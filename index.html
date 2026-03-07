@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PixelTools - Image Resize</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-shape bg-shape-1"></div>
+  <div class="bg-shape bg-shape-2"></div>
+
+  <main class="container">
+    <header class="hero">
+      <p class="eyebrow">Image Tools</p>
+      <h1>Resize Images Fast</h1>
+      <p class="subtitle">Upload a photo, set dimensions, and download the resized result instantly.</p>
+    </header>
+
+    <section class="card">
+      <div class="controls">
+        <label class="file-input" for="imageInput">
+          <input id="imageInput" type="file" accept="image/*" />
+          <span>Choose Image</span>
+        </label>
+
+        <div class="input-grid">
+          <label>
+            Width (px)
+            <input id="widthInput" type="number" min="1" placeholder="e.g. 1200" />
+          </label>
+
+          <label>
+            Height (px)
+            <input id="heightInput" type="number" min="1" placeholder="e.g. 800" />
+          </label>
+        </div>
+
+        <div class="input-grid">
+          <label>
+            Output format
+            <select id="formatInput">
+              <option value="image/jpeg">JPG</option>
+              <option value="image/png" selected>PNG</option>
+              <option value="image/webp">WEBP</option>
+            </select>
+          </label>
+
+          <label class="quality-label">
+            <span class="quality-head">Quality <strong><span id="qualityValue">92</span>%</strong></span>
+            <input id="qualityInput" type="range" min="1" max="100" value="92" />
+          </label>
+        </div>
+
+        <label class="checkbox-row">
+          <input id="keepRatio" type="checkbox" checked />
+          Keep aspect ratio
+        </label>
+
+        <button id="resizeButton" type="button" disabled>Resize Image</button>
+        <button id="downloadButton" type="button" disabled>Download Resized Image</button>
+
+        <p id="status" class="status">Upload an image to start.</p>
+      </div>
+
+      <div class="preview-panel">
+        <h2>Preview</h2>
+        <canvas id="previewCanvas" aria-label="Resized image preview"></canvas>
+        <p id="dimensions" class="dimensions"></p>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

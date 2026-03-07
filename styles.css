@@ -1,0 +1,240 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap');
+
+:root {
+  --bg: #f6f3ee;
+  --panel: #fff8ef;
+  --text: #1e1b18;
+  --muted: #6f665c;
+  --accent: #d95f2f;
+  --accent-dark: #ba4d23;
+  --outline: #e4d7c7;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Space Grotesk', sans-serif;
+  color: var(--text);
+  background: radial-gradient(circle at 12% 20%, #fff6ea 0%, transparent 30%),
+    radial-gradient(circle at 88% 15%, #fdd8c6 0%, transparent 28%),
+    var(--bg);
+  position: relative;
+  overflow-x: hidden;
+}
+
+.bg-shape {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(55px);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.bg-shape-1 {
+  width: 300px;
+  height: 300px;
+  left: -100px;
+  top: -80px;
+  background: #ffad66;
+}
+
+.bg-shape-2 {
+  width: 340px;
+  height: 340px;
+  right: -120px;
+  bottom: -120px;
+  background: #f28f75;
+}
+
+.container {
+  width: min(960px, 92vw);
+  margin: 44px auto;
+}
+
+.hero {
+  margin-bottom: 18px;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--accent-dark);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+h1 {
+  margin: 8px 0;
+  font-size: clamp(1.8rem, 4.2vw, 3rem);
+  line-height: 1.06;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--muted);
+  max-width: 640px;
+}
+
+.card {
+  background: color-mix(in oklab, var(--panel) 92%, white);
+  border: 1px solid var(--outline);
+  border-radius: 20px;
+  padding: 18px;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: minmax(360px, 430px) minmax(0, 1fr);
+  box-shadow: 0 18px 40px rgba(48, 33, 20, 0.08);
+}
+
+.controls {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  min-width: 0;
+}
+
+.file-input {
+  display: inline-flex;
+  position: relative;
+  cursor: pointer;
+}
+
+.file-input input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.file-input span,
+button {
+  width: 100%;
+  border: 1px solid var(--outline);
+  border-radius: 12px;
+  padding: 11px 13px;
+  font: inherit;
+  background: white;
+  transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+}
+
+.file-input span {
+  text-align: center;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:hover:enabled,
+.file-input:hover span {
+  transform: translateY(-1px);
+  border-color: color-mix(in oklab, var(--accent) 48%, var(--outline));
+  box-shadow: 0 7px 16px rgba(140, 67, 31, 0.12);
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+#resizeButton,
+#downloadButton {
+  background: var(--accent);
+  color: white;
+  border-color: transparent;
+  font-weight: 600;
+}
+
+#resizeButton:hover:enabled,
+#downloadButton:hover:enabled {
+  background: var(--accent-dark);
+}
+
+.input-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+label {
+  font-size: 0.88rem;
+  display: grid;
+  gap: 5px;
+}
+
+input[type="number"] {
+  font: inherit;
+  border: 1px solid var(--outline);
+  border-radius: 10px;
+  padding: 10px;
+  background: white;
+}
+
+select {
+  font: inherit;
+  border: 1px solid var(--outline);
+  border-radius: 10px;
+  padding: 10px;
+  background: white;
+}
+
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.quality-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.checkbox-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.preview-panel {
+  background: white;
+  border: 1px dashed var(--outline);
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.preview-panel h2 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+}
+
+#previewCanvas {
+  max-width: 100%;
+  border-radius: 10px;
+  display: block;
+  background: repeating-conic-gradient(#faf4ea 0% 25%, #f3e7d8 0% 50%) 50% / 20px 20px;
+}
+
+.status,
+.dimensions {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+@media (max-width: 850px) {
+  .card {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .input-grid {
+    grid-template-columns: 1fr;
+  }
+}
