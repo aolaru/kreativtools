@@ -3,7 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PixelTools - Image Resize</title>
+  <title>KreativTools | Free Image Resize and Convert Tool</title>
+  <meta name="description" content="Resize and convert images directly in your browser. Fast, private, and free image tools from KreativTools." />
+  <meta name="keywords" content="image resize, image converter, jpg to png, png to webp, web image tools" />
+  <meta name="author" content="KreativTools" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="KreativTools | Free Image Resize and Convert Tool" />
+  <meta property="og:description" content="Resize and convert images directly in your browser. Fast, private, and free." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kreativtools.com/" />
+  <meta property="og:image" content="https://kreativtools.com/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="KreativTools | Free Image Resize and Convert Tool" />
+  <meta name="twitter:description" content="Resize and convert images directly in your browser. Fast, private, and free." />
+  <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -13,18 +27,23 @@
   <main class="container">
     <header class="hero">
       <p class="eyebrow">Image Tools</p>
-      <h1>Resize Images Fast</h1>
-      <p class="subtitle">Upload a photo, set dimensions, and download the resized result instantly.</p>
+      <h1>Resize And Convert Images Fast</h1>
+      <p class="subtitle">Upload one image, then choose your tool: resize dimensions or convert format in seconds.</p>
     </header>
 
     <section class="card">
       <div class="controls">
+        <div class="tool-switcher" role="tablist" aria-label="Tool type">
+          <button id="toolResize" type="button" class="tool-button is-active" aria-pressed="true">Resize</button>
+          <button id="toolConvert" type="button" class="tool-button" aria-pressed="false">Convert</button>
+        </div>
+
         <label class="file-input" for="imageInput">
           <input id="imageInput" type="file" accept="image/*" />
           <span>Choose Image</span>
         </label>
 
-        <div class="input-grid">
+        <div id="resizeFields" class="input-grid">
           <label>
             Width (px)
             <input id="widthInput" type="number" min="1" placeholder="e.g. 1200" />
@@ -52,13 +71,13 @@
           </label>
         </div>
 
-        <label class="checkbox-row">
+        <label id="ratioRow" class="checkbox-row">
           <input id="keepRatio" type="checkbox" checked />
           Keep aspect ratio
         </label>
 
-        <button id="resizeButton" type="button" disabled>Resize Image</button>
-        <button id="downloadButton" type="button" disabled>Download Resized Image</button>
+        <button id="applyButton" type="button" disabled>Apply Resize</button>
+        <button id="downloadButton" type="button" disabled>Download Image</button>
 
         <p id="status" class="status">Upload an image to start.</p>
       </div>
