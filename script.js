@@ -1,21 +1,30 @@
 const imageInput = document.getElementById('imageInput');
+const dropzone = document.getElementById('dropzone');
+const uploadButton = document.getElementById('uploadButton');
+
 const widthInput = document.getElementById('widthInput');
 const heightInput = document.getElementById('heightInput');
 const formatInput = document.getElementById('formatInput');
 const qualityInput = document.getElementById('qualityInput');
 const qualityValue = document.getElementById('qualityValue');
 const keepRatioInput = document.getElementById('keepRatio');
-const applyButton = document.getElementById('applyButton');
-const downloadButton = document.getElementById('downloadButton');
-const statusEl = document.getElementById('status');
-const canvas = document.getElementById('previewCanvas');
-const dimensionsEl = document.getElementById('dimensions');
-const resizeFields = document.getElementById('resizeFields');
-const ratioRow = document.getElementById('ratioRow');
+
 const toolResizeButton = document.getElementById('toolResize');
 const toolConvertButton = document.getElementById('toolConvert');
 
+const workspace = document.getElementById('workspace');
+const resizeFields = document.getElementById('resizeFields');
+const ratioRow = document.getElementById('ratioRow');
+
+const applyButton = document.getElementById('applyButton');
+const downloadButton = document.getElementById('downloadButton');
+
+const statusEl = document.getElementById('status');
+const canvas = document.getElementById('previewCanvas');
+const dimensionsEl = document.getElementById('dimensions');
+
 const ctx = canvas.getContext('2d');
+
 let originalImage = null;
 let originalWidth = 0;
 let originalHeight = 0;
@@ -23,7 +32,7 @@ let sourceBaseName = 'image';
 let activeTool = 'resize';
 
 const MAX_DIMENSION = 16384;
-const MAX_CANVAS_PIXELS = 268435456; // 16,384 * 16,384
+const MAX_CANVAS_PIXELS = 268435456;
 
 const extensionByMime = {
   'image/jpeg': 'jpg',
@@ -59,13 +68,6 @@ const getSafeDimension = (value, fallback) => {
 
 const canUseCanvasSize = (width, height) => width > 0 && height > 0 && width * height <= MAX_CANVAS_PIXELS;
 
-const getSelectedExtension = () => extensionByMime[formatInput.value] || 'png';
-
-const getOutputFilename = () => {
-  const suffix = activeTool === 'convert' ? 'converted' : 'resized';
-  return `${sourceBaseName}-${suffix}.${getSelectedExtension()}`;
-};
-
 const getOutputQuality = () => {
   const q = Number.parseInt(qualityInput.value, 10);
   return Math.min(1, Math.max(0.01, q / 100));
@@ -79,6 +81,12 @@ const syncQualityUi = () => {
   qualityValue.textContent = qualityInput.value;
 };
 
+const getOutputFilename = () => {
+  const ext = extensionByMime[formatInput.value] || 'png';
+  const suffix = activeTool === 'convert' ? 'converted' : 'resized';
+  return `${sourceBaseName}-${suffix}.${ext}`;
+};
+
 const syncToolUi = () => {
   const isResize = activeTool === 'resize';
 
@@ -90,13 +98,50 @@ const syncToolUi = () => {
   resizeFields.classList.toggle('is-hidden', !isResize);
   ratioRow.classList.toggle('is-hidden', !isResize);
   applyButton.textContent = isResize ? 'Apply Resize' : 'Prepare Convert';
+};
 
-  if (originalImage) {
-    setStatus(isResize ? 'Resize mode active. Set dimensions then apply.' : 'Convert mode active. Choose format and download.');
-    if (!isResize) {
-      drawImageToCanvas(originalImage, originalWidth, originalHeight);
-    }
+const enableWorkspace = () => {
+  workspace.classList.remove('is-hidden');
+  applyButton.disabled = false;
+  downloadButton.disabled = false;
+};
+
+const loadFile = (file) => {
+  if (!file || !file.type.startsWith('image/')) {
+    setStatus('Please select a valid image file.');
+    return;
   }
+
+  const imageUrl = URL.createObjectURL(file);
+  const img = new Image();
+
+  img.onload = () => {
+    originalImage = img;
+    originalWidth = img.naturalWidth;
+    originalHeight = img.naturalHeight;
+    sourceBaseName = file.name.replace(/\.[^.]+$/, '');
+
+    widthInput.value = String(originalWidth);
+    heightInput.value = String(originalHeight);
+
+    if (!canUseCanvasSize(originalWidth, originalHeight)) {
+      setStatus('Image is too large for safe browser processing. Use a smaller file.');
+      URL.revokeObjectURL(imageUrl);
+      return;
+    }
+
+    drawImageToCanvas(img, originalWidth, originalHeight);
+    enableWorkspace();
+    setStatus(`Loaded image: ${file.name}`);
+    URL.revokeObjectURL(imageUrl);
+  };
+
+  img.onerror = () => {
+    setStatus('Could not load this file. Please try another image.');
+    URL.revokeObjectURL(imageUrl);
+  };
+
+  img.src = imageUrl;
 };
 
 const applyResize = () => {
@@ -109,58 +154,57 @@ const applyResize = () => {
   heightInput.value = String(height);
 
   if (!canUseCanvasSize(width, height)) {
-    setStatus('Image is too large to process safely in-browser. Please use smaller dimensions.');
+    setStatus('Target size is too large. Please reduce width or height.');
     return;
   }
 
   drawImageToCanvas(originalImage, width, height);
-  setStatus('Resize applied. You can now download the image.');
+  setStatus('Resize applied. Download when ready.');
 };
 
 const prepareConvert = () => {
   if (!originalImage) return;
-
-  if (!canUseCanvasSize(originalWidth, originalHeight)) {
-    setStatus('Image is too large to convert safely in-browser. Please use a smaller source image.');
-    return;
-  }
-
   drawImageToCanvas(originalImage, originalWidth, originalHeight);
-  setStatus('Convert ready. Choose format and download the image.');
+  setStatus('Convert ready. Choose a format and download.');
 };
+
+uploadButton.addEventListener('click', () => {
+  imageInput.click();
+});
+
+dropzone.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    imageInput.click();
+  }
+});
 
 imageInput.addEventListener('change', () => {
   const [file] = imageInput.files || [];
-  if (!file) return;
+  if (file) loadFile(file);
+});
 
-  const imageUrl = URL.createObjectURL(file);
-  const img = new Image();
+dropzone.addEventListener('dragenter', (event) => {
+  event.preventDefault();
+  dropzone.classList.add('drag-over');
+});
 
-  img.onload = () => {
-    originalImage = img;
-    originalWidth = img.naturalWidth;
-    originalHeight = img.naturalHeight;
+dropzone.addEventListener('dragover', (event) => {
+  event.preventDefault();
+  dropzone.classList.add('drag-over');
+});
 
-    widthInput.value = String(originalWidth);
-    heightInput.value = String(originalHeight);
+dropzone.addEventListener('dragleave', (event) => {
+  if (event.target === dropzone) {
+    dropzone.classList.remove('drag-over');
+  }
+});
 
-    drawImageToCanvas(img, originalWidth, originalHeight);
-
-    applyButton.disabled = false;
-    downloadButton.disabled = false;
-
-    sourceBaseName = file.name.replace(/\.[^.]+$/, '');
-    setStatus(`Loaded image: ${file.name}`);
-
-    URL.revokeObjectURL(imageUrl);
-  };
-
-  img.onerror = () => {
-    setStatus('Could not load this file. Please try another image.');
-    URL.revokeObjectURL(imageUrl);
-  };
-
-  img.src = imageUrl;
+dropzone.addEventListener('drop', (event) => {
+  event.preventDefault();
+  dropzone.classList.remove('drag-over');
+  const [file] = event.dataTransfer?.files || [];
+  if (file) loadFile(file);
 });
 
 toolResizeButton.addEventListener('click', () => {
@@ -173,10 +217,7 @@ toolConvertButton.addEventListener('click', () => {
   syncToolUi();
 });
 
-formatInput.addEventListener('change', () => {
-  syncQualityUi();
-});
-
+formatInput.addEventListener('change', syncQualityUi);
 qualityInput.addEventListener('input', () => {
   qualityValue.textContent = qualityInput.value;
 });
@@ -196,6 +237,11 @@ heightInput.addEventListener('input', () => {
 });
 
 applyButton.addEventListener('click', () => {
+  if (!originalImage) {
+    setStatus('Upload an image first.');
+    return;
+  }
+
   if (activeTool === 'resize') {
     applyResize();
     return;
@@ -205,19 +251,19 @@ applyButton.addEventListener('click', () => {
 });
 
 downloadButton.addEventListener('click', () => {
-  if (!canvas.width || !canvas.height) return;
-  if (!canUseCanvasSize(canvas.width, canvas.height)) {
-    setStatus('Image is too large to download safely. Please reduce dimensions.');
+  if (!canvas.width || !canvas.height) {
+    setStatus('Nothing to download yet.');
     return;
   }
 
   const mimeType = formatInput.value;
   const filename = getOutputFilename();
   const quality = isQualityActive() ? getOutputQuality() : undefined;
+
   canvas.toBlob(
     (blob) => {
       if (!blob) {
-        setStatus('Could not export image. Try a different format or size.');
+        setStatus('Could not export image. Try a different format.');
         return;
       }
 

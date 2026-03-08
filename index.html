@@ -21,34 +21,60 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="bg-shape bg-shape-1"></div>
-  <div class="bg-shape bg-shape-2"></div>
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <header class="site-header">
+    <div class="brand">
+      <div class="brand-mark">K</div>
+      <div class="brand-copy">
+        <strong>Kreativ Tools</strong>
+        <span>by Olaru AI</span>
+      </div>
+    </div>
+
+    <nav class="top-nav" aria-label="Primary">
+      <a href="#" aria-current="page">Image</a>
+      <a href="#">PDF</a>
+      <a href="#">Video</a>
+      <a href="#">File</a>
+    </nav>
+
+    <div class="header-actions">
+      <button type="button" class="ghost">All Tools</button>
+      <button type="button" class="primary">Start Free</button>
+    </div>
+  </header>
 
   <main class="container">
-    <header class="hero">
-      <p class="eyebrow">Image Tools</p>
-      <h1>Resize And Convert Images Fast</h1>
-      <p class="subtitle">Upload one image, then choose your tool: resize dimensions or convert format in seconds.</p>
-    </header>
+    <section class="hero">
+      <p class="eyebrow">Image Suite</p>
+      <h1>Resize an Image or Photo</h1>
+      <p>Upload once, then resize dimensions or convert format in a few clicks.</p>
+    </section>
 
-    <section class="card">
+    <section class="upload-card">
+      <input id="imageInput" type="file" accept="image/*" hidden />
+      <div id="dropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload image">
+        <div class="drop-icon" aria-hidden="true"></div>
+        <button id="uploadButton" type="button" class="primary upload-trigger">Upload from Device</button>
+        <p>or drag and drop an image here</p>
+        <p id="status" class="status">No file selected yet.</p>
+      </div>
+    </section>
+
+    <section id="workspace" class="workspace is-hidden">
       <div class="controls">
         <div class="tool-switcher" role="tablist" aria-label="Tool type">
           <button id="toolResize" type="button" class="tool-button is-active" aria-pressed="true">Resize</button>
           <button id="toolConvert" type="button" class="tool-button" aria-pressed="false">Convert</button>
         </div>
 
-        <label class="file-input" for="imageInput">
-          <input id="imageInput" type="file" accept="image/*" />
-          <span>Choose Image</span>
-        </label>
-
         <div id="resizeFields" class="input-grid">
           <label>
             Width (px)
             <input id="widthInput" type="number" min="1" placeholder="e.g. 1200" />
           </label>
-
           <label>
             Height (px)
             <input id="heightInput" type="number" min="1" placeholder="e.g. 800" />
@@ -65,7 +91,7 @@
             </select>
           </label>
 
-          <label class="quality-label">
+          <label>
             <span class="quality-head">Quality <strong><span id="qualityValue">92</span>%</strong></span>
             <input id="qualityInput" type="range" min="1" max="100" value="92" />
           </label>
@@ -76,15 +102,13 @@
           Keep aspect ratio
         </label>
 
-        <button id="applyButton" type="button" disabled>Apply Resize</button>
-        <button id="downloadButton" type="button" disabled>Download Image</button>
-
-        <p id="status" class="status">Upload an image to start.</p>
+        <button id="applyButton" type="button" class="primary" disabled>Apply Resize</button>
+        <button id="downloadButton" type="button" class="primary" disabled>Download Image</button>
       </div>
 
       <div class="preview-panel">
         <h2>Preview</h2>
-        <canvas id="previewCanvas" aria-label="Resized image preview"></canvas>
+        <canvas id="previewCanvas" aria-label="Image preview"></canvas>
         <p id="dimensions" class="dimensions"></p>
       </div>
     </section>
