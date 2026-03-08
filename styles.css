@@ -333,6 +333,100 @@ input[type='range'] {
   display: none;
 }
 
+.site-footer {
+  margin-top: 52px;
+  background: #eef2f7;
+  border-top: 1px solid #d5dfec;
+}
+
+.footer-topline {
+  height: 10px;
+  background: linear-gradient(90deg, #2389d8, #56a6e6);
+}
+
+.footer-inner {
+  width: min(1200px, 94vw);
+  margin: 0 auto;
+  padding: 52px 0 38px;
+  display: grid;
+  grid-template-columns: 1.3fr repeat(3, 1fr);
+  gap: 28px;
+}
+
+.footer-about h3 {
+  margin: 0 0 14px;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.footer-about h3 span {
+  color: #2589d8;
+}
+
+.footer-about p {
+  margin: 0;
+  color: #69778c;
+  font-size: 1.35rem;
+  line-height: 1.35;
+  max-width: 520px;
+}
+
+.site-footer h4 {
+  margin: 0 0 14px;
+  font-size: 1.55rem;
+}
+
+.site-footer ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.site-footer a {
+  color: #6f7b8f;
+  text-decoration: none;
+  font-size: 1.35rem;
+}
+
+.site-footer a:hover {
+  color: #2589d8;
+}
+
+.footer-bottom {
+  width: min(1200px, 94vw);
+  margin: 0 auto;
+  padding: 22px 0 30px;
+  border-top: 1px solid #d5dfec;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  color: #6f7b8f;
+  font-size: 1.2rem;
+}
+
+.footer-bottom p {
+  margin: 0;
+}
+
+.footer-brand-links {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-brand-links a {
+  color: #4f5f76;
+  font-size: inherit;
+  text-decoration: none;
+}
+
+.footer-brand-links a:hover {
+  color: #2589d8;
+}
+
 @media (max-width: 920px) {
   .site-header {
     grid-template-columns: 1fr;
@@ -346,6 +440,10 @@ input[type='range'] {
   .workspace {
     grid-template-columns: 1fr;
   }
+
+  .footer-inner {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 620px) {
@@ -356,5 +454,31 @@ input[type='range'] {
   .upload-trigger {
     min-width: 0;
     width: 100%;
+  }
+
+  .footer-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-about h3 {
+    font-size: 1.65rem;
+  }
+
+  .footer-about p,
+  .site-footer a {
+    font-size: 1rem;
+  }
+
+  .site-footer h4 {
+    font-size: 1.2rem;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    font-size: 0.95rem;
+  }
+
+  .footer-brand-links {
+    gap: 8px;
   }
 }
