@@ -49,8 +49,8 @@
   <main class="container">
     <section class="hero">
       <p class="eyebrow">Image Suite</p>
-      <h1>Resize an Image or Photo</h1>
-      <p>Upload once, then resize dimensions or convert format in a few clicks.</p>
+      <h1>Resize an Image, Convert, or Export PDF</h1>
+      <p>Upload once, then resize dimensions, convert format, or download your image as a PDF.</p>
     </section>
 
     <section class="upload-card">
@@ -68,6 +68,7 @@
         <div class="tool-switcher" role="tablist" aria-label="Tool type">
           <button id="toolResize" type="button" class="tool-button is-active" aria-pressed="true">Resize</button>
           <button id="toolConvert" type="button" class="tool-button" aria-pressed="false">Convert</button>
+          <button id="toolPdf" type="button" class="tool-button" aria-pressed="false">Image to PDF</button>
         </div>
 
         <div id="resizeFields" class="input-grid">
@@ -81,7 +82,7 @@
           </label>
         </div>
 
-        <div class="input-grid">
+        <div id="formatFields" class="input-grid">
           <label>
             Output format
             <select id="formatInput">
@@ -96,6 +97,29 @@
             <input id="qualityInput" type="range" min="1" max="100" value="92" />
           </label>
         </div>
+
+        <div id="pdfFields" class="input-grid is-hidden">
+          <label>
+            PDF page size
+            <select id="pdfPageSize">
+              <option value="a4" selected>A4</option>
+              <option value="letter">Letter</option>
+            </select>
+          </label>
+
+          <label>
+            Orientation
+            <select id="pdfOrientation">
+              <option value="portrait" selected>Portrait</option>
+              <option value="landscape">Landscape</option>
+            </select>
+          </label>
+        </div>
+
+        <label id="pdfMarginRow" class="is-hidden">
+          PDF margin (px)
+          <input id="pdfMarginInput" type="number" min="0" max="200" value="24" />
+        </label>
 
         <label id="ratioRow" class="checkbox-row">
           <input id="keepRatio" type="checkbox" checked />
@@ -114,6 +138,7 @@
     </section>
   </main>
 
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

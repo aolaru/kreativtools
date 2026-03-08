@@ -5,6 +5,7 @@ A lightweight browser-based image tools app.
 ## Current tools
 - Resize Image: change width/height with optional aspect ratio lock
 - Convert Image: convert format (JPG, PNG, WEBP) with quality control for JPG/WEBP
+- Image to PDF: export uploaded image to a single-page PDF with page size/orientation options
 
 ## Run locally
 Open `index.html` in your browser.

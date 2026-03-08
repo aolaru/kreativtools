@@ -11,10 +11,17 @@ const keepRatioInput = document.getElementById('keepRatio');
 
 const toolResizeButton = document.getElementById('toolResize');
 const toolConvertButton = document.getElementById('toolConvert');
+const toolPdfButton = document.getElementById('toolPdf');
 
 const workspace = document.getElementById('workspace');
 const resizeFields = document.getElementById('resizeFields');
+const formatFields = document.getElementById('formatFields');
+const pdfFields = document.getElementById('pdfFields');
 const ratioRow = document.getElementById('ratioRow');
+const pdfMarginRow = document.getElementById('pdfMarginRow');
+const pdfPageSizeInput = document.getElementById('pdfPageSize');
+const pdfOrientationInput = document.getElementById('pdfOrientation');
+const pdfMarginInput = document.getElementById('pdfMarginInput');
 
 const applyButton = document.getElementById('applyButton');
 const downloadButton = document.getElementById('downloadButton');
@@ -82,6 +89,9 @@ const syncQualityUi = () => {
 };
 
 const getOutputFilename = () => {
+  if (activeTool === 'pdf') {
+    return `${sourceBaseName}.pdf`;
+  }
   const ext = extensionByMime[formatInput.value] || 'png';
   const suffix = activeTool === 'convert' ? 'converted' : 'resized';
   return `${sourceBaseName}-${suffix}.${ext}`;
@@ -89,15 +99,23 @@ const getOutputFilename = () => {
 
 const syncToolUi = () => {
   const isResize = activeTool === 'resize';
+  const isPdf = activeTool === 'pdf';
+  const isConvert = activeTool === 'convert';
 
   toolResizeButton.classList.toggle('is-active', isResize);
-  toolConvertButton.classList.toggle('is-active', !isResize);
+  toolConvertButton.classList.toggle('is-active', isConvert);
+  toolPdfButton.classList.toggle('is-active', isPdf);
   toolResizeButton.setAttribute('aria-pressed', String(isResize));
-  toolConvertButton.setAttribute('aria-pressed', String(!isResize));
+  toolConvertButton.setAttribute('aria-pressed', String(isConvert));
+  toolPdfButton.setAttribute('aria-pressed', String(isPdf));
 
   resizeFields.classList.toggle('is-hidden', !isResize);
   ratioRow.classList.toggle('is-hidden', !isResize);
-  applyButton.textContent = isResize ? 'Apply Resize' : 'Prepare Convert';
+  formatFields.classList.toggle('is-hidden', isPdf);
+  pdfFields.classList.toggle('is-hidden', !isPdf);
+  pdfMarginRow.classList.toggle('is-hidden', !isPdf);
+  applyButton.textContent = isResize ? 'Apply Resize' : isPdf ? 'Prepare PDF' : 'Prepare Convert';
+  downloadButton.textContent = isPdf ? 'Download PDF' : 'Download Image';
 };
 
 const enableWorkspace = () => {
@@ -168,6 +186,54 @@ const prepareConvert = () => {
   setStatus('Convert ready. Choose a format and download.');
 };
 
+const preparePdf = () => {
+  if (!originalImage) return;
+  drawImageToCanvas(originalImage, originalWidth, originalHeight);
+  setStatus('PDF is ready. Choose page options and download.');
+};
+
+const downloadPdf = () => {
+  if (!canvas.width || !canvas.height) {
+    setStatus('Nothing to export yet.');
+    return;
+  }
+
+  const jspdfApi = window.jspdf;
+  if (!jspdfApi || !jspdfApi.jsPDF) {
+    setStatus('PDF engine failed to load. Refresh and try again.');
+    return;
+  }
+
+  const pageSize = pdfPageSizeInput.value;
+  const orientation = pdfOrientationInput.value;
+  const marginRaw = Number(pdfMarginInput.value);
+  const margin = Number.isFinite(marginRaw) ? Math.min(200, Math.max(0, marginRaw)) : 24;
+  pdfMarginInput.value = String(Math.round(margin));
+
+  const { jsPDF } = jspdfApi;
+  const doc = new jsPDF({
+    orientation,
+    unit: 'pt',
+    format: pageSize,
+    compress: true,
+  });
+
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
+  const maxWidth = Math.max(1, pageWidth - margin * 2);
+  const maxHeight = Math.max(1, pageHeight - margin * 2);
+  const scale = Math.min(maxWidth / canvas.width, maxHeight / canvas.height);
+  const targetWidth = Math.max(1, Math.round(canvas.width * scale));
+  const targetHeight = Math.max(1, Math.round(canvas.height * scale));
+  const x = (pageWidth - targetWidth) / 2;
+  const y = (pageHeight - targetHeight) / 2;
+
+  const imageData = canvas.toDataURL('image/jpeg', 0.92);
+  doc.addImage(imageData, 'JPEG', x, y, targetWidth, targetHeight, undefined, 'FAST');
+  doc.save(getOutputFilename());
+  setStatus(`Downloaded ${getOutputFilename()}`);
+};
+
 uploadButton.addEventListener('click', () => {
   imageInput.click();
 });
@@ -217,6 +283,11 @@ toolConvertButton.addEventListener('click', () => {
   syncToolUi();
 });
 
+toolPdfButton.addEventListener('click', () => {
+  activeTool = 'pdf';
+  syncToolUi();
+});
+
 formatInput.addEventListener('change', syncQualityUi);
 qualityInput.addEventListener('input', () => {
   qualityValue.textContent = qualityInput.value;
@@ -247,10 +318,20 @@ applyButton.addEventListener('click', () => {
     return;
   }
 
+  if (activeTool === 'pdf') {
+    preparePdf();
+    return;
+  }
+
   prepareConvert();
 });
 
 downloadButton.addEventListener('click', () => {
+  if (activeTool === 'pdf') {
+    downloadPdf();
+    return;
+  }
+
   if (!canvas.width || !canvas.height) {
     setStatus('Nothing to download yet.');
     return;
