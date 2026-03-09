@@ -33,7 +33,7 @@ expect_nav_order() {
 }
 
 main() {
-  local pages=(index.html pdf.html video.html fonts.html audio.html file.html changes.html)
+  local pages=(index.html image-tools.html pdf.html video.html fonts.html audio.html file.html changes.html all-tools.html privacy.html terms.html contact.html image-compress.html pdf-merge.html)
 
   expect_file "styles.css"
   expect_file "theme.js"
@@ -46,9 +46,9 @@ main() {
     expect_nav_order "$p"
   done
 
-  expect_pattern "index.html" 'id="toolResize"'
-  expect_pattern "index.html" 'id="toolConvert"'
-  expect_pattern "index.html" 'id="toolPdf"'
+  expect_pattern "image-tools.html" 'id="toolResize"'
+  expect_pattern "image-tools.html" 'id="toolConvert"'
+  expect_pattern "image-tools.html" 'id="toolPdf"'
 
   expect_pattern "pdf.html" 'id="pdfImageInput"'
   expect_pattern "video.html" 'id="videoInput"'

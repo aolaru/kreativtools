@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kreativ Tools | Image Tools</title>
+  <meta name="description" content="Resize, convert, compress, and export images with Kreativ Tools." />
+  <meta name="keywords" content="image resize, image converter, jpg to png, png to webp, web image tools" />
+  <meta name="author" content="Kreativ Tools" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="Kreativ Tools | Free Image Resize and Convert Tool" />
+  <meta property="og:description" content="Resize and convert images directly in your browser. Fast, private, and free." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kreativtools.com/" />
+  <meta property="og:image" content="https://kreativtools.com/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Kreativ Tools | Free Image Resize and Convert Tool" />
+  <meta name="twitter:description" content="Resize and convert images directly in your browser. Fast, private, and free." />
+  <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Kreativ Tools Home">
+      <div class="brand-mark">K</div>
+      <div class="brand-copy">
+        <strong>Kreativ Tools</strong>
+      </div>
+    </a>
+
+    <nav class="top-nav" aria-label="Primary">
+      <a href="image-tools.html" aria-current="page">Image</a>
+      <a href="pdf.html">PDF</a>
+      <a href="video.html">Video</a>
+      <a href="fonts.html">Fonts</a>
+      <a href="audio.html">Audio</a>
+      <a href="file.html">File</a>
+      <a href="changes.html">Changes</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="ghost header-link" href="all-tools.html">All Tools</a>
+      <button id="themeToggle" type="button" class="icon-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><span aria-hidden="true">☾</span></button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <p class="eyebrow">Image Suite</p>
+      <h1>Resize an Image, Convert, or Export PDF</h1>
+      <p>Upload once, then resize dimensions, convert format, or download your image as a PDF.</p>
+    </section>
+
+    <section class="upload-card">
+      <input id="imageInput" type="file" accept="image/*" hidden />
+      <div id="dropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload image">
+        <div class="drop-icon" aria-hidden="true"></div>
+        <button id="uploadButton" type="button" class="primary upload-trigger">Upload from Device</button>
+        <p>or drag and drop an image here</p>
+        <p id="status" class="status">No file selected yet.</p>
+      </div>
+    </section>
+
+    <section id="workspace" class="workspace is-hidden">
+      <div class="controls">
+        <div class="tool-switcher" role="tablist" aria-label="Tool type">
+          <button id="toolResize" type="button" class="tool-button is-active" aria-pressed="true">Resize</button>
+          <button id="toolConvert" type="button" class="tool-button" aria-pressed="false">Convert</button>
+          <button id="toolPdf" type="button" class="tool-button" aria-pressed="false">Image to PDF</button>
+        </div>
+
+        <div id="resizeFields" class="input-grid">
+          <label>
+            Width (px)
+            <input id="widthInput" type="number" min="1" placeholder="e.g. 1200" />
+          </label>
+          <label>
+            Height (px)
+            <input id="heightInput" type="number" min="1" placeholder="e.g. 800" />
+          </label>
+        </div>
+
+        <div id="formatFields" class="input-grid">
+          <label>
+            Output format
+            <select id="formatInput">
+              <option value="image/jpeg">JPG</option>
+              <option value="image/png" selected>PNG</option>
+              <option value="image/webp">WEBP</option>
+            </select>
+          </label>
+
+          <label>
+            <span class="quality-head">Quality <strong><span id="qualityValue">92</span>%</strong></span>
+            <input id="qualityInput" type="range" min="1" max="100" value="92" />
+          </label>
+        </div>
+
+        <div id="pdfFields" class="input-grid is-hidden">
+          <label>
+            PDF page size
+            <select id="pdfPageSize">
+              <option value="a4" selected>A4</option>
+              <option value="letter">Letter</option>
+            </select>
+          </label>
+
+          <label>
+            Orientation
+            <select id="pdfOrientation">
+              <option value="portrait" selected>Portrait</option>
+              <option value="landscape">Landscape</option>
+            </select>
+          </label>
+        </div>
+
+        <label id="pdfMarginRow" class="is-hidden">
+          PDF margin (px)
+          <input id="pdfMarginInput" type="number" min="0" max="200" value="24" />
+        </label>
+
+        <label id="ratioRow" class="checkbox-row">
+          <input id="keepRatio" type="checkbox" checked />
+          Keep aspect ratio
+        </label>
+
+        <button id="applyButton" type="button" class="primary" disabled>Apply Resize</button>
+        <button id="downloadButton" type="button" class="primary" disabled>Download Image</button>
+      </div>
+
+      <div class="preview-panel">
+        <h2>Preview</h2>
+        <canvas id="previewCanvas" aria-label="Image preview"></canvas>
+        <p id="dimensions" class="dimensions"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+  <div class="footer-topline"></div>
+  <div class="footer-inner">
+    <section class="footer-about">
+      <h3>Kreativ<span>Tools</span></h3>
+      <p>Kreativ Tools provides free online creative utilities for image, PDF, video, font, audio, and file workflows. Your files stay private and are processed in-browser whenever possible.</p>
+    </section>
+
+    <section>
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="all-tools.html">All Tools</a></li>
+        <li><a href="changes.html">Changes</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h4>Core Tools</h4>
+      <ul>
+        <li><a href="image-tools.html">Image Resize & Convert</a></li>
+        <li><a href="image-compress.html">Image Compress</a></li>
+        <li><a href="pdf.html">Image to PDF</a></li>
+        <li><a href="video.html">Video to WEBM</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h4>More Tools</h4>
+      <ul>
+        <li><a href="audio.html">Audio to WAV</a></li>
+        <li><a href="file.html">XML to CSV</a></li>
+        <li><a href="changes.html">Latest Releases</a></li>
+        <li><a href="all-tools.html">Browse Directory</a></li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="footer-bottom">
+    <p class="footer-brand-links">
+      <a href="https://kreativfont.com/" target="_blank" rel="noopener noreferrer">Kreativ Font</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://kreativsound.com/" target="_blank" rel="noopener noreferrer">Kreativ Sound</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://kreativwp.com/" target="_blank" rel="noopener noreferrer">Kreativ WP</a>
+    </p>
+    <p>© 2026 <a href="https://madebykreativ.com/" target="_blank" rel="noopener noreferrer">Made by KREATIV</a> · Independent creative tools and assets by Andrei Olaru</p>
+  </div>
+</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="script.js"></script>
+  <script src="cookie-consent.js"></script>
+  <script src="theme.js"></script>
+</body>
+</html>

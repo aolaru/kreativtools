@@ -2,6 +2,7 @@ const { test, expect } = require('@playwright/test');
 
 const pages = [
   '/index.html',
+  '/image-tools.html',
   '/pdf.html',
   '/video.html',
   '/fonts.html',

@@ -11,7 +11,7 @@ const onePxPng = {
 };
 
 test('image tool uploads and enables workspace actions', async ({ page }) => {
-  await page.goto('/index.html');
+  await page.goto('/image-tools.html');
   await page.setInputFiles('#imageInput', onePxPng);
   await expect(page.locator('#workspace')).not.toHaveClass(/is-hidden/);
   await expect(page.locator('#applyButton')).toBeEnabled();

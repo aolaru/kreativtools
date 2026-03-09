@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kreativ Tools | Free Image Resize and Convert Tool</title>
-  <meta name="description" content="Resize and convert images directly in your browser. Fast, private, and free image tools from Kreativ Tools." />
-  <meta name="keywords" content="image resize, image converter, jpg to png, png to webp, web image tools" />
+  <title>Kreativ Tools | Browser-Based Creative Utilities</title>
+  <meta name="description" content="A growing collection of browser-based creative utilities for image, PDF, video, fonts, audio, and file workflows." />
+  <meta name="keywords" content="creative tools, browser tools, image tools, pdf tools, video tools, audio tools" />
   <meta name="author" content="Kreativ Tools" />
   <meta name="robots" content="index, follow" />
-  <meta property="og:title" content="Kreativ Tools | Free Image Resize and Convert Tool" />
-  <meta property="og:description" content="Resize and convert images directly in your browser. Fast, private, and free." />
+  <meta property="og:title" content="Kreativ Tools | Browser-Based Creative Utilities" />
+  <meta property="og:description" content="Free browser-based tools for image, PDF, video, fonts, audio, and file workflows." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://kreativtools.com/" />
   <meta property="og:image" content="https://kreativtools.com/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Kreativ Tools | Free Image Resize and Convert Tool" />
-  <meta name="twitter:description" content="Resize and convert images directly in your browser. Fast, private, and free." />
+  <meta name="twitter:title" content="Kreativ Tools | Browser-Based Creative Utilities" />
+  <meta name="twitter:description" content="Free browser-based tools for image, PDF, video, fonts, audio, and file workflows." />
   <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="styles.css" />
@@ -27,13 +27,11 @@
   <header class="site-header">
     <a class="brand" href="index.html" aria-label="Kreativ Tools Home">
       <div class="brand-mark">K</div>
-      <div class="brand-copy">
-        <strong>Kreativ Tools</strong>
-      </div>
+      <div class="brand-copy"><strong>Kreativ Tools</strong></div>
     </a>
 
     <nav class="top-nav" aria-label="Primary">
-      <a href="index.html" aria-current="page">Image</a>
+      <a href="image-tools.html">Image</a>
       <a href="pdf.html">PDF</a>
       <a href="video.html">Video</a>
       <a href="fonts.html">Fonts</a>
@@ -50,93 +48,51 @@
 
   <main class="container">
     <section class="hero">
-      <p class="eyebrow">Image Suite</p>
-      <h1>Resize an Image, Convert, or Export PDF</h1>
-      <p>Upload once, then resize dimensions, convert format, or download your image as a PDF.</p>
-    </section>
-
-    <section class="upload-card">
-      <input id="imageInput" type="file" accept="image/*" hidden />
-      <div id="dropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload image">
-        <div class="drop-icon" aria-hidden="true"></div>
-        <button id="uploadButton" type="button" class="primary upload-trigger">Upload from Device</button>
-        <p>or drag and drop an image here</p>
-        <p id="status" class="status">No file selected yet.</p>
+      <p class="eyebrow">Creative Utility Platform</p>
+      <h1>One Home For All Kreativ Tools</h1>
+      <p>Use focused, browser-based tools across image, PDF, video, fonts, audio, and file workflows without leaving the web.</p>
+      <div class="hero-actions">
+        <a class="primary header-link" href="all-tools.html">Browse All Tools</a>
+        <a class="ghost header-link" href="changes.html">View Latest Changes</a>
       </div>
     </section>
 
-    <section id="workspace" class="workspace is-hidden">
-      <div class="controls">
-        <div class="tool-switcher" role="tablist" aria-label="Tool type">
-          <button id="toolResize" type="button" class="tool-button is-active" aria-pressed="true">Resize</button>
-          <button id="toolConvert" type="button" class="tool-button" aria-pressed="false">Convert</button>
-          <button id="toolPdf" type="button" class="tool-button" aria-pressed="false">Image to PDF</button>
-        </div>
+    <section class="tools-grid" aria-label="Featured categories">
+      <a class="tool-card" href="image-tools.html">
+        <div class="tool-thumb thumb-image" aria-hidden="true">IMG</div>
+        <h3>Image</h3>
+        <p>Resize, convert, compress, and export visuals for web and social use.</p>
+      </a>
 
-        <div id="resizeFields" class="input-grid">
-          <label>
-            Width (px)
-            <input id="widthInput" type="number" min="1" placeholder="e.g. 1200" />
-          </label>
-          <label>
-            Height (px)
-            <input id="heightInput" type="number" min="1" placeholder="e.g. 800" />
-          </label>
-        </div>
+      <a class="tool-card" href="pdf.html">
+        <div class="tool-thumb thumb-pdf" aria-hidden="true">PDF</div>
+        <h3>PDF</h3>
+        <p>Create, merge, and transform documents with client-side PDF workflows.</p>
+      </a>
 
-        <div id="formatFields" class="input-grid">
-          <label>
-            Output format
-            <select id="formatInput">
-              <option value="image/jpeg">JPG</option>
-              <option value="image/png" selected>PNG</option>
-              <option value="image/webp">WEBP</option>
-            </select>
-          </label>
+      <a class="tool-card" href="video.html">
+        <div class="tool-thumb thumb-video" aria-hidden="true">VID</div>
+        <h3>Video</h3>
+        <p>Convert and prepare lightweight video assets directly in the browser.</p>
+      </a>
 
-          <label>
-            <span class="quality-head">Quality <strong><span id="qualityValue">92</span>%</strong></span>
-            <input id="qualityInput" type="range" min="1" max="100" value="92" />
-          </label>
-        </div>
+      <a class="tool-card" href="fonts.html">
+        <div class="tool-thumb thumb-font" aria-hidden="true">FNT</div>
+        <h3>Fonts</h3>
+        <p>Convert font files for modern web delivery and performance.</p>
+      </a>
 
-        <div id="pdfFields" class="input-grid is-hidden">
-          <label>
-            PDF page size
-            <select id="pdfPageSize">
-              <option value="a4" selected>A4</option>
-              <option value="letter">Letter</option>
-            </select>
-          </label>
+      <a class="tool-card" href="audio.html">
+        <div class="tool-thumb thumb-audio" aria-hidden="true">AUD</div>
+        <h3>Audio</h3>
+        <p>Convert and standardize audio assets for editing and publishing.</p>
+      </a>
 
-          <label>
-            Orientation
-            <select id="pdfOrientation">
-              <option value="portrait" selected>Portrait</option>
-              <option value="landscape">Landscape</option>
-            </select>
-          </label>
-        </div>
-
-        <label id="pdfMarginRow" class="is-hidden">
-          PDF margin (px)
-          <input id="pdfMarginInput" type="number" min="0" max="200" value="24" />
-        </label>
-
-        <label id="ratioRow" class="checkbox-row">
-          <input id="keepRatio" type="checkbox" checked />
-          Keep aspect ratio
-        </label>
-
-        <button id="applyButton" type="button" class="primary" disabled>Apply Resize</button>
-        <button id="downloadButton" type="button" class="primary" disabled>Download Image</button>
-      </div>
-
-      <div class="preview-panel">
-        <h2>Preview</h2>
-        <canvas id="previewCanvas" aria-label="Image preview"></canvas>
-        <p id="dimensions" class="dimensions"></p>
-      </div>
+      <a class="tool-card" href="file.html">
+        <div class="tool-thumb thumb-file" aria-hidden="true">XML</div>
+        <h3>File</h3>
+        <p>Transform structured data files with quick conversion utilities.</p>
+      </a>
     </section>
   </main>
 
@@ -163,7 +119,7 @@
     <section>
       <h4>Core Tools</h4>
       <ul>
-        <li><a href="index.html">Image Resize & Convert</a></li>
+        <li><a href="image-tools.html">Image Resize & Convert</a></li>
         <li><a href="image-compress.html">Image Compress</a></li>
         <li><a href="pdf.html">Image to PDF</a></li>
         <li><a href="video.html">Video to WEBM</a></li>
@@ -173,9 +129,9 @@
     <section>
       <h4>More Tools</h4>
       <ul>
+        <li><a href="fonts.html">Font to Webfont</a></li>
         <li><a href="audio.html">Audio to WAV</a></li>
         <li><a href="file.html">XML to CSV</a></li>
-        <li><a href="changes.html">Latest Releases</a></li>
         <li><a href="all-tools.html">Browse Directory</a></li>
       </ul>
     </section>
@@ -193,8 +149,6 @@
   </div>
 </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
-  <script src="script.js"></script>
   <script src="cookie-consent.js"></script>
   <script src="theme.js"></script>
 </body>
