@@ -335,6 +335,20 @@ input[type='range'] {
   width: 100%;
 }
 
+.code-preview {
+  margin: 0;
+  padding: 12px;
+  border: 1px solid var(--outline);
+  border-radius: 10px;
+  background: #f7fbff;
+  color: #2a3b52;
+  font-size: 0.84rem;
+  line-height: 1.4;
+  max-height: 300px;
+  overflow: auto;
+  white-space: pre-wrap;
+}
+
 .dimensions {
   margin: 10px 0 0;
   color: var(--muted);
