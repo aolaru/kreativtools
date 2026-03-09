@@ -1,22 +1,25 @@
 const { test, expect } = require('@playwright/test');
 
 const pages = [
-  '/index.html',
-  '/image-tools.html',
-  '/pdf.html',
-  '/video.html',
-  '/fonts.html',
-  '/audio.html',
-  '/file.html',
-  '/changes.html',
-  '/all-tools.html',
-  '/privacy.html',
-  '/terms.html',
+  '/',
+  '/image/resize/',
+  '/image/compress/',
+  '/pdf/image-to-pdf/',
+  '/pdf/merge/',
+  '/video/convert-webm/',
+  '/fonts/webfont-convert/',
+  '/audio/to-wav/',
+  '/file/xml-to-csv/',
+  '/changes/',
+  '/tools/',
+  '/privacy/',
+  '/terms/',
+  '/contact/',
 ];
 
 test('main pages load and keep Changes as last nav item', async ({ page }) => {
-  for (const path of pages) {
-    await page.goto(path);
+  for (const route of pages) {
+    await page.goto(route);
     await expect(page.locator('nav.top-nav')).toBeVisible();
     const labels = await page.locator('nav.top-nav a').allTextContents();
     expect(labels[labels.length - 1].trim()).toBe('Changes');
@@ -24,7 +27,7 @@ test('main pages load and keep Changes as last nav item', async ({ page }) => {
 });
 
 test('theme toggle switches data-theme attribute', async ({ page }) => {
-  await page.goto('/index.html');
+  await page.goto('/');
   const root = page.locator('html');
   const before = await root.getAttribute('data-theme');
   await page.click('#themeToggle');
@@ -33,8 +36,8 @@ test('theme toggle switches data-theme attribute', async ({ page }) => {
 });
 
 test('brand link points to homepage from content pages', async ({ page }) => {
-  await page.goto('/pdf.html');
-  await expect(page.locator('a.brand[href="index.html"]')).toBeVisible();
-  await page.goto('/video.html');
-  await expect(page.locator('a.brand[href="index.html"]')).toBeVisible();
+  await page.goto('/pdf/image-to-pdf/');
+  await expect(page.locator('a.brand[href="/"]')).toBeVisible();
+  await page.goto('/video/convert-webm/');
+  await expect(page.locator('a.brand[href="/"]')).toBeVisible();
 });

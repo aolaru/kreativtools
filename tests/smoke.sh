@@ -23,9 +23,9 @@ expect_pattern() {
 expect_nav_order() {
   local file="$1"
   local audio_line file_line changes_line
-  audio_line="$(rg -n '<a href="audio\.html"' "$file" | head -n1 | cut -d: -f1)"
-  file_line="$(rg -n '<a href="file\.html"' "$file" | head -n1 | cut -d: -f1)"
-  changes_line="$(rg -n '<a href="changes\.html"' "$file" | head -n1 | cut -d: -f1)"
+  audio_line="$(rg -n '<a href="/audio/to-wav/"' "$file" | head -n1 | cut -d: -f1)"
+  file_line="$(rg -n '<a href="/file/xml-to-csv/"' "$file" | head -n1 | cut -d: -f1)"
+  changes_line="$(rg -n '<a href="/changes/"' "$file" | head -n1 | cut -d: -f1)"
 
   [[ -n "$audio_line" && -n "$file_line" && -n "$changes_line" ]] || fail "Could not read nav order markers in $file"
   (( audio_line < file_line )) || fail "Expected audio before file in nav for $file"
@@ -33,32 +33,47 @@ expect_nav_order() {
 }
 
 main() {
-  local pages=(index.html image-tools.html pdf.html video.html fonts.html audio.html file.html changes.html all-tools.html privacy.html terms.html contact.html image-compress.html pdf-merge.html)
+  local pages=(
+    index.html
+    image/resize/index.html
+    image/compress/index.html
+    pdf/image-to-pdf/index.html
+    pdf/merge/index.html
+    video/convert-webm/index.html
+    fonts/webfont-convert/index.html
+    audio/to-wav/index.html
+    file/xml-to-csv/index.html
+    changes/index.html
+    tools/index.html
+    privacy/index.html
+    terms/index.html
+    contact/index.html
+  )
 
   expect_file "styles.css"
   expect_file "theme.js"
 
   for p in "${pages[@]}"; do
     expect_file "$p"
-    expect_pattern "$p" '<script src="theme\.js"></script>'
+    expect_pattern "$p" '<script src="/theme\.js"></script>'
     expect_pattern "$p" 'id="themeToggle"'
     expect_pattern "$p" 'href="https://madebykreativ\.com/"'
     expect_nav_order "$p"
   done
 
-  expect_pattern "image-tools.html" 'id="toolResize"'
-  expect_pattern "image-tools.html" 'id="toolConvert"'
-  expect_pattern "image-tools.html" 'id="toolPdf"'
+  expect_pattern "image/resize/index.html" 'id="toolResize"'
+  expect_pattern "image/resize/index.html" 'id="toolConvert"'
+  expect_pattern "image/resize/index.html" 'id="toolPdf"'
 
-  expect_pattern "pdf.html" 'id="pdfImageInput"'
-  expect_pattern "video.html" 'id="videoInput"'
-  expect_pattern "fonts.html" 'id="fontInput"'
-  expect_pattern "audio.html" 'id="audioInput"'
-  expect_pattern "file.html" 'id="xmlInput"'
+  expect_pattern "pdf/image-to-pdf/index.html" 'id="pdfImageInput"'
+  expect_pattern "video/convert-webm/index.html" 'id="videoInput"'
+  expect_pattern "fonts/webfont-convert/index.html" 'id="fontInput"'
+  expect_pattern "audio/to-wav/index.html" 'id="audioInput"'
+  expect_pattern "file/xml-to-csv/index.html" 'id="xmlInput"'
 
-  expect_pattern "changes.html" 'class="changelog-list"'
-  expect_pattern "changes.html" 'NEW -'
-  expect_pattern "changes.html" 'FIX -|UPDATE -'
+  expect_pattern "changes/index.html" 'class="changelog-list"'
+  expect_pattern "changes/index.html" 'NEW -'
+  expect_pattern "changes/index.html" 'FIX -|UPDATE -'
 
   echo "PASS: smoke checks completed"
 }
