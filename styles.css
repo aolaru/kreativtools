@@ -176,6 +176,12 @@ button:disabled {
   color: var(--text);
 }
 
+.header-link {
+  display: inline-grid;
+  place-items: center;
+  text-decoration: none;
+}
+
 .container {
   width: min(1200px, 94vw);
   margin: 28px auto 50px;
@@ -409,6 +415,60 @@ input[type='range'] {
   color: #334762;
   font-size: 0.95rem;
 }
+
+.tools-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+}
+
+.tool-card {
+  border: 1px solid var(--outline);
+  border-radius: 16px;
+  background: var(--panel);
+  padding: 14px;
+  text-decoration: none;
+  color: var(--text);
+  display: grid;
+  gap: 10px;
+  transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+}
+
+.tool-card:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in oklab, var(--accent) 48%, var(--outline));
+  box-shadow: 0 10px 20px rgba(26, 73, 126, 0.15);
+}
+
+.tool-card h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.tool-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.tool-thumb {
+  height: 94px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: white;
+}
+
+.thumb-image { background: linear-gradient(135deg, #4aa9f5, #2368d9); }
+.thumb-pdf { background: linear-gradient(135deg, #fb6b6b, #cf2f2f); }
+.thumb-video { background: linear-gradient(135deg, #5b7cfa, #2d45b6); }
+.thumb-font { background: linear-gradient(135deg, #9c6bff, #6244c6); }
+.thumb-audio { background: linear-gradient(135deg, #17b692, #0f886d); }
+.thumb-file { background: linear-gradient(135deg, #f39f3d, #c97213); }
+.thumb-change { background: linear-gradient(135deg, #6f8cae, #415a78); }
 
 .dimensions {
   margin: 10px 0 0;

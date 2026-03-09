@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kreativ Tools | Changes</title>
-  <meta name="description" content="Latest updates, fixes, and new tools on Kreativ Tools." />
+  <title>Kreativ Tools | All Tools</title>
+  <meta name="description" content="Browse all tools available on Kreativ Tools." />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -27,40 +27,64 @@
       <a href="fonts.html">Fonts</a>
       <a href="audio.html">Audio</a>
       <a href="file.html">File</a>
-      <a href="changes.html" aria-current="page">Changes</a>
+      <a href="changes.html">Changes</a>
     </nav>
 
     <div class="header-actions">
-      <a class="ghost header-link" href="all-tools.html">All Tools</a>
+      <a class="ghost header-link" href="all-tools.html" aria-current="page">All Tools</a>
       <button id="themeToggle" type="button" class="icon-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><span aria-hidden="true">☾</span></button>
     </div>
   </header>
 
   <main class="container">
     <section class="hero">
-      <p class="eyebrow">Product Log</p>
-      <h1>Changes and Updates</h1>
-      <p>Timeline of improvements, fixes, and newly released tools on Kreativ Tools.</p>
+      <p class="eyebrow">Tool Directory</p>
+      <h1>All Kreativ Tools</h1>
+      <p>Pick a tool and start instantly. Every card opens a dedicated tool page.</p>
     </section>
 
-    <section class="upload-card">
-      <div class="changelog-list">
-        <p>2026-03-09 UPDATE - Navigation updated: Changes moved to the last menu item and Start Free replaced with a dark/light theme toggle icon.</p>
-        <p>2026-03-09 NEW - XML to CSV converter added on File page with record detection, preview, and CSV download.</p>
-        <p>2026-03-09 NEW - Audio to WAV converter added on Audio page with sample-rate options and mono export.</p>
-        <p>2026-03-09 NEW - Font to webfont converter added on Fonts page (TTF/OTF to WOFF/WOFF2).</p>
-        <p>2026-03-09 NEW - Video to WEBM converter added on Video page with browser-based conversion workflow.</p>
-        <p>2026-03-09 NEW - Dedicated PDF page launched with Image to PDF conversion tool and page controls.</p>
-        <p>2026-03-09 UPDATE - Branding refreshed: cleaner K favicon and legacy byline removed from headers.</p>
-        <p>2026-03-09 UPDATE - Site navigation expanded with dedicated pages for Image, PDF, Video, Fonts, Audio, and File tools.</p>
-        <p>2026-03-08 UPDATE - Main Image tool redesigned with upload-first UX, drag-and-drop area, and advanced workspace.</p>
-        <p>2026-03-08 NEW - In-app Image to PDF mode added on the main Image page with page controls and export options.</p>
-        <p>2026-03-08 UPDATE - Large multi-column footer added with Kreativ network links and legal/copyright section.</p>
-        <p>2026-03-08 UPDATE - GitHub Pages deployment workflow added for automated publishing from main branch.</p>
-        <p>2026-03-08 UPDATE - Project publishing updates applied for first live deployment pass.</p>
-        <p>2026-03-07 NEW - Core Image tool released with resize support, format conversion, quality controls, and safe export flow.</p>
-        <p>2026-03-07 UPDATE - README, SEO metadata, and baseline favicon were added in the first product setup iteration.</p>
-      </div>
+    <section class="tools-grid" aria-label="All tools list">
+      <a class="tool-card" href="index.html">
+        <div class="tool-thumb thumb-image" aria-hidden="true">IMG</div>
+        <h3>Image Resize & Convert</h3>
+        <p>Resize images by dimensions, convert formats, and control output quality.</p>
+      </a>
+
+      <a class="tool-card" href="pdf.html">
+        <div class="tool-thumb thumb-pdf" aria-hidden="true">PDF</div>
+        <h3>Image to PDF</h3>
+        <p>Turn images into one-page PDF exports with page size and margin options.</p>
+      </a>
+
+      <a class="tool-card" href="video.html">
+        <div class="tool-thumb thumb-video" aria-hidden="true">VID</div>
+        <h3>Video to WEBM</h3>
+        <p>Convert video uploads to WEBM directly in your browser workflow.</p>
+      </a>
+
+      <a class="tool-card" href="fonts.html">
+        <div class="tool-thumb thumb-font" aria-hidden="true">FNT</div>
+        <h3>Font to Webfont</h3>
+        <p>Convert TTF and OTF font files into WOFF or WOFF2 for web delivery.</p>
+      </a>
+
+      <a class="tool-card" href="audio.html">
+        <div class="tool-thumb thumb-audio" aria-hidden="true">AUD</div>
+        <h3>Audio to WAV</h3>
+        <p>Convert audio files to WAV with sample-rate selection and mono option.</p>
+      </a>
+
+      <a class="tool-card" href="file.html">
+        <div class="tool-thumb thumb-file" aria-hidden="true">XML</div>
+        <h3>XML to CSV</h3>
+        <p>Extract repeated XML records and export a clean CSV with preview.</p>
+      </a>
+
+      <a class="tool-card" href="changes.html">
+        <div class="tool-thumb thumb-change" aria-hidden="true">LOG</div>
+        <h3>Changes Log</h3>
+        <p>Track all new tools, fixes, and updates released on Kreativ Tools.</p>
+      </a>
     </section>
   </main>
 
