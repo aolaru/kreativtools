@@ -3,17 +3,325 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kreativ Tools | Audio</title>
+  <title>Kreativ Tools | Audio Converter</title>
+  <meta name="description" content="Convert audio files to WAV in your browser." />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <header class="site-header">
+    <div class="brand">
+      <div class="brand-mark">K</div>
+      <div class="brand-copy">
+        <strong>Kreativ Tools</strong>
+      </div>
+    </div>
+
+    <nav class="top-nav" aria-label="Primary">
+      <a href="index.html">Image</a>
+      <a href="pdf.html">PDF</a>
+      <a href="video.html">Video</a>
+      <a href="fonts.html">Fonts</a>
+      <a href="audio.html" aria-current="page">Audio</a>
+      <a href="learn.html">Learn</a>
+      <a href="file.html">File</a>
+    </nav>
+
+    <div class="header-actions">
+      <button type="button" class="ghost">All Tools</button>
+      <button type="button" class="primary">Start Free</button>
+    </div>
+  </header>
+
   <main class="container">
     <section class="hero">
-      <p class="eyebrow">Audio</p>
-      <h1>Audio Page</h1>
-      <p>Coming soon.</p>
+      <p class="eyebrow">Audio Tools</p>
+      <h1>Audio to WAV Converter</h1>
+      <p>Upload an audio file and export a clean WAV in your preferred sample rate.</p>
+    </section>
+
+    <section class="upload-card">
+      <input id="audioInput" type="file" accept="audio/*" hidden />
+      <div id="audioDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload audio file">
+        <div class="drop-icon" aria-hidden="true"></div>
+        <button id="audioUploadButton" type="button" class="primary upload-trigger">Upload Audio</button>
+        <p>or drag and drop an audio file here</p>
+        <p class="status">Supported formats: MP3, WAV, M4A/AAC, OGG, FLAC (depends on browser support).</p>
+        <p id="audioStatus" class="status">No audio selected yet.</p>
+      </div>
+    </section>
+
+    <section id="audioWorkspace" class="workspace is-hidden">
+      <div class="controls">
+        <label>
+          Output format
+          <input type="text" value="WAV" disabled />
+        </label>
+
+        <label>
+          Sample rate
+          <select id="sampleRateInput">
+            <option value="keep" selected>Keep original</option>
+            <option value="44100">44,100 Hz</option>
+            <option value="48000">48,000 Hz</option>
+          </select>
+        </label>
+
+        <label class="checkbox-row">
+          <input id="monoInput" type="checkbox" />
+          Export mono (single channel)
+        </label>
+
+        <button id="audioConvertButton" type="button" class="primary" disabled>Convert to WAV</button>
+      </div>
+
+      <div class="preview-panel">
+        <h2>Preview</h2>
+        <audio id="audioPreview" class="audio-preview" controls></audio>
+        <p id="audioMeta" class="dimensions"></p>
+      </div>
     </section>
   </main>
+
+  <footer class="site-footer">
+    <div class="footer-topline"></div>
+    <div class="footer-inner">
+      <section class="footer-about">
+        <h3>Kreativ<span>Tools</span></h3>
+        <p>Kreativ Tools provides free online image and PDF utilities that run in your browser. Your files stay private and are processed locally whenever possible.</p>
+      </section>
+
+      <section>
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </section>
+
+      <section>
+        <h4>Tools</h4>
+        <ul>
+          <li><a href="index.html">Resize Image</a></li>
+          <li><a href="index.html">Convert Image</a></li>
+          <li><a href="pdf.html">Image to PDF</a></li>
+          <li><a href="video.html">Video to WEBM</a></li>
+        </ul>
+      </section>
+
+      <section>
+        <h4>More Tools</h4>
+        <ul>
+          <li><a href="#">PDF to JPG</a></li>
+          <li><a href="#">Merge PDF</a></li>
+          <li><a href="#">Rotate Image</a></li>
+          <li><a href="#">Remove Background</a></li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-brand-links">
+        <a href="https://kreativfont.com/" target="_blank" rel="noopener noreferrer">Kreativ Font</a>
+        <span aria-hidden="true">·</span>
+        <a href="https://kreativsound.com/" target="_blank" rel="noopener noreferrer">Kreativ Sound</a>
+        <span aria-hidden="true">·</span>
+        <a href="https://kreativwp.com/" target="_blank" rel="noopener noreferrer">Kreativ WP</a>
+      </p>
+      <p>© 2026 <a href="https://madebykreativ.com/" target="_blank" rel="noopener noreferrer">Made by KREATIV</a> · Independent creative tools and assets by Andrei Olaru</p>
+    </div>
+  </footer>
+
+  <script>
+    const audioInput = document.getElementById('audioInput');
+    const uploadButton = document.getElementById('audioUploadButton');
+    const dropzone = document.getElementById('audioDropzone');
+    const statusEl = document.getElementById('audioStatus');
+
+    const workspace = document.getElementById('audioWorkspace');
+    const sampleRateInput = document.getElementById('sampleRateInput');
+    const monoInput = document.getElementById('monoInput');
+    const convertButton = document.getElementById('audioConvertButton');
+
+    const preview = document.getElementById('audioPreview');
+    const metaEl = document.getElementById('audioMeta');
+
+    let selectedFile = null;
+    let decodedBuffer = null;
+    let sourceName = 'audio';
+
+    const setStatus = (message) => {
+      statusEl.textContent = message;
+    };
+
+    const formatDuration = (seconds) => {
+      const s = Math.max(0, Math.round(seconds));
+      const m = Math.floor(s / 60);
+      const rem = String(s % 60).padStart(2, '0');
+      return `${m}:${rem}`;
+    };
+
+    const createWavBlob = (audioBuffer) => {
+      const channels = audioBuffer.numberOfChannels;
+      const sampleRate = audioBuffer.sampleRate;
+      const samples = audioBuffer.length;
+      const bytesPerSample = 2;
+      const blockAlign = channels * bytesPerSample;
+      const dataSize = samples * blockAlign;
+      const buffer = new ArrayBuffer(44 + dataSize);
+      const view = new DataView(buffer);
+
+      let offset = 0;
+      const writeString = (str) => {
+        for (let i = 0; i < str.length; i += 1) {
+          view.setUint8(offset, str.charCodeAt(i));
+          offset += 1;
+        }
+      };
+
+      writeString('RIFF');
+      view.setUint32(offset, 36 + dataSize, true);
+      offset += 4;
+      writeString('WAVE');
+      writeString('fmt ');
+      view.setUint32(offset, 16, true);
+      offset += 4;
+      view.setUint16(offset, 1, true);
+      offset += 2;
+      view.setUint16(offset, channels, true);
+      offset += 2;
+      view.setUint32(offset, sampleRate, true);
+      offset += 4;
+      view.setUint32(offset, sampleRate * blockAlign, true);
+      offset += 4;
+      view.setUint16(offset, blockAlign, true);
+      offset += 2;
+      view.setUint16(offset, bytesPerSample * 8, true);
+      offset += 2;
+      writeString('data');
+      view.setUint32(offset, dataSize, true);
+      offset += 4;
+
+      const channelsData = [];
+      for (let ch = 0; ch < channels; ch += 1) {
+        channelsData.push(audioBuffer.getChannelData(ch));
+      }
+
+      for (let i = 0; i < samples; i += 1) {
+        for (let ch = 0; ch < channels; ch += 1) {
+          const sample = Math.max(-1, Math.min(1, channelsData[ch][i]));
+          const intSample = sample < 0 ? sample * 32768 : sample * 32767;
+          view.setInt16(offset, intSample, true);
+          offset += 2;
+        }
+      }
+
+      return new Blob([buffer], { type: 'audio/wav' });
+    };
+
+    const renderBuffer = async (inputBuffer, targetSampleRate, mono) => {
+      const targetChannels = mono ? 1 : Math.min(2, inputBuffer.numberOfChannels);
+      const length = Math.max(1, Math.ceil(inputBuffer.duration * targetSampleRate));
+      const offline = new OfflineAudioContext(targetChannels, length, targetSampleRate);
+      const source = offline.createBufferSource();
+      source.buffer = inputBuffer;
+      source.connect(offline.destination);
+      source.start();
+      return offline.startRendering();
+    };
+
+    const loadAudioFile = async (file) => {
+      if (!file || !file.type.startsWith('audio/')) {
+        setStatus('Please select a valid audio file.');
+        return;
+      }
+
+      selectedFile = file;
+      sourceName = file.name.replace(/\.[^.]+$/, '');
+
+      try {
+        const data = await file.arrayBuffer();
+        const context = new AudioContext();
+        decodedBuffer = await context.decodeAudioData(data.slice(0));
+        await context.close();
+
+        const previewUrl = URL.createObjectURL(file);
+        preview.src = previewUrl;
+        workspace.classList.remove('is-hidden');
+        convertButton.disabled = false;
+
+        metaEl.textContent = `${decodedBuffer.numberOfChannels} ch • ${Math.round(decodedBuffer.sampleRate)} Hz • ${formatDuration(decodedBuffer.duration)}`;
+        setStatus(`Loaded audio: ${file.name}`);
+      } catch {
+        setStatus('Could not decode this audio file. Try another format.');
+      }
+    };
+
+    const convertAudio = async () => {
+      if (!selectedFile || !decodedBuffer) {
+        setStatus('Upload an audio file first.');
+        return;
+      }
+
+      convertButton.disabled = true;
+      setStatus('Converting to WAV...');
+
+      try {
+        const targetSampleRate = sampleRateInput.value === 'keep' ? decodedBuffer.sampleRate : Number(sampleRateInput.value);
+        const rendered = await renderBuffer(decodedBuffer, targetSampleRate, monoInput.checked);
+        const wavBlob = createWavBlob(rendered);
+
+        const url = URL.createObjectURL(wavBlob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `${sourceName}-converted.wav`;
+        link.click();
+        URL.revokeObjectURL(url);
+
+        setStatus(`Downloaded ${sourceName}-converted.wav`);
+      } catch {
+        setStatus('Conversion failed for this file. Please try another one.');
+      } finally {
+        convertButton.disabled = false;
+      }
+    };
+
+    uploadButton.addEventListener('click', () => audioInput.click());
+
+    dropzone.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        audioInput.click();
+      }
+    });
+
+    audioInput.addEventListener('change', () => {
+      const [file] = audioInput.files || [];
+      if (file) loadAudioFile(file);
+    });
+
+    dropzone.addEventListener('dragover', (event) => {
+      event.preventDefault();
+      dropzone.classList.add('drag-over');
+    });
+
+    dropzone.addEventListener('dragleave', () => {
+      dropzone.classList.remove('drag-over');
+    });
+
+    dropzone.addEventListener('drop', (event) => {
+      event.preventDefault();
+      dropzone.classList.remove('drag-over');
+      const [file] = event.dataTransfer?.files || [];
+      if (file) loadAudioFile(file);
+    });
+
+    convertButton.addEventListener('click', convertAudio);
+  </script>
 </body>
 </html>

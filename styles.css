@@ -331,6 +331,10 @@ input[type='range'] {
   max-height: 520px;
 }
 
+.audio-preview {
+  width: 100%;
+}
+
 .dimensions {
   margin: 10px 0 0;
   color: var(--muted);
