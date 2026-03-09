@@ -410,6 +410,15 @@ input[type='range'] {
   margin: 0;
 }
 
+.footer-bottom a {
+  color: #4f5f76;
+  text-decoration: none;
+}
+
+.footer-bottom a:hover {
+  color: #2589d8;
+}
+
 .footer-brand-links {
   display: inline-flex;
   flex-wrap: wrap;
