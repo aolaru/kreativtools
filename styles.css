@@ -349,6 +349,21 @@ input[type='range'] {
   white-space: pre-wrap;
 }
 
+.changelog-list {
+  display: grid;
+  gap: 10px;
+}
+
+.changelog-list p {
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--outline);
+  border-radius: 10px;
+  background: #f8fbff;
+  color: #334762;
+  font-size: 0.95rem;
+}
+
 .dimensions {
   margin: 10px 0 0;
   color: var(--muted);
