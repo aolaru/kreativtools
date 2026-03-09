@@ -10,6 +10,16 @@
   --accent-dark: #1d6fb0;
 }
 
+[data-theme='dark'] {
+  --bg: #0e1626;
+  --panel: #111e30;
+  --text: #e8f0fb;
+  --muted: #a9bdd7;
+  --outline: #24354d;
+  --accent: #4aa9f5;
+  --accent-dark: #3094e7;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -112,6 +122,22 @@ body {
   gap: 10px;
 }
 
+.icon-toggle {
+  width: 46px;
+  height: 46px;
+  display: inline-grid;
+  place-items: center;
+  background: #fff;
+  color: var(--text);
+  font-size: 1.15rem;
+  border-radius: 999px;
+  border: 1px solid var(--outline);
+}
+
+[data-theme='dark'] .icon-toggle {
+  background: #162842;
+}
+
 button {
   border: 1px solid var(--outline);
   border-radius: 12px;
@@ -187,6 +213,10 @@ button:disabled {
   margin-bottom: 22px;
 }
 
+[data-theme='dark'] .upload-card {
+  background: rgba(17, 30, 48, 0.7);
+}
+
 .dropzone {
   border: 2px dashed #bfcddd;
   border-radius: 20px;
@@ -203,6 +233,14 @@ button:disabled {
 .dropzone.drag-over {
   border-color: var(--accent);
   background: #eef6ff;
+}
+
+[data-theme='dark'] .dropzone {
+  background: #132338;
+}
+
+[data-theme='dark'] .dropzone.drag-over {
+  background: #1a2d45;
 }
 
 .drop-icon {
@@ -347,6 +385,12 @@ input[type='range'] {
   max-height: 300px;
   overflow: auto;
   white-space: pre-wrap;
+}
+
+[data-theme='dark'] .code-preview,
+[data-theme='dark'] .changelog-list p {
+  background: #16263d;
+  color: #d3e3f8;
 }
 
 .changelog-list {

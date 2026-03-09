@@ -26,13 +26,13 @@
       <a href="video.html">Video</a>
       <a href="fonts.html">Fonts</a>
       <a href="audio.html" aria-current="page">Audio</a>
-      <a href="changes.html">Changes</a>
       <a href="file.html">File</a>
+      <a href="changes.html">Changes</a>
     </nav>
 
     <div class="header-actions">
       <button type="button" class="ghost">All Tools</button>
-      <button type="button" class="primary">Start Free</button>
+      <button id="themeToggle" type="button" class="icon-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><span aria-hidden="true">☾</span></button>
     </div>
   </header>
 
@@ -323,5 +323,6 @@
 
     convertButton.addEventListener('click', convertAudio);
   </script>
+  <script src="theme.js"></script>
 </body>
 </html>

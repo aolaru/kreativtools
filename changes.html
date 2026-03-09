@@ -26,13 +26,13 @@
       <a href="video.html">Video</a>
       <a href="fonts.html">Fonts</a>
       <a href="audio.html">Audio</a>
-      <a href="changes.html" aria-current="page">Changes</a>
       <a href="file.html">File</a>
+      <a href="changes.html" aria-current="page">Changes</a>
     </nav>
 
     <div class="header-actions">
       <button type="button" class="ghost">All Tools</button>
-      <button type="button" class="primary">Start Free</button>
+      <button id="themeToggle" type="button" class="icon-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><span aria-hidden="true">☾</span></button>
     </div>
   </header>
 
@@ -45,6 +45,7 @@
 
     <section class="upload-card">
       <div class="changelog-list">
+        <p>2026-03-09 UPDATE - Navigation updated: Changes moved to the last menu item and Start Free replaced with a dark/light theme toggle icon.</p>
         <p>2026-03-09 NEW - XML to CSV converter added on File page with record detection, preview, and CSV download.</p>
         <p>2026-03-09 NEW - Audio to WAV converter added on Audio page with sample-rate options and mono export.</p>
         <p>2026-03-09 NEW - Font to webfont converter added on Fonts page (TTF/OTF to WOFF/WOFF2).</p>
@@ -109,5 +110,6 @@
       <p>© 2026 <a href="https://madebykreativ.com/" target="_blank" rel="noopener noreferrer">Made by KREATIV</a> · Independent creative tools and assets by Andrei Olaru</p>
     </div>
   </footer>
+  <script src="theme.js"></script>
 </body>
 </html>
