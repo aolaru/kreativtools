@@ -1,0 +1,13 @@
+{
+  "name": "kreativtools",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "test:smoke": "bash tests/smoke.sh",
+    "test:e2e": "playwright test",
+    "test": "npm run test:smoke && npm run test:e2e"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.54.2"
+  }
+}

@@ -10,6 +10,13 @@ A lightweight browser-based image tools app.
 ## Run locally
 Open `index.html` in your browser.
 
+## Tests
+- Smoke tests (shell): `bash tests/smoke.sh`
+- E2E tests (Playwright):
+  1. `npm install`
+  2. `npx playwright install`
+  3. `npm run test:e2e`
+
 ## Files
 - `index.html` - app structure and metadata
 - `styles.css` - visual design and responsive layout

@@ -1,0 +1,12 @@
+<catalog>
+  <item>
+    <id>1</id>
+    <name>Alpha</name>
+    <price currency="USD">12.50</price>
+  </item>
+  <item>
+    <id>2</id>
+    <name>Beta</name>
+    <price currency="USD">16.00</price>
+  </item>
+</catalog>
