@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kreativ Tools | Image Compress</title>
+  <meta name="description" content="Compress images in your browser by adjusting quality and exporting optimized files." />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Kreativ Tools Home">
+      <div class="brand-mark">K</div>
+      <div class="brand-copy"><strong>Kreativ Tools</strong></div>
+    </a>
+
+    <nav class="top-nav" aria-label="Primary">
+      <a href="index.html">Image</a>
+      <a href="pdf.html">PDF</a>
+      <a href="video.html">Video</a>
+      <a href="fonts.html">Fonts</a>
+      <a href="audio.html">Audio</a>
+      <a href="file.html">File</a>
+      <a href="changes.html">Changes</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="ghost header-link" href="all-tools.html">All Tools</a>
+      <button id="themeToggle" type="button" class="icon-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><span aria-hidden="true">☾</span></button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <p class="eyebrow">Image Tools</p>
+      <h1>Image Compress</h1>
+      <p>Upload an image, tune compression quality, and download a smaller optimized file.</p>
+    </section>
+
+    <section class="upload-card">
+      <input id="compressImageInput" type="file" accept="image/*" hidden />
+      <div id="compressDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload image for compression">
+        <div class="drop-icon" aria-hidden="true"></div>
+        <button id="compressUploadButton" type="button" class="primary upload-trigger">Upload Image</button>
+        <p>or drag and drop an image here</p>
+        <p id="compressStatus" class="status">No image selected yet.</p>
+      </div>
+    </section>
+
+    <section id="compressWorkspace" class="workspace is-hidden">
+      <div class="controls">
+        <label>
+          Output format
+          <select id="compressFormatInput">
+            <option value="image/jpeg" selected>JPG</option>
+            <option value="image/webp">WEBP</option>
+            <option value="image/png">PNG (lossless)</option>
+          </select>
+        </label>
+
+        <label>
+          <span class="quality-head">Quality <strong><span id="compressQualityValue">82</span>%</strong></span>
+          <input id="compressQualityInput" type="range" min="1" max="100" value="82" />
+        </label>
+
+        <p id="compressMeta" class="status">Upload an image to view compression details.</p>
+
+        <button id="compressApplyButton" type="button" class="primary" disabled>Compress Image</button>
+        <button id="compressDownloadButton" type="button" class="primary" disabled>Download Compressed Image</button>
+      </div>
+
+      <div class="preview-panel">
+        <h2>Preview</h2>
+        <canvas id="compressPreviewCanvas" aria-label="Compressed image preview"></canvas>
+        <p id="compressDimensions" class="dimensions"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+  <div class="footer-topline"></div>
+  <div class="footer-inner">
+    <section class="footer-about">
+      <h3>Kreativ<span>Tools</span></h3>
+      <p>Kreativ Tools provides free online creative utilities for image, PDF, video, font, audio, and file workflows. Your files stay private and are processed in-browser whenever possible.</p>
+    </section>
+
+    <section>
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="all-tools.html">All Tools</a></li>
+        <li><a href="changes.html">Changes</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h4>Core Tools</h4>
+      <ul>
+        <li><a href="index.html">Image Resize & Convert</a></li>
+        <li><a href="image-compress.html">Image Compress</a></li>
+        <li><a href="pdf.html">Image to PDF</a></li>
+        <li><a href="video.html">Video to WEBM</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h4>More Tools</h4>
+      <ul>
+        <li><a href="fonts.html">Font to Webfont</a></li>
+        <li><a href="audio.html">Audio to WAV</a></li>
+        <li><a href="file.html">XML to CSV</a></li>
+        <li><a href="all-tools.html">Browse Directory</a></li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="footer-bottom">
+    <p class="footer-brand-links">
+      <a href="https://kreativfont.com/" target="_blank" rel="noopener noreferrer">Kreativ Font</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://kreativsound.com/" target="_blank" rel="noopener noreferrer">Kreativ Sound</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://kreativwp.com/" target="_blank" rel="noopener noreferrer">Kreativ WP</a>
+    </p>
+    <p>© 2026 <a href="https://madebykreativ.com/" target="_blank" rel="noopener noreferrer">Made by KREATIV</a> · Independent creative tools and assets by Andrei Olaru</p>
+  </div>
+</footer>
+
+  <script>
+    const imageInput = document.getElementById('compressImageInput');
+    const uploadButton = document.getElementById('compressUploadButton');
+    const dropzone = document.getElementById('compressDropzone');
+    const statusEl = document.getElementById('compressStatus');
+
+    const workspace = document.getElementById('compressWorkspace');
+    const formatInput = document.getElementById('compressFormatInput');
+    const qualityInput = document.getElementById('compressQualityInput');
+    const qualityValue = document.getElementById('compressQualityValue');
+    const metaEl = document.getElementById('compressMeta');
+    const applyButton = document.getElementById('compressApplyButton');
+    const downloadButton = document.getElementById('compressDownloadButton');
+
+    const canvas = document.getElementById('compressPreviewCanvas');
+    const dimensionsEl = document.getElementById('compressDimensions');
+    const ctx = canvas.getContext('2d');
+
+    let sourceImage = null;
+    let sourceName = 'image';
+    let sourceFileSize = 0;
+    let compressedBlob = null;
+
+    const setStatus = (message) => {
+      statusEl.textContent = message;
+    };
+
+    const formatBytes = (bytes) => {
+      if (bytes < 1024) return `${bytes} B`;
+      if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+      return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+    };
+
+    const drawImage = (img) => {
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0);
+      dimensionsEl.textContent = `${img.naturalWidth} x ${img.naturalHeight}px`;
+    };
+
+    const isQualityEnabled = () => formatInput.value === 'image/jpeg' || formatInput.value === 'image/webp';
+
+    const syncQualityUi = () => {
+      qualityInput.disabled = !isQualityEnabled();
+      qualityValue.textContent = qualityInput.value;
+    };
+
+    const loadImageFile = (file) => {
+      if (!file || !file.type.startsWith('image/')) {
+        setStatus('Please upload a valid image file.');
+        return;
+      }
+
+      const imageUrl = URL.createObjectURL(file);
+      const img = new Image();
+
+      img.onload = () => {
+        sourceImage = img;
+        sourceName = file.name.replace(/\.[^.]+$/, '');
+        sourceFileSize = file.size;
+        compressedBlob = null;
+
+        drawImage(img);
+        workspace.classList.remove('is-hidden');
+        applyButton.disabled = false;
+        downloadButton.disabled = true;
+
+        metaEl.textContent = `Original size: ${formatBytes(sourceFileSize)}`;
+        setStatus(`Loaded image: ${file.name}`);
+        URL.revokeObjectURL(imageUrl);
+      };
+
+      img.onerror = () => {
+        setStatus('Could not load this image. Please try another file.');
+        URL.revokeObjectURL(imageUrl);
+      };
+
+      img.src = imageUrl;
+    };
+
+    const compressImage = () => {
+      if (!sourceImage) {
+        setStatus('Upload an image first.');
+        return;
+      }
+
+      const mime = formatInput.value;
+      const quality = Math.max(0.01, Math.min(1, Number(qualityInput.value) / 100));
+
+      drawImage(sourceImage);
+
+      canvas.toBlob(
+        (blob) => {
+          if (!blob) {
+            setStatus('Compression failed. Try another format or quality.');
+            return;
+          }
+
+          compressedBlob = blob;
+          downloadButton.disabled = false;
+
+          const compressedSize = blob.size;
+          const ratio = sourceFileSize > 0 ? ((1 - compressedSize / sourceFileSize) * 100).toFixed(1) : '0.0';
+          const deltaLabel = compressedSize <= sourceFileSize ? `-${ratio}%` : `+${Math.abs(Number(ratio)).toFixed(1)}%`;
+
+          metaEl.textContent = `Original: ${formatBytes(sourceFileSize)} • Compressed: ${formatBytes(compressedSize)} (${deltaLabel})`;
+          setStatus('Compression complete. Download when ready.');
+        },
+        mime,
+        isQualityEnabled() ? quality : undefined
+      );
+    };
+
+    const downloadCompressed = () => {
+      if (!compressedBlob) {
+        setStatus('Compress image first.');
+        return;
+      }
+
+      const ext = formatInput.value === 'image/png' ? 'png' : formatInput.value === 'image/webp' ? 'webp' : 'jpg';
+      const url = URL.createObjectURL(compressedBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${sourceName}-compressed.${ext}`;
+      link.click();
+      URL.revokeObjectURL(url);
+      setStatus(`Downloaded ${sourceName}-compressed.${ext}`);
+    };
+
+    uploadButton.addEventListener('click', () => imageInput.click());
+
+    dropzone.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        imageInput.click();
+      }
+    });
+
+    imageInput.addEventListener('change', () => {
+      const [file] = imageInput.files || [];
+      if (file) loadImageFile(file);
+    });
+
+    dropzone.addEventListener('dragover', (event) => {
+      event.preventDefault();
+      dropzone.classList.add('drag-over');
+    });
+
+    dropzone.addEventListener('dragleave', () => {
+      dropzone.classList.remove('drag-over');
+    });
+
+    dropzone.addEventListener('drop', (event) => {
+      event.preventDefault();
+      dropzone.classList.remove('drag-over');
+      const [file] = event.dataTransfer?.files || [];
+      if (file) loadImageFile(file);
+    });
+
+    formatInput.addEventListener('change', () => {
+      syncQualityUi();
+      compressedBlob = null;
+      downloadButton.disabled = true;
+    });
+
+    qualityInput.addEventListener('input', () => {
+      qualityValue.textContent = qualityInput.value;
+    });
+
+    applyButton.addEventListener('click', compressImage);
+    downloadButton.addEventListener('click', downloadCompressed);
+
+    syncQualityUi();
+  </script>
+  <script src="cookie-consent.js"></script>
+  <script src="theme.js"></script>
+</body>
+</html>
