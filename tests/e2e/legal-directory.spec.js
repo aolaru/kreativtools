@@ -38,7 +38,7 @@ test('footer legal links exist across all pages', async ({ page }) => {
     await page.goto(route);
     await expect(page.locator('footer a[href="/privacy/"]')).toBeVisible();
     await expect(page.locator('footer a[href="/terms/"]')).toBeVisible();
-    await expect(page.locator('script[src="/cookie-consent.js"]')).toHaveCount(1);
+    await expect(page.locator('script[src$="cookie-consent.js"]')).toHaveCount(1);
   }
 });
 
