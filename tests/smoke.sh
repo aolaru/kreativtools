@@ -59,6 +59,7 @@ main() {
     expect_file "$p"
     expect_pattern "$p" '<script src="[^"]*theme\.js"></script>'
     expect_pattern "$p" 'id="themeToggle"'
+    expect_pattern "$p" 'id="shareButton"'
     expect_pattern "$p" 'href="https://madebykreativ\.com/"'
     expect_nav_order "$p"
   done
