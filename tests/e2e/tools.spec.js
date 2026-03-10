@@ -11,7 +11,7 @@ const onePxPng = {
 };
 
 test('image tool uploads and enables workspace actions', async ({ page }) => {
-  await page.goto('/image/resize/');
+  await page.goto('/image/resize');
   await page.setInputFiles('#imageInput', onePxPng);
   await expect(page.locator('#workspace')).not.toHaveClass(/is-hidden/);
   await expect(page.locator('#applyButton')).toBeEnabled();
@@ -19,7 +19,7 @@ test('image tool uploads and enables workspace actions', async ({ page }) => {
 });
 
 test('file tool converts sample XML and renders CSV preview', async ({ page }) => {
-  await page.goto('/file/xml-to-csv/');
+  await page.goto('/file/xml-to-csv');
   const sampleXmlPath = path.resolve(__dirname, '..', 'fixtures', 'sample.xml');
   await page.setInputFiles('#xmlInput', sampleXmlPath);
   await page.click('#xmlConvertButton');

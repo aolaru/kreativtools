@@ -2,19 +2,19 @@ const { test, expect } = require('@playwright/test');
 
 const pages = [
   '/',
-  '/image/resize/',
-  '/image/compress/',
-  '/pdf/image-to-pdf/',
-  '/pdf/merge/',
-  '/video/convert-webm/',
-  '/fonts/webfont-convert/',
-  '/audio/to-wav/',
-  '/file/xml-to-csv/',
-  '/changes/',
-  '/tools/',
-  '/privacy/',
-  '/terms/',
-  '/contact/',
+  '/image/resize',
+  '/image/compress',
+  '/pdf/image-to-pdf',
+  '/pdf/merge',
+  '/video/convert-webm',
+  '/fonts/webfont-convert',
+  '/audio/to-wav',
+  '/file/xml-to-csv',
+  '/changes',
+  '/tools',
+  '/privacy',
+  '/terms',
+  '/contact',
 ];
 
 test('all pages load CSS/JS assets without 404/500', async ({ page }) => {
