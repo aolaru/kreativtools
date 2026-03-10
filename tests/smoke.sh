@@ -35,6 +35,8 @@ expect_nav_order() {
 main() {
   local pages=(
     index.html
+    image/index.html
+    pdf/index.html
     image/resize/index.html
     image/compress/index.html
     pdf/image-to-pdf/index.html

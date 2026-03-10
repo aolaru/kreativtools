@@ -2,6 +2,8 @@ const { test, expect } = require('@playwright/test');
 
 const pages = [
   '/',
+  '/image',
+  '/pdf',
   '/image/resize',
   '/image/compress',
   '/pdf/image-to-pdf',

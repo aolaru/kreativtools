@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  <title>Kreativ Tools | All Tools</title>
-  <meta name="description" content="Browse all tools available on Kreativ Tools." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kreativ Tools | Image Tools</title>
+  <meta name="description" content="Image tools for resize, convert, and compress workflows." />
   <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="../styles.css" />
 </head>
@@ -14,13 +15,11 @@
   <header class="site-header">
     <a class="brand" href="/" aria-label="Kreativ Tools Home">
       <div class="brand-mark">K</div>
-      <div class="brand-copy">
-        <strong>Kreativ Tools</strong>
-      </div>
+      <div class="brand-copy"><strong>Kreativ Tools</strong></div>
     </a>
 
     <nav class="top-nav" aria-label="Primary">
-      <a href="/image">Image</a>
+      <a href="/image" aria-current="page">Image</a>
       <a href="/pdf">PDF</a>
       <a href="/video/convert-webm">Video</a>
       <a href="/fonts/webfont-convert">Fonts</a>
@@ -30,71 +29,29 @@
     </nav>
 
     <div class="header-actions">
-      <a class="ghost header-link" href="/tools" aria-current="page">All Tools</a>
+      <a class="ghost header-link" href="/tools">All Tools</a>
       <button id="themeToggle" type="button" class="icon-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><span aria-hidden="true">☾</span></button>
     </div>
   </header>
 
   <main class="container">
     <section class="hero">
-      <p class="eyebrow">Tool Directory</p>
-      <h1>All Kreativ Tools</h1>
-      <p>Pick a tool and start instantly. Every card opens a dedicated tool page.</p>
+      <p class="eyebrow">Image Category</p>
+      <h1>All Image Tools</h1>
+      <p>Choose the image workflow you need, each tool on its own page.</p>
     </section>
 
-    <section class="tools-grid" aria-label="All tools list">
-      <a class="tool-card" href="/image/compress">
-        <div class="tool-thumb thumb-image" aria-hidden="true">CMP</div>
-        <h3>Image Compress</h3>
-        <p>Reduce image file size with adjustable quality and instant browser export.</p>
-      </a>
-
+    <section class="tools-grid" aria-label="Image tools list">
       <a class="tool-card" href="/image/resize">
         <div class="tool-thumb thumb-image" aria-hidden="true">IMG</div>
         <h3>Image Resize & Convert</h3>
-        <p>Resize images by dimensions, convert formats, and control output quality.</p>
+        <p>Resize dimensions, convert format, and export optimized outputs.</p>
       </a>
 
-      <a class="tool-card" href="/pdf/image-to-pdf">
-        <div class="tool-thumb thumb-pdf" aria-hidden="true">PDF</div>
-        <h3>Image to PDF</h3>
-        <p>Turn images into one-page PDF exports with page size and margin options.</p>
-      </a>
-      <a class="tool-card" href="/pdf/merge">
-        <div class="tool-thumb thumb-pdf" aria-hidden="true">MRG</div>
-        <h3>PDF Merge</h3>
-        <p>Combine multiple PDF files into one merged document in your browser.</p>
-      </a>
-
-
-      <a class="tool-card" href="/video/convert-webm">
-        <div class="tool-thumb thumb-video" aria-hidden="true">VID</div>
-        <h3>Video to WEBM</h3>
-        <p>Convert video uploads to WEBM directly in your browser workflow.</p>
-      </a>
-
-      <a class="tool-card" href="/fonts/webfont-convert">
-        <div class="tool-thumb thumb-font" aria-hidden="true">FNT</div>
-        <h3>Font to Webfont</h3>
-        <p>Convert TTF and OTF font files into WOFF or WOFF2 for web delivery.</p>
-      </a>
-
-      <a class="tool-card" href="/audio/to-wav">
-        <div class="tool-thumb thumb-audio" aria-hidden="true">AUD</div>
-        <h3>Audio to WAV</h3>
-        <p>Convert audio files to WAV with sample-rate selection and mono option.</p>
-      </a>
-
-      <a class="tool-card" href="/file/xml-to-csv">
-        <div class="tool-thumb thumb-file" aria-hidden="true">XML</div>
-        <h3>XML to CSV</h3>
-        <p>Extract repeated XML records and export a clean CSV with preview.</p>
-      </a>
-
-      <a class="tool-card" href="/changes">
-        <div class="tool-thumb thumb-change" aria-hidden="true">LOG</div>
-        <h3>Changes Log</h3>
-        <p>Track all new tools, fixes, and updates released on Kreativ Tools.</p>
+      <a class="tool-card" href="/image/compress">
+        <div class="tool-thumb thumb-image" aria-hidden="true">CMP</div>
+        <h3>Image Compress</h3>
+        <p>Reduce file size with adjustable quality before downloading.</p>
       </a>
     </section>
   </main>
@@ -104,7 +61,7 @@
   <div class="footer-inner">
     <section class="footer-about">
       <h3>Kreativ<span>Tools</span></h3>
-      <p>Kreativ Tools provides free online creative utilities for image, PDF, video, font, audio, and file workflows. Your files stay private and are processed in-browser whenever possible.</p>
+      <p>Kreativ Tools provides free online creative utilities for image, PDF, video, font, audio, and file workflows.</p>
     </section>
 
     <section>
@@ -151,7 +108,6 @@
     <p>© 2026 <a href="https://madebykreativ.com/" target="_blank" rel="noopener noreferrer">Made by KREATIV</a> · Independent creative tools and assets by Andrei Olaru</p>
   </div>
 </footer>
-
 
   <script src="../cookie-consent.js"></script>
   <script src="../github-pages-prefix.js"></script>

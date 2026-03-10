@@ -5,6 +5,7 @@
   "scripts": {
     "test:smoke": "bash tests/smoke.sh",
     "test:e2e": "playwright test",
+    "test:lighthouse": "npx -y @lhci/cli@0.14.x autorun --config=.lighthouserc.json",
     "test": "npm run test:smoke && npm run test:e2e"
   },
   "devDependencies": {
