@@ -1,6 +1,8 @@
 (() => {
   const CONSENT_KEY = 'kreativ_cookie_consent';
   const CONSENT_VALUES = new Set(['accepted', 'rejected']);
+  const MANAGE_CONSENT_LINK_ID = 'manageConsentLink';
+  let bannerEl = null;
 
   const EU_COUNTRY_CODES = new Set([
     'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE',
@@ -19,6 +21,14 @@
   const storeConsent = (value) => {
     try {
       localStorage.setItem(CONSENT_KEY, value);
+    } catch {
+      // ignore storage failures
+    }
+  };
+
+  const clearConsent = () => {
+    try {
+      localStorage.removeItem(CONSENT_KEY);
     } catch {
       // ignore storage failures
     }
@@ -49,7 +59,15 @@
     return tz.startsWith('Europe/');
   };
 
+  const closeBanner = () => {
+    if (!bannerEl) return;
+    bannerEl.remove();
+    bannerEl = null;
+  };
+
   const createBanner = () => {
+    closeBanner();
+
     const banner = document.createElement('aside');
     banner.className = 'cookie-banner';
     banner.setAttribute('role', 'dialog');
@@ -62,24 +80,61 @@
       </div>
     `;
 
-    const close = () => banner.remove();
-
     banner.querySelector('.cookie-accept').addEventListener('click', () => {
       storeConsent('accepted');
-      close();
+      closeBanner();
     });
 
     banner.querySelector('.cookie-reject').addEventListener('click', () => {
       storeConsent('rejected');
-      close();
+      closeBanner();
     });
 
     document.body.appendChild(banner);
+    bannerEl = banner;
+  };
+
+  const openConsentManager = () => {
+    createBanner();
+  };
+
+  const injectManageConsentLink = () => {
+    if (document.getElementById(MANAGE_CONSENT_LINK_ID)) return;
+
+    const footerInfo = document.querySelector('.footer-bottom p:last-child');
+    if (!footerInfo) return;
+
+    const separator = document.createElement('span');
+    separator.textContent = ' · ';
+    separator.setAttribute('aria-hidden', 'true');
+
+    const link = document.createElement('a');
+    link.id = MANAGE_CONSENT_LINK_ID;
+    link.href = '#';
+    link.textContent = 'Manage consent';
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      openConsentManager();
+    });
+
+    footerInfo.appendChild(separator);
+    footerInfo.appendChild(link);
   };
 
   document.addEventListener('DOMContentLoaded', () => {
-    if (getStoredConsent()) return;
-    if (!isLikelyEuVisitor()) return;
-    createBanner();
+    injectManageConsentLink();
+
+    if (!getStoredConsent() && isLikelyEuVisitor()) {
+      createBanner();
+    }
   });
+
+  window.KreativConsent = {
+    open: openConsentManager,
+    get: getStoredConsent,
+    reset: () => {
+      clearConsent();
+      openConsentManager();
+    }
+  };
 })();
