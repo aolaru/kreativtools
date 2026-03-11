@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  <title>Kreativ Tools | Video Trim</title>
+  <meta name="description" content="Trim video clips in your browser and export the selected range." />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Kreativ Tools Home">
+      <div class="brand-mark">K</div>
+      <div class="brand-copy"><strong>Kreativ Tools</strong></div>
+    </a>
+
+    <nav class="top-nav" aria-label="Primary">
+      <a href="/image">Image</a>
+      <a href="/pdf">PDF</a>
+      <a href="/video/convert-webm" aria-current="page">Video</a>
+      <a href="/fonts/webfont-convert">Fonts</a>
+      <a href="/audio/to-wav">Audio</a>
+      <a href="/file/xml-to-csv">File</a>
+      <a href="/changes">Changes</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="ghost header-link" href="/tools">All Tools</a>
+      <button id="shareButton" type="button" class="icon-toggle" aria-label="Share this page" title="Share this page"><span aria-hidden="true">↗</span></button>
+      <button id="themeToggle" type="button" class="icon-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><span aria-hidden="true">☾</span></button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <p class="eyebrow">Video Tools</p>
+      <h1>Video Trim</h1>
+      <p>Select start/end time and export only that clip segment as WEBM.</p>
+    </section>
+
+    <section class="upload-card">
+      <input id="trimVideoInput" type="file" accept="video/*" hidden />
+      <div id="trimDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload video">
+        <div class="drop-icon" aria-hidden="true"></div>
+        <button id="trimUploadButton" type="button" class="primary upload-trigger">Upload Video</button>
+        <p>or drag and drop a video here</p>
+        <p id="trimStatus" class="status">No video selected yet.</p>
+      </div>
+    </section>
+
+    <section id="trimWorkspace" class="workspace is-hidden">
+      <div class="controls">
+        <label>
+          Start (seconds)
+          <input id="trimStartInput" type="number" min="0" step="0.1" value="0" />
+        </label>
+        <label>
+          End (seconds)
+          <input id="trimEndInput" type="number" min="0.1" step="0.1" value="1" />
+        </label>
+        <label>
+          Output fps
+          <input id="trimFpsInput" type="number" min="12" max="60" value="30" />
+        </label>
+        <p id="trimMeta" class="status">Output is video-only WEBM (audio not included in this browser flow).</p>
+        <button id="trimActionButton" type="button" class="primary" disabled>Trim and Download</button>
+      </div>
+
+      <div class="preview-panel">
+        <h2>Preview</h2>
+        <video id="trimPreview" class="video-preview" controls playsinline></video>
+        <p id="trimDimensions" class="dimensions"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="footer-topline"></div><div class="footer-inner"><section class="footer-about"><h3>Kreativ<span>Tools</span></h3><p>Kreativ Tools provides free online creative utilities for image, PDF, video, font, audio, and file workflows. Your files stay private and are processed in-browser whenever possible.</p></section><section><h4>Navigate</h4><ul><li><a href="/">Home</a></li><li><a href="/tools">All Tools</a></li><li><a href="/changes">Changes</a></li><li><a href="/privacy">Privacy Policy</a></li><li><a href="/terms">Terms</a></li><li><a href="/contact">Contact</a></li></ul></section><section><h4>Core Tools</h4><ul><li><a href="/image/resize">Image Resize & Convert</a></li><li><a href="/image/compress">Image Compress</a></li><li><a href="/pdf/image-to-pdf">Image to PDF</a></li><li><a href="/video/convert-webm">Video to WEBM</a></li></ul></section><section><h4>More Tools</h4><ul><li><a href="/audio/to-wav">Audio to WAV</a></li><li><a href="/file/xml-to-csv">XML to CSV</a></li><li><a href="/changes">Latest Releases</a></li><li><a href="/tools">Browse Directory</a></li></ul></section></div><div class="footer-bottom"><p class="footer-brand-links"><a href="https://kreativfont.com/" target="_blank" rel="noopener noreferrer">Kreativ Font</a><span aria-hidden="true">·</span><a href="https://kreativsound.com/" target="_blank" rel="noopener noreferrer">Kreativ Sound</a><span aria-hidden="true">·</span><a href="https://kreativwp.com/" target="_blank" rel="noopener noreferrer">Kreativ WP</a></p><p>© 2026 <a href="https://madebykreativ.com/" target="_blank" rel="noopener noreferrer">Made by KREATIV</a> · Independent creative tools and assets by Andrei Olaru</p></div></footer>
+
+  <script>
+    const input = document.getElementById('trimVideoInput');
+    const uploadButton = document.getElementById('trimUploadButton');
+    const dropzone = document.getElementById('trimDropzone');
+    const statusEl = document.getElementById('trimStatus');
+    const workspace = document.getElementById('trimWorkspace');
+    const startInput = document.getElementById('trimStartInput');
+    const endInput = document.getElementById('trimEndInput');
+    const fpsInput = document.getElementById('trimFpsInput');
+    const actionButton = document.getElementById('trimActionButton');
+    const preview = document.getElementById('trimPreview');
+    const metaEl = document.getElementById('trimMeta');
+    const dimsEl = document.getElementById('trimDimensions');
+
+    let selectedName = 'video';
+    let drawFrameId = null;
+
+    const setStatus = (message) => { statusEl.textContent = message; };
+
+    const getRecorderMime = () => {
+      const candidates = ['video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/webm'];
+      return candidates.find((m) => MediaRecorder.isTypeSupported(m)) || '';
+    };
+
+    const loadVideo = (file) => {
+      if (!file || !file.type.startsWith('video/')) {
+        setStatus('Please select a valid video file.');
+        return;
+      }
+      selectedName = file.name.replace(/\.[^.]+$/, '');
+      const url = URL.createObjectURL(file);
+      preview.src = url;
+      preview.load();
+      preview.onloadedmetadata = () => {
+        workspace.classList.remove('is-hidden');
+        startInput.value = '0';
+        endInput.value = String(Math.max(0.1, Number(preview.duration.toFixed(1))));
+        actionButton.disabled = false;
+        dimsEl.textContent = `${Math.round(preview.videoWidth)} x ${Math.round(preview.videoHeight)}px • ${preview.duration.toFixed(2)}s`;
+        metaEl.textContent = 'Set start and end time, then click Trim and Download.';
+        setStatus(`Loaded video: ${file.name}`);
+      };
+    };
+
+    const trimVideo = async () => {
+      const mime = getRecorderMime();
+      if (!mime) {
+        setStatus('This browser cannot record WEBM.');
+        return;
+      }
+
+      const start = Math.max(0, Number(startInput.value) || 0);
+      const end = Math.min(preview.duration || 0, Number(endInput.value) || 0);
+      if (!(end > start)) {
+        setStatus('End time must be greater than start time.');
+        return;
+      }
+
+      const fps = Math.min(60, Math.max(12, Number(fpsInput.value) || 30));
+      fpsInput.value = String(Math.round(fps));
+
+      const canvas = document.createElement('canvas');
+      canvas.width = preview.videoWidth;
+      canvas.height = preview.videoHeight;
+      const ctx = canvas.getContext('2d');
+      const stream = canvas.captureStream(fps);
+      const recorder = new MediaRecorder(stream, { mimeType: mime });
+      const chunks = [];
+
+      recorder.ondataavailable = (event) => {
+        if (event.data && event.data.size > 0) chunks.push(event.data);
+      };
+
+      recorder.onstop = () => {
+        if (drawFrameId) cancelAnimationFrame(drawFrameId);
+        const blob = new Blob(chunks, { type: 'video/webm' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `${selectedName}-trimmed.webm`;
+        link.click();
+        URL.revokeObjectURL(url);
+        actionButton.disabled = false;
+        setStatus(`Downloaded ${selectedName}-trimmed.webm`);
+      };
+
+      const draw = () => {
+        ctx.drawImage(preview, 0, 0, canvas.width, canvas.height);
+        if (!preview.paused && !preview.ended && preview.currentTime < end) {
+          drawFrameId = requestAnimationFrame(draw);
+        }
+      };
+
+      actionButton.disabled = true;
+      setStatus('Trimming video...');
+      preview.pause();
+      preview.muted = true;
+      preview.currentTime = start;
+
+      const onSeekedStart = () => {
+        preview.removeEventListener('seeked', onSeekedStart);
+        recorder.start();
+        preview.play();
+        draw();
+      };
+
+      const onTimeUpdate = () => {
+        if (preview.currentTime >= end) {
+          preview.pause();
+          preview.removeEventListener('timeupdate', onTimeUpdate);
+          recorder.stop();
+        }
+      };
+
+      preview.addEventListener('seeked', onSeekedStart);
+      preview.addEventListener('timeupdate', onTimeUpdate);
+    };
+
+    uploadButton.addEventListener('click', () => input.click());
+    dropzone.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        input.click();
+      }
+    });
+    input.addEventListener('change', () => {
+      const [file] = input.files || [];
+      if (file) loadVideo(file);
+      input.value = '';
+    });
+    dropzone.addEventListener('dragover', (event) => {
+      event.preventDefault();
+      dropzone.classList.add('drag-over');
+    });
+    dropzone.addEventListener('dragleave', () => {
+      dropzone.classList.remove('drag-over');
+    });
+    dropzone.addEventListener('drop', (event) => {
+      event.preventDefault();
+      dropzone.classList.remove('drag-over');
+      const [file] = event.dataTransfer?.files || [];
+      if (file) loadVideo(file);
+    });
+    actionButton.addEventListener('click', trimVideo);
+  </script>
+
+  <script src="cookie-consent.js"></script>
+  <script src="github-pages-prefix.js"></script>
+  <script src="theme.js"></script>
+</body>
+</html>

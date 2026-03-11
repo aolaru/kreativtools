@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  <title>Kreativ Tools | @font-face CSS Generator</title>
+  <meta name="description" content="Generate @font-face CSS from uploaded font files." />
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../../styles.css" />
+</head>
+<body>
+  <div class="bg-glow bg-glow-1"></div><div class="bg-glow bg-glow-2"></div>
+  <header class="site-header"><a class="brand" href="/" aria-label="Kreativ Tools Home"><div class="brand-mark">K</div><div class="brand-copy"><strong>Kreativ Tools</strong></div></a><nav class="top-nav" aria-label="Primary"><a href="/image">Image</a><a href="/pdf">PDF</a><a href="/video/convert-webm">Video</a><a href="/fonts/webfont-convert" aria-current="page">Fonts</a><a href="/audio/to-wav">Audio</a><a href="/file/xml-to-csv">File</a><a href="/changes">Changes</a></nav><div class="header-actions"><a class="ghost header-link" href="/tools">All Tools</a><button id="shareButton" type="button" class="icon-toggle" aria-label="Share this page" title="Share this page"><span aria-hidden="true">↗</span></button><button id="themeToggle" type="button" class="icon-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><span aria-hidden="true">☾</span></button></div></header>
+
+  <main class="container">
+    <section class="hero"><p class="eyebrow">Font Tools</p><h1>@font-face CSS Generator</h1><p>Upload a font file and generate ready-to-paste CSS.</p></section>
+    <section class="upload-card"><input id="cssFontInput" type="file" accept=".ttf,.otf,.woff,.woff2,font/ttf,font/otf,font/woff,font/woff2" hidden /><div id="cssFontDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload font file"><div class="drop-icon" aria-hidden="true"></div><button id="cssFontUploadButton" type="button" class="primary upload-trigger">Upload Font</button><p>or drag and drop a font file here</p><p id="cssFontStatus" class="status">No font selected yet.</p></div></section>
+    <section id="cssWorkspace" class="workspace is-hidden">
+      <div class="controls">
+        <label>Font family<input id="cssFamilyInput" type="text" value="MyFont" /></label>
+        <label>Font weight<input id="cssWeightInput" type="text" value="400" /></label>
+        <label>Font style<select id="cssStyleInput"><option value="normal" selected>normal</option><option value="italic">italic</option></select></label>
+        <label>Font display<select id="cssDisplayInput"><option value="swap" selected>swap</option><option value="auto">auto</option><option value="fallback">fallback</option><option value="optional">optional</option><option value="block">block</option></select></label>
+        <button id="cssGenerateButton" type="button" class="primary" disabled>Generate CSS</button>
+        <button id="cssDownloadButton" type="button" class="primary" disabled>Download CSS</button>
+      </div>
+      <div class="preview-panel"><h2>Generated CSS</h2><pre id="cssOutput" class="code-preview">Upload a font and click Generate CSS.</pre></div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="footer-topline"></div><div class="footer-inner"><section class="footer-about"><h3>Kreativ<span>Tools</span></h3><p>Kreativ Tools provides free online creative utilities for image, PDF, video, font, audio, and file workflows. Your files stay private and are processed in-browser whenever possible.</p></section><section><h4>Navigate</h4><ul><li><a href="/">Home</a></li><li><a href="/tools">All Tools</a></li><li><a href="/changes">Changes</a></li><li><a href="/privacy">Privacy Policy</a></li><li><a href="/terms">Terms</a></li><li><a href="/contact">Contact</a></li></ul></section><section><h4>Core Tools</h4><ul><li><a href="/image/resize">Image Resize & Convert</a></li><li><a href="/image/compress">Image Compress</a></li><li><a href="/pdf/image-to-pdf">Image to PDF</a></li><li><a href="/video/convert-webm">Video to WEBM</a></li></ul></section><section><h4>More Tools</h4><ul><li><a href="/audio/to-wav">Audio to WAV</a></li><li><a href="/file/xml-to-csv">XML to CSV</a></li><li><a href="/changes">Latest Releases</a></li><li><a href="/tools">Browse Directory</a></li></ul></section></div><div class="footer-bottom"><p class="footer-brand-links"><a href="https://kreativfont.com/" target="_blank" rel="noopener noreferrer">Kreativ Font</a><span aria-hidden="true">·</span><a href="https://kreativsound.com/" target="_blank" rel="noopener noreferrer">Kreativ Sound</a><span aria-hidden="true">·</span><a href="https://kreativwp.com/" target="_blank" rel="noopener noreferrer">Kreativ WP</a></p><p>© 2026 <a href="https://madebykreativ.com/" target="_blank" rel="noopener noreferrer">Made by KREATIV</a> · Independent creative tools and assets by Andrei Olaru</p></div></footer>
+
+  <script>
+    const input = document.getElementById('cssFontInput');
+    const uploadButton = document.getElementById('cssFontUploadButton');
+    const dropzone = document.getElementById('cssFontDropzone');
+    const statusEl = document.getElementById('cssFontStatus');
+    const workspace = document.getElementById('cssWorkspace');
+
+    const familyInput = document.getElementById('cssFamilyInput');
+    const weightInput = document.getElementById('cssWeightInput');
+    const styleInput = document.getElementById('cssStyleInput');
+    const displayInput = document.getElementById('cssDisplayInput');
+    const generateButton = document.getElementById('cssGenerateButton');
+    const downloadButton = document.getElementById('cssDownloadButton');
+    const output = document.getElementById('cssOutput');
+
+    let fileName = 'font';
+    let dataUrl = '';
+    let generatedCss = '';
+
+    const setStatus = (m) => { statusEl.textContent = m; };
+
+    const inferFormat = (name) => {
+      const lower = name.toLowerCase();
+      if (lower.endsWith('.woff2')) return 'woff2';
+      if (lower.endsWith('.woff')) return 'woff';
+      if (lower.endsWith('.otf')) return 'opentype';
+      return 'truetype';
+    };
+
+    const loadFont = (file) => {
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        dataUrl = reader.result;
+        fileName = file.name.replace(/\.[^.]+$/, '');
+        familyInput.value = fileName.replace(/[_-]+/g, ' ');
+        workspace.classList.remove('is-hidden');
+        generateButton.disabled = false;
+        downloadButton.disabled = true;
+        output.textContent = 'Click Generate CSS to build @font-face block.';
+        setStatus(`Loaded font: ${file.name}`);
+      };
+      reader.onerror = () => setStatus('Could not read this font file.');
+      reader.readAsDataURL(file);
+    };
+
+    const generateCss = () => {
+      if (!dataUrl) {
+        setStatus('Upload a font first.');
+        return;
+      }
+      const format = inferFormat(fileName);
+      generatedCss = `@font-face {\n  font-family: '${familyInput.value || 'MyFont'}';\n  src: url('${dataUrl}') format('${format}');\n  font-weight: ${weightInput.value || '400'};\n  font-style: ${styleInput.value || 'normal'};\n  font-display: ${displayInput.value || 'swap'};\n}\n\n/* Usage */\n.body-text {\n  font-family: '${familyInput.value || 'MyFont'}', sans-serif;\n}`;
+      output.textContent = generatedCss;
+      downloadButton.disabled = false;
+      setStatus('CSS generated.');
+    };
+
+    const downloadCss = () => {
+      if (!generatedCss) return;
+      const blob = new Blob([generatedCss], { type: 'text/css;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${fileName || 'font'}-font-face.css`;
+      link.click();
+      URL.revokeObjectURL(url);
+      setStatus(`Downloaded ${fileName || 'font'}-font-face.css`);
+    };
+
+    uploadButton.addEventListener('click', () => input.click());
+    dropzone.addEventListener('keydown', (event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); input.click(); } });
+    input.addEventListener('change', () => { const [file] = input.files || []; if (file) loadFont(file); input.value=''; });
+    dropzone.addEventListener('dragover', (event) => { event.preventDefault(); dropzone.classList.add('drag-over'); });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag-over'));
+    dropzone.addEventListener('drop', (event) => { event.preventDefault(); dropzone.classList.remove('drag-over'); const [file] = event.dataTransfer?.files || []; if (file) loadFont(file); });
+    generateButton.addEventListener('click', generateCss);
+    downloadButton.addEventListener('click', downloadCss);
+  </script>
+
+  <script src="../../cookie-consent.js"></script><script src="../../github-pages-prefix.js"></script><script src="../../theme.js"></script>
+</body>
+</html>
