@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  <title>Kreativ Tools | Image to PDF</title>
-  <meta name="description" content="Convert an image to PDF directly in your browser." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kreativ Tools | PDF Tools</title>
+  <meta name="description" content="PDF tools for conversion and merge workflows." />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -14,9 +15,7 @@
   <header class="site-header">
     <a class="brand" href="/" aria-label="Kreativ Tools Home">
       <div class="brand-mark">K</div>
-      <div class="brand-copy">
-        <strong>Kreativ Tools</strong>
-      </div>
+      <div class="brand-copy"><strong>Kreativ Tools</strong></div>
     </a>
 
     <nav class="top-nav" aria-label="Primary">
@@ -38,55 +37,29 @@
 
   <main class="container">
     <section class="hero">
-      <p class="eyebrow">PDF Tools</p>
-      <h1>Image to PDF</h1>
-      <p>Upload an image, choose page options, and download a clean one-page PDF.</p>
+      <p class="eyebrow">PDF Category</p>
+      <h1>All PDF Tools</h1>
+      <p>Choose a PDF workflow. Each tool has its own dedicated page.</p>
     </section>
 
-    <section class="upload-card">
-      <input id="pdfImageInput" type="file" accept="image/*" hidden />
-      <div id="pdfDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload image for PDF">
-        <div class="drop-icon" aria-hidden="true"></div>
-        <button id="pdfUploadButton" type="button" class="primary upload-trigger">Upload from Device</button>
-        <p>or drag and drop an image here</p>
-        <p id="pdfStatus" class="status">No file selected yet.</p>
-      </div>
-    </section>
+    <section class="tools-grid" aria-label="PDF tools list">
+      <a class="tool-card" href="/pdf/image-to-pdf">
+        <div class="tool-thumb thumb-pdf" aria-hidden="true">PDF</div>
+        <h3>Image to PDF</h3>
+        <p>Convert a single image into a clean PDF with margin and page controls.</p>
+      </a>
 
-    <section id="pdfWorkspace" class="workspace is-hidden">
-      <div class="controls">
-        <div class="input-grid">
-          <label>
-            PDF page size
-            <select id="pdfPageSize">
-              <option value="a4" selected>A4</option>
-              <option value="letter">Letter</option>
-            </select>
-          </label>
+      <a class="tool-card" href="/pdf/merge">
+        <div class="tool-thumb thumb-pdf" aria-hidden="true">MRG</div>
+        <h3>PDF Merge</h3>
+        <p>Merge multiple PDF files into one document directly in browser.</p>
+      </a>
 
-          <label>
-            Orientation
-            <select id="pdfOrientation">
-              <option value="portrait" selected>Portrait</option>
-              <option value="landscape">Landscape</option>
-            </select>
-          </label>
-        </div>
-
-        <label>
-          PDF margin (px)
-          <input id="pdfMarginInput" type="number" min="0" max="200" value="24" />
-        </label>
-
-        <button id="pdfPrepareButton" type="button" class="primary" disabled>Prepare PDF</button>
-        <button id="pdfDownloadButton" type="button" class="primary" disabled>Download PDF</button>
-      </div>
-
-      <div class="preview-panel">
-        <h2>Preview</h2>
-        <canvas id="pdfPreviewCanvas" aria-label="PDF image preview"></canvas>
-        <p id="pdfDimensions" class="dimensions"></p>
-      </div>
+      <a class="tool-card" href="/pdf/compress">
+        <div class="tool-thumb thumb-pdf" aria-hidden="true">CMP</div>
+        <h3>PDF Compress</h3>
+        <p>Optimize PDF files and export a smaller version directly in browser.</p>
+      </a>
     </section>
   </main>
 
@@ -95,7 +68,7 @@
   <div class="footer-inner">
     <section class="footer-about">
       <h3>Kreativ<span>Tools</span></h3>
-      <p>Kreativ Tools provides free online creative utilities for image, PDF, video, font, audio, and file workflows. Your files stay private and are processed in-browser whenever possible.</p>
+      <p>Kreativ Tools provides free online creative utilities for image, PDF, video, font, audio, and file workflows.</p>
     </section>
 
     <section>
@@ -142,151 +115,6 @@
     <p>© 2026 <a href="https://madebykreativ.com/" target="_blank" rel="noopener noreferrer">Made by KREATIV</a> · Independent creative tools and assets by Andrei Olaru</p>
   </div>
 </footer>
-
-  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
-  <script>
-    const imageInput = document.getElementById('pdfImageInput');
-    const uploadButton = document.getElementById('pdfUploadButton');
-    const dropzone = document.getElementById('pdfDropzone');
-    const statusEl = document.getElementById('pdfStatus');
-
-    const workspace = document.getElementById('pdfWorkspace');
-    const prepareButton = document.getElementById('pdfPrepareButton');
-    const downloadButton = document.getElementById('pdfDownloadButton');
-
-    const pageSizeInput = document.getElementById('pdfPageSize');
-    const orientationInput = document.getElementById('pdfOrientation');
-    const marginInput = document.getElementById('pdfMarginInput');
-
-    const canvas = document.getElementById('pdfPreviewCanvas');
-    const dimensionsEl = document.getElementById('pdfDimensions');
-    const ctx = canvas.getContext('2d');
-
-    let sourceImage = null;
-    let sourceName = 'image';
-
-    const setStatus = (message) => {
-      statusEl.textContent = message;
-    };
-
-    const drawPreview = (img) => {
-      canvas.width = img.naturalWidth;
-      canvas.height = img.naturalHeight;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, 0, 0);
-      dimensionsEl.textContent = `${img.naturalWidth} x ${img.naturalHeight}px`;
-    };
-
-    const loadImageFile = (file) => {
-      if (!file || !file.type.startsWith('image/')) {
-        setStatus('Please select a valid image file.');
-        return;
-      }
-
-      const imageUrl = URL.createObjectURL(file);
-      const img = new Image();
-
-      img.onload = () => {
-        sourceImage = img;
-        sourceName = file.name.replace(/\.[^.]+$/, '');
-        drawPreview(img);
-        workspace.classList.remove('is-hidden');
-        prepareButton.disabled = false;
-        downloadButton.disabled = false;
-        setStatus(`Loaded image: ${file.name}`);
-        URL.revokeObjectURL(imageUrl);
-      };
-
-      img.onerror = () => {
-        setStatus('Could not load this file. Please try another image.');
-        URL.revokeObjectURL(imageUrl);
-      };
-
-      img.src = imageUrl;
-    };
-
-    const preparePdf = () => {
-      if (!sourceImage) return;
-      drawPreview(sourceImage);
-      setStatus('PDF is ready. Download when ready.');
-    };
-
-    const downloadPdf = () => {
-      if (!canvas.width || !canvas.height) {
-        setStatus('Nothing to export yet.');
-        return;
-      }
-
-      const jspdfApi = window.jspdf;
-      if (!jspdfApi || !jspdfApi.jsPDF) {
-        setStatus('PDF engine failed to load. Refresh and try again.');
-        return;
-      }
-
-      const marginRaw = Number(marginInput.value);
-      const margin = Number.isFinite(marginRaw) ? Math.min(200, Math.max(0, marginRaw)) : 24;
-      marginInput.value = String(Math.round(margin));
-
-      const { jsPDF } = jspdfApi;
-      const doc = new jsPDF({
-        orientation: orientationInput.value,
-        unit: 'pt',
-        format: pageSizeInput.value,
-        compress: true,
-      });
-
-      const pageWidth = doc.internal.pageSize.getWidth();
-      const pageHeight = doc.internal.pageSize.getHeight();
-      const maxWidth = Math.max(1, pageWidth - margin * 2);
-      const maxHeight = Math.max(1, pageHeight - margin * 2);
-      const scale = Math.min(maxWidth / canvas.width, maxHeight / canvas.height);
-      const targetWidth = Math.max(1, Math.round(canvas.width * scale));
-      const targetHeight = Math.max(1, Math.round(canvas.height * scale));
-      const x = (pageWidth - targetWidth) / 2;
-      const y = (pageHeight - targetHeight) / 2;
-
-      const imageData = canvas.toDataURL('image/jpeg', 0.92);
-      doc.addImage(imageData, 'JPEG', x, y, targetWidth, targetHeight, undefined, 'FAST');
-
-      const filename = `${sourceName}.pdf`;
-      doc.save(filename);
-      setStatus(`Downloaded ${filename}`);
-    };
-
-    uploadButton.addEventListener('click', () => imageInput.click());
-
-    dropzone.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        imageInput.click();
-      }
-    });
-
-    imageInput.addEventListener('change', () => {
-      const [file] = imageInput.files || [];
-      if (file) loadImageFile(file);
-    });
-
-    dropzone.addEventListener('dragover', (event) => {
-      event.preventDefault();
-      dropzone.classList.add('drag-over');
-    });
-
-    dropzone.addEventListener('dragleave', () => {
-      dropzone.classList.remove('drag-over');
-    });
-
-    dropzone.addEventListener('drop', (event) => {
-      event.preventDefault();
-      dropzone.classList.remove('drag-over');
-      const [file] = event.dataTransfer?.files || [];
-      if (file) loadImageFile(file);
-    });
-
-    prepareButton.addEventListener('click', preparePdf);
-    downloadButton.addEventListener('click', downloadPdf);
-  </script>
-
 
   <script src="cookie-consent.js"></script>
   <script src="github-pages-prefix.js"></script>
