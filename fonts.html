@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  <title>Kreativ Tools | Font to Webfont</title>
-  <meta name="description" content="Convert TTF and OTF fonts to webfont formats in your browser." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kreativ Tools | Font Tools</title>
+  <meta name="description" content="Font tools for conversion, preview, and CSS generation workflows." />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -14,9 +15,7 @@
   <header class="site-header">
     <a class="brand" href="/" aria-label="Kreativ Tools Home">
       <div class="brand-mark">K</div>
-      <div class="brand-copy">
-        <strong>Kreativ Tools</strong>
-      </div>
+      <div class="brand-copy"><strong>Kreativ Tools</strong></div>
     </a>
 
     <nav class="top-nav" aria-label="Primary">
@@ -38,43 +37,29 @@
 
   <main class="container">
     <section class="hero">
-      <p class="eyebrow">Font Tools</p>
-      <h1>Font to Webfont Converter</h1>
-      <p>Upload a TTF or OTF file and export to WOFF or WOFF2 for web use.</p>
+      <p class="eyebrow">Fonts Category</p>
+      <h1>All Font Tools</h1>
+      <p>Choose a font workflow. Each tool has its own dedicated page.</p>
     </section>
 
-    <section class="upload-card">
-      <input id="fontInput" type="file" accept=".ttf,.otf,font/ttf,font/otf" hidden />
-      <div id="fontDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload font file">
-        <div class="drop-icon" aria-hidden="true"></div>
-        <button id="fontUploadButton" type="button" class="primary upload-trigger">Upload Font</button>
-        <p>or drag and drop a .ttf or .otf file here</p>
-        <p id="fontStatus" class="status">No font selected yet.</p>
-      </div>
-    </section>
+    <section class="tools-grid" aria-label="Font tools list">
+      <a class="tool-card" href="/fonts/webfont-convert">
+        <div class="tool-thumb thumb-font" aria-hidden="true">WFF</div>
+        <h3>Font to Webfont</h3>
+        <p>Convert TTF and OTF font files into WOFF or WOFF2 for web delivery.</p>
+      </a>
 
-    <section id="fontWorkspace" class="workspace is-hidden">
-      <div class="controls">
-        <label>
-          Input format
-          <input id="inputFormat" type="text" value="-" disabled />
-        </label>
+      <a class="tool-card" href="/fonts/preview">
+        <div class="tool-thumb thumb-font" aria-hidden="true">PRV</div>
+        <h3>Font Preview</h3>
+        <p>Preview uploaded fonts with custom text and scalable size controls.</p>
+      </a>
 
-        <label>
-          Output webfont
-          <select id="outputFormat">
-            <option value="woff" selected>WOFF</option>
-            <option value="woff2">WOFF2</option>
-          </select>
-        </label>
-
-        <button id="fontConvertButton" type="button" class="primary" disabled>Convert Font</button>
-      </div>
-
-      <div class="preview-panel">
-        <h2>Font Info</h2>
-        <p id="fontMeta" class="dimensions">Upload a font to see details.</p>
-      </div>
+      <a class="tool-card" href="/fonts/css-generator">
+        <div class="tool-thumb thumb-font" aria-hidden="true">CSS</div>
+        <h3>Font CSS Generator</h3>
+        <p>Generate ready-to-use @font-face CSS blocks from uploaded fonts.</p>
+      </a>
     </section>
   </main>
 
@@ -83,7 +68,7 @@
   <div class="footer-inner">
     <section class="footer-about">
       <h3>Kreativ<span>Tools</span></h3>
-      <p>Kreativ Tools provides free online creative utilities for image, PDF, video, font, audio, and file workflows. Your files stay private and are processed in-browser whenever possible.</p>
+      <p>Kreativ Tools provides free online creative utilities for image, PDF, video, font, audio, and file workflows.</p>
     </section>
 
     <section>
@@ -130,145 +115,6 @@
     <p>© 2026 <a href="https://madebykreativ.com/" target="_blank" rel="noopener noreferrer">Made by KREATIV</a> · Independent creative tools and assets by Andrei Olaru</p>
   </div>
 </footer>
-
-  <script type="module">
-    import * as FontEditorModule from 'https://cdn.jsdelivr.net/npm/fonteditor-core@2.6.3/+esm';
-
-    const fontInput = document.getElementById('fontInput');
-    const uploadButton = document.getElementById('fontUploadButton');
-    const dropzone = document.getElementById('fontDropzone');
-    const statusEl = document.getElementById('fontStatus');
-
-    const workspace = document.getElementById('fontWorkspace');
-    const inputFormatEl = document.getElementById('inputFormat');
-    const outputFormatEl = document.getElementById('outputFormat');
-    const convertButton = document.getElementById('fontConvertButton');
-    const metaEl = document.getElementById('fontMeta');
-
-    let selectedFile = null;
-    let inputType = null;
-
-    const setStatus = (message) => {
-      statusEl.textContent = message;
-    };
-
-    const inferInputType = (file) => {
-      const lower = file.name.toLowerCase();
-      if (lower.endsWith('.ttf')) return 'ttf';
-      if (lower.endsWith('.otf')) return 'otf';
-      return null;
-    };
-
-    const formatBytes = (bytes) => {
-      if (bytes < 1024) return `${bytes} B`;
-      if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-      return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
-    };
-
-    const loadFontFile = (file) => {
-      const detected = inferInputType(file);
-      if (!file || !detected) {
-        setStatus('Please upload a .ttf or .otf font file.');
-        return;
-      }
-
-      selectedFile = file;
-      inputType = detected;
-      workspace.classList.remove('is-hidden');
-      inputFormatEl.value = inputType.toUpperCase();
-      metaEl.textContent = `${file.name} • ${formatBytes(file.size)}`;
-      convertButton.disabled = false;
-      setStatus(`Loaded font: ${file.name}`);
-    };
-
-    const downloadBuffer = (buffer, filename, mime) => {
-      const blob = new Blob([buffer], { type: mime });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = filename;
-      link.click();
-      URL.revokeObjectURL(url);
-    };
-
-    const convertFont = async () => {
-      if (!selectedFile || !inputType) {
-        setStatus('Upload a font first.');
-        return;
-      }
-
-      const fontEditor = FontEditorModule.default || FontEditorModule;
-      if (!fontEditor || typeof fontEditor.createFont !== 'function') {
-        setStatus('Font engine failed to load. Refresh and try again.');
-        return;
-      }
-
-      const outputType = outputFormatEl.value;
-      convertButton.disabled = true;
-      setStatus(`Converting to ${outputType.toUpperCase()}...`);
-
-      try {
-        const sourceBuffer = await selectedFile.arrayBuffer();
-        const font = fontEditor.createFont(sourceBuffer, {
-          type: inputType,
-          hinting: true,
-          compound2simple: false,
-        });
-
-        const outputBuffer = font.write({
-          type: outputType,
-          hinting: true,
-        });
-
-        const outputName = `${selectedFile.name.replace(/\.[^.]+$/, '')}.${outputType}`;
-        const mime = outputType === 'woff2' ? 'font/woff2' : 'font/woff';
-        downloadBuffer(outputBuffer, outputName, mime);
-        setStatus(`Downloaded ${outputName}`);
-      } catch (error) {
-        const isWoff2 = outputType === 'woff2';
-        setStatus(
-          isWoff2
-            ? 'WOFF2 conversion is not supported in this browser build. Try WOFF.'
-            : 'Conversion failed for this font. Try another file.'
-        );
-      } finally {
-        convertButton.disabled = false;
-      }
-    };
-
-    uploadButton.addEventListener('click', () => fontInput.click());
-
-    dropzone.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        fontInput.click();
-      }
-    });
-
-    fontInput.addEventListener('change', () => {
-      const [file] = fontInput.files || [];
-      if (file) loadFontFile(file);
-    });
-
-    dropzone.addEventListener('dragover', (event) => {
-      event.preventDefault();
-      dropzone.classList.add('drag-over');
-    });
-
-    dropzone.addEventListener('dragleave', () => {
-      dropzone.classList.remove('drag-over');
-    });
-
-    dropzone.addEventListener('drop', (event) => {
-      event.preventDefault();
-      dropzone.classList.remove('drag-over');
-      const [file] = event.dataTransfer?.files || [];
-      if (file) loadFontFile(file);
-    });
-
-    convertButton.addEventListener('click', convertFont);
-  </script>
-
 
   <script src="cookie-consent.js"></script>
   <script src="github-pages-prefix.js"></script>
