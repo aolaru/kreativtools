@@ -38,7 +38,22 @@
     <section class="hero">
       <p class="eyebrow">PDF Tools</p>
       <h1>Merge PDF Files</h1>
-      <p>Upload multiple PDF files, keep your preferred order, and export one merged PDF.</p>
+      <p>Build your merge queue, adjust the order, then export one combined PDF when the list looks right.</p>
+    </section>
+
+    <section class="tool-intro" aria-label="How this tool works">
+      <div class="tool-intro-card">
+        <h2>Before you upload</h2>
+        <ul class="tool-intro-list">
+          <li>Add two or more `.pdf` files from your device. Files stay in this browser session only.</li>
+          <li>Use the queue controls to move files up, move them down, or remove one without starting over.</li>
+          <li>The merged file follows the queue order exactly as shown.</li>
+        </ul>
+      </div>
+      <div class="tool-intro-card">
+        <h2>What you get</h2>
+        <p>You can review the queue, merge when ready, and then download the combined PDF from a separate result step.</p>
+      </div>
     </section>
 
     <section class="upload-card">
@@ -47,21 +62,41 @@
         <div class="drop-icon" aria-hidden="true"></div>
         <button id="mergePdfUploadButton" type="button" class="primary upload-trigger">Upload PDFs</button>
         <p>or drag and drop PDF files here</p>
-        <p class="status">Tip: files are merged in the same order shown in the list.</p>
-        <p id="mergePdfStatus" class="status">No PDF files selected yet.</p>
+        <p class="status">Tip: add more files later without losing the queue you already built.</p>
+        <p id="mergePdfStatus" class="status">Ready for upload.</p>
       </div>
     </section>
 
     <section id="mergePdfWorkspace" class="workspace is-hidden">
       <div class="controls">
         <p id="mergePdfMeta" class="status">Add at least 2 PDF files to merge.</p>
-        <button id="mergePdfActionButton" type="button" class="primary" disabled>Merge and Download PDF</button>
+        <button id="mergePdfActionButton" type="button" class="primary" disabled>Merge PDFs</button>
+        <div class="inline-actions">
+          <button id="mergePdfDownloadButton" type="button" class="secondary-button" disabled>Download Merged PDF</button>
+          <button id="mergePdfAddMoreButton" type="button" class="ghost">Add More PDFs</button>
+        </div>
       </div>
 
       <div class="preview-panel">
-        <h2>Files to Merge</h2>
-        <pre id="mergePdfList" class="code-preview">No files added yet.</pre>
-        <p class="dimensions">Need a different order? Re-add files in the desired sequence.</p>
+        <div class="tool-results">
+          <h2>Merge Queue</h2>
+          <p id="mergePdfSummary">No PDF files added yet.</p>
+          <div id="mergePdfList" class="queue-list" aria-live="polite"></div>
+          <div class="result-card">
+            <div class="result-row">
+              <span>Files in queue</span>
+              <strong id="mergePdfCount">0</strong>
+            </div>
+            <div class="result-row">
+              <span>Total input size</span>
+              <strong id="mergePdfTotalSize">-</strong>
+            </div>
+            <div class="result-row">
+              <span>Merged output</span>
+              <strong id="mergePdfOutputStatus">Waiting for merge</strong>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -130,8 +165,15 @@
     const metaEl = document.getElementById('mergePdfMeta');
     const listEl = document.getElementById('mergePdfList');
     const mergeButton = document.getElementById('mergePdfActionButton');
+    const downloadButton = document.getElementById('mergePdfDownloadButton');
+    const addMoreButton = document.getElementById('mergePdfAddMoreButton');
+    const summaryEl = document.getElementById('mergePdfSummary');
+    const countEl = document.getElementById('mergePdfCount');
+    const totalSizeEl = document.getElementById('mergePdfTotalSize');
+    const outputStatusEl = document.getElementById('mergePdfOutputStatus');
 
     let files = [];
+    let mergedBytes = null;
 
     const setStatus = (message) => {
       statusEl.textContent = message;
@@ -143,23 +185,106 @@
       return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
     };
 
+    const resetMergeResult = () => {
+      mergedBytes = null;
+      outputStatusEl.textContent = 'Waiting for merge';
+      downloadButton.disabled = true;
+    };
+
+    const moveFile = (index, offset) => {
+      const targetIndex = index + offset;
+      if (targetIndex < 0 || targetIndex >= files.length) return;
+
+      const nextFiles = files.slice();
+      const [item] = nextFiles.splice(index, 1);
+      nextFiles.splice(targetIndex, 0, item);
+      files = nextFiles;
+      resetMergeResult();
+      refreshUi();
+      setStatus(`Moved ${item.name} ${offset < 0 ? 'up' : 'down'} in the queue.`);
+    };
+
+    const removeFile = (index) => {
+      const [removed] = files.splice(index, 1);
+      resetMergeResult();
+      refreshUi();
+      if (removed) {
+        setStatus(`Removed ${removed.name} from the queue.`);
+      }
+    };
+
     const refreshUi = () => {
       if (!files.length) {
         workspace.classList.add('is-hidden');
         mergeButton.disabled = true;
-        listEl.textContent = 'No files added yet.';
+        listEl.replaceChildren();
         metaEl.textContent = 'Add at least 2 PDF files to merge.';
+        summaryEl.textContent = 'No PDF files added yet.';
+        countEl.textContent = '0';
+        totalSizeEl.textContent = '-';
+        resetMergeResult();
         return;
       }
 
       workspace.classList.remove('is-hidden');
       mergeButton.disabled = files.length < 2;
+      countEl.textContent = String(files.length);
+      totalSizeEl.textContent = formatBytes(files.reduce((sum, file) => sum + file.size, 0));
+      summaryEl.textContent = files.length < 2
+        ? 'Add one more PDF to enable merging.'
+        : 'Queue looks ready. Adjust the order if needed, then merge.';
+      metaEl.textContent = files.length < 2
+        ? 'Add at least 2 PDF files to merge.'
+        : `${files.length} PDF files ready in the current order.`;
 
-      listEl.textContent = files
-        .map((f, idx) => `${idx + 1}. ${f.name} (${formatBytes(f.size)})`)
-        .join('\n');
+      listEl.replaceChildren(
+        ...files.map((file, index) => {
+          const item = document.createElement('article');
+          item.className = 'queue-item';
 
-      metaEl.textContent = `${files.length} PDF file(s) selected.`;
+          const main = document.createElement('div');
+          main.className = 'queue-item-main';
+
+          const title = document.createElement('div');
+          title.className = 'queue-item-title';
+          title.textContent = `${index + 1}. ${file.name}`;
+
+          const meta = document.createElement('div');
+          meta.className = 'queue-item-meta';
+          meta.textContent = formatBytes(file.size);
+
+          const actions = document.createElement('div');
+          actions.className = 'queue-item-actions';
+
+          const upButton = document.createElement('button');
+          upButton.type = 'button';
+          upButton.className = 'secondary-button';
+          upButton.dataset.action = 'up';
+          upButton.dataset.index = String(index);
+          upButton.disabled = index === 0;
+          upButton.textContent = 'Move Up';
+
+          const downButton = document.createElement('button');
+          downButton.type = 'button';
+          downButton.className = 'secondary-button';
+          downButton.dataset.action = 'down';
+          downButton.dataset.index = String(index);
+          downButton.disabled = index === files.length - 1;
+          downButton.textContent = 'Move Down';
+
+          const removeButton = document.createElement('button');
+          removeButton.type = 'button';
+          removeButton.className = 'danger-button';
+          removeButton.dataset.action = 'remove';
+          removeButton.dataset.index = String(index);
+          removeButton.textContent = 'Remove';
+
+          main.append(title, meta);
+          actions.append(upButton, downButton, removeButton);
+          item.append(main, actions);
+          return item;
+        })
+      );
     };
 
     const addFiles = (incoming) => {
@@ -173,7 +298,8 @@
       }
 
       files = files.concat(pdfFiles);
-      setStatus(`${pdfFiles.length} PDF file(s) added.`);
+      resetMergeResult();
+      setStatus(`${pdfFiles.length} PDF file(s) added to the queue.`);
       refreshUi();
     };
 
@@ -190,7 +316,9 @@
       }
 
       mergeButton.disabled = true;
-      setStatus('Merging PDFs...');
+      downloadButton.disabled = true;
+      outputStatusEl.textContent = 'Merging in progress';
+      setStatus('Merging PDFs locally...');
 
       try {
         const mergedPdf = await PDFLibApi.PDFDocument.create();
@@ -202,21 +330,33 @@
           pages.forEach((page) => mergedPdf.addPage(page));
         }
 
-        const mergedBytes = await mergedPdf.save();
-        const blob = new Blob([mergedBytes], { type: 'application/pdf' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'merged.pdf';
-        link.click();
-        URL.revokeObjectURL(url);
-
-        setStatus('Merged PDF downloaded.');
+        mergedBytes = await mergedPdf.save();
+        outputStatusEl.textContent = `Ready to download (${formatBytes(mergedBytes.byteLength)})`;
+        downloadButton.disabled = false;
+        setStatus('Merge complete. Review the queue and download when ready.');
       } catch {
+        mergedBytes = null;
+        outputStatusEl.textContent = 'Merge failed';
         setStatus('Could not merge these PDFs. Try different files.');
       } finally {
         mergeButton.disabled = false;
       }
+    };
+
+    const downloadMergedPdf = () => {
+      if (!mergedBytes) {
+        setStatus('Merge the PDFs first to enable download.');
+        return;
+      }
+
+      const blob = new Blob([mergedBytes], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'merged.pdf';
+      link.click();
+      URL.revokeObjectURL(url);
+      setStatus('Downloaded merged PDF.');
     };
 
     uploadButton.addEventListener('click', () => input.click());
@@ -248,7 +388,21 @@
       addFiles(event.dataTransfer.files);
     });
 
+    listEl.addEventListener('click', (event) => {
+      const button = event.target.closest('button[data-action]');
+      if (!button) return;
+
+      const index = Number(button.dataset.index);
+      if (!Number.isInteger(index)) return;
+
+      if (button.dataset.action === 'up') moveFile(index, -1);
+      if (button.dataset.action === 'down') moveFile(index, 1);
+      if (button.dataset.action === 'remove') removeFile(index);
+    });
+
     mergeButton.addEventListener('click', mergePdfFiles);
+    downloadButton.addEventListener('click', downloadMergedPdf);
+    addMoreButton.addEventListener('click', () => input.click());
     refreshUi();
   </script>
 

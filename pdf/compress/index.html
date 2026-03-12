@@ -38,7 +38,22 @@
     <section class="hero">
       <p class="eyebrow">PDF Tools</p>
       <h1>Compress PDF</h1>
-      <p>Upload one PDF and export an optimized version. Best results are usually seen on PDFs with redundant structure.</p>
+      <p>Compress one PDF in your browser, review the savings, then download the optimized file when it looks worth keeping.</p>
+    </section>
+
+    <section class="tool-intro" aria-label="How this tool works">
+      <div class="tool-intro-card">
+        <h2>Before you upload</h2>
+        <ul class="tool-intro-list">
+          <li>Works with one `.pdf` file at a time and keeps processing in your browser.</li>
+          <li>Best results usually come from PDFs with duplicate structure or inefficient object streams.</li>
+          <li>Image-heavy or already optimized PDFs may shrink only a little, or not at all.</li>
+        </ul>
+      </div>
+      <div class="tool-intro-card">
+        <h2>What you get</h2>
+        <p>You will see the original size, optimized size, and savings before deciding to download the output file.</p>
+      </div>
     </section>
 
     <section class="upload-card">
@@ -47,20 +62,44 @@
         <div class="drop-icon" aria-hidden="true"></div>
         <button id="compressPdfUploadButton" type="button" class="primary upload-trigger">Upload PDF</button>
         <p>or drag and drop a PDF file here</p>
-        <p id="compressPdfStatus" class="status">No PDF selected yet.</p>
+        <p class="status">Private by default. Your PDF stays on this device unless your browser or extensions say otherwise.</p>
+        <p id="compressPdfStatus" class="status">Ready for upload.</p>
       </div>
     </section>
 
     <section id="compressPdfWorkspace" class="workspace is-hidden">
       <div class="controls">
         <p id="compressPdfMeta" class="status">Upload a PDF file to continue.</p>
-        <button id="compressPdfActionButton" type="button" class="primary" disabled>Compress and Download PDF</button>
+        <button id="compressPdfActionButton" type="button" class="primary" disabled>Compress PDF</button>
+        <div class="inline-actions">
+          <button id="compressPdfDownloadButton" type="button" class="secondary-button" disabled>Download Optimized PDF</button>
+          <button id="compressPdfResetButton" type="button" class="ghost">Choose Another PDF</button>
+        </div>
       </div>
 
       <div class="preview-panel">
-        <h2>Compression Preview</h2>
-        <pre id="compressPdfPreview" class="code-preview">No file selected.</pre>
-        <p class="dimensions">Note: encrypted or image-heavy PDFs may see little or no size reduction.</p>
+        <div id="compressPdfResults" class="tool-results">
+          <h2>Compression Results</h2>
+          <p id="compressPdfSummary">No PDF analyzed yet.</p>
+          <div class="result-card">
+            <div class="result-row">
+              <span>Original size</span>
+              <strong id="compressPdfInputSize">-</strong>
+            </div>
+            <div class="result-row">
+              <span>Optimized size</span>
+              <strong id="compressPdfOutputSize">-</strong>
+            </div>
+            <div id="compressPdfSavingsRow" class="result-row">
+              <span>Saved</span>
+              <strong id="compressPdfSavings">-</strong>
+            </div>
+          </div>
+          <ul class="result-list">
+            <li>Compression is file-dependent. Already optimized or image-heavy PDFs may not shrink much.</li>
+            <li>If savings are minimal, you can skip the download and keep your original file.</li>
+          </ul>
+        </div>
       </div>
     </section>
   </main>
@@ -127,10 +166,18 @@
 
     const workspace = document.getElementById('compressPdfWorkspace');
     const metaEl = document.getElementById('compressPdfMeta');
-    const previewEl = document.getElementById('compressPdfPreview');
     const actionButton = document.getElementById('compressPdfActionButton');
+    const downloadButton = document.getElementById('compressPdfDownloadButton');
+    const resetButton = document.getElementById('compressPdfResetButton');
+    const summaryEl = document.getElementById('compressPdfSummary');
+    const inputSizeEl = document.getElementById('compressPdfInputSize');
+    const outputSizeEl = document.getElementById('compressPdfOutputSize');
+    const savingsEl = document.getElementById('compressPdfSavings');
+    const savingsRow = document.getElementById('compressPdfSavingsRow');
 
     let selectedFile = null;
+    let compressedBytes = null;
+    let outputName = '';
 
     const setStatus = (message) => {
       statusEl.textContent = message;
@@ -140,6 +187,26 @@
       if (bytes < 1024) return `${bytes} B`;
       if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
       return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+    };
+
+    const resetResults = () => {
+      compressedBytes = null;
+      outputName = '';
+      summaryEl.textContent = 'No PDF analyzed yet.';
+      inputSizeEl.textContent = selectedFile ? formatBytes(selectedFile.size) : '-';
+      outputSizeEl.textContent = '-';
+      savingsEl.textContent = '-';
+      savingsRow.classList.remove('result-savings-positive');
+      downloadButton.disabled = true;
+    };
+
+    const resetTool = () => {
+      selectedFile = null;
+      workspace.classList.add('is-hidden');
+      actionButton.disabled = true;
+      metaEl.textContent = 'Upload a PDF file to continue.';
+      resetResults();
+      setStatus('Ready for upload.');
     };
 
     const loadPdf = (file) => {
@@ -153,12 +220,9 @@
       workspace.classList.remove('is-hidden');
       actionButton.disabled = false;
       metaEl.textContent = `${file.name} • ${formatBytes(file.size)}`;
-      previewEl.textContent = [
-        `Input file: ${file.name}`,
-        `Input size: ${formatBytes(file.size)}`,
-        'Output: optimized PDF'
-      ].join('\n');
-      setStatus(`Loaded PDF: ${file.name}`);
+      resetResults();
+      summaryEl.textContent = 'File loaded. Run compression to compare the optimized version before downloading.';
+      setStatus(`Loaded PDF: ${file.name}. Ready to compress.`);
     };
 
     const downloadBuffer = (buffer, filename) => {
@@ -184,7 +248,9 @@
       }
 
       actionButton.disabled = true;
-      setStatus('Compressing PDF...');
+      downloadButton.disabled = true;
+      setStatus('Compressing PDF locally...');
+      summaryEl.textContent = 'Optimizing your PDF. This can take a moment for larger files.';
 
       try {
         const srcBytes = await selectedFile.arrayBuffer();
@@ -202,26 +268,43 @@
         const savedBytes = inputSize - outputSize;
         const savedPercent = inputSize > 0 ? ((savedBytes / inputSize) * 100).toFixed(1) : '0.0';
 
-        const outputName = `${selectedFile.name.replace(/\.[^.]+$/, '')}.compressed.pdf`;
-        downloadBuffer(outputBytes, outputName);
-
-        previewEl.textContent = [
-          `Input file: ${selectedFile.name}`,
-          `Input size: ${formatBytes(inputSize)}`,
-          `Output size: ${formatBytes(outputSize)}`,
-          `Saved: ${savedBytes > 0 ? formatBytes(savedBytes) : '0 B'} (${savedBytes > 0 ? savedPercent : '0.0'}%)`
-        ].join('\n');
+        compressedBytes = outputBytes;
+        outputName = `${selectedFile.name.replace(/\.[^.]+$/, '')}.compressed.pdf`;
+        inputSizeEl.textContent = formatBytes(inputSize);
+        outputSizeEl.textContent = formatBytes(outputSize);
+        savingsEl.textContent = `${savedBytes > 0 ? formatBytes(savedBytes) : '0 B'} (${savedBytes > 0 ? savedPercent : '0.0'}%)`;
+        summaryEl.textContent = savedBytes > 0
+          ? 'Compression finished. Review the savings below, then download the optimized PDF if you want to keep it.'
+          : 'Compression finished, but this file did not get smaller. You can skip the download if the result is not useful.';
+        savingsRow.classList.toggle('result-savings-positive', savedBytes > 0);
+        downloadButton.disabled = false;
 
         if (savedBytes > 0) {
-          setStatus(`Compressed PDF downloaded: ${outputName}`);
+          setStatus(`Compression complete. Optimized PDF is ready to download.`);
         } else {
-          setStatus(`Optimization finished. No size reduction for this file.`);
+          setStatus('Compression complete. This PDF did not shrink.');
         }
       } catch {
+        compressedBytes = null;
+        outputName = '';
+        summaryEl.textContent = 'Compression failed. Try another PDF or keep the original file.';
+        outputSizeEl.textContent = '-';
+        savingsEl.textContent = '-';
+        savingsRow.classList.remove('result-savings-positive');
         setStatus('Could not compress this PDF. Try a different file.');
       } finally {
         actionButton.disabled = false;
       }
+    };
+
+    const downloadCompressedPdf = () => {
+      if (!compressedBytes || !outputName) {
+        setStatus('Compress the PDF first to enable download.');
+        return;
+      }
+
+      downloadBuffer(compressedBytes, outputName);
+      setStatus(`Downloaded optimized PDF: ${outputName}`);
     };
 
     uploadButton.addEventListener('click', () => input.click());
@@ -256,8 +339,10 @@
     });
 
     actionButton.addEventListener('click', compressPdf);
+    downloadButton.addEventListener('click', downloadCompressedPdf);
+    resetButton.addEventListener('click', () => input.click());
+    resetTool();
   </script>
-
 
   <script src="../../cookie-consent.js"></script>
   <script src="../../github-pages-prefix.js"></script>
