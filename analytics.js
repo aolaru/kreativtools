@@ -2,12 +2,12 @@
   const CONSENT_KEY = 'kreativ_cookie_consent';
   const CONFIG = {
     enabled: true,
-    provider: 'plausible',
-    plausibleDomain: 'kreativtools.com',
-    plausibleScriptSrc: 'https://plausible.io/js/script.js'
+    provider: 'cloudflare',
+    cloudflareToken: 'f7acecd16c454cfbbb4704b4e665a173'
   };
 
-  if (!CONFIG.enabled) return;
+  if (!CONFIG.enabled || CONFIG.provider !== 'cloudflare') return;
+  if (!CONFIG.cloudflareToken) return;
 
   const host = window.location.hostname;
   if (host === 'localhost' || host === '127.0.0.1') return;
@@ -17,16 +17,15 @@
   try {
     if (localStorage.getItem(CONSENT_KEY) === 'rejected') return;
   } catch {
-    // ignore storage errors
+    // Ignore storage errors and fail open.
   }
 
-  if (CONFIG.provider !== 'plausible' || !CONFIG.plausibleDomain) return;
-  if (document.querySelector('script[data-kreativ-analytics="plausible"]')) return;
+  if (document.querySelector('script[data-kreativ-analytics="cloudflare"]')) return;
 
   const script = document.createElement('script');
   script.defer = true;
-  script.dataset.domain = CONFIG.plausibleDomain;
-  script.dataset.kreativAnalytics = 'plausible';
-  script.src = CONFIG.plausibleScriptSrc;
+  script.dataset.cfBeacon = JSON.stringify({ token: CONFIG.cloudflareToken });
+  script.dataset.kreativAnalytics = 'cloudflare';
+  script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
   document.head.appendChild(script);
 })();
