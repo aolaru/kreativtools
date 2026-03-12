@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  <title>Kreativ Tools | Video Converter</title>
-  <meta name="description" content="Convert videos to WEBM in your browser with Kreativ Tools." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kreativ Tools | Video Tools</title>
+  <meta name="description" content="Video tools for conversion, trimming, and thumbnail workflows." />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -14,9 +15,7 @@
   <header class="site-header">
     <a class="brand" href="/" aria-label="Kreativ Tools Home">
       <div class="brand-mark">K</div>
-      <div class="brand-copy">
-        <strong>Kreativ Tools</strong>
-      </div>
+      <div class="brand-copy"><strong>Kreativ Tools</strong></div>
     </a>
 
     <nav class="top-nav" aria-label="Primary">
@@ -38,43 +37,29 @@
 
   <main class="container">
     <section class="hero">
-      <p class="eyebrow">Video Tools</p>
-      <h1>Convert Video to WEBM</h1>
-      <p>Upload a video, then convert and download as WEBM directly in your browser.</p>
+      <p class="eyebrow">Video Category</p>
+      <h1>All Video Tools</h1>
+      <p>Choose a video workflow. Each tool has its own dedicated page.</p>
     </section>
 
-    <section class="upload-card">
-      <input id="videoInput" type="file" accept="video/*" hidden />
-      <div id="videoDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload video">
-        <div class="drop-icon" aria-hidden="true"></div>
-        <button id="videoUploadButton" type="button" class="primary upload-trigger">Upload Video</button>
-        <p>or drag and drop a video here</p>
-        <p id="videoStatus" class="status">No video selected yet.</p>
-      </div>
-    </section>
+    <section class="tools-grid" aria-label="Video tools list">
+      <a class="tool-card" href="/video/convert-webm">
+        <div class="tool-thumb thumb-video" aria-hidden="true">WEBM</div>
+        <h3>Video to WEBM</h3>
+        <p>Convert uploaded videos to lightweight WEBM directly in browser.</p>
+      </a>
 
-    <section id="videoWorkspace" class="workspace is-hidden">
-      <div class="controls">
-        <label>
-          Output format
-          <input type="text" value="WEBM" disabled />
-        </label>
+      <a class="tool-card" href="/video/thumbnail">
+        <div class="tool-thumb thumb-video" aria-hidden="true">THMB</div>
+        <h3>Video Thumbnail</h3>
+        <p>Capture a frame at any timestamp and export PNG or JPG thumbnails.</p>
+      </a>
 
-        <label>
-          Output fps
-          <input id="fpsInput" type="number" min="12" max="60" value="30" />
-        </label>
-
-        <p class="status">Note: current browser conversion exports video only (no audio track).</p>
-
-        <button id="videoConvertButton" type="button" class="primary" disabled>Convert to WEBM</button>
-      </div>
-
-      <div class="preview-panel">
-        <h2>Preview</h2>
-        <video id="videoPreview" class="video-preview" controls playsinline></video>
-        <p id="videoMeta" class="dimensions"></p>
-      </div>
+      <a class="tool-card" href="/video/trim">
+        <div class="tool-thumb thumb-video" aria-hidden="true">TRIM</div>
+        <h3>Video Trim</h3>
+        <p>Select a start and end point and download only that clip segment.</p>
+      </a>
     </section>
   </main>
 
@@ -83,7 +68,7 @@
   <div class="footer-inner">
     <section class="footer-about">
       <h3>Kreativ<span>Tools</span></h3>
-      <p>Kreativ Tools provides free online creative utilities for image, PDF, video, font, audio, and file workflows. Your files stay private and are processed in-browser whenever possible.</p>
+      <p>Kreativ Tools provides free online creative utilities for image, PDF, video, font, audio, and file workflows.</p>
     </section>
 
     <section>
@@ -130,151 +115,6 @@
     <p>© 2026 <a href="https://madebykreativ.com/" target="_blank" rel="noopener noreferrer">Made by KREATIV</a> · Independent creative tools and assets by Andrei Olaru</p>
   </div>
 </footer>
-
-  <script>
-    const videoInput = document.getElementById('videoInput');
-    const uploadButton = document.getElementById('videoUploadButton');
-    const dropzone = document.getElementById('videoDropzone');
-    const statusEl = document.getElementById('videoStatus');
-
-    const workspace = document.getElementById('videoWorkspace');
-    const convertButton = document.getElementById('videoConvertButton');
-    const fpsInput = document.getElementById('fpsInput');
-
-    const preview = document.getElementById('videoPreview');
-    const metaEl = document.getElementById('videoMeta');
-
-    let selectedFile = null;
-    let selectedName = 'video';
-    let animationFrameId = null;
-
-    const setStatus = (message) => {
-      statusEl.textContent = message;
-    };
-
-    const loadVideoFile = (file) => {
-      if (!file || !file.type.startsWith('video/')) {
-        setStatus('Please select a valid video file.');
-        return;
-      }
-
-      selectedFile = file;
-      selectedName = file.name.replace(/\.[^.]+$/, '');
-
-      const url = URL.createObjectURL(file);
-      preview.src = url;
-      preview.load();
-
-      preview.onloadedmetadata = () => {
-        metaEl.textContent = `${Math.round(preview.videoWidth)} x ${Math.round(preview.videoHeight)}px • ${Math.round(preview.duration)}s`;
-        workspace.classList.remove('is-hidden');
-        convertButton.disabled = false;
-        setStatus(`Loaded video: ${file.name}`);
-      };
-    };
-
-    const getSupportedRecorderMime = () => {
-      const candidates = ['video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/webm'];
-      return candidates.find((mime) => MediaRecorder.isTypeSupported(mime)) || '';
-    };
-
-    const convertVideo = async () => {
-      if (!selectedFile || !preview.videoWidth || !preview.videoHeight) {
-        setStatus('Upload a video first.');
-        return;
-      }
-
-      const mimeType = getSupportedRecorderMime();
-      if (!mimeType) {
-        setStatus('This browser does not support WEBM recording.');
-        return;
-      }
-
-      const fpsRaw = Number(fpsInput.value);
-      const fps = Number.isFinite(fpsRaw) ? Math.min(60, Math.max(12, fpsRaw)) : 30;
-      fpsInput.value = String(Math.round(fps));
-
-      const canvas = document.createElement('canvas');
-      canvas.width = preview.videoWidth;
-      canvas.height = preview.videoHeight;
-      const ctx = canvas.getContext('2d');
-      const stream = canvas.captureStream(fps);
-      const recorder = new MediaRecorder(stream, { mimeType });
-      const chunks = [];
-
-      recorder.ondataavailable = (event) => {
-        if (event.data && event.data.size > 0) chunks.push(event.data);
-      };
-
-      recorder.onstop = () => {
-        if (animationFrameId) cancelAnimationFrame(animationFrameId);
-
-        const blob = new Blob(chunks, { type: 'video/webm' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `${selectedName}-converted.webm`;
-        link.click();
-        URL.revokeObjectURL(url);
-        setStatus(`Downloaded ${selectedName}-converted.webm`);
-      };
-
-      const drawFrame = () => {
-        ctx.drawImage(preview, 0, 0, canvas.width, canvas.height);
-        if (!preview.paused && !preview.ended) {
-          animationFrameId = requestAnimationFrame(drawFrame);
-        }
-      };
-
-      convertButton.disabled = true;
-      setStatus('Converting to WEBM...');
-
-      preview.currentTime = 0;
-      preview.muted = true;
-
-      recorder.start();
-      preview.play();
-      drawFrame();
-
-      preview.onended = () => {
-        recorder.stop();
-        convertButton.disabled = false;
-      };
-    };
-
-    uploadButton.addEventListener('click', () => videoInput.click());
-
-    dropzone.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        videoInput.click();
-      }
-    });
-
-    videoInput.addEventListener('change', () => {
-      const [file] = videoInput.files || [];
-      if (file) loadVideoFile(file);
-    });
-
-    dropzone.addEventListener('dragover', (event) => {
-      event.preventDefault();
-      dropzone.classList.add('drag-over');
-    });
-
-    dropzone.addEventListener('dragleave', () => {
-      dropzone.classList.remove('drag-over');
-    });
-
-    dropzone.addEventListener('drop', (event) => {
-      event.preventDefault();
-      dropzone.classList.remove('drag-over');
-      const [file] = event.dataTransfer?.files || [];
-      if (file) loadVideoFile(file);
-    });
-
-    convertButton.addEventListener('click', convertVideo);
-  </script>
-
 
   <script src="cookie-consent.js"></script>
   <script src="github-pages-prefix.js"></script>
