@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kreativ Tools | PDF Tools</title>
-  <meta name="description" content="PDF tools for conversion and merge workflows." />
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="styles.css" />
+  <title>Kreativ Tools | Audio Tools</title>
+  <meta name="description" content="Audio tools for conversion, trimming, and volume workflows." />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../styles.css" />
 </head>
 <body>
   <div class="bg-glow bg-glow-1"></div>
@@ -20,10 +20,10 @@
 
     <nav class="top-nav" aria-label="Primary">
       <a href="/image">Image</a>
-      <a href="/pdf" aria-current="page">PDF</a>
+      <a href="/pdf">PDF</a>
       <a href="/video">Video</a>
       <a href="/fonts">Fonts</a>
-      <a href="/audio">Audio</a>
+      <a href="/audio" aria-current="page">Audio</a>
       <a href="/file">File</a>
       <a href="/changes">Changes</a>
     </nav>
@@ -37,28 +37,28 @@
 
   <main class="container">
     <section class="hero">
-      <p class="eyebrow">PDF Category</p>
-      <h1>All PDF Tools</h1>
-      <p>Choose a PDF workflow. Each tool has its own dedicated page.</p>
+      <p class="eyebrow">Audio Category</p>
+      <h1>All Audio Tools</h1>
+      <p>Choose an audio workflow. Each tool has its own dedicated page.</p>
     </section>
 
-    <section class="tools-grid" aria-label="PDF tools list">
-      <a class="tool-card" href="/pdf/image-to-pdf">
-        <div class="tool-thumb thumb-pdf" aria-hidden="true">PDF</div>
-        <h3>Image to PDF</h3>
-        <p>Convert a single image into a clean PDF with margin and page controls.</p>
+    <section class="tools-grid" aria-label="Audio tools list">
+      <a class="tool-card" href="/audio/to-wav">
+        <div class="tool-thumb thumb-audio" aria-hidden="true">WAV</div>
+        <h3>Audio to WAV</h3>
+        <p>Convert common audio uploads into WAV with sample rate and mono options.</p>
       </a>
 
-      <a class="tool-card" href="/pdf/merge">
-        <div class="tool-thumb thumb-pdf" aria-hidden="true">MRG</div>
-        <h3>PDF Merge</h3>
-        <p>Merge multiple PDF files into one document directly in browser.</p>
+      <a class="tool-card" href="/audio/trim">
+        <div class="tool-thumb thumb-audio" aria-hidden="true">TRM</div>
+        <h3>Audio Trim</h3>
+        <p>Select start and end times and export only the audio segment you need.</p>
       </a>
 
-      <a class="tool-card" href="/pdf/compress">
-        <div class="tool-thumb thumb-pdf" aria-hidden="true">CMP</div>
-        <h3>PDF Compress</h3>
-        <p>Optimize PDF files and export a smaller version directly in browser.</p>
+      <a class="tool-card" href="/audio/volume">
+        <div class="tool-thumb thumb-audio" aria-hidden="true">VOL</div>
+        <h3>Audio Volume Booster</h3>
+        <p>Boost or reduce loudness and download processed audio as WAV.</p>
       </a>
     </section>
   </main>
@@ -116,8 +116,8 @@
   </div>
 </footer>
 
-  <script src="cookie-consent.js"></script>
-  <script src="github-pages-prefix.js"></script>
-  <script src="theme.js"></script>
+  <script src="../cookie-consent.js"></script>
+  <script src="../github-pages-prefix.js"></script>
+  <script src="../theme.js"></script>
 </body>
 </html>
