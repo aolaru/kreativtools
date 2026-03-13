@@ -742,11 +742,18 @@ input[type='range'] {
 .tool-thumb {
   height: 94px;
   border-radius: 12px;
-  display: grid;
-  place-items: center;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: white;
+  position: relative;
+  overflow: hidden;
+  display: block;
+  color: transparent;
+  user-select: none;
+}
+
+.tool-thumb::before,
+.tool-thumb::after {
+  content: '';
+  position: absolute;
+  inset: auto;
 }
 
 .thumb-image { background: linear-gradient(135deg, #4aa9f5, #2368d9); }
@@ -756,6 +763,286 @@ input[type='range'] {
 .thumb-audio { background: linear-gradient(135deg, #17b692, #0f886d); }
 .thumb-file { background: linear-gradient(135deg, #f39f3d, #c97213); }
 .thumb-change { background: linear-gradient(135deg, #6f8cae, #415a78); }
+
+.tool-thumb::before {
+  left: 14px;
+  right: 14px;
+  top: 14px;
+  bottom: 14px;
+  border-radius: 18px;
+  opacity: 0.98;
+}
+
+.tool-thumb::after {
+  width: 30px;
+  height: 30px;
+  right: 14px;
+  bottom: 14px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(2px);
+}
+
+.thumb-image-compress::before {
+  background:
+    radial-gradient(circle at 22% 28%, rgba(255, 255, 255, 0.95) 0 16px, transparent 17px),
+    linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.02)),
+    linear-gradient(135deg, #8ed6ff, #2f6fe5);
+  clip-path: polygon(0 0, 100% 0, 100% 76%, 74% 76%, 58% 58%, 42% 78%, 28% 66%, 0 88%);
+}
+
+.thumb-image-compress::after {
+  background:
+    linear-gradient(180deg, transparent 0 18%, rgba(255,255,255,0.85) 18% 28%, transparent 28% 46%, rgba(255,255,255,0.85) 46% 56%, transparent 56% 100%),
+    rgba(15, 43, 92, 0.26);
+}
+
+.thumb-image-resize::before {
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.88), rgba(255,255,255,0.55)),
+    linear-gradient(135deg, #92ddff, #2f78dd);
+  clip-path: polygon(0 10%, 78% 10%, 78% 0, 100% 0, 100% 22%, 90% 22%, 90% 100%, 12% 100%, 12% 90%, 0 90%);
+}
+
+.thumb-image-resize::after {
+  background:
+    linear-gradient(135deg, transparent 0 35%, rgba(255,255,255,0.92) 35% 48%, transparent 48% 100%),
+    rgba(11, 43, 104, 0.22);
+}
+
+.thumb-image-webp::before {
+  background:
+    radial-gradient(circle at 28% 30%, rgba(255,255,255,0.92) 0 14px, transparent 15px),
+    linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.02)),
+    linear-gradient(135deg, #74e0ba, #1a7ec9);
+  clip-path: polygon(0 12%, 100% 0, 100% 100%, 0 88%);
+}
+
+.thumb-image-webp::after {
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.95) 0 45%, transparent 45% 100%),
+    linear-gradient(315deg, rgba(255,255,255,0.7) 0 22%, transparent 22% 100%),
+    rgba(7, 53, 86, 0.2);
+}
+
+.thumb-pdf-image::before,
+.thumb-pdf-merge::before,
+.thumb-pdf-compress::before {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.78)),
+    linear-gradient(135deg, #ffb3b3, #de4d4d);
+  clip-path: polygon(0 0, 74% 0, 100% 26%, 100% 100%, 0 100%);
+}
+
+.thumb-pdf-image::after {
+  background:
+    radial-gradient(circle at 50% 50%, rgba(222,77,77,0.95) 0 6px, transparent 7px),
+    linear-gradient(180deg, rgba(222,77,77,0.95) 0 0) center/16px 2px no-repeat,
+    rgba(255, 255, 255, 0.2);
+}
+
+.thumb-pdf-merge::after {
+  background:
+    linear-gradient(90deg, rgba(222,77,77,0.9) 0 42%, transparent 42% 58%, rgba(222,77,77,0.9) 58% 100%),
+    linear-gradient(180deg, transparent 0 44%, rgba(222,77,77,0.9) 44% 56%, transparent 56% 100%),
+    rgba(255,255,255,0.18);
+}
+
+.thumb-pdf-compress::after {
+  background:
+    linear-gradient(180deg, rgba(222,77,77,0.92) 0 0) center 8px/2px 12px no-repeat,
+    linear-gradient(135deg, transparent 0 34%, rgba(222,77,77,0.92) 34% 52%, transparent 52% 100%),
+    rgba(255,255,255,0.18);
+}
+
+.thumb-video-convert::before,
+.thumb-video-thumbnail::before,
+.thumb-video-trim::before {
+  background:
+    linear-gradient(180deg, rgba(8,16,40,0.18), rgba(8,16,40,0.02)),
+    linear-gradient(135deg, #8296ff, #3247bf);
+}
+
+.thumb-video-convert::before {
+  clip-path: polygon(0 12%, 100% 12%, 100% 88%, 0 88%);
+}
+
+.thumb-video-convert::after {
+  background:
+    linear-gradient(135deg, transparent 0 34%, rgba(255,255,255,0.92) 34% 64%, transparent 64% 100%),
+    rgba(8, 18, 52, 0.24);
+  border-radius: 999px;
+}
+
+.thumb-video-thumbnail::before {
+  clip-path: polygon(0 8%, 100% 8%, 100% 92%, 0 92%);
+}
+
+.thumb-video-thumbnail::after {
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.96) 0 7px, transparent 8px),
+    rgba(8, 18, 52, 0.24);
+  border-radius: 999px;
+}
+
+.thumb-video-trim::after {
+  width: 48px;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,0.94) 0 6px, transparent 6px 42px, rgba(255,255,255,0.94) 42px 48px),
+    rgba(8, 18, 52, 0.24);
+}
+
+.thumb-font-convert::before,
+.thumb-font-preview::before,
+.thumb-font-css::before {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.02)),
+    linear-gradient(135deg, #ba91ff, #6244c6);
+}
+
+.thumb-font-convert::before {
+  clip-path: polygon(10% 18%, 90% 18%, 90% 82%, 10% 82%);
+}
+
+.thumb-font-convert::after {
+  width: 42px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.92) 0 0) center/2px 14px no-repeat,
+    linear-gradient(135deg, transparent 0 40%, rgba(255,255,255,0.92) 40% 58%, transparent 58% 100%),
+    rgba(46, 24, 94, 0.26);
+  border-radius: 999px;
+}
+
+.thumb-font-preview::after {
+  content: 'Aa';
+  width: auto;
+  height: auto;
+  right: 16px;
+  bottom: 10px;
+  background: none;
+  color: rgba(255,255,255,0.94);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.thumb-font-css::after {
+  content: '{}';
+  width: auto;
+  height: auto;
+  right: 14px;
+  bottom: 12px;
+  background: none;
+  color: rgba(255,255,255,0.92);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.06em;
+}
+
+.thumb-audio-wav::before,
+.thumb-audio-trim::before,
+.thumb-audio-volume::before {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.02)),
+    linear-gradient(135deg, #33d3aa, #0f886d);
+}
+
+.thumb-audio-wav::after {
+  width: 52px;
+  background:
+    linear-gradient(90deg,
+      rgba(255,255,255,0.92) 0 4px,
+      transparent 4px 10px,
+      rgba(255,255,255,0.92) 10px 14px,
+      transparent 14px 20px,
+      rgba(255,255,255,0.92) 20px 24px,
+      transparent 24px 30px,
+      rgba(255,255,255,0.92) 30px 34px,
+      transparent 34px 40px,
+      rgba(255,255,255,0.92) 40px 44px,
+      transparent 44px 100%);
+    border-radius: 999px;
+}
+
+.thumb-audio-trim::after {
+  width: 52px;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,0.95) 0 8px, transparent 8px 44px, rgba(255,255,255,0.95) 44px 52px),
+    rgba(5, 73, 59, 0.22);
+  border-radius: 999px;
+}
+
+.thumb-audio-volume::after {
+  background:
+    linear-gradient(135deg, transparent 0 32%, rgba(255,255,255,0.95) 32% 54%, transparent 54% 100%),
+    linear-gradient(225deg, transparent 0 45%, rgba(255,255,255,0.72) 45% 58%, transparent 58% 100%),
+    rgba(5, 73, 59, 0.22);
+  border-radius: 999px;
+}
+
+.thumb-file-xml::before,
+.thumb-file-jsoncsv::before,
+.thumb-file-csvjson::before {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.02)),
+    linear-gradient(135deg, #f8b455, #c97213);
+  clip-path: polygon(0 0, 74% 0, 100% 26%, 100% 100%, 0 100%);
+}
+
+.thumb-file-xml::after {
+  content: '<>';
+  width: auto;
+  height: auto;
+  right: 12px;
+  bottom: 12px;
+  background: none;
+  color: rgba(255,255,255,0.92);
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.thumb-file-jsoncsv::after {
+  content: '{,}';
+  width: auto;
+  height: auto;
+  right: 12px;
+  bottom: 12px;
+  background: none;
+  color: rgba(255,255,255,0.92);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.thumb-file-csvjson::after {
+  content: '[ ]';
+  width: auto;
+  height: auto;
+  right: 12px;
+  bottom: 12px;
+  background: none;
+  color: rgba(255,255,255,0.92);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.thumb-change::before {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.02)),
+    linear-gradient(135deg, #9bb0c9, #415a78);
+  clip-path: polygon(12% 18%, 88% 18%, 88% 82%, 12% 82%);
+}
+
+.thumb-change::after {
+  background:
+    linear-gradient(180deg,
+      rgba(255,255,255,0.9) 0 3px,
+      transparent 3px 9px,
+      rgba(255,255,255,0.9) 9px 12px,
+      transparent 12px 18px,
+      rgba(255,255,255,0.9) 18px 21px,
+      transparent 21px 100%),
+    rgba(24, 40, 61, 0.22);
+}
 
 .dimensions {
   margin: 10px 0 0;
