@@ -384,6 +384,64 @@ button:disabled {
   line-height: 1.5;
 }
 
+.article-shell {
+  display: grid;
+  gap: 18px;
+}
+
+.article-section {
+  border: 1px solid var(--outline);
+  border-radius: 18px;
+  background: var(--panel);
+  padding: 18px;
+}
+
+.article-section h2 {
+  margin: 0 0 10px;
+  font-size: 1.15rem;
+}
+
+.article-section p {
+  margin: 0 0 12px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.article-section p:last-child {
+  margin-bottom: 0;
+}
+
+.article-section ul,
+.article-section ol {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--muted);
+  display: grid;
+  gap: 8px;
+  line-height: 1.55;
+}
+
+.article-meta {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.article-pill {
+  border: 1px solid var(--outline);
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+[data-theme='dark'] .article-pill {
+  background: rgba(17, 30, 48, 0.7);
+}
+
 .tool-intro-list,
 .result-list {
   margin: 0;

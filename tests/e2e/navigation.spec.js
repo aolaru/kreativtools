@@ -19,12 +19,15 @@ const pages = [
   '/contact',
 ];
 
-test('main pages load and keep Changes as last nav item', async ({ page }) => {
+test('main pages load and keep Learn before Changes with Changes last', async ({ page }) => {
   for (const route of pages) {
     await page.goto(route);
     await expect(page.locator('nav.top-nav')).toBeVisible();
     const labels = await page.locator('nav.top-nav a').allTextContents();
-    expect(labels[labels.length - 1].trim()).toBe('Changes');
+    const normalized = labels.map((label) => label.trim());
+    expect(normalized[normalized.length - 1]).toBe('Changes');
+    expect(normalized).toContain('Learn');
+    expect(normalized.indexOf('Learn')).toBe(normalized.indexOf('Changes') - 1);
   }
 });
 
