@@ -96,11 +96,12 @@ body {
   width: 38px;
   height: 38px;
   border-radius: 10px;
-  background: linear-gradient(140deg, #2f99ea, #2458da);
-  color: #fff;
-  display: grid;
-  place-items: center;
-  font-weight: 700;
+  background: center / cover no-repeat url('/favicon.svg');
+  display: block;
+  color: transparent;
+  font-size: 0;
+  flex: 0 0 38px;
+  box-shadow: 0 10px 22px rgba(37, 83, 218, 0.16);
 }
 
 .brand-copy strong {
