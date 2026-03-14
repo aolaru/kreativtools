@@ -6,6 +6,12 @@
   let shareDocClickHandler = null;
   let shareKeydownHandler = null;
   let shareMenuIdCounter = 0;
+  const setButtonIcon = (button, iconClasses) => {
+    const icon = button?.querySelector('i');
+    if (!icon) return;
+    icon.className = iconClasses;
+    icon.setAttribute('aria-hidden', 'true');
+  };
 
   const setTheme = (theme) => {
     root.setAttribute('data-theme', theme);
@@ -17,8 +23,7 @@
 
     const btn = document.getElementById('themeToggle');
     if (btn) {
-      const icon = btn.querySelector('span');
-      if (icon) icon.textContent = theme === 'dark' ? '☀' : '☾';
+      setButtonIcon(btn, theme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon');
       btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
       btn.title = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
     }
@@ -42,8 +47,6 @@
   const updateShareButton = (state) => {
     const btn = document.getElementById('shareButton');
     if (!btn) return;
-    const icon = btn.querySelector('span');
-    if (!icon) return;
 
     if (shareResetTimer) {
       clearTimeout(shareResetTimer);
@@ -51,18 +54,18 @@
     }
 
     if (state === 'ok') {
-      icon.textContent = '✓';
+      setButtonIcon(btn, 'fa-solid fa-check');
       btn.title = 'Link copied';
       btn.setAttribute('aria-label', 'Link copied');
       shareResetTimer = setTimeout(() => {
-        icon.textContent = '↗';
+        setButtonIcon(btn, 'fa-solid fa-arrow-up-from-bracket');
         btn.title = 'Share this page';
         btn.setAttribute('aria-label', 'Share this page');
       }, 1500);
       return;
     }
 
-    icon.textContent = '↗';
+    setButtonIcon(btn, 'fa-solid fa-arrow-up-from-bracket');
     btn.title = 'Share this page';
     btn.setAttribute('aria-label', 'Share this page');
   };
