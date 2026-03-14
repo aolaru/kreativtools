@@ -259,17 +259,36 @@ button:disabled {
 
 .eyebrow {
   margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--accent) 18%, var(--outline));
+  background: rgba(255, 255, 255, 0.7);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 0.77rem;
+  letter-spacing: 0.08em;
+  font-size: 0.74rem;
   font-weight: 700;
   color: var(--accent-dark);
 }
 
+.eyebrow::before {
+  content: '\f0ad';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  font-size: 0.78rem;
+}
+
+[data-theme='dark'] .eyebrow {
+  background: rgba(17, 30, 48, 0.78);
+}
+
 .hero h1 {
-  margin: 10px 0;
+  margin: 14px 0 10px;
   font-size: clamp(2rem, 5vw, 3.8rem);
   line-height: 1.05;
+  letter-spacing: -0.04em;
 }
 
 .hero p {
@@ -354,6 +373,40 @@ button:disabled {
   font-size: 0.9rem;
 }
 
+.status-empty,
+.code-preview.empty-note,
+.dimensions.empty-note {
+  position: relative;
+  border-radius: 14px;
+  border: 1px dashed color-mix(in oklab, var(--accent) 24%, var(--outline));
+  background: color-mix(in oklab, var(--accent) 4%, var(--panel));
+  padding: 14px 14px 14px 44px;
+}
+
+.status-empty::before,
+.code-preview.empty-note::before,
+.dimensions.empty-note::before {
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  color: var(--accent-dark);
+  font-size: 0.95rem;
+}
+
+.status-empty::before {
+  content: '\f093';
+}
+
+.code-preview.empty-note::before {
+  content: '\f15c';
+}
+
+.dimensions.empty-note::before {
+  content: '\f05a';
+}
+
 .tool-intro {
   display: grid;
   gap: 12px;
@@ -375,6 +428,26 @@ button:disabled {
 .tool-results h2 {
   margin: 0 0 8px;
   font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tool-intro-card h2::before,
+.tool-results h2::before,
+.article-section h2::before,
+.preview-panel h2::before {
+  content: '\f05a';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  display: inline-grid;
+  place-items: center;
+  background: color-mix(in oklab, var(--accent) 14%, var(--panel));
+  color: var(--accent-dark);
+  font-size: 0.82rem;
 }
 
 .tool-intro-card p,
@@ -399,6 +472,9 @@ button:disabled {
 .article-section h2 {
   margin: 0 0 10px;
   font-size: 1.15rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .article-section p {
@@ -542,6 +618,9 @@ input[type='range'] {
 .preview-panel h2 {
   margin: 0 0 10px;
   font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 #previewCanvas {
@@ -867,6 +946,32 @@ input[type='range'] {
 .site-footer h4 {
   margin: 0 0 14px;
   font-size: 1.55rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-inner section:nth-child(2) h4::before,
+.footer-inner section:nth-child(3) h4::before,
+.footer-inner section:nth-child(4) h4::before {
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  font-size: 1rem;
+}
+
+.footer-inner section:nth-child(2) h4::before {
+  content: '\f0e8';
+  color: #e67e22;
+}
+
+.footer-inner section:nth-child(3) h4::before {
+  content: '\f0ad';
+  color: #2b8be4;
+}
+
+.footer-inner section:nth-child(4) h4::before {
+  content: '\f5fc';
+  color: #18a67b;
 }
 
 .site-footer ul {
@@ -881,10 +986,12 @@ input[type='range'] {
   color: #6f7b8f;
   text-decoration: none;
   font-size: 1.35rem;
+  transition: color 120ms ease, transform 120ms ease;
 }
 
 .site-footer a:hover {
   color: #2589d8;
+  transform: translateX(2px);
 }
 
 [data-theme='dark'] .site-footer a {
@@ -1027,6 +1134,10 @@ input[type='range'] {
   .upload-trigger {
     min-width: 0;
     width: 100%;
+  }
+
+  .eyebrow {
+    padding: 7px 10px;
   }
 
   .result-row,

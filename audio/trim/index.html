@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />  <title>Kreativ Tools | Audio Trim</title>
   <meta name="description" content="Trim audio segments and export WAV in your browser." />
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../../styles.css" />
 </head>
 <body>
@@ -13,7 +14,7 @@
 
   <main class="container">
     <section class="hero"><p class="eyebrow">Audio Tools</p><h1>Audio Trim</h1><p>Select start/end time and export only the needed audio segment as WAV.</p></section>
-    <section class="upload-card"><input id="trimAudioInput" type="file" accept="audio/*" hidden /><div id="trimAudioDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload audio"><div class="drop-icon" aria-hidden="true"></div><button id="trimAudioUploadButton" type="button" class="primary upload-trigger">Upload Audio</button><p>or drag and drop an audio file here</p><p id="trimAudioStatus" class="status">No audio selected yet.</p></div></section>
+    <section class="upload-card"><input id="trimAudioInput" type="file" accept="audio/*" hidden /><div id="trimAudioDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload audio"><div class="drop-icon" aria-hidden="true"></div><button id="trimAudioUploadButton" type="button" class="primary upload-trigger">Upload Audio</button><p>or drag and drop an audio file here</p><p id="trimAudioStatus" class="status status-empty">No audio selected yet.</p></div></section>
     <section id="trimAudioWorkspace" class="workspace is-hidden"><div class="controls"><label>Start (seconds)<input id="trimAudioStart" type="number" min="0" step="0.01" value="0" /></label><label>End (seconds)<input id="trimAudioEnd" type="number" min="0.01" step="0.01" value="1" /></label><button id="trimAudioAction" type="button" class="primary" disabled>Trim and Download WAV</button></div><div class="preview-panel"><h2>Preview</h2><audio id="trimAudioPreview" class="audio-preview" controls></audio><p id="trimAudioMeta" class="dimensions"></p></div></section>
   </main>
 

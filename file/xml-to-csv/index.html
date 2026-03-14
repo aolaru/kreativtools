@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />  <title>Kreativ Tools | XML to CSV</title>
   <meta name="description" content="Convert XML files to CSV in your browser." />
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../../styles.css" />
 </head>
 <body>
@@ -51,7 +52,7 @@
         <button id="xmlUploadButton" type="button" class="primary upload-trigger">Upload XML</button>
         <p>or drag and drop an XML file here</p>
         <p class="status">Best results when records are repeated elements (for example: &lt;item&gt;, &lt;row&gt;, &lt;product&gt;).</p>
-        <p id="xmlStatus" class="status">No XML file selected yet.</p>
+        <p id="xmlStatus" class="status status-empty">No XML file selected yet.</p>
       </div>
     </section>
 
@@ -68,7 +69,7 @@
 
       <div class="preview-panel">
         <h2>CSV Preview</h2>
-        <pre id="csvPreview" class="code-preview">Upload XML to see CSV preview.</pre>
+        <pre id="csvPreview" class="code-preview empty-note">Upload XML to see CSV preview.</pre>
         <p id="xmlMeta" class="dimensions"></p>
       </div>
     </section>

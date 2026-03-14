@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />  <title>Kreativ Tools | Font Preview</title>
   <meta name="description" content="Preview your uploaded font files directly in the browser." />
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../../styles.css" />
 </head>
 <body>
@@ -14,12 +15,12 @@
 
   <main class="container">
     <section class="hero"><p class="eyebrow">Font Tools</p><h1>Font Preview</h1><p>Upload a TTF/OTF/WOFF/WOFF2 font and preview custom text instantly.</p></section>
-    <section class="upload-card"><input id="fontPreviewInput" type="file" accept=".ttf,.otf,.woff,.woff2,font/ttf,font/otf,font/woff,font/woff2" hidden /><div id="fontPreviewDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload font file"><div class="drop-icon" aria-hidden="true"></div><button id="fontPreviewUploadButton" type="button" class="primary upload-trigger">Upload Font</button><p>or drag and drop a font file here</p><p id="fontPreviewStatus" class="status">No font selected yet.</p></div></section>
+    <section class="upload-card"><input id="fontPreviewInput" type="file" accept=".ttf,.otf,.woff,.woff2,font/ttf,font/otf,font/woff,font/woff2" hidden /><div id="fontPreviewDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload font file"><div class="drop-icon" aria-hidden="true"></div><button id="fontPreviewUploadButton" type="button" class="primary upload-trigger">Upload Font</button><p>or drag and drop a font file here</p><p id="fontPreviewStatus" class="status status-empty">No font selected yet.</p></div></section>
     <section id="fontPreviewWorkspace" class="workspace is-hidden">
       <div class="controls">
         <label>Preview text<input id="fontPreviewText" type="text" value="Sphinx of black quartz, judge my vow 0123456789" /></label>
         <label>Font size (px)<input id="fontPreviewSize" type="number" min="12" max="180" value="52" /></label>
-        <p id="fontPreviewMeta" class="status">Upload a font to begin preview.</p>
+        <p id="fontPreviewMeta" class="status status-empty">Upload a font to begin preview.</p>
       </div>
       <div class="preview-panel"><h2>Live Preview</h2><div id="fontPreviewBox" class="upload-card" style="min-height:220px;display:grid;align-content:center;">Sphinx of black quartz, judge my vow 0123456789</div></div>
     </section>

@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />  <title>Kreativ Tools | @font-face CSS Generator</title>
   <meta name="description" content="Generate @font-face CSS from uploaded font files." />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -13,7 +14,7 @@
 
   <main class="container">
     <section class="hero"><p class="eyebrow">Font Tools</p><h1>@font-face CSS Generator</h1><p>Upload a font file and generate ready-to-paste CSS.</p></section>
-    <section class="upload-card"><input id="cssFontInput" type="file" accept=".ttf,.otf,.woff,.woff2,font/ttf,font/otf,font/woff,font/woff2" hidden /><div id="cssFontDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload font file"><div class="drop-icon" aria-hidden="true"></div><button id="cssFontUploadButton" type="button" class="primary upload-trigger">Upload Font</button><p>or drag and drop a font file here</p><p id="cssFontStatus" class="status">No font selected yet.</p></div></section>
+    <section class="upload-card"><input id="cssFontInput" type="file" accept=".ttf,.otf,.woff,.woff2,font/ttf,font/otf,font/woff,font/woff2" hidden /><div id="cssFontDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload font file"><div class="drop-icon" aria-hidden="true"></div><button id="cssFontUploadButton" type="button" class="primary upload-trigger">Upload Font</button><p>or drag and drop a font file here</p><p id="cssFontStatus" class="status status-empty">No font selected yet.</p></div></section>
     <section id="cssWorkspace" class="workspace is-hidden">
       <div class="controls">
         <label>Font family<input id="cssFamilyInput" type="text" value="MyFont" /></label>
@@ -23,7 +24,7 @@
         <button id="cssGenerateButton" type="button" class="primary" disabled>Generate CSS</button>
         <button id="cssDownloadButton" type="button" class="primary" disabled>Download CSS</button>
       </div>
-      <div class="preview-panel"><h2>Generated CSS</h2><pre id="cssOutput" class="code-preview">Upload a font and click Generate CSS.</pre></div>
+      <div class="preview-panel"><h2>Generated CSS</h2><pre id="cssOutput" class="code-preview empty-note">Upload a font and click Generate CSS.</pre></div>
     </section>
   </main>
 

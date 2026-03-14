@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />  <title>Kreativ Tools | Image Compress</title>
   <meta name="description" content="Compress images in your browser by adjusting quality and exporting optimized files." />
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../../styles.css" />
 </head>
 <body>
@@ -48,7 +49,7 @@
         <div class="drop-icon" aria-hidden="true"></div>
         <button id="compressUploadButton" type="button" class="primary upload-trigger">Upload Image</button>
         <p>or drag and drop an image here</p>
-        <p id="compressStatus" class="status">No image selected yet.</p>
+        <p id="compressStatus" class="status status-empty">No image selected yet.</p>
       </div>
     </section>
 
@@ -68,7 +69,7 @@
           <input id="compressQualityInput" type="range" min="1" max="100" value="82" />
         </label>
 
-        <p id="compressMeta" class="status">Upload an image to view compression details.</p>
+        <p id="compressMeta" class="status status-empty">Upload an image to view compression details.</p>
 
         <button id="compressApplyButton" type="button" class="primary" disabled>Compress Image</button>
         <button id="compressDownloadButton" type="button" class="primary" disabled>Download Compressed Image</button>
