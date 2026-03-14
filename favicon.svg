@@ -1,5 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Kreativ Tools logo">
-  <rect x="4" y="4" width="56" height="56" rx="18" fill="#ffffff"/>
-  <rect x="4.5" y="4.5" width="55" height="55" rx="17.5" fill="none" stroke="#d7e0eb"/>
-  <path d="M20 15.5h8.25v16.45l13.7-16.45h10.55L36.05 32.2 54 48.5H43.15L28.25 34.85V48.5H20z" fill="#101725"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Kreativ Tools favicon">
+  <defs>
+    <linearGradient id="kGradient" x1="28" y1="24" x2="71" y2="77" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2589d8"/>
+      <stop offset="1" stop-color="#1d6fb0"/>
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" rx="24" fill="#101725"/>
+  <path d="M29 22h12v24.169L61.02 22H76L53.765 48.695 77 78H61.805L41 52.425V78H29z" fill="url(#kGradient)"/>
 </svg>

@@ -101,7 +101,7 @@ body {
   color: transparent;
   font-size: 0;
   flex: 0 0 38px;
-  box-shadow: 0 10px 22px rgba(16, 23, 37, 0.08);
+  box-shadow: none;
 }
 
 .brand-copy strong {
