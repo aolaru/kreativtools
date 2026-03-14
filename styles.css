@@ -756,6 +756,17 @@ input[type='range'] {
   inset: auto;
 }
 
+.tool-thumb-icon {
+  position: absolute;
+  left: 14px;
+  bottom: 12px;
+  z-index: 2;
+  color: rgba(255, 255, 255, 0.96);
+  font-size: 1.45rem;
+  line-height: 1;
+  text-shadow: 0 6px 18px rgba(8, 16, 40, 0.28);
+}
+
 .thumb-image { background: linear-gradient(135deg, #4aa9f5, #2368d9); }
 .thumb-pdf { background: linear-gradient(135deg, #fb6b6b, #cf2f2f); }
 .thumb-video { background: linear-gradient(135deg, #5b7cfa, #2d45b6); }
