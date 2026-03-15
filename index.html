@@ -52,52 +52,179 @@
   </header>
 
   <main class="container">
-    <section class="hero">
-      <p class="eyebrow">Creative Utility Platform</p>
-      <h1>One Home For All Kreativ Tools</h1>
-      <p>Use focused, browser-based tools across image, PDF, video, fonts, audio, and file workflows without leaving the web.</p>
-      <div class="hero-actions">
-        <a class="primary header-link" href="/tools">Browse All Tools</a>
-        <a class="ghost header-link" href="/changes">View Latest Changes</a>
+    <section class="hero hero-home">
+      <div class="hero-home-copy">
+        <p class="eyebrow">Creative Utility Platform</p>
+        <h1>Useful browser tools for the messy parts of creative work.</h1>
+        <p>Compress PDFs, resize images, convert fonts, trim media, and clean up files without bouncing between apps or handing uploads to random services.</p>
+        <div class="hero-actions">
+          <a class="primary header-link" href="/tools">Browse All Tools</a>
+          <a class="ghost header-link" href="/learn">Read the Guides</a>
+        </div>
+        <div class="hero-points" aria-label="Platform highlights">
+          <span><i class="fa-solid fa-lock" aria-hidden="true"></i> Privacy-first browser workflows</span>
+          <span><i class="fa-solid fa-bolt" aria-hidden="true"></i> Fast single-purpose utilities</span>
+          <span><i class="fa-solid fa-layer-group" aria-hidden="true"></i> Image, PDF, video, font, audio, and file tools</span>
+        </div>
+      </div>
+
+      <aside class="hero-rail" aria-label="Quick launch">
+        <div class="hero-rail-card">
+          <p class="hero-rail-label">Start here</p>
+          <h2>Jump into the most useful workflows</h2>
+          <div class="quick-links">
+            <a href="/image/compress"><i class="fa-solid fa-file-image" aria-hidden="true"></i><span>Compress Image</span></a>
+            <a href="/pdf/merge"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span>Merge PDF</span></a>
+            <a href="/pdf/compress"><i class="fa-solid fa-file-pdf" aria-hidden="true"></i><span>Compress PDF</span></a>
+            <a href="/fonts/webfont-convert"><i class="fa-solid fa-font" aria-hidden="true"></i><span>Font to Webfont</span></a>
+          </div>
+        </div>
+        <div class="hero-rail-stats">
+          <div>
+            <strong>Processed in-browser</strong>
+            <span>Built for privacy-sensitive, quick-turn tasks.</span>
+          </div>
+          <div>
+            <strong>Growing Learn section</strong>
+            <span>Practical articles tied to real tools and outcomes.</span>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="home-band" aria-label="Core platform benefits">
+      <article class="home-band-card">
+        <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+        <h2>Private by default</h2>
+        <p>Most workflows are designed to keep files in the browser, which makes the site more useful for client documents, internal assets, and quick one-off fixes.</p>
+      </article>
+      <article class="home-band-card">
+        <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>
+        <h2>Focused, not bloated</h2>
+        <p>Each utility is built around a single job so users can understand it quickly, get a result, and move on without learning a whole suite.</p>
+      </article>
+      <article class="home-band-card">
+        <i class="fa-solid fa-arrow-trend-up" aria-hidden="true"></i>
+        <h2>Built for repeat use</h2>
+        <p>The best pages are becoming stronger landing pages for search, content, and professional workflows rather than just generic tool placeholders.</p>
+      </article>
+    </section>
+
+    <section class="home-section">
+      <div class="home-section-heading">
+        <p class="eyebrow">Featured Tools</p>
+        <h2>Start with the highest-value workflows</h2>
+        <p>These are the tools most likely to drive repeat usage, search demand, and future monetization.</p>
+      </div>
+      <div class="tools-grid" aria-label="Featured tools">
+        <a class="tool-card" data-category="Image Tool" href="/image/compress">
+          <div class="tool-thumb thumb-image thumb-image-compress" aria-hidden="true"><i class="fa-solid fa-file-image tool-thumb-icon"></i></div>
+          <h3>Compress Image</h3>
+          <p>Reduce JPG, PNG, and WebP file sizes for websites, email, and product uploads.</p>
+        </a>
+
+        <a class="tool-card" data-category="PDF Tool" href="/pdf/merge">
+          <div class="tool-thumb thumb-pdf thumb-pdf-merge" aria-hidden="true"><i class="fa-solid fa-layer-group tool-thumb-icon"></i></div>
+          <h3>Merge PDF</h3>
+          <p>Combine multiple PDFs in the right order with a clearer queue-based workflow.</p>
+        </a>
+
+        <a class="tool-card" data-category="PDF Tool" href="/pdf/compress">
+          <div class="tool-thumb thumb-pdf thumb-pdf-compress" aria-hidden="true"><i class="fa-solid fa-file-pdf tool-thumb-icon"></i></div>
+          <h3>Compress PDF</h3>
+          <p>Optimize PDFs for email and delivery while reviewing file savings before download.</p>
+        </a>
+
+        <a class="tool-card" data-category="Font Tool" href="/fonts/webfont-convert">
+          <div class="tool-thumb thumb-font thumb-font-convert" aria-hidden="true"><i class="fa-solid fa-font tool-thumb-icon"></i></div>
+          <h3>Font to Webfont</h3>
+          <p>Convert OTF and TTF files into web-ready formats for faster frontend delivery.</p>
+        </a>
+
+        <a class="tool-card" data-category="Image Tool" href="/image/resize">
+          <div class="tool-thumb thumb-image thumb-image-resize" aria-hidden="true"><i class="fa-solid fa-up-right-and-down-left-from-center tool-thumb-icon"></i></div>
+          <h3>Resize Image</h3>
+          <p>Quickly resize and convert images for content, ecommerce, and social publishing.</p>
+        </a>
+
+        <a class="tool-card" data-category="File Tool" href="/file/xml-to-csv">
+          <div class="tool-thumb thumb-file thumb-file-xml" aria-hidden="true"><i class="fa-solid fa-code tool-thumb-icon"></i></div>
+          <h3>XML to CSV</h3>
+          <p>Turn structured exports into spreadsheet-friendly data for cleanup and reporting.</p>
+        </a>
       </div>
     </section>
 
-    <section class="tools-grid" aria-label="Featured categories">
-      <a class="tool-card" data-category="Image Tools" href="/image">
+    <section class="home-section">
+      <div class="home-section-heading">
+        <p class="eyebrow">Explore by Category</p>
+        <h2>Browse the full tool library</h2>
+        <p>Jump into a category if you know the workflow area but not the exact tool yet.</p>
+      </div>
+      <div class="tools-grid" aria-label="Featured categories">
+        <a class="tool-card" data-category="Image Tools" href="/image">
         <div class="tool-thumb thumb-image thumb-image-resize" aria-hidden="true"><i class="fa-solid fa-up-right-and-down-left-from-center tool-thumb-icon"></i></div>
         <h3>Image</h3>
         <p>Resize, convert, compress, and export visuals for web and social use.</p>
-      </a>
+        </a>
 
-      <a class="tool-card" data-category="PDF Tools" href="/pdf">
+        <a class="tool-card" data-category="PDF Tools" href="/pdf">
         <div class="tool-thumb thumb-pdf thumb-pdf-image" aria-hidden="true"><i class="fa-solid fa-file-pdf tool-thumb-icon"></i></div>
         <h3>PDF</h3>
         <p>Create, merge, and transform documents with client-side PDF workflows.</p>
-      </a>
+        </a>
 
-      <a class="tool-card" data-category="Video Tools" href="/video">
+        <a class="tool-card" data-category="Video Tools" href="/video">
         <div class="tool-thumb thumb-video thumb-video-convert" aria-hidden="true"><i class="fa-solid fa-film tool-thumb-icon"></i></div>
         <h3>Video</h3>
         <p>Convert and prepare lightweight video assets directly in the browser.</p>
-      </a>
+        </a>
 
-      <a class="tool-card" data-category="Font Tools" href="/fonts">
+        <a class="tool-card" data-category="Font Tools" href="/fonts">
         <div class="tool-thumb thumb-font thumb-font-convert" aria-hidden="true"><i class="fa-solid fa-font tool-thumb-icon"></i></div>
         <h3>Fonts</h3>
         <p>Convert font files for modern web delivery and performance.</p>
-      </a>
+        </a>
 
-      <a class="tool-card" data-category="Audio Tools" href="/audio">
+        <a class="tool-card" data-category="Audio Tools" href="/audio">
         <div class="tool-thumb thumb-audio thumb-audio-wav" aria-hidden="true"><i class="fa-solid fa-wave-square tool-thumb-icon"></i></div>
         <h3>Audio</h3>
         <p>Convert and standardize audio assets for editing and publishing.</p>
-      </a>
+        </a>
 
-      <a class="tool-card" data-category="File Tools" href="/file">
+        <a class="tool-card" data-category="File Tools" href="/file">
         <div class="tool-thumb thumb-file thumb-file-xml" aria-hidden="true"><i class="fa-solid fa-code tool-thumb-icon"></i></div>
         <h3>File</h3>
         <p>Transform structured data files with quick conversion utilities.</p>
-      </a>
+        </a>
+      </div>
+    </section>
+
+    <section class="home-split" aria-label="Learn and updates">
+      <article class="home-panel">
+        <p class="eyebrow">Learn</p>
+        <h2>Turn search intent into real workflows</h2>
+        <p>The Learn section now supports the tools with practical, problem-first articles instead of generic filler content.</p>
+        <ul class="home-link-list">
+          <li><a href="/learn/compress-pdf-for-email">How to Compress a PDF for Email</a></li>
+          <li><a href="/learn/merge-pdf-files-in-order">How to Merge PDF Files in the Right Order</a></li>
+          <li><a href="/learn/convert-otf-or-ttf-to-woff2">How to Convert OTF or TTF to WOFF2</a></li>
+        </ul>
+        <a class="ghost header-link" href="/learn">Visit Learn</a>
+      </article>
+
+      <article class="home-panel">
+        <p class="eyebrow">Latest Changes</p>
+        <h2>The product is moving</h2>
+        <p>Recent work has focused on stronger PDF workflows, a better content layer, tighter UI patterns, and a more consistent visual system.</p>
+        <ul class="home-change-list">
+          <li>Branded favicon family and shared site mark</li>
+          <li>Font Awesome header actions and improved card system</li>
+          <li>Learn launch with first practical tutorials</li>
+          <li>PDF Merge and PDF Compress UX upgrades</li>
+        </ul>
+        <a class="ghost header-link" href="/changes">View Full Changelog</a>
+      </article>
     </section>
   </main>
 
