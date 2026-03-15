@@ -58,14 +58,14 @@
       btn.title = 'Link copied';
       btn.setAttribute('aria-label', 'Link copied');
       shareResetTimer = setTimeout(() => {
-        setButtonIcon(btn, 'fa-solid fa-arrow-up-from-bracket');
+        setButtonIcon(btn, 'fa-solid fa-share-nodes');
         btn.title = 'Share this page';
         btn.setAttribute('aria-label', 'Share this page');
       }, 1500);
       return;
     }
 
-    setButtonIcon(btn, 'fa-solid fa-arrow-up-from-bracket');
+    setButtonIcon(btn, 'fa-solid fa-share-nodes');
     btn.title = 'Share this page';
     btn.setAttribute('aria-label', 'Share this page');
   };
