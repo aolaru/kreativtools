@@ -29,7 +29,7 @@ The current site direction is:
 
 ## Run locally
 
-Open [index.html](/Users/andreiolaru/Library/CloudStorage/Dropbox/OLARUAI/kreativ-websites/kreativtools.com/index.html) in a browser, or serve the project root with any static file server.
+Open `index.html` in a browser, or serve the project root with any static file server.
 
 ## Tests
 
@@ -43,13 +43,13 @@ Open [index.html](/Users/andreiolaru/Library/CloudStorage/Dropbox/OLARUAI/kreati
 
 ## Key files
 
-- [index.html](/Users/andreiolaru/Library/CloudStorage/Dropbox/OLARUAI/kreativ-websites/kreativtools.com/index.html): homepage
-- [tools/index.html](/Users/andreiolaru/Library/CloudStorage/Dropbox/OLARUAI/kreativ-websites/kreativtools.com/tools/index.html): tools directory
-- [learn.html](/Users/andreiolaru/Library/CloudStorage/Dropbox/OLARUAI/kreativ-websites/kreativtools.com/learn.html): Learn landing page
-- [changes.html](/Users/andreiolaru/Library/CloudStorage/Dropbox/OLARUAI/kreativ-websites/kreativtools.com/changes.html): changelog
-- [styles.css](/Users/andreiolaru/Library/CloudStorage/Dropbox/OLARUAI/kreativ-websites/kreativtools.com/styles.css): shared visual system
-- [theme.js](/Users/andreiolaru/Library/CloudStorage/Dropbox/OLARUAI/kreativ-websites/kreativtools.com/theme.js): theme toggle and share menu behavior
-- [favicon.svg](/Users/andreiolaru/Library/CloudStorage/Dropbox/OLARUAI/kreativ-websites/kreativtools.com/favicon.svg): primary branded favicon
+- `index.html`: homepage
+- `tools/index.html`: tools directory
+- `learn.html`: Learn landing page
+- `changes.html`: changelog
+- `styles.css`: shared visual system
+- `theme.js`: theme toggle and share menu behavior
+- `favicon.svg`: primary branded favicon
 
 ## Notes
 
