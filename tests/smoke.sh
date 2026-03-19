@@ -46,6 +46,7 @@ main() {
     video/convert-webm/index.html
     fonts/webfont-convert/index.html
     audio/to-wav/index.html
+    audio/to-mp3/index.html
     file/xml-to-csv/index.html
     changes/index.html
     tools/index.html
@@ -74,6 +75,7 @@ main() {
   expect_pattern "video/convert-webm/index.html" 'id="videoInput"'
   expect_pattern "fonts/webfont-convert/index.html" 'id="fontInput"'
   expect_pattern "audio/to-wav/index.html" 'id="audioInput"'
+  expect_pattern "audio/to-mp3/index.html" 'id="mp3AudioInput"'
   expect_pattern "file/xml-to-csv/index.html" 'id="xmlInput"'
 
   expect_pattern "changes/index.html" 'class="changelog-list"'

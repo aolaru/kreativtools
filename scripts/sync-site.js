@@ -12,6 +12,7 @@ const REDIRECTS = {
   'all-tools.html': '/tools',
   'audio-trim.html': '/audio/trim',
   'audio-volume.html': '/audio/volume',
+  'audio-to-mp3.html': '/audio/to-mp3',
   'audio.html': '/audio',
   'changes.html': '/changes',
   'contact.html': '/contact',

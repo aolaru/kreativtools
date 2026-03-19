@@ -11,6 +11,7 @@ const pages = [
   '/video/convert-webm',
   '/fonts/webfont-convert',
   '/audio/to-wav',
+  '/audio/to-mp3',
   '/file/xml-to-csv',
   '/changes',
   '/tools',
@@ -22,7 +23,7 @@ const pages = [
 test('all tools directory shows cards that link to tools', async ({ page }) => {
   await page.goto('/tools');
   const cards = page.locator('.tool-card');
-  await expect(cards).toHaveCount(19);
+  await expect(cards).toHaveCount(20);
 
   await expect(page.locator('.tool-card[href="/image/compress"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/image/resize"]')).toBeVisible();
@@ -37,6 +38,7 @@ test('all tools directory shows cards that link to tools', async ({ page }) => {
   await expect(page.locator('.tool-card[href="/fonts/preview"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/fonts/css-generator"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/audio/to-wav"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/audio/to-mp3"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/audio/trim"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/audio/volume"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/file/xml-to-csv"]')).toBeVisible();

@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kreativ Tools | Audio to MP3</title>
+  <meta name="description" content="Convert WAV and other browser-supported audio files to MP3 with bitrate compression options." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://kreativtools.com/audio/to-mp3" />
+  <meta property="og:title" content="Kreativ Tools | Audio to MP3" />
+  <meta property="og:description" content="Convert WAV and other browser-supported audio files to MP3 with bitrate compression options." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kreativtools.com/audio/to-mp3" />
+  <meta property="og:image" content="https://kreativtools.com/og-image.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Kreativ Tools | Audio to MP3" />
+  <meta name="twitter:description" content="Convert WAV and other browser-supported audio files to MP3 with bitrate compression options." />
+  <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
+  <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="../../favicon-32x32.png" sizes="32x32" type="image/png" />
+  <link rel="icon" href="../../favicon-16x16.png" sizes="16x16" type="image/png" />
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="../../styles.css" />
+</head>
+<body>
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Kreativ Tools Home">
+      <div class="brand-mark">K</div>
+      <div class="brand-copy"><strong>Kreativ Tools</strong></div>
+    </a>
+
+    <nav class="top-nav" aria-label="Primary">
+      <a href="/image">Image</a>
+      <a href="/pdf">PDF</a>
+      <a href="/video">Video</a>
+      <a href="/fonts">Fonts</a>
+      <a href="/audio" aria-current="page">Audio</a>
+      <a href="/file">File</a>
+      <a href="/learn">Learn</a>
+      <a href="/changes">Changes</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="ghost header-link" href="/tools">All Tools</a>
+      <button id="shareButton" type="button" class="icon-toggle" aria-label="Share this page" title="Share this page"><i class="fa-solid fa-share-nodes" aria-hidden="true"></i></button>
+      <button id="themeToggle" type="button" class="icon-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><i class="fa-solid fa-moon" aria-hidden="true"></i></button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <p class="eyebrow">Audio Tools</p>
+      <h1>Audio to MP3</h1>
+      <p>Convert WAV and other browser-supported audio files into MP3 and choose how aggressively you want to compress the final export.</p>
+    </section>
+
+    <section class="tool-intro" aria-label="MP3 conversion guidance">
+      <div class="tool-intro-card">
+        <h2>Best for</h2>
+        <p>Turning heavier WAV files into lighter MP3 downloads for sharing, previews, drafts, and smaller everyday delivery files.</p>
+      </div>
+      <div class="tool-intro-card">
+        <h2>Compression rule</h2>
+        <p>Lower bitrate means smaller MP3 files and more compression. Higher bitrate means better quality and larger downloads.</p>
+      </div>
+    </section>
+
+    <section class="upload-card">
+      <input id="mp3AudioInput" type="file" accept="audio/*,.wav,.mp3,.m4a,.ogg,.flac,.aac" hidden />
+      <div id="mp3AudioDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload audio file">
+        <div class="drop-icon" aria-hidden="true"></div>
+        <button id="mp3AudioUploadButton" type="button" class="primary upload-trigger">Upload Audio</button>
+        <p>or drag and drop an audio file here</p>
+        <p class="status">Input works best with WAV, MP3, M4A/AAC, OGG, and FLAC files your browser can decode.</p>
+        <p id="mp3AudioStatus" class="status status-empty">No audio selected yet.</p>
+      </div>
+    </section>
+
+    <section id="mp3AudioWorkspace" class="workspace is-hidden">
+      <div class="controls">
+        <label>
+          Output format
+          <input type="text" value="MP3" disabled />
+        </label>
+
+        <label>
+          MP3 compression
+          <select id="mp3BitrateInput">
+            <option value="96">Higher compression · 96 kbps</option>
+            <option value="128" selected>Balanced · 128 kbps</option>
+            <option value="192">Standard · 192 kbps</option>
+            <option value="256">High quality · 256 kbps</option>
+            <option value="320">Maximum quality · 320 kbps</option>
+          </select>
+        </label>
+
+        <label>
+          Sample rate
+          <select id="mp3SampleRateInput">
+            <option value="keep" selected>Keep original</option>
+            <option value="44100">44,100 Hz</option>
+            <option value="48000">48,000 Hz</option>
+          </select>
+        </label>
+
+        <label class="checkbox-row">
+          <input id="mp3MonoInput" type="checkbox" />
+          Export mono for smaller files
+        </label>
+
+        <button id="mp3ConvertButton" type="button" class="primary" disabled>Convert to MP3</button>
+      </div>
+
+      <div class="preview-panel">
+        <h2>Preview</h2>
+        <audio id="mp3AudioPreview" class="audio-preview" controls></audio>
+        <p id="mp3AudioMeta" class="dimensions"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+  <div class="footer-topline"></div>
+  <div class="footer-inner">
+    <section class="footer-about">
+      <h3>Kreativ<span>Tools</span></h3>
+      <p>Kreativ Tools is a growing browser-based toolkit for image, PDF, video, font, audio, and file workflows. Explore focused utilities, practical Learn guides, and privacy-friendly tools for repeat creative work.</p>
+    </section>
+
+    <section>
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/tools">All Tools</a></li>
+        <li><a href="/learn">Learn</a></li>
+        <li><a href="/changes">Changes</a></li>
+        <li><a href="/privacy">Privacy Policy</a></li>
+        <li><a href="/terms">Terms</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h4>Core Tools</h4>
+      <ul>
+        <li><a href="/image/compress">Image Compress</a></li>
+        <li><a href="/pdf/merge">PDF Merge</a></li>
+        <li><a href="/pdf/compress">PDF Compress</a></li>
+        <li><a href="/fonts/webfont-convert">Font to Webfont</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h4>More Tools</h4>
+      <ul>
+        <li><a href="/learn">Learn Guides</a></li>
+        <li><a href="/video/thumbnail">Video Thumbnail</a></li>
+        <li><a href="/file/xml-to-csv">XML to CSV</a></li>
+        <li><a href="/tools">Browse Directory</a></li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="footer-bottom">
+    <p class="footer-brand-links"><a href="https://kreativfont.com/" target="_blank" rel="noopener noreferrer">Kreativ Font</a><span aria-hidden="true">·</span><a href="https://kreativsound.com/" target="_blank" rel="noopener noreferrer">Kreativ Sound</a><span aria-hidden="true">·</span><a href="https://kreativwp.com/" target="_blank" rel="noopener noreferrer">Kreativ WP</a><span aria-hidden="true">·</span><a href="/">Kreativ Tools</a></p>
+    <p>© 2026 <a href="https://madebykreativ.com/" target="_blank" rel="noopener noreferrer">Made by KREATIV</a> · Independent creative tools and assets by Andrei Olaru</p>
+  </div>
+</footer>
+
+  <script src="../../audio/lame.min.js"></script>
+  <script>
+    const audioInput = document.getElementById('mp3AudioInput');
+    const uploadButton = document.getElementById('mp3AudioUploadButton');
+    const dropzone = document.getElementById('mp3AudioDropzone');
+    const statusEl = document.getElementById('mp3AudioStatus');
+    const workspace = document.getElementById('mp3AudioWorkspace');
+    const bitrateInput = document.getElementById('mp3BitrateInput');
+    const sampleRateInput = document.getElementById('mp3SampleRateInput');
+    const monoInput = document.getElementById('mp3MonoInput');
+    const convertButton = document.getElementById('mp3ConvertButton');
+    const preview = document.getElementById('mp3AudioPreview');
+    const metaEl = document.getElementById('mp3AudioMeta');
+
+    let selectedFile = null;
+    let decodedBuffer = null;
+    let sourceName = 'audio';
+    let previewUrl = '';
+
+    const setStatus = (message) => {
+      statusEl.textContent = message;
+    };
+
+    const formatDuration = (seconds) => {
+      const s = Math.max(0, Math.round(seconds));
+      const m = Math.floor(s / 60);
+      const rem = String(s % 60).padStart(2, '0');
+      return `${m}:${rem}`;
+    };
+
+    const floatToInt16 = (channelData) => {
+      const output = new Int16Array(channelData.length);
+      for (let i = 0; i < channelData.length; i += 1) {
+        const sample = Math.max(-1, Math.min(1, channelData[i]));
+        output[i] = sample < 0 ? sample * 32768 : sample * 32767;
+      }
+      return output;
+    };
+
+    const renderBuffer = async (inputBuffer, targetSampleRate, mono) => {
+      const targetChannels = mono ? 1 : Math.min(2, inputBuffer.numberOfChannels);
+      const length = Math.max(1, Math.ceil(inputBuffer.duration * targetSampleRate));
+      const offline = new OfflineAudioContext(targetChannels, length, targetSampleRate);
+      const source = offline.createBufferSource();
+      source.buffer = inputBuffer;
+      source.connect(offline.destination);
+      source.start();
+      return offline.startRendering();
+    };
+
+    const encodeMp3 = (audioBuffer, bitrate) => {
+      const channels = Math.min(2, audioBuffer.numberOfChannels);
+      const sampleRate = audioBuffer.sampleRate;
+      const encoder = new lamejs.Mp3Encoder(channels, sampleRate, bitrate);
+      const blockSize = 1152;
+      const mp3Chunks = [];
+      const left = floatToInt16(audioBuffer.getChannelData(0));
+      const right = channels > 1 ? floatToInt16(audioBuffer.getChannelData(1)) : null;
+
+      for (let i = 0; i < left.length; i += blockSize) {
+        const leftChunk = left.subarray(i, i + blockSize);
+        let encodedChunk;
+        if (channels === 2 && right) {
+          const rightChunk = right.subarray(i, i + blockSize);
+          encodedChunk = encoder.encodeBuffer(leftChunk, rightChunk);
+        } else {
+          encodedChunk = encoder.encodeBuffer(leftChunk);
+        }
+
+        if (encodedChunk.length > 0) {
+          mp3Chunks.push(new Int8Array(encodedChunk));
+        }
+      }
+
+      const flushChunk = encoder.flush();
+      if (flushChunk.length > 0) {
+        mp3Chunks.push(new Int8Array(flushChunk));
+      }
+
+      return new Blob(mp3Chunks, { type: 'audio/mpeg' });
+    };
+
+    const loadAudioFile = async (file) => {
+      if (!file || !file.type.startsWith('audio/') && !/\.(wav|mp3|m4a|aac|ogg|flac)$/i.test(file.name)) {
+        setStatus('Please select a valid audio file.');
+        return;
+      }
+
+      selectedFile = file;
+      sourceName = file.name.replace(/\.[^.]+$/, '');
+
+      try {
+        const data = await file.arrayBuffer();
+        const context = new AudioContext();
+        decodedBuffer = await context.decodeAudioData(data.slice(0));
+        await context.close();
+
+        if (previewUrl) URL.revokeObjectURL(previewUrl);
+        previewUrl = URL.createObjectURL(file);
+        preview.src = previewUrl;
+        workspace.classList.remove('is-hidden');
+        convertButton.disabled = false;
+
+        metaEl.textContent = `${decodedBuffer.numberOfChannels} ch • ${Math.round(decodedBuffer.sampleRate)} Hz • ${formatDuration(decodedBuffer.duration)}`;
+        setStatus(`Loaded audio: ${file.name}`);
+      } catch {
+        setStatus('Could not decode this audio file. Try WAV, MP3, M4A, OGG, or another browser-supported audio format.');
+      }
+    };
+
+    const convertAudio = async () => {
+      if (!selectedFile || !decodedBuffer) {
+        setStatus('Upload an audio file first.');
+        return;
+      }
+
+      if (!window.lamejs) {
+        setStatus('MP3 encoder could not load. Please refresh and try again.');
+        return;
+      }
+
+      convertButton.disabled = true;
+      setStatus('Converting to MP3...');
+
+      try {
+        const targetSampleRate = sampleRateInput.value === 'keep' ? decodedBuffer.sampleRate : Number(sampleRateInput.value);
+        const rendered = await renderBuffer(decodedBuffer, targetSampleRate, monoInput.checked);
+        const bitrate = Number(bitrateInput.value);
+        const mp3Blob = encodeMp3(rendered, bitrate);
+        const url = URL.createObjectURL(mp3Blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `${sourceName}-${bitrate}kbps.mp3`;
+        link.click();
+        URL.revokeObjectURL(url);
+        setStatus(`Downloaded ${sourceName}-${bitrate}kbps.mp3`);
+      } catch {
+        setStatus('MP3 conversion failed for this file. Please try another one.');
+      } finally {
+        convertButton.disabled = false;
+      }
+    };
+
+    uploadButton.addEventListener('click', () => audioInput.click());
+
+    dropzone.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        audioInput.click();
+      }
+    });
+
+    audioInput.addEventListener('change', () => {
+      const [file] = audioInput.files || [];
+      if (file) loadAudioFile(file);
+      audioInput.value = '';
+    });
+
+    dropzone.addEventListener('dragover', (event) => {
+      event.preventDefault();
+      dropzone.classList.add('drag-over');
+    });
+
+    dropzone.addEventListener('dragleave', () => {
+      dropzone.classList.remove('drag-over');
+    });
+
+    dropzone.addEventListener('drop', (event) => {
+      event.preventDefault();
+      dropzone.classList.remove('drag-over');
+      const [file] = event.dataTransfer?.files || [];
+      if (file) loadAudioFile(file);
+    });
+
+    convertButton.addEventListener('click', convertAudio);
+  </script>
+
+  <script src="../../cookie-consent.js"></script>
+  <script src="../../github-pages-prefix.js"></script>
+  <script src="../../analytics.js"></script>
+  <script src="../../theme.js"></script>
+</body>
+</html>
