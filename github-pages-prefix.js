@@ -16,13 +16,6 @@
     document.head.appendChild(analyticsScript);
   }
 
-  var path = window.location.pathname;
-  if (path && path !== '/' && path.endsWith('/')) {
-    var normalized = path.replace(/\/+$/, '');
-    if (!normalized) normalized = '/';
-    window.history.replaceState({}, '', normalized + window.location.search + window.location.hash);
-  }
-
   if (!isGithubPages) return;
 
   var parts = window.location.pathname.split('/').filter(Boolean);

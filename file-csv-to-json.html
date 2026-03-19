@@ -7,7 +7,6 @@
   <meta name="description" content="Convert CSV files to JSON in your browser." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://kreativtools.com/file/csv-to-json" />
-  <meta http-equiv="refresh" content="0; url=/file/csv-to-json" />
   <meta property="og:title" content="Kreativ Tools | CSV to JSON" />
   <meta property="og:description" content="Convert CSV files to JSON in your browser." />
   <meta property="og:type" content="website" />
@@ -21,7 +20,19 @@
   <link rel="icon" href="favicon-32x32.png" sizes="32x32" type="image/png" />
   <link rel="icon" href="favicon-16x16.png" sizes="16x16" type="image/png" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-  <script>window.location.replace("/file/csv-to-json");</script>
+  <script>(function () {
+  var route = "/file/csv-to-json";
+  var isGithubPages = window.location.hostname.endsWith('github.io');
+  var target = route;
+  if (isGithubPages) {
+    var parts = window.location.pathname.split('/').filter(Boolean);
+    if (parts.length > 0) {
+      var prefix = '/' + parts[0];
+      target = route === '/' ? prefix + '/' : prefix + route;
+    }
+  }
+  window.location.replace(target);
+})();</script>
 </head>
 <body>
   <p>Redirecting to <a href="/file/csv-to-json">/file/csv-to-json</a>...</p>

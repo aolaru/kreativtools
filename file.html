@@ -7,7 +7,6 @@
   <meta name="description" content="File tools for XML, JSON, and CSV conversion workflows." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://kreativtools.com/file" />
-  <meta http-equiv="refresh" content="0; url=/file" />
   <meta property="og:title" content="Kreativ Tools | File Tools" />
   <meta property="og:description" content="File tools for XML, JSON, and CSV conversion workflows." />
   <meta property="og:type" content="website" />
@@ -21,7 +20,19 @@
   <link rel="icon" href="favicon-32x32.png" sizes="32x32" type="image/png" />
   <link rel="icon" href="favicon-16x16.png" sizes="16x16" type="image/png" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-  <script>window.location.replace("/file");</script>
+  <script>(function () {
+  var route = "/file";
+  var isGithubPages = window.location.hostname.endsWith('github.io');
+  var target = route;
+  if (isGithubPages) {
+    var parts = window.location.pathname.split('/').filter(Boolean);
+    if (parts.length > 0) {
+      var prefix = '/' + parts[0];
+      target = route === '/' ? prefix + '/' : prefix + route;
+    }
+  }
+  window.location.replace(target);
+})();</script>
 </head>
 <body>
   <p>Redirecting to <a href="/file">/file</a>...</p>

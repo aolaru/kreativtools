@@ -47,10 +47,12 @@ test('brand link points to homepage from content pages', async ({ page }) => {
   await expect(page.locator('a.brand[href="/"]')).toBeVisible();
 });
 
-test('canonical URL removes trailing slash from displayed path', async ({ page }) => {
+test('clean routes resolve without breaking tool pages', async ({ page }) => {
   await page.goto('/image/resize');
-  await expect.poll(() => new URL(page.url()).pathname).toBe('/image/resize');
+  await expect(page.getByRole('heading', { level: 1, name: /Resize an Image, Convert, or Export PDF/i })).toBeVisible();
+  await expect.poll(() => new URL(page.url()).pathname).toMatch(/^\/image\/resize\/?$/);
 
   await page.goto('/tools');
-  await expect.poll(() => new URL(page.url()).pathname).toBe('/tools');
+  await expect(page.locator('.tool-card[href="/image/compress"]')).toBeVisible();
+  await expect.poll(() => new URL(page.url()).pathname).toMatch(/^\/tools\/?$/);
 });

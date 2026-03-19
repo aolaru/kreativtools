@@ -284,6 +284,19 @@ function buildRedirectPage(route, title, description) {
   const target = `${SITE_URL}${route}`;
   const safeTitle = escapeHtml(title);
   const safeDescription = escapeAttr(description);
+  const redirectScript = `(function () {
+  var route = ${JSON.stringify(route)};
+  var isGithubPages = window.location.hostname.endsWith('github.io');
+  var target = route;
+  if (isGithubPages) {
+    var parts = window.location.pathname.split('/').filter(Boolean);
+    if (parts.length > 0) {
+      var prefix = '/' + parts[0];
+      target = route === '/' ? prefix + '/' : prefix + route;
+    }
+  }
+  window.location.replace(target);
+})();`;
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -293,7 +306,6 @@ function buildRedirectPage(route, title, description) {
   <meta name="description" content="${safeDescription}" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="${target}" />
-  <meta http-equiv="refresh" content="0; url=${route}" />
   <meta property="og:title" content="${escapeAttr(title)}" />
   <meta property="og:description" content="${safeDescription}" />
   <meta property="og:type" content="website" />
@@ -307,7 +319,7 @@ function buildRedirectPage(route, title, description) {
   <link rel="icon" href="favicon-32x32.png" sizes="32x32" type="image/png" />
   <link rel="icon" href="favicon-16x16.png" sizes="16x16" type="image/png" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-  <script>window.location.replace(${JSON.stringify(route)});</script>
+  <script>${redirectScript}</script>
 </head>
 <body>
   <p>Redirecting to <a href="${route}">${route}</a>...</p>

@@ -7,7 +7,6 @@
   <meta name="description" content="Boost or reduce audio volume and export WAV in your browser." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://kreativtools.com/audio/volume" />
-  <meta http-equiv="refresh" content="0; url=/audio/volume" />
   <meta property="og:title" content="Kreativ Tools | Audio Volume Booster" />
   <meta property="og:description" content="Boost or reduce audio volume and export WAV in your browser." />
   <meta property="og:type" content="website" />
@@ -21,7 +20,19 @@
   <link rel="icon" href="favicon-32x32.png" sizes="32x32" type="image/png" />
   <link rel="icon" href="favicon-16x16.png" sizes="16x16" type="image/png" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-  <script>window.location.replace("/audio/volume");</script>
+  <script>(function () {
+  var route = "/audio/volume";
+  var isGithubPages = window.location.hostname.endsWith('github.io');
+  var target = route;
+  if (isGithubPages) {
+    var parts = window.location.pathname.split('/').filter(Boolean);
+    if (parts.length > 0) {
+      var prefix = '/' + parts[0];
+      target = route === '/' ? prefix + '/' : prefix + route;
+    }
+  }
+  window.location.replace(target);
+})();</script>
 </head>
 <body>
   <p>Redirecting to <a href="/audio/volume">/audio/volume</a>...</p>
