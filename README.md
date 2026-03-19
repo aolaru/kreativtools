@@ -2,6 +2,12 @@
 
 Kreativ Tools is a browser-based utility site for image, PDF, video, font, audio, and file workflows. The site includes dedicated tool pages, a Learn section with practical guides, a public changelog, and a shared UI/metadata generation step to keep static pages consistent.
 
+## Current version
+
+- Current product version: `v0.9.0`
+- Version source of truth: `package.json`
+- Current release stage: pre-`1.0`, stable enough to promote, still actively evolving
+
 ## Current scope
 
 ### Main sections
@@ -59,6 +65,33 @@ Use `npm run sync:site` after shared layout or metadata changes. The sync script
 - `scripts/sync-site.js`: shared metadata/header/footer generator
 - `sitemap.xml`: canonical URL list
 - `favicon.svg`: primary branded favicon
+
+## Versioning
+
+Use lightweight semantic versioning for the product:
+
+- Patch: small fixes, copy changes, small UI polish, metadata cleanup, test-only maintenance
+- Minor: new tools, meaningful UX improvements, new Learn article batches, structural site improvements
+- Major: a real public milestone, major product repositioning, or a release you want to promote as a stable foundation
+
+For Kreativ Tools right now:
+
+- stay in `0.x` while the product is still expanding quickly
+- use `1.0.0` only when the core tool set, site structure, and public positioning feel stable enough for a stronger launch push
+
+## Release workflow
+
+1. Ship the product changes.
+2. Update the Changes page with the important release notes.
+3. Bump the version:
+   - `npm run version:patch`
+   - `npm run version:minor`
+   - `npm run version:major`
+4. Re-run:
+   - `bash tests/smoke.sh`
+   - `npm run test:e2e`
+5. Commit the version bump and release notes.
+6. Optionally create a matching git tag like `v0.9.0`.
 
 ## Notes
 
