@@ -53,6 +53,6 @@ test('clean routes resolve without breaking tool pages', async ({ page }) => {
   await expect.poll(() => new URL(page.url()).pathname).toMatch(/^\/image\/resize\/?$/);
 
   await page.goto('/tools');
-  await expect(page.locator('.tool-card[href="/image/compress"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/image/compress/"]')).toBeVisible();
   await expect.poll(() => new URL(page.url()).pathname).toMatch(/^\/tools\/?$/);
 });

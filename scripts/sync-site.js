@@ -9,65 +9,65 @@ const FONT_AWESOME_HREF = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6
 const FONT_AWESOME_INTEGRITY = 'sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==';
 
 const REDIRECTS = {
-  'all-tools.html': '/tools',
-  'audio-trim.html': '/audio/trim',
-  'audio-volume.html': '/audio/volume',
-  'audio-to-mp3.html': '/audio/to-mp3',
-  'audio.html': '/audio',
-  'changes.html': '/changes',
-  'contact.html': '/contact',
-  'file-csv-to-json.html': '/file/csv-to-json',
-  'file-json-to-csv.html': '/file/json-to-csv',
-  'file.html': '/file',
-  'fonts-css-generator.html': '/fonts/css-generator',
-  'fonts-preview.html': '/fonts/preview',
-  'fonts.html': '/fonts',
-  'image-compress.html': '/image/compress',
-  'image-to-webp.html': '/image/to-webp',
-  'image-tools.html': '/image/resize',
-  'learn.html': '/learn',
-  'pdf-compress.html': '/pdf/compress',
-  'pdf-merge.html': '/pdf/merge',
-  'pdf.html': '/pdf',
-  'privacy.html': '/privacy',
-  'terms.html': '/terms',
-  'video-thumbnail.html': '/video/thumbnail',
-  'video-trim.html': '/video/trim',
-  'video.html': '/video',
+  'all-tools.html': '/tools/',
+  'audio-trim.html': '/audio/trim/',
+  'audio-volume.html': '/audio/volume/',
+  'audio-to-mp3.html': '/audio/to-mp3/',
+  'audio.html': '/audio/',
+  'changes.html': '/changes/',
+  'contact.html': '/contact/',
+  'file-csv-to-json.html': '/file/csv-to-json/',
+  'file-json-to-csv.html': '/file/json-to-csv/',
+  'file.html': '/file/',
+  'fonts-css-generator.html': '/fonts/css-generator/',
+  'fonts-preview.html': '/fonts/preview/',
+  'fonts.html': '/fonts/',
+  'image-compress.html': '/image/compress/',
+  'image-to-webp.html': '/image/to-webp/',
+  'image-tools.html': '/image/resize/',
+  'learn.html': '/learn/',
+  'pdf-compress.html': '/pdf/compress/',
+  'pdf-merge.html': '/pdf/merge/',
+  'pdf.html': '/pdf/',
+  'privacy.html': '/privacy/',
+  'terms.html': '/terms/',
+  'video-thumbnail.html': '/video/thumbnail/',
+  'video-trim.html': '/video/trim/',
+  'video.html': '/video/',
 };
 
 const NAV_ITEMS = [
-  { label: 'Image', href: '/image', key: 'image' },
-  { label: 'PDF', href: '/pdf', key: 'pdf' },
-  { label: 'Video', href: '/video', key: 'video' },
-  { label: 'Fonts', href: '/fonts', key: 'fonts' },
-  { label: 'Audio', href: '/audio', key: 'audio' },
-  { label: 'File', href: '/file', key: 'file' },
-  { label: 'Learn', href: '/learn', key: 'learn' },
-  { label: 'Changes', href: '/changes', key: 'changes' },
+  { label: 'Image', href: '/image/', key: 'image' },
+  { label: 'PDF', href: '/pdf/', key: 'pdf' },
+  { label: 'Video', href: '/video/', key: 'video' },
+  { label: 'Fonts', href: '/fonts/', key: 'fonts' },
+  { label: 'Audio', href: '/audio/', key: 'audio' },
+  { label: 'File', href: '/file/', key: 'file' },
+  { label: 'Learn', href: '/learn/', key: 'learn' },
+  { label: 'Changes', href: '/changes/', key: 'changes' },
 ];
 
 const FOOTER_SECTIONS = {
   navigate: [
     ['Home', '/'],
-    ['All Tools', '/tools'],
-    ['Learn', '/learn'],
-    ['Changes', '/changes'],
-    ['Privacy Policy', '/privacy'],
-    ['Terms', '/terms'],
-    ['Contact', '/contact'],
+    ['All Tools', '/tools/'],
+    ['Learn', '/learn/'],
+    ['Changes', '/changes/'],
+    ['Privacy Policy', '/privacy/'],
+    ['Terms', '/terms/'],
+    ['Contact', '/contact/'],
   ],
   core: [
-    ['Image Compress', '/image/compress'],
-    ['PDF Merge', '/pdf/merge'],
-    ['PDF Compress', '/pdf/compress'],
-    ['Font to Webfont', '/fonts/webfont-convert'],
+    ['Image Compress', '/image/compress/'],
+    ['PDF Merge', '/pdf/merge/'],
+    ['PDF Compress', '/pdf/compress/'],
+    ['Font to Webfont', '/fonts/webfont-convert/'],
   ],
   more: [
-    ['Learn Guides', '/learn'],
-    ['Video Thumbnail', '/video/thumbnail'],
-    ['XML to CSV', '/file/xml-to-csv'],
-    ['Browse Directory', '/tools'],
+    ['Learn Guides', '/learn/'],
+    ['Video Thumbnail', '/video/thumbnail/'],
+    ['XML to CSV', '/file/xml-to-csv/'],
+    ['Browse Directory', '/tools/'],
   ],
 };
 
@@ -104,7 +104,7 @@ function canonicalFiles() {
 function routeForCanonicalFile(file) {
   const rel = path.relative(ROOT, file).replace(/\\/g, '/');
   if (rel === 'index.html') return '/';
-  return `/${rel.replace(/\/index\.html$/, '')}`;
+  return `/${rel.replace(/\/index\.html$/, '')}/`;
 }
 
 function prefixForFile(file) {
@@ -113,8 +113,19 @@ function prefixForFile(file) {
   return depth === 0 ? '' : '../'.repeat(depth);
 }
 
+function normalizeInternalHref(href) {
+  if (!href || !href.startsWith('/')) return href;
+  if (href === '/' || href.startsWith('//')) return href;
+
+  const [pathPart, suffix = ''] = href.split(/([?#].*)/, 2);
+  if (/\.[a-z0-9]+$/i.test(pathPart)) return href;
+  if (pathPart.endsWith('/')) return href;
+
+  return `${pathPart}/${suffix}`;
+}
+
 function navKeyForRoute(route) {
-  if (route === '/changes') return 'changes';
+  if (route === '/changes/') return 'changes';
   if (route.startsWith('/learn')) return 'learn';
   if (route.startsWith('/image')) return 'image';
   if (route.startsWith('/pdf')) return 'pdf';
@@ -170,7 +181,7 @@ function buildHeader(route) {
     return `      <a href="${item.href}"${current}>${item.label}</a>`;
   }).join('\n');
 
-  const allToolsCurrent = route === '/tools' ? ' aria-current="page"' : '';
+  const allToolsCurrent = route === '/tools/' ? ' aria-current="page"' : '';
 
   return `<header class="site-header">
     <a class="brand" href="/" aria-label="Kreativ Tools Home">
@@ -183,7 +194,7 @@ ${navLinks}
     </nav>
 
     <div class="header-actions">
-      <a class="ghost header-link" href="/tools"${allToolsCurrent}>All Tools</a>
+      <a class="ghost header-link" href="/tools/"${allToolsCurrent}>All Tools</a>
       <button id="shareButton" type="button" class="icon-toggle" aria-label="Share this page" title="Share this page"><i class="fa-solid fa-share-nodes" aria-hidden="true"></i></button>
       <button id="themeToggle" type="button" class="icon-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><i class="fa-solid fa-moon" aria-hidden="true"></i></button>
     </div>
@@ -265,6 +276,7 @@ function syncCanonicalPage(file) {
   content = replaceBlock(content, /<head>[\s\S]*?<\/head>/, head, 'head', rel);
   content = replaceBlock(content, /<header class="site-header">[\s\S]*?<\/header>/, buildHeader(route), 'header', rel);
   content = replaceBlock(content, /<footer class="site-footer">[\s\S]*?<\/footer>/, footer, 'footer', rel);
+  content = content.replace(/href="(\/[^"]*)"/g, (_match, href) => `href="${normalizeInternalHref(href)}"`);
 
   for (const script of scripts) {
     const scriptRegex = new RegExp(`<script src="${script.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}"><\\/script>`);

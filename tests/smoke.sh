@@ -23,10 +23,10 @@ expect_pattern() {
 expect_nav_order() {
   local file="$1"
   local audio_line file_line learn_line changes_line
-  audio_line="$(rg -n '<a href="/audio"' "$file" | head -n1 | cut -d: -f1)"
-  file_line="$(rg -n '<a href="/file"' "$file" | head -n1 | cut -d: -f1)"
-  learn_line="$(rg -n '<a href="/learn"' "$file" | head -n1 | cut -d: -f1)"
-  changes_line="$(rg -n '<a href="/changes"' "$file" | head -n1 | cut -d: -f1)"
+  audio_line="$(rg -n '<a href="/audio/?\"' "$file" | head -n1 | cut -d: -f1)"
+  file_line="$(rg -n '<a href="/file/?\"' "$file" | head -n1 | cut -d: -f1)"
+  learn_line="$(rg -n '<a href="/learn/?\"' "$file" | head -n1 | cut -d: -f1)"
+  changes_line="$(rg -n '<a href="/changes/?\"' "$file" | head -n1 | cut -d: -f1)"
 
   [[ -n "$audio_line" && -n "$file_line" && -n "$learn_line" && -n "$changes_line" ]] || fail "Could not read nav order markers in $file"
   (( audio_line < file_line )) || fail "Expected audio before file in nav for $file"

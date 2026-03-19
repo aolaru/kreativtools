@@ -10,24 +10,24 @@ const compressPdf = path.join(fixturesDir, 'compress-sample.pdf');
 test('homepage surfaces featured workflows and Learn entry points', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('heading', { level: 1, name: /Useful browser tools/i })).toBeVisible();
-  await expect(page.locator('.quick-links a[href="/image/compress"]')).toBeVisible();
-  await expect(page.locator('.quick-links a[href="/pdf/merge"]')).toBeVisible();
-  await expect(page.locator('.home-panel a[href="/learn"]')).toBeVisible();
-  await expect(page.locator('.home-panel a[href="/changes"]')).toBeVisible();
+  await expect(page.locator('.quick-links a[href="/image/compress/"]')).toBeVisible();
+  await expect(page.locator('.quick-links a[href="/pdf/merge/"]')).toBeVisible();
+  await expect(page.locator('.home-panel a[href="/learn/"]')).toBeVisible();
+  await expect(page.locator('.home-panel a[href="/changes/"]')).toBeVisible();
 });
 
 test('learn landing page includes the core hero guides and expanded follow-up guides', async ({ page }) => {
   await page.goto('/learn');
   await expect(page.getByRole('heading', { level: 1, name: 'Guides for Better Results' })).toBeVisible();
-  await expect(page.locator('.tool-card[href="/learn/compress-pdf-for-email"]')).toBeVisible();
-  await expect(page.locator('.tool-card[href="/learn/merge-pdf-files-in-order"]')).toBeVisible();
-  await expect(page.locator('.tool-card[href="/learn/convert-otf-or-ttf-to-woff2"]')).toBeVisible();
-  await expect(page.locator('.tool-card[href="/learn/compress-images-for-faster-websites"]')).toBeVisible();
-  await expect(page.locator('.tool-card[href="/learn/resize-images-for-shopify-or-woocommerce"]')).toBeVisible();
-  await expect(page.locator('.tool-card[href="/learn/convert-png-to-webp-without-obvious-quality-loss"]')).toBeVisible();
-  await expect(page.locator('.tool-card[href="/learn/when-pdf-compression-does-not-help"]')).toBeVisible();
-  await expect(page.locator('.tool-card[href="/learn/organize-pdf-handoff-files-before-sending"]')).toBeVisible();
-  await expect(page.locator('.tool-card[href="/learn/prepare-webfonts-for-fast-frontend-delivery"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/learn/compress-pdf-for-email/"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/learn/merge-pdf-files-in-order/"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/learn/convert-otf-or-ttf-to-woff2/"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/learn/compress-images-for-faster-websites/"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/learn/resize-images-for-shopify-or-woocommerce/"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/learn/convert-png-to-webp-without-obvious-quality-loss/"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/learn/when-pdf-compression-does-not-help/"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/learn/organize-pdf-handoff-files-before-sending/"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/learn/prepare-webfonts-for-fast-frontend-delivery/"]')).toBeVisible();
 });
 
 test('pdf merge accepts fixtures and enables merged download flow', async ({ page }) => {
