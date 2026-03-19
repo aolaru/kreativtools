@@ -44,7 +44,7 @@ const NAV_ITEMS = [
   { label: 'Audio', href: '/audio/', key: 'audio' },
   { label: 'File', href: '/file/', key: 'file' },
   { label: 'Learn', href: '/learn/', key: 'learn' },
-  { label: 'Changes', href: '/changes/', key: 'changes' },
+  { label: 'Updates', href: '/changes/', key: 'changes' },
 ];
 
 const FOOTER_SECTIONS = {
@@ -52,7 +52,7 @@ const FOOTER_SECTIONS = {
     ['Home', '/'],
     ['All Tools', '/tools/'],
     ['Learn', '/learn/'],
-    ['Changes', '/changes/'],
+    ['Updates', '/changes/'],
     ['Privacy Policy', '/privacy/'],
     ['Terms', '/terms/'],
     ['Contact', '/contact/'],

@@ -1,6 +1,6 @@
 # Kreativ Tools
 
-Kreativ Tools is a browser-based utility site for image, PDF, video, font, audio, and file workflows. The site includes dedicated tool pages, a Learn section with practical guides, a public changelog, and a shared UI/metadata generation step to keep static pages consistent.
+Kreativ Tools is a browser-based utility site for image, PDF, video, font, audio, and file workflows. The site includes dedicated tool pages, a Learn section with practical guides, a public Updates page, and a shared UI/metadata generation step to keep static pages consistent.
 
 ## Current version
 
@@ -14,7 +14,7 @@ Kreativ Tools is a browser-based utility site for image, PDF, video, font, audio
 - Home: product overview, featured workflows, and entry points into tools, Learn, and recent changes
 - Tools directory: full listing of available tools
 - Learn: practical how-to guides connected to real tools
-- Changes: public changelog for launches, UX updates, and design improvements
+- Updates: public product log for launches, UX updates, and design improvements
 
 ### Tool categories
 - Image: compress, resize, convert to WebP
@@ -59,7 +59,7 @@ Use `npm run sync:site` after shared layout or metadata changes. The sync script
 - `index.html`: homepage
 - `tools/index.html`: tools directory
 - `learn/index.html`: canonical Learn landing page
-- `changes/index.html`: canonical changelog page
+- `changes/index.html`: canonical Updates page
 - `styles.css`: shared visual system
 - `theme.js`: theme toggle and share menu behavior
 - `scripts/sync-site.js`: shared metadata/header/footer generator
@@ -82,7 +82,7 @@ For Kreativ Tools right now:
 ## Release workflow
 
 1. Ship the product changes.
-2. Update the Changes page with the important release notes.
+2. Update the Updates page with the important release notes.
 3. Bump the version:
    - `npm run version:patch`
    - `npm run version:minor`
