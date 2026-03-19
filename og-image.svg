@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Kreativ Tools social preview">
+  <defs>
+    <linearGradient id="bgGlowA" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#17304d"/>
+      <stop offset="1" stop-color="#0e1626"/>
+    </linearGradient>
+    <linearGradient id="bgGlowB" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2589d8"/>
+      <stop offset="1" stop-color="#1d6fb0"/>
+    </linearGradient>
+    <linearGradient id="markGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4aa9f5"/>
+      <stop offset="1" stop-color="#2589d8"/>
+    </linearGradient>
+    <filter id="blurSoft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="36" />
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" rx="36" fill="#0e1626" />
+
+  <circle cx="205" cy="120" r="165" fill="url(#bgGlowB)" opacity="0.18" filter="url(#blurSoft)" />
+  <circle cx="1010" cy="520" r="170" fill="#4aa9f5" opacity="0.14" filter="url(#blurSoft)" />
+  <circle cx="920" cy="120" r="130" fill="url(#bgGlowA)" opacity="0.28" filter="url(#blurSoft)" />
+
+  <rect x="58" y="58" width="1084" height="514" rx="30" fill="#101b2d" stroke="#24354d" stroke-width="2" />
+
+  <rect x="96" y="94" width="122" height="122" rx="28" fill="#111e30" />
+  <path d="M136 119h18v44.85L191.2 119H214l-34.14 52.03L215 224h-24.01L154 177.83V224h-18z" fill="url(#markGradient)" />
+
+  <text x="260" y="148" fill="#e8f0fb" font-family="Space Grotesk, Arial, sans-serif" font-size="64" font-weight="700" letter-spacing="-1.2">Kreativ Tools</text>
+  <text x="260" y="198" fill="#a9bdd7" font-family="Space Grotesk, Arial, sans-serif" font-size="26" font-weight="500">Browser-based creative utilities for faster everyday workflows</text>
+
+  <g transform="translate(96 276)">
+    <rect width="318" height="182" rx="26" fill="#111e30" stroke="#24354d" />
+    <text x="30" y="52" fill="#4aa9f5" font-family="Space Grotesk, Arial, sans-serif" font-size="18" font-weight="700">IMAGE + PDF</text>
+    <text x="30" y="98" fill="#e8f0fb" font-family="Space Grotesk, Arial, sans-serif" font-size="34" font-weight="700">Compress, resize,</text>
+    <text x="30" y="138" fill="#e8f0fb" font-family="Space Grotesk, Arial, sans-serif" font-size="34" font-weight="700">merge, and export</text>
+    <text x="30" y="164" fill="#a9bdd7" font-family="Space Grotesk, Arial, sans-serif" font-size="18">Fast task pages for real production work.</text>
+  </g>
+
+  <g transform="translate(441 276)">
+    <rect width="318" height="182" rx="26" fill="#111e30" stroke="#24354d" />
+    <text x="30" y="52" fill="#4aa9f5" font-family="Space Grotesk, Arial, sans-serif" font-size="18" font-weight="700">FONTS + FILES</text>
+    <text x="30" y="98" fill="#e8f0fb" font-family="Space Grotesk, Arial, sans-serif" font-size="34" font-weight="700">Convert webfonts</text>
+    <text x="30" y="138" fill="#e8f0fb" font-family="Space Grotesk, Arial, sans-serif" font-size="34" font-weight="700">and clean data</text>
+    <text x="30" y="164" fill="#a9bdd7" font-family="Space Grotesk, Arial, sans-serif" font-size="18">Focused browser tools without app overhead.</text>
+  </g>
+
+  <g transform="translate(786 276)">
+    <rect width="318" height="182" rx="26" fill="#111e30" stroke="#24354d" />
+    <text x="30" y="52" fill="#4aa9f5" font-family="Space Grotesk, Arial, sans-serif" font-size="18" font-weight="700">LEARN</text>
+    <text x="30" y="98" fill="#e8f0fb" font-family="Space Grotesk, Arial, sans-serif" font-size="34" font-weight="700">Practical guides</text>
+    <text x="30" y="138" fill="#e8f0fb" font-family="Space Grotesk, Arial, sans-serif" font-size="34" font-weight="700">tied to tools</text>
+    <text x="30" y="164" fill="#a9bdd7" font-family="Space Grotesk, Arial, sans-serif" font-size="18">Search-friendly workflows for repeat problems.</text>
+  </g>
+
+  <text x="98" y="525" fill="#7d91aa" font-family="Space Grotesk, Arial, sans-serif" font-size="19" font-weight="500">Image · PDF · Fonts · Audio · Video · File</text>
+</svg>

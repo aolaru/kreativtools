@@ -3,6 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
+    "sync:site": "node scripts/sync-site.js",
     "test:smoke": "bash tests/smoke.sh",
     "test:e2e": "playwright test",
     "test:lighthouse": "npx -y @lhci/cli@0.14.x autorun --config=.lighthouserc.json",

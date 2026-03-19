@@ -22,22 +22,32 @@ const pages = [
 test('all tools directory shows cards that link to tools', async ({ page }) => {
   await page.goto('/tools');
   const cards = page.locator('.tool-card');
-  await expect(cards).toHaveCount(9);
+  await expect(cards).toHaveCount(19);
 
   await expect(page.locator('.tool-card[href="/image/compress"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/image/resize"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/image/to-webp"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/pdf/image-to-pdf"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/pdf/merge"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/pdf/compress"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/video/convert-webm"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/video/thumbnail"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/video/trim"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/fonts/webfont-convert"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/fonts/preview"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/fonts/css-generator"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/audio/to-wav"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/audio/trim"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/audio/volume"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/file/xml-to-csv"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/file/json-to-csv"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/file/csv-to-json"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/changes"]')).toBeVisible();
 });
 
 test('footer legal links exist across all pages', async ({ page }) => {
   for (const route of pages) {
-    await page.goto(route);
+    await page.goto(route, { waitUntil: 'domcontentloaded' });
     await expect(page.locator('footer a[href="/privacy"]')).toBeVisible();
     await expect(page.locator('footer a[href="/terms"]')).toBeVisible();
     await expect(page.locator('script[src$="cookie-consent.js"]')).toHaveCount(1);

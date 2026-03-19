@@ -2,260 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  <title>Kreativ Tools | PDF Merge</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kreativ Tools | PDF Merge</title>
   <meta name="description" content="Merge multiple PDF files into one document directly in your browser." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://kreativtools.com/pdf/merge" />
+  <meta http-equiv="refresh" content="0; url=/pdf/merge" />
+  <meta property="og:title" content="Kreativ Tools | PDF Merge" />
+  <meta property="og:description" content="Merge multiple PDF files into one document directly in your browser." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kreativtools.com/pdf/merge" />
+  <meta property="og:image" content="https://kreativtools.com/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Kreativ Tools | PDF Merge" />
+  <meta name="twitter:description" content="Merge multiple PDF files into one document directly in your browser." />
+  <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="icon" href="favicon-32x32.png" sizes="32x32" type="image/png" />
   <link rel="icon" href="favicon-16x16.png" sizes="16x16" type="image/png" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="styles.css" />
+  <script>window.location.replace("/pdf/merge");</script>
 </head>
 <body>
-  <div class="bg-glow bg-glow-1"></div>
-  <div class="bg-glow bg-glow-2"></div>
-
-  <header class="site-header">
-    <a class="brand" href="/" aria-label="Kreativ Tools Home">
-      <div class="brand-mark">K</div>
-      <div class="brand-copy"><strong>Kreativ Tools</strong></div>
-    </a>
-
-    <nav class="top-nav" aria-label="Primary">
-      <a href="/image">Image</a>
-      <a href="/pdf">PDF</a>
-      <a href="/video">Video</a>
-      <a href="/fonts">Fonts</a>
-      <a href="/audio">Audio</a>
-      <a href="/file">File</a>
-      <a href="/learn">Learn</a>
-      <a href="/changes">Changes</a>
-    </nav>
-
-    <div class="header-actions">
-      <a class="ghost header-link" href="/tools">All Tools</a>
-      <button id="shareButton" type="button" class="icon-toggle" aria-label="Share this page" title="Share this page"><i class="fa-solid fa-share-nodes" aria-hidden="true"></i></button>
-      <button id="themeToggle" type="button" class="icon-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><i class="fa-solid fa-moon" aria-hidden="true"></i></button>
-    </div>
-  </header>
-
-  <main class="container">
-    <section class="hero">
-      <p class="eyebrow">PDF Tools</p>
-      <h1>Merge PDF Files</h1>
-      <p>Upload multiple PDF files, keep your preferred order, and export one merged PDF.</p>
-    </section>
-
-    <section class="upload-card">
-      <input id="mergePdfInput" type="file" accept="application/pdf,.pdf" multiple hidden />
-      <div id="mergePdfDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload PDF files">
-        <div class="drop-icon" aria-hidden="true"></div>
-        <button id="mergePdfUploadButton" type="button" class="primary upload-trigger">Upload PDFs</button>
-        <p>or drag and drop PDF files here</p>
-        <p class="status">Tip: files are merged in the same order shown in the list.</p>
-        <p id="mergePdfStatus" class="status status-empty">No PDF files selected yet.</p>
-      </div>
-    </section>
-
-    <section id="mergePdfWorkspace" class="workspace is-hidden">
-      <div class="controls">
-        <p id="mergePdfMeta" class="status">Add at least 2 PDF files to merge.</p>
-        <button id="mergePdfActionButton" type="button" class="primary" disabled>Merge and Download PDF</button>
-      </div>
-
-      <div class="preview-panel">
-        <h2>Files to Merge</h2>
-        <pre id="mergePdfList" class="code-preview empty-note">No files added yet.</pre>
-        <p class="dimensions">Need a different order? Re-add files in the desired sequence.</p>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-  <div class="footer-topline"></div>
-  <div class="footer-inner">
-    <section class="footer-about">
-      <h3>Kreativ<span>Tools</span></h3>
-      <p>Kreativ Tools is a growing browser-based toolkit for image, PDF, video, font, audio, and file workflows. Explore focused utilities, practical Learn guides, and privacy-friendly tools for repeat creative work.</p>
-    </section>
-
-    <section>
-      <h4>Navigate</h4>
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/tools">All Tools</a></li>
-        <li><a href="/learn">Learn</a></li>
-        <li><a href="/changes">Changes</a></li>
-        <li><a href="/privacy">Privacy Policy</a></li>
-        <li><a href="/terms">Terms</a></li>
-        <li><a href="/contact">Contact</a></li>
-      </ul>
-    </section>
-
-    <section>
-      <h4>Core Tools</h4>
-      <ul>
-        <li><a href="/image/compress">Image Compress</a></li>
-        <li><a href="/pdf/merge">PDF Merge</a></li>
-        <li><a href="/pdf/compress">PDF Compress</a></li>
-        <li><a href="/fonts/webfont-convert">Font to Webfont</a></li>
-      </ul>
-    </section>
-
-    <section>
-      <h4>More Tools</h4>
-      <ul>
-        <li><a href="/learn">Learn Guides</a></li>
-        <li><a href="/video/thumbnail">Video Thumbnail</a></li>
-        <li><a href="/file/xml-to-csv">XML to CSV</a></li>
-        <li><a href="/tools">Browse Directory</a></li>
-      </ul>
-    </section>
-  </div>
-
-  <div class="footer-bottom">
-    <p class="footer-brand-links"><a href="https://kreativfont.com/" target="_blank" rel="noopener noreferrer">Kreativ Font</a><span aria-hidden="true">·</span><a href="https://kreativsound.com/" target="_blank" rel="noopener noreferrer">Kreativ Sound</a><span aria-hidden="true">·</span><a href="https://kreativwp.com/" target="_blank" rel="noopener noreferrer">Kreativ WP</a><span aria-hidden="true">·</span><a href="/">Kreativ Tools</a></p>
-    <p>© 2026 <a href="https://madebykreativ.com/" target="_blank" rel="noopener noreferrer">Made by KREATIV</a> · Independent creative tools and assets by Andrei Olaru</p>
-  </div>
-</footer>
-
-  <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
-  <script>
-    const input = document.getElementById('mergePdfInput');
-    const uploadButton = document.getElementById('mergePdfUploadButton');
-    const dropzone = document.getElementById('mergePdfDropzone');
-    const statusEl = document.getElementById('mergePdfStatus');
-
-    const workspace = document.getElementById('mergePdfWorkspace');
-    const metaEl = document.getElementById('mergePdfMeta');
-    const listEl = document.getElementById('mergePdfList');
-    const mergeButton = document.getElementById('mergePdfActionButton');
-
-    let files = [];
-
-    const setStatus = (message) => {
-      statusEl.textContent = message;
-    };
-
-    const formatBytes = (bytes) => {
-      if (bytes < 1024) return `${bytes} B`;
-      if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-      return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
-    };
-
-    const refreshUi = () => {
-      if (!files.length) {
-        workspace.classList.add('is-hidden');
-        mergeButton.disabled = true;
-        listEl.textContent = 'No files added yet.';
-        metaEl.textContent = 'Add at least 2 PDF files to merge.';
-        return;
-      }
-
-      workspace.classList.remove('is-hidden');
-      mergeButton.disabled = files.length < 2;
-
-      listEl.textContent = files
-        .map((f, idx) => `${idx + 1}. ${f.name} (${formatBytes(f.size)})`)
-        .join('\n');
-
-      metaEl.textContent = `${files.length} PDF file(s) selected.`;
-    };
-
-    const addFiles = (incoming) => {
-      const pdfFiles = Array.from(incoming || []).filter(
-        (file) => file && (file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf'))
-      );
-
-      if (!pdfFiles.length) {
-        setStatus('Please add valid PDF files.');
-        return;
-      }
-
-      files = files.concat(pdfFiles);
-      setStatus(`${pdfFiles.length} PDF file(s) added.`);
-      refreshUi();
-    };
-
-    const mergePdfFiles = async () => {
-      if (files.length < 2) {
-        setStatus('Add at least 2 PDF files to merge.');
-        return;
-      }
-
-      const PDFLibApi = window.PDFLib;
-      if (!PDFLibApi || !PDFLibApi.PDFDocument) {
-        setStatus('PDF engine failed to load. Refresh and try again.');
-        return;
-      }
-
-      mergeButton.disabled = true;
-      setStatus('Merging PDFs...');
-
-      try {
-        const mergedPdf = await PDFLibApi.PDFDocument.create();
-
-        for (const file of files) {
-          const bytes = await file.arrayBuffer();
-          const srcPdf = await PDFLibApi.PDFDocument.load(bytes, { ignoreEncryption: true });
-          const pages = await mergedPdf.copyPages(srcPdf, srcPdf.getPageIndices());
-          pages.forEach((page) => mergedPdf.addPage(page));
-        }
-
-        const mergedBytes = await mergedPdf.save();
-        const blob = new Blob([mergedBytes], { type: 'application/pdf' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'merged.pdf';
-        link.click();
-        URL.revokeObjectURL(url);
-
-        setStatus('Merged PDF downloaded.');
-      } catch {
-        setStatus('Could not merge these PDFs. Try different files.');
-      } finally {
-        mergeButton.disabled = false;
-      }
-    };
-
-    uploadButton.addEventListener('click', () => input.click());
-
-    dropzone.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        input.click();
-      }
-    });
-
-    input.addEventListener('change', () => {
-      addFiles(input.files);
-      input.value = '';
-    });
-
-    dropzone.addEventListener('dragover', (event) => {
-      event.preventDefault();
-      dropzone.classList.add('drag-over');
-    });
-
-    dropzone.addEventListener('dragleave', () => {
-      dropzone.classList.remove('drag-over');
-    });
-
-    dropzone.addEventListener('drop', (event) => {
-      event.preventDefault();
-      dropzone.classList.remove('drag-over');
-      addFiles(event.dataTransfer.files);
-    });
-
-    mergeButton.addEventListener('click', mergePdfFiles);
-    refreshUi();
-  </script>
-
-
-  <script src="cookie-consent.js"></script>
-  <script src="github-pages-prefix.js"></script>
-  <script src="analytics.js"></script>
-  <script src="theme.js"></script>
+  <p>Redirecting to <a href="/pdf/merge">/pdf/merge</a>...</p>
 </body>
 </html>

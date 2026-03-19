@@ -1,6 +1,6 @@
 # Kreativ Tools
 
-Kreativ Tools is a browser-based utility site for image, PDF, video, font, audio, and file workflows. The site now includes dedicated tool pages, a Learn section with practical guides, a changelog, and a shared design system across the static pages.
+Kreativ Tools is a browser-based utility site for image, PDF, video, font, audio, and file workflows. The site includes dedicated tool pages, a Learn section with practical guides, a public changelog, and a shared UI/metadata generation step to keep static pages consistent.
 
 ## Current scope
 
@@ -11,25 +11,32 @@ Kreativ Tools is a browser-based utility site for image, PDF, video, font, audio
 - Changes: public changelog for launches, UX updates, and design improvements
 
 ### Tool categories
-- Image: resize, compress, convert to WebP, image-to-PDF flow on the main image app
+- Image: compress, resize, convert to WebP
 - PDF: image to PDF, merge PDF, compress PDF
 - Video: convert to WEBM, extract thumbnail, trim video
 - Fonts: webfont convert, preview, CSS generator
 - Audio: convert to WAV, trim audio, adjust volume
 - File: XML to CSV, JSON to CSV, CSV to JSON
 
-## Product direction
-
-The current site direction is:
-- focused browser-based tools instead of a single monolithic app
-- stronger landing pages for high-intent workflows
-- privacy-friendly processing where possible
-- practical content in Learn to support search and user success
-- a shared UI system with Font Awesome iconography and a branded favicon family
+### Hero Learn workflows
+- Compress a PDF for email
+- Merge PDF files in the right order
+- Convert OTF or TTF to WOFF2
+- Compress images for faster websites
+- Resize images for Shopify or WooCommerce
 
 ## Run locally
 
-Open `index.html` in a browser, or serve the project root with any static file server.
+Serve the project root with any static file server.
+
+## Shared generation
+
+Canonical pages live at clean routes such as `section/index.html` and `tool/index.html`.
+
+Use `npm run sync:site` after shared layout or metadata changes. The sync script:
+- normalizes title, description, canonical, Open Graph, and Twitter metadata on public pages
+- applies the shared header and footer markup across canonical pages
+- regenerates legacy `*.html` route aliases as redirect stubs to the clean routes
 
 ## Tests
 
@@ -45,14 +52,16 @@ Open `index.html` in a browser, or serve the project root with any static file s
 
 - `index.html`: homepage
 - `tools/index.html`: tools directory
-- `learn.html`: Learn landing page
-- `changes.html`: changelog
+- `learn/index.html`: canonical Learn landing page
+- `changes/index.html`: canonical changelog page
 - `styles.css`: shared visual system
 - `theme.js`: theme toggle and share menu behavior
+- `scripts/sync-site.js`: shared metadata/header/footer generator
+- `sitemap.xml`: canonical URL list
 - `favicon.svg`: primary branded favicon
 
 ## Notes
 
-- The site uses a static HTML structure with shared CSS and JavaScript.
 - Favicon assets are available as SVG, `32x32`, `16x16`, and Apple touch icon variants.
-- The footer and navigation are duplicated across static pages, so global content updates usually require a site-wide edit pass.
+- Legacy top-level `*.html` pages are kept as redirect aliases for compatibility.
+- Playwright fixtures for PDF flows live in `tests/fixtures/`.

@@ -33,7 +33,7 @@ test('all pages load CSS/JS assets without 404/500', async ({ page }) => {
       }
     });
 
-    await page.goto(route, { waitUntil: 'networkidle' });
+    await page.goto(route, { waitUntil: 'domcontentloaded' });
 
     expect(cssJsResponses.length).toBeGreaterThan(0);
     for (const asset of cssJsResponses) {
@@ -42,5 +42,15 @@ test('all pages load CSS/JS assets without 404/500', async ({ page }) => {
         `Asset failed on ${route}: ${asset.url} returned ${asset.status}`
       ).toBeLessThan(400);
     }
+  }
+});
+
+test('social preview assets and favicon assets resolve', async ({ page, baseURL }) => {
+  const assets = ['/og-image.png', '/og-image.svg', '/favicon.svg', '/favicon-32x32.png', '/apple-touch-icon.png'];
+
+  for (const asset of assets) {
+    const response = await page.goto(`${baseURL}${asset}`);
+    expect(response, `Missing response for ${asset}`).not.toBeNull();
+    expect(response.status(), `Asset failed: ${asset} returned ${response.status()}`).toBeLessThan(400);
   }
 });
