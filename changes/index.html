@@ -65,6 +65,9 @@
         <span class="article-pill">Current version v0.9.0</span>
         <span class="article-pill">Pre-1.0 release line</span>
       </div>
+      <div class="hero-actions">
+        <a class="ghost header-link" href="/learn/update-labels/">Label Guide</a>
+      </div>
     </section>
 
     <section class="upload-card">
@@ -185,6 +188,23 @@
   <script src="../cookie-consent.js"></script>
   <script src="../github-pages-prefix.js"></script>
   <script src="../analytics.js"></script>
+  <script>
+    document.querySelectorAll('.changelog-list p').forEach((entry) => {
+      const text = entry.textContent.trim();
+      const match = text.match(/^(\d{4}-\d{2}-\d{2})\s+(NEW|UPDATE|FIX|RELEASE)\s+-\s+(.*)$/);
+      if (!match) return;
+
+      const [, date, label, body] = match;
+      const badgeClass = {
+        NEW: 'is-new',
+        UPDATE: 'is-update',
+        FIX: 'is-fix',
+        RELEASE: 'is-release',
+      }[label] || '';
+
+      entry.innerHTML = `<span class="update-entry-date">${date}</span><span class="update-entry-badge ${badgeClass}">${label}</span>${body}`;
+    });
+  </script>
   <script src="../theme.js"></script>
 </body>
 </html>
