@@ -18,6 +18,15 @@ test('image tool uploads and enables workspace actions', async ({ page }) => {
   await expect(page.locator('#downloadButton')).toBeEnabled();
 });
 
+test('image crop uploads and enables crop export flow', async ({ page }) => {
+  await page.goto('/image/crop');
+  await page.setInputFiles('#cropImageInput', onePxPng);
+  await expect(page.locator('#cropWorkspace')).not.toHaveClass(/is-hidden/);
+  await expect(page.locator('#cropApplyButton')).toBeEnabled();
+  await page.click('#cropApplyButton');
+  await expect(page.locator('#cropDownloadButton')).toBeEnabled();
+});
+
 test('file tool converts sample XML and renders CSV preview', async ({ page }) => {
   await page.goto('/file/xml-to-csv');
   const sampleXmlPath = path.resolve(__dirname, '..', 'fixtures', 'sample.xml');

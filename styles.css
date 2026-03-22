@@ -1095,6 +1095,7 @@ input[type='range'] {
 }
 
 .thumb-image { background: #f8dfe8; color: #ff5d7c; }
+.thumb-image-crop { background: #fbe7d8; color: #ef6e1d; }
 .thumb-pdf { background: #f4e4d9; color: #ff7a1a; }
 .thumb-video { background: #dcecff; color: #448eef; }
 .thumb-font { background: #e8e1ff; color: #7757f5; }
@@ -1106,6 +1107,37 @@ input[type='range'] {
   margin: 10px 0 0;
   color: var(--muted);
   font-size: 0.87rem;
+}
+
+.crop-preview-panel {
+  display: grid;
+  gap: 16px;
+}
+
+.crop-canvas-shell,
+.crop-output-shell {
+  border-radius: 18px;
+  border: 1px solid var(--outline);
+  background: color-mix(in oklab, var(--accent) 2%, var(--panel));
+  overflow: auto;
+  padding: 12px;
+}
+
+.crop-canvas-shell canvas,
+.crop-output-shell canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+.crop-canvas-shell canvas {
+  cursor: crosshair;
+}
+
+.crop-quick-actions {
+  display: flex;
+  justify-content: flex-start;
 }
 
 .is-hidden {

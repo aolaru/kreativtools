@@ -38,6 +38,7 @@ main() {
   local pages=(
     index.html
     image/index.html
+    image/crop/index.html
     pdf/index.html
     image/resize/index.html
     image/compress/index.html
@@ -70,6 +71,9 @@ main() {
   expect_pattern "image/resize/index.html" 'id="toolResize"'
   expect_pattern "image/resize/index.html" 'id="toolConvert"'
   expect_pattern "image/resize/index.html" 'id="toolPdf"'
+  expect_pattern "image/crop/index.html" 'id="cropImageInput"'
+  expect_pattern "image/crop/index.html" 'id="cropApplyButton"'
+  expect_pattern "image/crop/index.html" 'id="cropDownloadButton"'
 
   expect_pattern "pdf/image-to-pdf/index.html" 'id="pdfImageInput"'
   expect_pattern "video/convert-webm/index.html" 'id="videoInput"'

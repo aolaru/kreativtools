@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kreativ Tools | Image Crop</title>
+  <meta name="description" content="Crop images in your browser with freeform selection, aspect-ratio presets, and export as JPG, PNG, or WebP." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://kreativtools.com/image/crop/" />
+  <meta property="og:title" content="Kreativ Tools | Image Crop" />
+  <meta property="og:description" content="Crop images in your browser with freeform selection, aspect-ratio presets, and export as JPG, PNG, or WebP." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kreativtools.com/image/crop/" />
+  <meta property="og:image" content="https://kreativtools.com/og-image.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Kreativ Tools | Image Crop" />
+  <meta name="twitter:description" content="Crop images in your browser with freeform selection, aspect-ratio presets, and export as JPG, PNG, or WebP." />
+  <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
+  <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="../../favicon-32x32.png" sizes="32x32" type="image/png" />
+  <link rel="icon" href="../../favicon-16x16.png" sizes="16x16" type="image/png" />
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="../../styles.css" />
+</head>
+<body>
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Kreativ Tools Home">
+      <div class="brand-mark">K</div>
+      <div class="brand-copy"><strong>Kreativ Tools</strong></div>
+    </a>
+
+    <nav class="top-nav" aria-label="Primary">
+      <a href="/image/" aria-current="page">Image</a>
+      <a href="/pdf/">PDF</a>
+      <a href="/video/">Video</a>
+      <a href="/fonts/">Fonts</a>
+      <a href="/audio/">Audio</a>
+      <a href="/file/">File</a>
+      <a href="/learn/">Learn</a>
+      <a href="/changes/">Updates</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="ghost header-link" href="/tools/">All Tools</a>
+      <button id="shareButton" type="button" class="icon-toggle" aria-label="Share this page" title="Share this page"><i class="fa-solid fa-share-nodes" aria-hidden="true"></i></button>
+      <button id="themeToggle" type="button" class="icon-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><i class="fa-solid fa-moon" aria-hidden="true"></i></button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <p class="eyebrow">Image Tools</p>
+      <h1>Image Crop</h1>
+      <p>Draw a crop area, switch aspect presets, fine-tune the selection, and export the result as JPG, PNG, or WebP.</p>
+    </section>
+
+    <section class="tool-intro" aria-label="Image crop guidance">
+      <div class="tool-intro-card">
+        <h2>What it does</h2>
+        <p>Crop photos, graphics, and screenshots directly in your browser without sending the file to a server.</p>
+      </div>
+      <div class="tool-intro-card">
+        <h2>Best for</h2>
+        <p>Social crops, ecommerce product framing, profile images, thumbnails, and quick cleanup before compression or format conversion.</p>
+      </div>
+    </section>
+
+    <section class="upload-card">
+      <input id="cropImageInput" type="file" accept="image/*" hidden />
+      <div id="cropDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload image for crop">
+        <div class="drop-icon" aria-hidden="true"></div>
+        <button id="cropUploadButton" type="button" class="primary upload-trigger">Upload Image</button>
+        <p>or drag and drop an image here</p>
+        <p id="cropStatus" class="status status-empty">No image selected yet.</p>
+      </div>
+    </section>
+
+    <section id="cropWorkspace" class="workspace is-hidden">
+      <div class="controls">
+        <div class="tool-switcher" role="tablist" aria-label="Crop presets">
+          <button type="button" class="tool-button is-active" data-ratio="free" aria-pressed="true">Free</button>
+          <button type="button" class="tool-button" data-ratio="1:1" aria-pressed="false">1:1</button>
+          <button type="button" class="tool-button" data-ratio="4:5" aria-pressed="false">4:5</button>
+          <button type="button" class="tool-button" data-ratio="16:9" aria-pressed="false">16:9</button>
+          <button type="button" class="tool-button" data-ratio="3:2" aria-pressed="false">3:2</button>
+        </div>
+
+        <div class="input-grid">
+          <label>
+            X
+            <input id="cropXInput" type="number" min="0" value="0" />
+          </label>
+          <label>
+            Y
+            <input id="cropYInput" type="number" min="0" value="0" />
+          </label>
+          <label>
+            Width
+            <input id="cropWidthInput" type="number" min="1" value="0" />
+          </label>
+          <label>
+            Height
+            <input id="cropHeightInput" type="number" min="1" value="0" />
+          </label>
+        </div>
+
+        <div class="tool-intro">
+          <div class="tool-intro-card">
+            <h2>Selection tips</h2>
+            <p>Drag on the image to create a new crop area. Use the numeric fields for precise adjustments.</p>
+          </div>
+        </div>
+
+        <div class="hero-actions crop-quick-actions">
+          <button id="cropResetButton" type="button" class="ghost header-link">Reset Selection</button>
+          <button id="cropCenterButton" type="button" class="ghost header-link">Center Crop</button>
+        </div>
+
+        <div class="input-grid">
+          <label>
+            Output format
+            <select id="cropFormatInput">
+              <option value="image/png" selected>PNG</option>
+              <option value="image/jpeg">JPG</option>
+              <option value="image/webp">WEBP</option>
+            </select>
+          </label>
+
+          <label>
+            <span class="quality-head">Quality <strong><span id="cropQualityValue">92</span>%</strong></span>
+            <input id="cropQualityInput" type="range" min="1" max="100" value="92" />
+          </label>
+        </div>
+
+        <p id="cropMeta" class="status status-empty">Upload an image to begin cropping.</p>
+
+        <button id="cropApplyButton" type="button" class="primary" disabled>Apply Crop</button>
+        <button id="cropDownloadButton" type="button" class="primary" disabled>Download Cropped Image</button>
+      </div>
+
+      <div class="preview-panel crop-preview-panel">
+        <h2>Crop Preview</h2>
+        <div class="crop-canvas-shell">
+          <canvas id="cropSelectionCanvas" aria-label="Crop selection preview"></canvas>
+        </div>
+        <p id="cropDimensions" class="dimensions empty-note">Selection details will appear here after upload.</p>
+
+        <h2>Output Preview</h2>
+        <div class="crop-output-shell">
+          <canvas id="cropOutputCanvas" aria-label="Cropped image output preview"></canvas>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+  <div class="footer-topline"></div>
+  <div class="footer-inner">
+    <section class="footer-about">
+      <h3>Kreativ<span>Tools</span></h3>
+      <p>Kreativ Tools is a growing browser-based toolkit for image, PDF, video, font, audio, and file workflows. Explore focused utilities, practical Learn guides, and privacy-friendly tools for repeat creative work.</p>
+    </section>
+
+    <section>
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/tools/">All Tools</a></li>
+        <li><a href="/learn/">Learn</a></li>
+        <li><a href="/changes/">Updates</a></li>
+        <li><a href="/privacy/">Privacy Policy</a></li>
+        <li><a href="/terms/">Terms</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h4>Core Tools</h4>
+      <ul>
+        <li><a href="/image/compress/">Image Compress</a></li>
+        <li><a href="/pdf/merge/">PDF Merge</a></li>
+        <li><a href="/pdf/compress/">PDF Compress</a></li>
+        <li><a href="/fonts/webfont-convert/">Font to Webfont</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h4>More Tools</h4>
+      <ul>
+        <li><a href="/learn/">Learn Guides</a></li>
+        <li><a href="/video/thumbnail/">Video Thumbnail</a></li>
+        <li><a href="/file/xml-to-csv/">XML to CSV</a></li>
+        <li><a href="/tools/">Browse Directory</a></li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="footer-bottom">
+    <p class="footer-brand-links"><a href="https://kreativfont.com/" target="_blank" rel="noopener noreferrer">Kreativ Font</a><span aria-hidden="true">·</span><a href="https://kreativsound.com/" target="_blank" rel="noopener noreferrer">Kreativ Sound</a><span aria-hidden="true">·</span><a href="https://kreativwp.com/" target="_blank" rel="noopener noreferrer">Kreativ WP</a><span aria-hidden="true">·</span><a href="/">Kreativ Tools</a></p>
+    <p>© 2026 <a href="https://madebykreativ.com/" target="_blank" rel="noopener noreferrer">Made by KREATIV</a> · Independent creative tools and assets by Andrei Olaru</p>
+  </div>
+</footer>
+
+  <script>
+    const cropImageInput = document.getElementById('cropImageInput');
+    const cropUploadButton = document.getElementById('cropUploadButton');
+    const cropDropzone = document.getElementById('cropDropzone');
+    const cropStatus = document.getElementById('cropStatus');
+    const cropWorkspace = document.getElementById('cropWorkspace');
+
+    const cropSelectionCanvas = document.getElementById('cropSelectionCanvas');
+    const cropSelectionCtx = cropSelectionCanvas.getContext('2d');
+    const cropOutputCanvas = document.getElementById('cropOutputCanvas');
+    const cropOutputCtx = cropOutputCanvas.getContext('2d');
+
+    const cropXInput = document.getElementById('cropXInput');
+    const cropYInput = document.getElementById('cropYInput');
+    const cropWidthInput = document.getElementById('cropWidthInput');
+    const cropHeightInput = document.getElementById('cropHeightInput');
+    const cropMeta = document.getElementById('cropMeta');
+    const cropDimensions = document.getElementById('cropDimensions');
+    const cropFormatInput = document.getElementById('cropFormatInput');
+    const cropQualityInput = document.getElementById('cropQualityInput');
+    const cropQualityValue = document.getElementById('cropQualityValue');
+    const cropApplyButton = document.getElementById('cropApplyButton');
+    const cropDownloadButton = document.getElementById('cropDownloadButton');
+    const cropResetButton = document.getElementById('cropResetButton');
+    const cropCenterButton = document.getElementById('cropCenterButton');
+    const presetButtons = Array.from(document.querySelectorAll('[data-ratio]'));
+
+    let sourceImage = null;
+    let sourceName = 'cropped-image';
+    let outputBlob = null;
+    let activeRatio = null;
+    let displayScale = 1;
+    let selection = null;
+    let dragStart = null;
+    let isDragging = false;
+
+    const formatBytes = (bytes) => {
+      if (bytes < 1024) return `${bytes} B`;
+      if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+      return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+    };
+
+    const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+    const setStatus = (message) => {
+      cropStatus.textContent = message;
+    };
+
+    const selectionToDisplay = () => ({
+      x: Math.round(selection.x * displayScale),
+      y: Math.round(selection.y * displayScale),
+      width: Math.round(selection.width * displayScale),
+      height: Math.round(selection.height * displayScale),
+    });
+
+    const syncQualityUi = () => {
+      const lossy = cropFormatInput.value === 'image/jpeg' || cropFormatInput.value === 'image/webp';
+      cropQualityInput.disabled = !lossy;
+      cropQualityValue.textContent = cropQualityInput.value;
+    };
+
+    const updateSelectionInputs = () => {
+      if (!selection) return;
+      cropXInput.value = selection.x;
+      cropYInput.value = selection.y;
+      cropWidthInput.value = selection.width;
+      cropHeightInput.value = selection.height;
+      cropDimensions.classList.remove('empty-note');
+      cropDimensions.textContent = `Crop area: ${selection.width} x ${selection.height}px at ${selection.x}, ${selection.y}`;
+    };
+
+    const updateMeta = () => {
+      if (!sourceImage || !selection) return;
+      const cropArea = selection.width * selection.height;
+      const totalArea = sourceImage.naturalWidth * sourceImage.naturalHeight;
+      const kept = totalArea > 0 ? ((cropArea / totalArea) * 100).toFixed(1) : '0.0';
+      cropMeta.textContent = `Original: ${sourceImage.naturalWidth} x ${sourceImage.naturalHeight}px • Keeping ${kept}% of the image`;
+    };
+
+    const drawSelectionCanvas = () => {
+      if (!sourceImage || !selection) return;
+
+      cropSelectionCtx.clearRect(0, 0, cropSelectionCanvas.width, cropSelectionCanvas.height);
+      cropSelectionCtx.drawImage(sourceImage, 0, 0, cropSelectionCanvas.width, cropSelectionCanvas.height);
+
+      const rect = selectionToDisplay();
+      cropSelectionCtx.save();
+      cropSelectionCtx.fillStyle = 'rgba(10, 17, 28, 0.45)';
+      cropSelectionCtx.fillRect(0, 0, cropSelectionCanvas.width, cropSelectionCanvas.height);
+      cropSelectionCtx.clearRect(rect.x, rect.y, rect.width, rect.height);
+      cropSelectionCtx.strokeStyle = '#2589d8';
+      cropSelectionCtx.lineWidth = 3;
+      cropSelectionCtx.strokeRect(rect.x + 1.5, rect.y + 1.5, Math.max(rect.width - 3, 0), Math.max(rect.height - 3, 0));
+      cropSelectionCtx.restore();
+    };
+
+    const resizeSelectionCanvas = () => {
+      if (!sourceImage) return;
+
+      const maxWidth = 880;
+      displayScale = Math.min(1, maxWidth / sourceImage.naturalWidth);
+      cropSelectionCanvas.width = Math.max(1, Math.round(sourceImage.naturalWidth * displayScale));
+      cropSelectionCanvas.height = Math.max(1, Math.round(sourceImage.naturalHeight * displayScale));
+      drawSelectionCanvas();
+    };
+
+    const fitSelectionToBounds = (nextSelection) => {
+      const maxX = sourceImage.naturalWidth - nextSelection.width;
+      const maxY = sourceImage.naturalHeight - nextSelection.height;
+      return {
+        x: clamp(Math.round(nextSelection.x), 0, Math.max(maxX, 0)),
+        y: clamp(Math.round(nextSelection.y), 0, Math.max(maxY, 0)),
+        width: clamp(Math.round(nextSelection.width), 1, sourceImage.naturalWidth),
+        height: clamp(Math.round(nextSelection.height), 1, sourceImage.naturalHeight),
+      };
+    };
+
+    const applyAspectRatio = (width, height) => {
+      if (!activeRatio) return { width, height };
+      const ratioHeight = Math.max(1, Math.round(width / activeRatio));
+      return { width, height: ratioHeight };
+    };
+
+    const setSelection = (nextSelection) => {
+      if (!sourceImage) return;
+      selection = fitSelectionToBounds(nextSelection);
+
+      if (selection.x + selection.width > sourceImage.naturalWidth) {
+        selection.x = sourceImage.naturalWidth - selection.width;
+      }
+
+      if (selection.y + selection.height > sourceImage.naturalHeight) {
+        selection.y = sourceImage.naturalHeight - selection.height;
+      }
+
+      drawSelectionCanvas();
+      updateSelectionInputs();
+      updateMeta();
+      cropApplyButton.disabled = false;
+      outputBlob = null;
+      cropDownloadButton.disabled = true;
+    };
+
+    const setPreset = (value) => {
+      activeRatio = value === 'free' ? null : (() => {
+        const [w, h] = value.split(':').map(Number);
+        return w / h;
+      })();
+
+      for (const button of presetButtons) {
+        const active = button.dataset.ratio === value;
+        button.classList.toggle('is-active', active);
+        button.setAttribute('aria-pressed', String(active));
+      }
+
+      if (!sourceImage || !selection) return;
+
+      if (!activeRatio) {
+        drawSelectionCanvas();
+        return;
+      }
+
+      const targetWidth = selection.width;
+      const adjusted = applyAspectRatio(targetWidth, selection.height);
+      const boundedHeight = Math.min(adjusted.height, sourceImage.naturalHeight);
+      const boundedWidth = Math.min(Math.round(boundedHeight * activeRatio), sourceImage.naturalWidth);
+      setSelection({
+        x: selection.x,
+        y: selection.y,
+        width: boundedWidth,
+        height: boundedHeight,
+      });
+    };
+
+    const resetSelection = () => {
+      if (!sourceImage) return;
+      setSelection({
+        x: 0,
+        y: 0,
+        width: sourceImage.naturalWidth,
+        height: sourceImage.naturalHeight,
+      });
+    };
+
+    const centerSelection = () => {
+      if (!sourceImage || !selection) return;
+      setSelection({
+        x: Math.round((sourceImage.naturalWidth - selection.width) / 2),
+        y: Math.round((sourceImage.naturalHeight - selection.height) / 2),
+        width: selection.width,
+        height: selection.height,
+      });
+    };
+
+    const applyCrop = () => {
+      if (!sourceImage || !selection) {
+        setStatus('Upload an image and define a crop area first.');
+        return;
+      }
+
+      cropOutputCanvas.width = selection.width;
+      cropOutputCanvas.height = selection.height;
+      cropOutputCtx.clearRect(0, 0, cropOutputCanvas.width, cropOutputCanvas.height);
+      cropOutputCtx.drawImage(
+        sourceImage,
+        selection.x,
+        selection.y,
+        selection.width,
+        selection.height,
+        0,
+        0,
+        selection.width,
+        selection.height
+      );
+
+      const quality = Math.max(0.01, Math.min(1, Number(cropQualityInput.value) / 100));
+      cropOutputCanvas.toBlob((blob) => {
+        if (!blob) {
+          setStatus('Could not generate the cropped image. Please try again.');
+          return;
+        }
+
+        outputBlob = blob;
+        cropDownloadButton.disabled = false;
+        setStatus('Cropped image ready to download.');
+        cropMeta.textContent = `Cropped result: ${selection.width} x ${selection.height}px • ${formatBytes(blob.size)}`;
+      }, cropFormatInput.value, quality);
+    };
+
+    const downloadCrop = () => {
+      if (!outputBlob) return;
+      const link = document.createElement('a');
+      const extension = cropFormatInput.value === 'image/jpeg'
+        ? 'jpg'
+        : cropFormatInput.value === 'image/webp'
+          ? 'webp'
+          : 'png';
+      link.href = URL.createObjectURL(outputBlob);
+      link.download = `${sourceName}-crop.${extension}`;
+      link.click();
+      URL.revokeObjectURL(link.href);
+    };
+
+    const pointerToImagePoint = (event) => {
+      const rect = cropSelectionCanvas.getBoundingClientRect();
+      const x = clamp(Math.round((event.clientX - rect.left) * (cropSelectionCanvas.width / rect.width) / displayScale), 0, sourceImage.naturalWidth);
+      const y = clamp(Math.round((event.clientY - rect.top) * (cropSelectionCanvas.height / rect.height) / displayScale), 0, sourceImage.naturalHeight);
+      return { x, y };
+    };
+
+    const handlePointerDown = (event) => {
+      if (!sourceImage) return;
+      isDragging = true;
+      dragStart = pointerToImagePoint(event);
+    };
+
+    const handlePointerMove = (event) => {
+      if (!isDragging || !sourceImage || !dragStart) return;
+      const point = pointerToImagePoint(event);
+      let width = Math.max(1, Math.abs(point.x - dragStart.x));
+      let height = Math.max(1, Math.abs(point.y - dragStart.y));
+
+      if (activeRatio) {
+        const lockedHeight = Math.max(1, Math.round(width / activeRatio));
+        if (lockedHeight <= sourceImage.naturalHeight) {
+          height = lockedHeight;
+        } else {
+          height = sourceImage.naturalHeight;
+          width = Math.max(1, Math.round(height * activeRatio));
+        }
+      }
+
+      const x = point.x >= dragStart.x ? dragStart.x : dragStart.x - width;
+      const y = point.y >= dragStart.y ? dragStart.y : dragStart.y - height;
+      setSelection({ x, y, width, height });
+    };
+
+    const handlePointerUp = () => {
+      isDragging = false;
+      dragStart = null;
+    };
+
+    const syncSelectionFromInputs = (field) => {
+      if (!sourceImage || !selection) return;
+
+      let next = {
+        x: Number(cropXInput.value) || 0,
+        y: Number(cropYInput.value) || 0,
+        width: Number(cropWidthInput.value) || 1,
+        height: Number(cropHeightInput.value) || 1,
+      };
+
+      if (activeRatio && (field === 'width' || field === 'height')) {
+        if (field === 'width') {
+          next.height = Math.max(1, Math.round(next.width / activeRatio));
+          cropHeightInput.value = next.height;
+        } else {
+          next.width = Math.max(1, Math.round(next.height * activeRatio));
+          cropWidthInput.value = next.width;
+        }
+      }
+
+      setSelection(next);
+    };
+
+    const loadImageFile = (file) => {
+      if (!file || !file.type.startsWith('image/')) {
+        setStatus('Please upload a valid image file.');
+        return;
+      }
+
+      const imageUrl = URL.createObjectURL(file);
+      const image = new Image();
+
+      image.onload = () => {
+        sourceImage = image;
+        sourceName = file.name.replace(/\.[^.]+$/, '');
+        cropWorkspace.classList.remove('is-hidden');
+        resizeSelectionCanvas();
+        resetSelection();
+        setStatus(`Loaded image: ${file.name}`);
+        URL.revokeObjectURL(imageUrl);
+      };
+
+      image.onerror = () => {
+        setStatus('Could not load this image. Please try another file.');
+        URL.revokeObjectURL(imageUrl);
+      };
+
+      image.src = imageUrl;
+    };
+
+    const handleFiles = (files) => {
+      const [file] = files;
+      if (file) loadImageFile(file);
+    };
+
+    cropUploadButton.addEventListener('click', () => cropImageInput.click());
+    cropImageInput.addEventListener('change', (event) => handleFiles(event.target.files));
+
+    cropDropzone.addEventListener('dragover', (event) => {
+      event.preventDefault();
+      cropDropzone.classList.add('drag-over');
+    });
+
+    cropDropzone.addEventListener('dragleave', () => {
+      cropDropzone.classList.remove('drag-over');
+    });
+
+    cropDropzone.addEventListener('drop', (event) => {
+      event.preventDefault();
+      cropDropzone.classList.remove('drag-over');
+      handleFiles(event.dataTransfer.files);
+    });
+
+    cropDropzone.addEventListener('click', (event) => {
+      if (event.target !== cropUploadButton) cropImageInput.click();
+    });
+
+    cropDropzone.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        cropImageInput.click();
+      }
+    });
+
+    cropSelectionCanvas.addEventListener('pointerdown', handlePointerDown);
+    cropSelectionCanvas.addEventListener('pointermove', handlePointerMove);
+    window.addEventListener('pointerup', handlePointerUp);
+
+    cropXInput.addEventListener('input', () => syncSelectionFromInputs('x'));
+    cropYInput.addEventListener('input', () => syncSelectionFromInputs('y'));
+    cropWidthInput.addEventListener('input', () => syncSelectionFromInputs('width'));
+    cropHeightInput.addEventListener('input', () => syncSelectionFromInputs('height'));
+
+    cropResetButton.addEventListener('click', resetSelection);
+    cropCenterButton.addEventListener('click', centerSelection);
+    cropApplyButton.addEventListener('click', applyCrop);
+    cropDownloadButton.addEventListener('click', downloadCrop);
+    cropFormatInput.addEventListener('change', syncQualityUi);
+    cropQualityInput.addEventListener('input', syncQualityUi);
+
+    for (const button of presetButtons) {
+      button.addEventListener('click', () => setPreset(button.dataset.ratio));
+    }
+
+    syncQualityUi();
+  </script>
+
+  <script src="../../cookie-consent.js"></script>
+  <script src="../../github-pages-prefix.js"></script>
+  <script src="../../analytics.js"></script>
+  <script src="../../theme.js"></script>
+</body>
+</html>

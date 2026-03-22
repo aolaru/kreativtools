@@ -3,6 +3,7 @@ const { test, expect } = require('@playwright/test');
 const pages = [
   '/',
   '/image',
+  '/image/crop',
   '/pdf',
   '/image/resize',
   '/image/compress',
