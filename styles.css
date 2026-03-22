@@ -1092,6 +1092,7 @@ input[type='range'] {
 
 .tool-card {
   --card-label: #ff6a1a;
+  position: relative;
   border: 1px solid #edf1f5;
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.9);
@@ -1107,10 +1108,52 @@ input[type='range'] {
   box-shadow: 0 18px 40px rgba(15, 28, 45, 0.04);
 }
 
+.tool-card-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 54px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  z-index: 1;
+}
+
+.tool-card-badge.is-new {
+  background: #e6f7ee;
+  border-color: #b7e6cc;
+  color: #13845a;
+}
+
+.tool-card-badge.is-updated {
+  background: #e8f1fd;
+  border-color: #c4daf7;
+  color: #256fbe;
+}
+
 [data-theme='dark'] .tool-card {
   background: rgba(17, 30, 48, 0.9);
   border-color: #22344b;
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.24);
+}
+
+[data-theme='dark'] .tool-card-badge.is-new {
+  background: rgba(20, 132, 90, 0.16);
+  border-color: rgba(109, 208, 165, 0.28);
+  color: #8ee1ba;
+}
+
+[data-theme='dark'] .tool-card-badge.is-updated {
+  background: rgba(37, 111, 190, 0.16);
+  border-color: rgba(107, 175, 255, 0.24);
+  color: #9ac7ff;
 }
 
 .tool-card:hover {

@@ -4,7 +4,7 @@ Kreativ Tools is a browser-based utility site for image, PDF, video, font, audio
 
 ## Current version
 
-- Current product version: `v0.9.0`
+- Current product version: `v0.9.1`
 - Version source of truth: `package.json`
 - Current release stage: pre-`1.0`, stable enough to promote, still actively evolving
 
@@ -91,7 +91,7 @@ For Kreativ Tools right now:
    - `bash tests/smoke.sh`
    - `npm run test:e2e`
 5. Commit the version bump and release notes.
-6. Optionally create a matching git tag like `v0.9.0`.
+6. Optionally create a matching git tag like `v0.9.1`.
 
 ## Notes
 
