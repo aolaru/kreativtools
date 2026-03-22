@@ -998,6 +998,16 @@ input[type='range'] {
   font-size: 0.95rem;
 }
 
+.changelog-list a {
+  color: var(--accent-dark);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.changelog-list a:hover {
+  text-decoration: underline;
+}
+
 .update-entry-date {
   font-weight: 700;
   color: var(--text);
@@ -1068,6 +1078,10 @@ input[type='range'] {
   background: rgba(107, 66, 217, 0.18);
   border-color: rgba(180, 151, 255, 0.24);
   color: #c8b3ff;
+}
+
+[data-theme='dark'] .changelog-list a {
+  color: #8fc5ff;
 }
 
 .tools-grid {

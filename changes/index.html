@@ -189,6 +189,58 @@
   <script src="../github-pages-prefix.js"></script>
   <script src="../analytics.js"></script>
   <script>
+    const updateLinkMap = [
+      ['Image Crop', '/image/crop/'],
+      ['Audio to MP3', '/audio/to-mp3/'],
+      ['Learn', '/learn/'],
+      ['PDF Merge', '/pdf/merge/'],
+      ['PDF Compress', '/pdf/compress/'],
+      ['Image Compress', '/image/compress/'],
+      ['Image to WebP', '/image/to-webp/'],
+      ['Video Trim', '/video/trim/'],
+      ['Video Thumbnail', '/video/thumbnail/'],
+      ['Font Preview', '/fonts/preview/'],
+      ['Font CSS Generator', '/fonts/css-generator/'],
+      ['Audio Trim', '/audio/trim/'],
+      ['Audio Volume Booster', '/audio/volume/'],
+      ['JSON to CSV', '/file/json-to-csv/'],
+      ['CSV to JSON', '/file/csv-to-json/'],
+      ['XML to CSV', '/file/xml-to-csv/'],
+      ['Image to PDF', '/pdf/image-to-pdf/'],
+      ['Audio to WAV', '/audio/to-wav/'],
+      ['Font to webfont', '/fonts/webfont-convert/'],
+      ['Video to WEBM', '/video/convert-webm/'],
+      ['Privacy Policy', '/privacy/'],
+      ['Terms', '/terms/'],
+      ['Contact', '/contact/'],
+      ['All Tools', '/tools/'],
+    ];
+
+    const escapeHtml = (value) => value
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+
+    const linkInternalReferences = (body) => {
+      let html = escapeHtml(body);
+
+      html = html.replace(/(^|[\s(])(\/[a-z0-9-]+(?:\/[a-z0-9-]+)*\/?)(?=([\s).,]|$))/gi, (match, prefix, route) => {
+        return `${prefix}<a href="${route}">${route}</a>`;
+      });
+
+      for (const [label, href] of updateLinkMap) {
+        const escapedLabel = label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const labelRegex = new RegExp(`(^|[^">])(${escapedLabel})(?=([^<]*$))`, 'g');
+        html = html.replace(labelRegex, (match, prefix, text) => {
+          if (prefix.includes('href=')) return match;
+          return `${prefix}<a href="${href}">${text}</a>`;
+        });
+      }
+
+      return html;
+    };
+
     document.querySelectorAll('.changelog-list p').forEach((entry) => {
       const text = entry.textContent.trim();
       const match = text.match(/^(\d{4}-\d{2}-\d{2})\s+(NEW|UPDATE|FIX|RELEASE)\s+-\s+(.*)$/);
@@ -202,7 +254,7 @@
         RELEASE: 'is-release',
       }[label] || '';
 
-      entry.innerHTML = `<span class="update-entry-date">${date}</span><span class="update-entry-badge ${badgeClass}">${label}</span>${body}`;
+      entry.innerHTML = `<span class="update-entry-date">${date}</span><span class="update-entry-badge ${badgeClass}">${label}</span>${linkInternalReferences(body)}`;
     });
   </script>
   <script src="../theme.js"></script>
