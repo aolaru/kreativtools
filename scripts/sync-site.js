@@ -138,7 +138,7 @@ function navKeyForRoute(route) {
 }
 
 function ogTypeForRoute(route) {
-  if (route.startsWith('/learn/')) return 'article';
+  if (route.startsWith('/learn/') && route !== '/learn/') return 'article';
   return 'website';
 }
 

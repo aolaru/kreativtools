@@ -4,7 +4,7 @@ Kreativ Tools is a browser-based utility site for image, PDF, video, font, audio
 
 ## Current version
 
-- Current product version: `v0.9.1`
+- Current product version: `v0.9.2`
 - Version source of truth: `package.json`
 - Current release stage: pre-`1.0`, stable enough to promote, still actively evolving
 
@@ -17,11 +17,11 @@ Kreativ Tools is a browser-based utility site for image, PDF, video, font, audio
 - Updates: public product log for launches, UX updates, and design improvements
 
 ### Tool categories
-- Image: compress, resize, convert to WebP
-- PDF: image to PDF, merge PDF, compress PDF
+- Image: crop, compress, resize, convert to WebP
+- PDF: image to PDF, split PDF, merge PDF, compress PDF
 - Video: convert to WEBM, extract thumbnail, trim video
 - Fonts: webfont convert, preview, CSS generator
-- Audio: convert to WAV, trim audio, adjust volume
+- Audio: convert to WAV, convert to MP3, trim audio, adjust volume
 - File: XML to CSV, JSON to CSV, CSV to JSON
 
 ### Hero Learn workflows
@@ -91,7 +91,7 @@ For Kreativ Tools right now:
    - `bash tests/smoke.sh`
    - `npm run test:e2e`
 5. Commit the version bump and release notes.
-6. Optionally create a matching git tag like `v0.9.1`.
+6. Optionally create a matching git tag like `v0.9.2`.
 
 ## Notes
 
