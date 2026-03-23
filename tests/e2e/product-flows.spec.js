@@ -41,6 +41,39 @@ test('pdf merge accepts fixtures and enables merged download flow', async ({ pag
   await expect(page.locator('#mergePdfDownloadButton')).toBeEnabled();
 });
 
+test('pdf split creates separate outputs from custom page ranges', async ({ page }) => {
+  await page.goto('/pdf/split');
+  const splitPdfBase64 = await page.evaluate(async () => {
+    const doc = await PDFLib.PDFDocument.create();
+    for (let index = 0; index < 3; index += 1) {
+      const pdfPage = doc.addPage([420, 595]);
+      pdfPage.drawText(`Split Fixture Page ${index + 1}`, { x: 48, y: 520, size: 22 });
+    }
+    const bytes = await doc.save();
+    let binary = '';
+    const chunk = 0x8000;
+    for (let index = 0; index < bytes.length; index += chunk) {
+      binary += String.fromCharCode(...bytes.slice(index, index + chunk));
+    }
+    return btoa(binary);
+  });
+
+  await page.setInputFiles('#splitPdfInput', {
+    name: 'split-fixture.pdf',
+    mimeType: 'application/pdf',
+    buffer: Buffer.from(splitPdfBase64, 'base64'),
+  });
+
+  await expect(page.locator('#splitPdfWorkspace')).not.toHaveClass(/is-hidden/);
+  await expect(page.locator('#splitPdfPageCount')).toHaveText('3');
+  await page.selectOption('#splitPdfMode', 'ranges');
+  await page.fill('#splitPdfRanges', '1-2\n3');
+  await page.click('#splitPdfActionButton');
+  await expect(page.locator('#splitPdfOutputCount')).toHaveText('2');
+  await expect(page.locator('#splitPdfList .queue-item')).toHaveCount(2);
+  await expect(page.locator('#splitPdfDownloadAllButton')).toBeEnabled();
+});
+
 test('pdf compress processes a fixture and exposes the result step', async ({ page }) => {
   await page.goto('/pdf/compress');
   await page.setInputFiles('#compressPdfInput', compressPdf);

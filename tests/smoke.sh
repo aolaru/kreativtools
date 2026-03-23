@@ -43,6 +43,7 @@ main() {
     image/resize/index.html
     image/compress/index.html
     pdf/image-to-pdf/index.html
+    pdf/split/index.html
     pdf/merge/index.html
     video/convert-webm/index.html
     fonts/webfont-convert/index.html
@@ -76,6 +77,9 @@ main() {
   expect_pattern "image/crop/index.html" 'id="cropDownloadButton"'
 
   expect_pattern "pdf/image-to-pdf/index.html" 'id="pdfImageInput"'
+  expect_pattern "pdf/split/index.html" 'id="splitPdfInput"'
+  expect_pattern "pdf/split/index.html" 'id="splitPdfActionButton"'
+  expect_pattern "pdf/split/index.html" 'id="splitPdfDownloadAllButton"'
   expect_pattern "video/convert-webm/index.html" 'id="videoInput"'
   expect_pattern "fonts/webfont-convert/index.html" 'id="fontInput"'
   expect_pattern "audio/to-wav/index.html" 'id="audioInput"'

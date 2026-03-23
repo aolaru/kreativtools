@@ -799,7 +799,8 @@ label {
 }
 
 input[type='number'],
-select {
+select,
+textarea {
   border: 1px solid var(--outline);
   border-radius: 10px;
   padding: 10px;
@@ -808,10 +809,27 @@ select {
 }
 
 [data-theme='dark'] input[type='number'],
-[data-theme='dark'] select {
+[data-theme='dark'] select,
+[data-theme='dark'] textarea {
   background: #16273e;
   color: var(--text);
   border-color: #2b3e5b;
+}
+
+textarea {
+  width: 100%;
+  resize: vertical;
+  line-height: 1.45;
+}
+
+.stack-field {
+  align-content: start;
+}
+
+.field-help {
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.45;
 }
 
 input[type='range'] {

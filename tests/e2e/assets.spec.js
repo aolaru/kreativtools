@@ -8,6 +8,7 @@ const pages = [
   '/image/resize',
   '/image/compress',
   '/pdf/image-to-pdf',
+  '/pdf/split',
   '/pdf/merge',
   '/video/convert-webm',
   '/fonts/webfont-convert',
