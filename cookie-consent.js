@@ -101,12 +101,8 @@
   const injectManageConsentLink = () => {
     if (document.getElementById(MANAGE_CONSENT_LINK_ID)) return;
 
-    const footerInfo = document.querySelector('.footer-bottom p:last-child');
-    if (!footerInfo) return;
-
-    const separator = document.createElement('span');
-    separator.textContent = ' · ';
-    separator.setAttribute('aria-hidden', 'true');
+    const footerMetaActions = document.querySelector('.footer-meta-actions');
+    if (!footerMetaActions) return;
 
     const link = document.createElement('a');
     link.id = MANAGE_CONSENT_LINK_ID;
@@ -117,8 +113,7 @@
       openConsentManager();
     });
 
-    footerInfo.appendChild(separator);
-    footerInfo.appendChild(link);
+    footerMetaActions.appendChild(link);
   };
 
   document.addEventListener('DOMContentLoaded', () => {

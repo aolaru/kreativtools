@@ -1303,22 +1303,22 @@ input[type='range'] {
 }
 
 .footer-topline {
-  height: 10px;
+  height: 5px;
   background: linear-gradient(90deg, #2389d8, #56a6e6);
 }
 
 .footer-inner {
   width: min(1200px, 94vw);
   margin: 0 auto;
-  padding: 52px 0 38px;
+  padding: 42px 0 30px;
   display: grid;
-  grid-template-columns: 1.3fr repeat(3, 1fr);
-  gap: 28px;
+  grid-template-columns: 1.12fr repeat(3, minmax(0, 1fr));
+  gap: 24px;
 }
 
 .footer-about h3 {
-  margin: 0 0 14px;
-  font-size: 2rem;
+  margin: 0 0 12px;
+  font-size: 1.72rem;
   line-height: 1;
 }
 
@@ -1329,9 +1329,9 @@ input[type='range'] {
 .footer-about p {
   margin: 0;
   color: #69778c;
-  font-size: 1.35rem;
-  line-height: 1.35;
-  max-width: 520px;
+  font-size: 1.02rem;
+  line-height: 1.55;
+  max-width: 420px;
 }
 
 [data-theme='dark'] .footer-about p {
@@ -1340,7 +1340,7 @@ input[type='range'] {
 
 .site-footer h4 {
   margin: 0 0 14px;
-  font-size: 1.55rem;
+  font-size: 1.08rem;
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -1374,13 +1374,14 @@ input[type='range'] {
   padding: 0;
   list-style: none;
   display: grid;
-  gap: 10px;
+  gap: 8px;
 }
 
 .site-footer a {
   color: #6f7b8f;
   text-decoration: none;
-  font-size: 1.35rem;
+  font-size: 1rem;
+  line-height: 1.45;
   transition: color 120ms ease, transform 120ms ease;
 }
 
@@ -1400,15 +1401,15 @@ input[type='range'] {
 .footer-bottom {
   width: min(1200px, 94vw);
   margin: 0 auto;
-  padding: 22px 0 30px;
+  padding: 18px 0 26px;
   border-top: 1px solid #d5dfec;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: 10px;
   color: #6f7b8f;
-  font-size: 1.2rem;
+  font-size: 0.96rem;
   text-align: center;
 }
 
@@ -1420,6 +1421,14 @@ input[type='range'] {
 .footer-bottom p {
   margin: 0;
   text-align: center;
+}
+
+.footer-meta-actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .cookie-banner {
@@ -1484,7 +1493,7 @@ input[type='range'] {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .footer-brand-links a {
@@ -1577,21 +1586,21 @@ input[type='range'] {
   }
 
   .footer-about h3 {
-    font-size: 1.65rem;
+    font-size: 1.5rem;
   }
 
   .footer-about p,
   .site-footer a {
-    font-size: 1rem;
+    font-size: 0.96rem;
   }
 
   .site-footer h4 {
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
 
   .footer-bottom {
     flex-direction: column;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
   }
 
   .footer-brand-links {
