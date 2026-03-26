@@ -10,10 +10,48 @@ const compressPdf = path.join(fixturesDir, 'compress-sample.pdf');
 test('homepage surfaces featured workflows and Learn entry points', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('heading', { level: 1, name: /Useful browser tools/i })).toBeVisible();
+  await expect(page.locator('.quick-links a[href="/studio/image-prep/"]')).toBeVisible();
   await expect(page.locator('.quick-links a[href="/image/compress/"]')).toBeVisible();
   await expect(page.locator('.quick-links a[href="/pdf/merge/"]')).toBeVisible();
+  await expect(page.locator('.home-panel a[href="/studio/"]').first()).toBeVisible();
   await expect(page.locator('.home-panel a[href="/learn/"]')).toBeVisible();
   await expect(page.locator('.home-panel a[href="/changes/"]')).toBeVisible();
+});
+
+test('studio landing page introduces workflow lineup and image prep entry point', async ({ page }) => {
+  await page.goto('/studio');
+  await expect(page.getByRole('heading', { level: 1, name: 'Kreativ Studio' })).toBeVisible();
+  await expect(page.locator('.tool-card[href="/studio/image-prep/"]')).toBeVisible();
+  await expect(page.locator('text=PDF Delivery')).toBeVisible();
+  await expect(page.locator('text=Audio Delivery')).toBeVisible();
+});
+
+test('studio image prep runs through a basic guided export flow', async ({ page }) => {
+  await page.goto('/studio/image-prep');
+
+  const pngBuffer = Buffer.from(
+    'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9VE3d2QAAAAASUVORK5CYII=',
+    'base64'
+  );
+
+  await page.setInputFiles('#studioImageInput', {
+    name: 'studio-fixture.png',
+    mimeType: 'image/png',
+    buffer: pngBuffer,
+  });
+
+  await expect(page.locator('#studioWorkspace')).not.toHaveClass(/is-hidden/);
+  await expect(page.locator('#studioStageCrop')).toBeVisible();
+  await page.click('#studioApplyCropButton');
+  await expect(page.locator('#studioStageResize')).toBeVisible();
+  await page.fill('#studioResizeWidth', '320');
+  await page.click('#studioApplyResizeButton');
+  await expect(page.locator('#studioStageCompress')).toBeVisible();
+  await page.selectOption('#studioFormat', 'image/webp');
+  await page.click('#studioGenerateExportButton');
+  await expect(page.locator('#studioStageExport')).toBeVisible();
+  await expect(page.locator('#studioDownloadButton')).toBeEnabled();
+  await expect(page.locator('#studioExportFormat')).toHaveText('WEBP');
 });
 
 test('learn landing page includes the core hero guides and expanded follow-up guides', async ({ page }) => {

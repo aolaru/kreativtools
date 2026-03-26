@@ -32,6 +32,8 @@ const REDIRECTS = {
   'pdf.html': '/pdf/',
   'privacy.html': '/privacy/',
   'terms.html': '/terms/',
+  'studio.html': '/studio/',
+  'studio-image-prep.html': '/studio/image-prep/',
   'video-thumbnail.html': '/video/thumbnail/',
   'video-trim.html': '/video/trim/',
   'video.html': '/video/',
@@ -65,6 +67,7 @@ const FOOTER_SECTIONS = {
     ['Font to Webfont', '/fonts/webfont-convert/'],
   ],
   more: [
+    ['Studio Preview', '/studio/'],
     ['Learn Guides', '/learn/'],
     ['Video Thumbnail', '/video/thumbnail/'],
     ['XML to CSV', '/file/xml-to-csv/'],

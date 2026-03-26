@@ -1,0 +1,883 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kreativ Studio | Image Prep Workflow</title>
+  <meta name="description" content="Public Kreativ Studio preview for image prep: upload once, then crop, resize, compress, and export in one guided browser workflow." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://kreativtools.com/studio/image-prep/" />
+  <meta property="og:title" content="Kreativ Studio | Image Prep Workflow" />
+  <meta property="og:description" content="Public Kreativ Studio preview for image prep: upload once, then crop, resize, compress, and export in one guided browser workflow." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kreativtools.com/studio/image-prep/" />
+  <meta property="og:image" content="https://kreativtools.com/og-image.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Kreativ Studio | Image Prep Workflow" />
+  <meta name="twitter:description" content="Public Kreativ Studio preview for image prep: upload once, then crop, resize, compress, and export in one guided browser workflow." />
+  <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
+  <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="../../favicon-32x32.png" sizes="32x32" type="image/png" />
+  <link rel="icon" href="../../favicon-16x16.png" sizes="16x16" type="image/png" />
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="../../styles.css" />
+</head>
+<body>
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Kreativ Tools Home">
+      <div class="brand-mark">K</div>
+      <div class="brand-copy"><strong>Kreativ Tools</strong></div>
+    </a>
+
+    <nav class="top-nav" aria-label="Primary">
+      <a href="/image/">Image</a>
+      <a href="/pdf/">PDF</a>
+      <a href="/video/">Video</a>
+      <a href="/fonts/">Fonts</a>
+      <a href="/audio/">Audio</a>
+      <a href="/file/">File</a>
+      <a href="/learn/">Learn</a>
+      <a href="/changes/">Updates</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="ghost header-link" href="/tools/">All Tools</a>
+      <button id="shareButton" type="button" class="icon-toggle" aria-label="Share this page" title="Share this page"><i class="fa-solid fa-share-nodes" aria-hidden="true"></i></button>
+      <button id="themeToggle" type="button" class="icon-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><i class="fa-solid fa-moon" aria-hidden="true"></i></button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <p class="eyebrow">Studio Preview</p>
+      <h1>Image Prep Workflow</h1>
+      <p>Upload once, then crop, resize, compress, and export in one guided browser flow. This is the first public preview of Kreativ Studio.</p>
+      <div class="hero-actions">
+        <a class="ghost header-link" href="/studio/">About Studio</a>
+        <a class="ghost header-link" href="/image/crop/">Open the standalone crop tool</a>
+      </div>
+    </section>
+
+    <section class="tool-intro" aria-label="Image prep workflow guidance">
+      <div class="tool-intro-card">
+        <h2>Best for</h2>
+        <p>Content uploads, ecommerce images, social graphics, thumbnails, and quick visual cleanup before delivery.</p>
+      </div>
+      <div class="tool-intro-card">
+        <h2>Workflow order</h2>
+        <p>Crop first if framing is wrong, resize to the right dimensions, then compress for the final delivery format and weight.</p>
+      </div>
+    </section>
+
+    <section class="upload-card">
+      <input id="studioImageInput" type="file" accept="image/*" hidden />
+      <div id="studioDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload image for Kreativ Studio Image Prep">
+        <div class="drop-icon" aria-hidden="true"></div>
+        <button id="studioUploadButton" type="button" class="primary upload-trigger">Upload Image</button>
+        <p>or drag and drop an image here</p>
+        <p id="studioStatus" class="status status-empty">No image selected yet.</p>
+      </div>
+    </section>
+
+    <section id="studioWorkspace" class="studio-shell is-hidden">
+      <aside class="studio-sidebar">
+        <section class="studio-sidebar-card">
+          <h2>Workflow Steps</h2>
+          <div class="studio-step-nav" aria-label="Image Prep steps">
+            <button id="studioStepUpload" class="studio-step-button is-active" type="button" data-step="upload" aria-current="step">
+              <strong>Upload</strong>
+              <span>Load the working image and review the file summary.</span>
+            </button>
+            <button id="studioStepCrop" class="studio-step-button" type="button" data-step="crop">
+              <strong>Crop</strong>
+              <span>Set framing before changing dimensions or file weight.</span>
+            </button>
+            <button id="studioStepResize" class="studio-step-button" type="button" data-step="resize">
+              <strong>Resize</strong>
+              <span>Adjust the output dimensions for the actual destination.</span>
+            </button>
+            <button id="studioStepCompress" class="studio-step-button" type="button" data-step="compress">
+              <strong>Compress</strong>
+              <span>Choose format and quality for the final export.</span>
+            </button>
+            <button id="studioStepExport" class="studio-step-button" type="button" data-step="export">
+              <strong>Export</strong>
+              <span>Download the prepared file and start another if needed.</span>
+            </button>
+          </div>
+        </section>
+
+        <section class="studio-summary-card">
+          <h2>Working File</h2>
+          <ul class="studio-summary-list">
+            <li><strong>Name:</strong> <span id="studioSummaryName">No file loaded</span></li>
+            <li><strong>Original size:</strong> <span id="studioSummarySize">-</span></li>
+            <li><strong>Current dimensions:</strong> <span id="studioSummaryDimensions">-</span></li>
+            <li><strong>Final output:</strong> <span id="studioSummaryOutput">Not generated yet</span></li>
+          </ul>
+          <p class="studio-preview-callout">This preview works on the current result at each step. You can revisit steps, but the workflow stays intentionally lightweight for this first public Studio pass.</p>
+        </section>
+      </aside>
+
+      <div class="studio-stage-stack">
+        <section id="studioStageUpload" class="studio-stage-card">
+          <h2>Upload Review</h2>
+          <p>Once a file is loaded, Kreativ Studio keeps the current working version in the browser and moves it through the steps below.</p>
+          <div class="studio-actions-row" style="margin-top:16px;">
+            <button id="studioChooseAnotherButton" type="button" class="ghost header-link">Choose Another Image</button>
+            <button id="studioContinueButton" type="button" class="primary">Continue to Crop</button>
+          </div>
+        </section>
+
+        <section id="studioStageCrop" class="studio-stage-card" hidden>
+          <h2>Crop</h2>
+          <p>Set the framing before resizing or compressing. Drag on the image to create a new crop selection or use the ratio presets for faster layout matching.</p>
+          <div class="tool-switcher" role="tablist" aria-label="Crop presets" style="margin-top:16px;">
+            <button type="button" class="tool-button is-active" data-studio-ratio="free" aria-pressed="true">Free</button>
+            <button type="button" class="tool-button" data-studio-ratio="1:1" aria-pressed="false">1:1</button>
+            <button type="button" class="tool-button" data-studio-ratio="4:5" aria-pressed="false">4:5</button>
+            <button type="button" class="tool-button" data-studio-ratio="16:9" aria-pressed="false">16:9</button>
+            <button type="button" class="tool-button" data-studio-ratio="3:2" aria-pressed="false">3:2</button>
+          </div>
+          <div class="studio-stage-grid" style="margin-top:16px;">
+            <div>
+              <div class="studio-canvas-shell">
+                <canvas id="studioCropCanvas" aria-label="Studio crop selection preview"></canvas>
+              </div>
+              <p id="studioCropMeta" class="studio-stage-note">Selection details will appear here after upload.</p>
+            </div>
+            <div>
+              <div class="input-grid">
+                <label>
+                  X
+                  <input id="studioCropX" type="number" min="0" value="0" />
+                </label>
+                <label>
+                  Y
+                  <input id="studioCropY" type="number" min="0" value="0" />
+                </label>
+                <label>
+                  Width
+                  <input id="studioCropWidth" type="number" min="1" value="0" />
+                </label>
+                <label>
+                  Height
+                  <input id="studioCropHeight" type="number" min="1" value="0" />
+                </label>
+              </div>
+              <div class="studio-inline-actions" style="margin-top:16px;">
+                <button id="studioCropReset" type="button" class="ghost header-link">Reset Selection</button>
+                <button id="studioCropCenter" type="button" class="ghost header-link">Center Crop</button>
+              </div>
+              <div class="studio-actions-row" style="margin-top:18px;">
+                <button id="studioSkipCropButton" type="button" class="ghost header-link">Skip Crop</button>
+                <button id="studioApplyCropButton" type="button" class="primary">Apply Crop and Continue</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="studioStageResize" class="studio-stage-card" hidden>
+          <h2>Resize</h2>
+          <p>Match the dimensions to the actual destination so you do not compress oversized images unnecessarily.</p>
+          <div class="studio-stage-grid" style="margin-top:16px;">
+            <div>
+              <div class="studio-preview-shell">
+                <canvas id="studioPreviewCanvas" aria-label="Studio current image preview"></canvas>
+              </div>
+              <p id="studioPreviewMeta" class="studio-stage-note">Current preview dimensions will appear here.</p>
+            </div>
+            <div>
+              <div class="input-grid">
+                <label>
+                  Width (px)
+                  <input id="studioResizeWidth" type="number" min="1" />
+                </label>
+                <label>
+                  Height (px)
+                  <input id="studioResizeHeight" type="number" min="1" />
+                </label>
+              </div>
+              <label class="checkbox-row" style="margin-top:14px;">
+                <input id="studioKeepRatio" type="checkbox" checked />
+                Keep aspect ratio
+              </label>
+              <p class="studio-stage-note">Use exact dimensions when you already know the destination size, such as a product card, social crop, or CMS slot.</p>
+              <div class="studio-actions-row" style="margin-top:18px;">
+                <button id="studioSkipResizeButton" type="button" class="ghost header-link">Keep Current Dimensions</button>
+                <button id="studioApplyResizeButton" type="button" class="primary">Resize and Continue</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="studioStageCompress" class="studio-stage-card" hidden>
+          <h2>Compress</h2>
+          <p>Choose the final delivery format and quality. JPG and WebP usually provide the best weight savings for photographs and general web graphics.</p>
+          <div class="studio-stage-grid" style="margin-top:16px;">
+            <div>
+              <div class="studio-preview-shell">
+                <canvas id="studioCompressPreviewCanvas" aria-label="Studio compression preview"></canvas>
+              </div>
+              <p id="studioCompressMeta" class="studio-stage-note">The final output summary will appear here after export generation.</p>
+            </div>
+            <div>
+              <div class="input-grid">
+                <label>
+                  Output format
+                  <select id="studioFormat">
+                    <option value="image/jpeg" selected>JPG</option>
+                    <option value="image/webp">WEBP</option>
+                    <option value="image/png">PNG (lossless)</option>
+                  </select>
+                </label>
+                <label>
+                  <span class="quality-head">Quality <strong><span id="studioQualityValue">82</span>%</strong></span>
+                  <input id="studioQuality" type="range" min="1" max="100" value="82" />
+                </label>
+              </div>
+              <p class="studio-stage-note">PNG keeps lossless detail and may stay larger. JPG or WebP are better final choices when file weight matters.</p>
+              <div class="studio-actions-row" style="margin-top:18px;">
+                <button id="studioBackToResizeButton" type="button" class="ghost header-link">Back to Resize</button>
+                <button id="studioGenerateExportButton" type="button" class="primary">Generate Final Export</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="studioStageExport" class="studio-export-card" hidden>
+          <h2>Export</h2>
+          <p>The prepared image is ready. Download it now, or restart the workflow with another file.</p>
+          <ul class="studio-export-meta">
+            <li><strong>Format</strong><span id="studioExportFormat">-</span></li>
+            <li><strong>Dimensions</strong><span id="studioExportDimensions">-</span></li>
+            <li><strong>Final file size</strong><span id="studioExportSize">-</span></li>
+          </ul>
+          <div class="studio-actions-row" style="margin-top:18px;">
+            <button id="studioDownloadButton" type="button" class="primary" disabled>Download Final Image</button>
+            <button id="studioRestartButton" type="button" class="ghost header-link">Start Another Image</button>
+          </div>
+          <div class="tool-intro" style="margin-top:20px;">
+            <div class="tool-intro-card">
+              <h2>Next step ideas</h2>
+              <p>Need the standalone tools instead? Open <a href="/image/crop/">Image Crop</a>, <a href="/image/resize/">Image Resize</a>, or <a href="/image/compress/">Image Compress</a> directly.</p>
+            </div>
+            <div class="tool-intro-card">
+              <h2>Related guide</h2>
+              <p>Read <a href="/learn/resize-before-compressing-images/">When to resize before compressing images</a> if you want a clearer rule for choosing the right order outside this flow.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+  <div class="footer-topline"></div>
+  <div class="footer-inner">
+    <section class="footer-about">
+      <h3>Kreativ<span>Tools</span></h3>
+      <p>Kreativ Tools is a growing browser-based toolkit for image, PDF, video, font, audio, and file workflows. Explore focused utilities, practical Learn guides, and privacy-friendly tools for repeat creative work.</p>
+    </section>
+
+    <section>
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/tools/">All Tools</a></li>
+        <li><a href="/learn/">Learn</a></li>
+        <li><a href="/changes/">Updates</a></li>
+        <li><a href="/privacy/">Privacy Policy</a></li>
+        <li><a href="/terms/">Terms</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h4>Core Tools</h4>
+      <ul>
+        <li><a href="/image/compress/">Image Compress</a></li>
+        <li><a href="/pdf/merge/">PDF Merge</a></li>
+        <li><a href="/pdf/compress/">PDF Compress</a></li>
+        <li><a href="/fonts/webfont-convert/">Font to Webfont</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h4>More Tools</h4>
+      <ul>
+        <li><a href="/studio/">Studio Preview</a></li>
+        <li><a href="/learn/">Learn Guides</a></li>
+        <li><a href="/video/thumbnail/">Video Thumbnail</a></li>
+        <li><a href="/file/xml-to-csv/">XML to CSV</a></li>
+        <li><a href="/tools/">Browse Directory</a></li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="footer-bottom">
+    <p class="footer-brand-links"><a href="https://kreativfont.com/" target="_blank" rel="noopener noreferrer">Kreativ Font</a><span aria-hidden="true">·</span><a href="https://kreativsound.com/" target="_blank" rel="noopener noreferrer">Kreativ Sound</a><span aria-hidden="true">·</span><a href="https://kreativwp.com/" target="_blank" rel="noopener noreferrer">Kreativ WP</a><span aria-hidden="true">·</span><a href="/">Kreativ Tools</a></p>
+    <p>© 2026 <a href="https://madebykreativ.com/" target="_blank" rel="noopener noreferrer">Made by KREATIV</a> · Independent creative tools and assets by Andrei Olaru</p>
+    <p class="footer-meta-actions"></p>
+  </div>
+</footer>
+
+  <script>
+    const studioImageInput = document.getElementById('studioImageInput');
+    const studioUploadButton = document.getElementById('studioUploadButton');
+    const studioDropzone = document.getElementById('studioDropzone');
+    const studioStatus = document.getElementById('studioStatus');
+    const studioWorkspace = document.getElementById('studioWorkspace');
+    const studioChooseAnotherButton = document.getElementById('studioChooseAnotherButton');
+    const studioContinueButton = document.getElementById('studioContinueButton');
+
+    const studioCropCanvas = document.getElementById('studioCropCanvas');
+    const studioCropCtx = studioCropCanvas.getContext('2d');
+    const studioPreviewCanvas = document.getElementById('studioPreviewCanvas');
+    const studioPreviewCtx = studioPreviewCanvas.getContext('2d');
+    const studioCompressPreviewCanvas = document.getElementById('studioCompressPreviewCanvas');
+    const studioCompressPreviewCtx = studioCompressPreviewCanvas.getContext('2d');
+
+    const studioSummaryName = document.getElementById('studioSummaryName');
+    const studioSummarySize = document.getElementById('studioSummarySize');
+    const studioSummaryDimensions = document.getElementById('studioSummaryDimensions');
+    const studioSummaryOutput = document.getElementById('studioSummaryOutput');
+
+    const studioCropMeta = document.getElementById('studioCropMeta');
+    const studioCropX = document.getElementById('studioCropX');
+    const studioCropY = document.getElementById('studioCropY');
+    const studioCropWidth = document.getElementById('studioCropWidth');
+    const studioCropHeight = document.getElementById('studioCropHeight');
+    const studioCropReset = document.getElementById('studioCropReset');
+    const studioCropCenter = document.getElementById('studioCropCenter');
+    const studioApplyCropButton = document.getElementById('studioApplyCropButton');
+    const studioSkipCropButton = document.getElementById('studioSkipCropButton');
+
+    const studioPreviewMeta = document.getElementById('studioPreviewMeta');
+    const studioResizeWidth = document.getElementById('studioResizeWidth');
+    const studioResizeHeight = document.getElementById('studioResizeHeight');
+    const studioKeepRatio = document.getElementById('studioKeepRatio');
+    const studioApplyResizeButton = document.getElementById('studioApplyResizeButton');
+    const studioSkipResizeButton = document.getElementById('studioSkipResizeButton');
+
+    const studioCompressMeta = document.getElementById('studioCompressMeta');
+    const studioFormat = document.getElementById('studioFormat');
+    const studioQuality = document.getElementById('studioQuality');
+    const studioQualityValue = document.getElementById('studioQualityValue');
+    const studioBackToResizeButton = document.getElementById('studioBackToResizeButton');
+    const studioGenerateExportButton = document.getElementById('studioGenerateExportButton');
+
+    const studioExportFormat = document.getElementById('studioExportFormat');
+    const studioExportDimensions = document.getElementById('studioExportDimensions');
+    const studioExportSize = document.getElementById('studioExportSize');
+    const studioDownloadButton = document.getElementById('studioDownloadButton');
+    const studioRestartButton = document.getElementById('studioRestartButton');
+
+    const stageButtons = Array.from(document.querySelectorAll('.studio-step-button'));
+    const ratioButtons = Array.from(document.querySelectorAll('[data-studio-ratio]'));
+    const stages = {
+      upload: document.getElementById('studioStageUpload'),
+      crop: document.getElementById('studioStageCrop'),
+      resize: document.getElementById('studioStageResize'),
+      compress: document.getElementById('studioStageCompress'),
+      export: document.getElementById('studioStageExport'),
+    };
+
+    const workingCanvas = document.createElement('canvas');
+    const workingCtx = workingCanvas.getContext('2d');
+    let workingName = 'image';
+    let originalSize = 0;
+    let finalBlob = null;
+    let finalMime = 'image/jpeg';
+    let activeStep = 'upload';
+    let cropSelection = null;
+    let cropRatio = null;
+    let cropScale = 1;
+    let dragStart = null;
+    let isDragging = false;
+
+    const formatBytes = (bytes) => {
+      if (!Number.isFinite(bytes) || bytes <= 0) return '0 B';
+      if (bytes < 1024) return `${bytes} B`;
+      if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+      return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+    };
+
+    const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+    const extensionForMime = (mime) => {
+      if (mime === 'image/png') return 'png';
+      if (mime === 'image/webp') return 'webp';
+      return 'jpg';
+    };
+
+    const setStatus = (message) => {
+      studioStatus.textContent = message;
+    };
+
+    const hasWorkingImage = () => workingCanvas.width > 0 && workingCanvas.height > 0;
+
+    const setStage = (step) => {
+      activeStep = step;
+      for (const button of stageButtons) {
+        const isActive = button.dataset.step === step;
+        button.classList.toggle('is-active', isActive);
+        if (isActive) {
+          button.setAttribute('aria-current', 'step');
+        } else {
+          button.removeAttribute('aria-current');
+        }
+      }
+
+      for (const [key, element] of Object.entries(stages)) {
+        element.hidden = key !== step;
+      }
+    };
+
+    const updateSummary = () => {
+      studioSummaryName.textContent = workingName || 'image';
+      studioSummarySize.textContent = formatBytes(originalSize);
+      studioSummaryDimensions.textContent = hasWorkingImage() ? `${workingCanvas.width} x ${workingCanvas.height}px` : '-';
+      studioSummaryOutput.textContent = finalBlob
+        ? `${extensionForMime(finalMime).toUpperCase()} • ${formatBytes(finalBlob.size)}`
+        : 'Not generated yet';
+    };
+
+    const updateResizeInputs = () => {
+      studioResizeWidth.value = workingCanvas.width ? String(workingCanvas.width) : '';
+      studioResizeHeight.value = workingCanvas.height ? String(workingCanvas.height) : '';
+    };
+
+    const drawPreview = () => {
+      if (!hasWorkingImage()) return;
+
+      for (const [canvas, ctx] of [
+        [studioPreviewCanvas, studioPreviewCtx],
+        [studioCompressPreviewCanvas, studioCompressPreviewCtx],
+      ]) {
+        canvas.width = workingCanvas.width;
+        canvas.height = workingCanvas.height;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(workingCanvas, 0, 0);
+      }
+
+      studioPreviewMeta.textContent = `Current working image: ${workingCanvas.width} x ${workingCanvas.height}px`;
+      studioCompressMeta.textContent = finalBlob
+        ? `Final export ready: ${formatBytes(finalBlob.size)}`
+        : `Current working image: ${workingCanvas.width} x ${workingCanvas.height}px`;
+    };
+
+    const selectionToDisplay = () => ({
+      x: Math.round(cropSelection.x * cropScale),
+      y: Math.round(cropSelection.y * cropScale),
+      width: Math.round(cropSelection.width * cropScale),
+      height: Math.round(cropSelection.height * cropScale),
+    });
+
+    const fitCropSelection = (nextSelection) => {
+      const maxWidth = workingCanvas.width;
+      const maxHeight = workingCanvas.height;
+      const width = clamp(Math.round(nextSelection.width), 1, maxWidth);
+      const height = clamp(Math.round(nextSelection.height), 1, maxHeight);
+      return {
+        x: clamp(Math.round(nextSelection.x), 0, Math.max(maxWidth - width, 0)),
+        y: clamp(Math.round(nextSelection.y), 0, Math.max(maxHeight - height, 0)),
+        width,
+        height,
+      };
+    };
+
+    const updateCropInputs = () => {
+      if (!cropSelection) return;
+      studioCropX.value = cropSelection.x;
+      studioCropY.value = cropSelection.y;
+      studioCropWidth.value = cropSelection.width;
+      studioCropHeight.value = cropSelection.height;
+      studioCropMeta.textContent = `Crop area: ${cropSelection.width} x ${cropSelection.height}px at ${cropSelection.x}, ${cropSelection.y}`;
+    };
+
+    const drawCropCanvas = () => {
+      if (!hasWorkingImage() || !cropSelection) return;
+
+      const maxWidth = 880;
+      cropScale = Math.min(1, maxWidth / workingCanvas.width);
+      studioCropCanvas.width = Math.max(1, Math.round(workingCanvas.width * cropScale));
+      studioCropCanvas.height = Math.max(1, Math.round(workingCanvas.height * cropScale));
+      studioCropCtx.clearRect(0, 0, studioCropCanvas.width, studioCropCanvas.height);
+      studioCropCtx.drawImage(workingCanvas, 0, 0, studioCropCanvas.width, studioCropCanvas.height);
+
+      const rect = selectionToDisplay();
+      studioCropCtx.save();
+      studioCropCtx.fillStyle = 'rgba(10, 17, 28, 0.45)';
+      studioCropCtx.fillRect(0, 0, studioCropCanvas.width, studioCropCanvas.height);
+      studioCropCtx.clearRect(rect.x, rect.y, rect.width, rect.height);
+      studioCropCtx.strokeStyle = '#2589d8';
+      studioCropCtx.lineWidth = 3;
+      studioCropCtx.strokeRect(rect.x + 1.5, rect.y + 1.5, Math.max(rect.width - 3, 0), Math.max(rect.height - 3, 0));
+      studioCropCtx.restore();
+    };
+
+    const setCropSelection = (nextSelection) => {
+      cropSelection = fitCropSelection(nextSelection);
+      drawCropCanvas();
+      updateCropInputs();
+      finalBlob = null;
+      updateSummary();
+    };
+
+    const resetCropSelection = () => {
+      if (!hasWorkingImage()) return;
+      setCropSelection({
+        x: 0,
+        y: 0,
+        width: workingCanvas.width,
+        height: workingCanvas.height,
+      });
+    };
+
+    const setCropRatio = (value) => {
+      cropRatio = value === 'free' ? null : (() => {
+        const [width, height] = value.split(':').map(Number);
+        return width / height;
+      })();
+
+      for (const button of ratioButtons) {
+        const isActive = button.dataset.studioRatio === value;
+        button.classList.toggle('is-active', isActive);
+        button.setAttribute('aria-pressed', String(isActive));
+      }
+
+      if (!cropRatio || !cropSelection) {
+        drawCropCanvas();
+        return;
+      }
+
+      const width = cropSelection.width;
+      const height = clamp(Math.round(width / cropRatio), 1, workingCanvas.height);
+      const adjustedWidth = clamp(Math.round(height * cropRatio), 1, workingCanvas.width);
+      setCropSelection({
+        x: cropSelection.x,
+        y: cropSelection.y,
+        width: adjustedWidth,
+        height,
+      });
+    };
+
+    const syncCropFromInputs = () => {
+      if (!hasWorkingImage()) return;
+      setCropSelection({
+        x: Number(studioCropX.value) || 0,
+        y: Number(studioCropY.value) || 0,
+        width: Number(studioCropWidth.value) || workingCanvas.width,
+        height: Number(studioCropHeight.value) || workingCanvas.height,
+      });
+    };
+
+    const pointerToCropPoint = (event) => {
+      const rect = studioCropCanvas.getBoundingClientRect();
+      const x = clamp(Math.round((event.clientX - rect.left) * (studioCropCanvas.width / rect.width) / cropScale), 0, workingCanvas.width);
+      const y = clamp(Math.round((event.clientY - rect.top) * (studioCropCanvas.height / rect.height) / cropScale), 0, workingCanvas.height);
+      return { x, y };
+    };
+
+    const handleCropPointerDown = (event) => {
+      if (!hasWorkingImage()) return;
+      isDragging = true;
+      dragStart = pointerToCropPoint(event);
+    };
+
+    const handleCropPointerMove = (event) => {
+      if (!isDragging || !dragStart || !hasWorkingImage()) return;
+      const point = pointerToCropPoint(event);
+      let width = Math.max(1, Math.abs(point.x - dragStart.x));
+      let height = Math.max(1, Math.abs(point.y - dragStart.y));
+
+      if (cropRatio) {
+        const lockedHeight = Math.max(1, Math.round(width / cropRatio));
+        if (lockedHeight <= workingCanvas.height) {
+          height = lockedHeight;
+        } else {
+          height = workingCanvas.height;
+          width = Math.max(1, Math.round(height * cropRatio));
+        }
+      }
+
+      const x = point.x >= dragStart.x ? dragStart.x : dragStart.x - width;
+      const y = point.y >= dragStart.y ? dragStart.y : dragStart.y - height;
+      setCropSelection({ x, y, width, height });
+    };
+
+    const handleCropPointerUp = () => {
+      isDragging = false;
+      dragStart = null;
+    };
+
+    const loadStudioFile = (file) => {
+      if (!file || !file.type.startsWith('image/')) {
+        setStatus('Please upload a valid image file.');
+        return;
+      }
+
+      const imageUrl = URL.createObjectURL(file);
+      const image = new Image();
+      image.onload = () => {
+        workingCanvas.width = image.naturalWidth;
+        workingCanvas.height = image.naturalHeight;
+        workingCtx.clearRect(0, 0, workingCanvas.width, workingCanvas.height);
+        workingCtx.drawImage(image, 0, 0);
+
+        workingName = file.name.replace(/\.[^.]+$/, '');
+        originalSize = file.size;
+        finalBlob = null;
+        finalMime = studioFormat.value;
+
+        resetCropSelection();
+        updateResizeInputs();
+        updateSummary();
+        drawPreview();
+
+        studioWorkspace.classList.remove('is-hidden');
+        setStage('crop');
+        setStatus(`Loaded image: ${file.name}`);
+        URL.revokeObjectURL(imageUrl);
+      };
+
+      image.onerror = () => {
+        setStatus('Could not load this image. Please try another file.');
+        URL.revokeObjectURL(imageUrl);
+      };
+      image.src = imageUrl;
+    };
+
+    const replaceWorkingCanvas = (nextCanvas) => {
+      workingCanvas.width = nextCanvas.width;
+      workingCanvas.height = nextCanvas.height;
+      workingCtx.clearRect(0, 0, workingCanvas.width, workingCanvas.height);
+      workingCtx.drawImage(nextCanvas, 0, 0);
+      finalBlob = null;
+      resetCropSelection();
+      updateResizeInputs();
+      drawPreview();
+      updateSummary();
+    };
+
+    const applyCrop = () => {
+      if (!hasWorkingImage() || !cropSelection) return;
+      const nextCanvas = document.createElement('canvas');
+      nextCanvas.width = cropSelection.width;
+      nextCanvas.height = cropSelection.height;
+      const nextCtx = nextCanvas.getContext('2d');
+      nextCtx.drawImage(
+        workingCanvas,
+        cropSelection.x,
+        cropSelection.y,
+        cropSelection.width,
+        cropSelection.height,
+        0,
+        0,
+        cropSelection.width,
+        cropSelection.height
+      );
+      replaceWorkingCanvas(nextCanvas);
+      setStage('resize');
+      setStatus('Crop applied. Continue with resize.');
+    };
+
+    const applyResize = () => {
+      if (!hasWorkingImage()) return;
+      const width = clamp(Number(studioResizeWidth.value) || workingCanvas.width, 1, 16384);
+      const height = clamp(Number(studioResizeHeight.value) || workingCanvas.height, 1, 16384);
+      const nextCanvas = document.createElement('canvas');
+      nextCanvas.width = width;
+      nextCanvas.height = height;
+      const nextCtx = nextCanvas.getContext('2d');
+      nextCtx.drawImage(workingCanvas, 0, 0, width, height);
+      replaceWorkingCanvas(nextCanvas);
+      setStage('compress');
+      setStatus('Resize applied. Generate the final export when ready.');
+    };
+
+    const generateFinalExport = () => {
+      if (!hasWorkingImage()) return;
+      const mime = studioFormat.value;
+      const quality = Math.max(0.01, Math.min(1, Number(studioQuality.value) / 100));
+      finalMime = mime;
+
+      workingCanvas.toBlob((blob) => {
+        if (!blob) {
+          setStatus('Could not generate the final export. Try another format or quality.');
+          return;
+        }
+
+        finalBlob = blob;
+        studioExportFormat.textContent = extensionForMime(mime).toUpperCase();
+        studioExportDimensions.textContent = `${workingCanvas.width} x ${workingCanvas.height}px`;
+        studioExportSize.textContent = formatBytes(blob.size);
+        studioDownloadButton.disabled = false;
+        studioCompressMeta.textContent = `Final export ready: ${formatBytes(blob.size)} in ${extensionForMime(mime).toUpperCase()}`;
+        updateSummary();
+        setStage('export');
+        setStatus('Final export ready to download.');
+      }, mime, mime === 'image/png' ? undefined : quality);
+    };
+
+    const downloadFinal = () => {
+      if (!finalBlob) return;
+      const url = URL.createObjectURL(finalBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${workingName}-studio.${extensionForMime(finalMime)}`;
+      link.click();
+      URL.revokeObjectURL(url);
+      setStatus(`Downloaded ${workingName}-studio.${extensionForMime(finalMime)}`);
+    };
+
+    const restartWorkflow = () => {
+      studioImageInput.value = '';
+      workingCanvas.width = 0;
+      workingCanvas.height = 0;
+      finalBlob = null;
+      workingName = 'image';
+      originalSize = 0;
+      studioWorkspace.classList.add('is-hidden');
+      setStage('upload');
+      updateSummary();
+      studioCropMeta.textContent = 'Selection details will appear here after upload.';
+      studioPreviewMeta.textContent = 'Current preview dimensions will appear here.';
+      studioCompressMeta.textContent = 'The final output summary will appear here after export generation.';
+      studioExportFormat.textContent = '-';
+      studioExportDimensions.textContent = '-';
+      studioExportSize.textContent = '-';
+      studioDownloadButton.disabled = true;
+      setStatus('No image selected yet.');
+    };
+
+    studioUploadButton.addEventListener('click', () => studioImageInput.click());
+    studioChooseAnotherButton.addEventListener('click', () => studioImageInput.click());
+
+    studioDropzone.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        studioImageInput.click();
+      }
+    });
+
+    studioImageInput.addEventListener('change', () => {
+      const [file] = studioImageInput.files || [];
+      if (file) loadStudioFile(file);
+    });
+
+    studioDropzone.addEventListener('dragover', (event) => {
+      event.preventDefault();
+      studioDropzone.classList.add('drag-over');
+    });
+
+    studioDropzone.addEventListener('dragleave', () => {
+      studioDropzone.classList.remove('drag-over');
+    });
+
+    studioDropzone.addEventListener('drop', (event) => {
+      event.preventDefault();
+      studioDropzone.classList.remove('drag-over');
+      const [file] = event.dataTransfer?.files || [];
+      if (file) loadStudioFile(file);
+    });
+
+    stageButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        if (!hasWorkingImage() && button.dataset.step !== 'upload') return;
+        setStage(button.dataset.step);
+      });
+    });
+
+    ratioButtons.forEach((button) => {
+      button.addEventListener('click', () => setCropRatio(button.dataset.studioRatio));
+    });
+
+    [studioCropX, studioCropY, studioCropWidth, studioCropHeight].forEach((input) => {
+      input.addEventListener('input', syncCropFromInputs);
+    });
+
+    studioCropCanvas.addEventListener('pointerdown', handleCropPointerDown);
+    studioCropCanvas.addEventListener('pointermove', handleCropPointerMove);
+    studioCropCanvas.addEventListener('pointerup', handleCropPointerUp);
+    studioCropCanvas.addEventListener('pointerleave', handleCropPointerUp);
+
+    studioCropReset.addEventListener('click', resetCropSelection);
+    studioCropCenter.addEventListener('click', () => {
+      if (!cropSelection || !hasWorkingImage()) return;
+      setCropSelection({
+        x: Math.round((workingCanvas.width - cropSelection.width) / 2),
+        y: Math.round((workingCanvas.height - cropSelection.height) / 2),
+        width: cropSelection.width,
+        height: cropSelection.height,
+      });
+    });
+    studioApplyCropButton.addEventListener('click', applyCrop);
+    studioSkipCropButton.addEventListener('click', () => {
+      setStage('resize');
+      setStatus('Crop skipped. Continue with resize.');
+    });
+
+    studioKeepRatio.addEventListener('change', () => {
+      updateResizeInputs();
+    });
+
+    studioResizeWidth.addEventListener('input', () => {
+      if (!studioKeepRatio.checked || !hasWorkingImage()) return;
+      const width = clamp(Number(studioResizeWidth.value) || workingCanvas.width, 1, 16384);
+      const ratio = workingCanvas.height / workingCanvas.width;
+      studioResizeHeight.value = String(Math.max(1, Math.round(width * ratio)));
+    });
+
+    studioResizeHeight.addEventListener('input', () => {
+      if (!studioKeepRatio.checked || !hasWorkingImage()) return;
+      const height = clamp(Number(studioResizeHeight.value) || workingCanvas.height, 1, 16384);
+      const ratio = workingCanvas.width / workingCanvas.height;
+      studioResizeWidth.value = String(Math.max(1, Math.round(height * ratio)));
+    });
+
+    studioApplyResizeButton.addEventListener('click', applyResize);
+    studioSkipResizeButton.addEventListener('click', () => {
+      setStage('compress');
+      setStatus('Resize skipped. Continue with compress.');
+    });
+
+    studioFormat.addEventListener('change', () => {
+      const qualityEnabled = studioFormat.value === 'image/jpeg' || studioFormat.value === 'image/webp';
+      studioQuality.disabled = !qualityEnabled;
+      finalBlob = null;
+      studioDownloadButton.disabled = true;
+      updateSummary();
+    });
+
+    studioQuality.addEventListener('input', () => {
+      studioQualityValue.textContent = studioQuality.value;
+    });
+
+    studioBackToResizeButton.addEventListener('click', () => setStage('resize'));
+    studioGenerateExportButton.addEventListener('click', generateFinalExport);
+    studioDownloadButton.addEventListener('click', downloadFinal);
+    studioRestartButton.addEventListener('click', restartWorkflow);
+    studioContinueButton.addEventListener('click', () => {
+      if (hasWorkingImage()) setStage('crop');
+    });
+
+    updateSummary();
+  </script>
+
+  <script src="../../cookie-consent.js"></script>
+  <script src="../../github-pages-prefix.js"></script>
+  <script src="../../analytics.js"></script>
+  <script src="../../theme.js"></script>
+</body>
+</html>

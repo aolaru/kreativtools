@@ -16,6 +16,8 @@ const pages = [
   '/audio/to-mp3',
   '/file/xml-to-csv',
   '/changes',
+  '/studio',
+  '/studio/image-prep',
   '/tools',
   '/privacy',
   '/terms',
