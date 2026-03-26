@@ -179,6 +179,7 @@
                 <button id="studioCropCenter" type="button" class="ghost header-link">Center Crop</button>
               </div>
               <div class="studio-actions-row" style="margin-top:18px;">
+                <button id="studioBackToUploadButton" type="button" class="ghost header-link">Back to Upload</button>
                 <button id="studioSkipCropButton" type="button" class="ghost header-link">Skip Crop</button>
                 <button id="studioApplyCropButton" type="button" class="primary">Apply Crop and Continue</button>
               </div>
@@ -211,8 +212,23 @@
                 <input id="studioKeepRatio" type="checkbox" checked />
                 Keep aspect ratio
               </label>
+              <div class="studio-preset-grid" aria-label="Destination size presets">
+                <button id="studioPresetShopify" type="button" class="studio-preset-button">
+                  <strong>Shopify Product</strong>
+                  <span>2048 × 2048 square</span>
+                </button>
+                <button id="studioPresetInstagram" type="button" class="studio-preset-button">
+                  <strong>Instagram Portrait</strong>
+                  <span>1080 × 1350 post</span>
+                </button>
+                <button id="studioPresetBlog" type="button" class="studio-preset-button">
+                  <strong>Blog Image</strong>
+                  <span>1600 × 900 hero</span>
+                </button>
+              </div>
               <p class="studio-stage-note">Use exact dimensions when you already know the destination size, such as a product card, social crop, or CMS slot.</p>
               <div class="studio-actions-row" style="margin-top:18px;">
+                <button id="studioBackToCropButton" type="button" class="ghost header-link">Back to Crop</button>
                 <button id="studioSkipResizeButton" type="button" class="ghost header-link">Keep Current Dimensions</button>
                 <button id="studioApplyResizeButton" type="button" class="primary">Resize and Continue</button>
               </div>
@@ -263,9 +279,11 @@
             <li><strong>Final file size</strong><span id="studioExportSize">-</span></li>
           </ul>
           <div class="studio-actions-row" style="margin-top:18px;">
+            <button id="studioBackToCompressButton" type="button" class="ghost header-link">Back to Compress</button>
             <button id="studioDownloadButton" type="button" class="primary" disabled>Download Final Image</button>
             <button id="studioRestartButton" type="button" class="ghost header-link">Start Another Image</button>
           </div>
+          <p id="studioSuccessNote" class="studio-success-note" hidden>Final image generated. Download it now or go back one step to adjust the format and quality.</p>
           <div class="tool-intro" style="margin-top:20px;">
             <div class="tool-intro-card">
               <h2>Next step ideas</h2>
@@ -359,6 +377,7 @@
     const studioCropHeight = document.getElementById('studioCropHeight');
     const studioCropReset = document.getElementById('studioCropReset');
     const studioCropCenter = document.getElementById('studioCropCenter');
+    const studioBackToUploadButton = document.getElementById('studioBackToUploadButton');
     const studioApplyCropButton = document.getElementById('studioApplyCropButton');
     const studioSkipCropButton = document.getElementById('studioSkipCropButton');
 
@@ -366,6 +385,10 @@
     const studioResizeWidth = document.getElementById('studioResizeWidth');
     const studioResizeHeight = document.getElementById('studioResizeHeight');
     const studioKeepRatio = document.getElementById('studioKeepRatio');
+    const studioPresetShopify = document.getElementById('studioPresetShopify');
+    const studioPresetInstagram = document.getElementById('studioPresetInstagram');
+    const studioPresetBlog = document.getElementById('studioPresetBlog');
+    const studioBackToCropButton = document.getElementById('studioBackToCropButton');
     const studioApplyResizeButton = document.getElementById('studioApplyResizeButton');
     const studioSkipResizeButton = document.getElementById('studioSkipResizeButton');
 
@@ -379,8 +402,10 @@
     const studioExportFormat = document.getElementById('studioExportFormat');
     const studioExportDimensions = document.getElementById('studioExportDimensions');
     const studioExportSize = document.getElementById('studioExportSize');
+    const studioBackToCompressButton = document.getElementById('studioBackToCompressButton');
     const studioDownloadButton = document.getElementById('studioDownloadButton');
     const studioRestartButton = document.getElementById('studioRestartButton');
+    const studioSuccessNote = document.getElementById('studioSuccessNote');
 
     const stageButtons = Array.from(document.querySelectorAll('.studio-step-button'));
     const ratioButtons = Array.from(document.querySelectorAll('[data-studio-ratio]'));
@@ -404,6 +429,15 @@
     let cropScale = 1;
     let dragStart = null;
     let isDragging = false;
+
+    const trackStudioEvent = (eventName, properties = {}) => {
+      if (typeof window.kreativTrack === 'function') {
+        window.kreativTrack(eventName, {
+          workflow: 'image-prep',
+          ...properties,
+        });
+      }
+    };
 
     const formatBytes = (bytes) => {
       if (!Number.isFinite(bytes) || bytes <= 0) return '0 B';
@@ -441,6 +475,10 @@
       for (const [key, element] of Object.entries(stages)) {
         element.hidden = key !== step;
       }
+    };
+
+    const clearSuccessNote = () => {
+      studioSuccessNote.hidden = true;
     };
 
     const updateSummary = () => {
@@ -531,6 +569,7 @@
       drawCropCanvas();
       updateCropInputs();
       finalBlob = null;
+      clearSuccessNote();
       updateSummary();
     };
 
@@ -637,10 +676,11 @@
 
         workingName = file.name.replace(/\.[^.]+$/, '');
         originalSize = file.size;
-        finalBlob = null;
-        finalMime = studioFormat.value;
+      finalBlob = null;
+      finalMime = studioFormat.value;
+      clearSuccessNote();
 
-        resetCropSelection();
+      resetCropSelection();
         updateResizeInputs();
         updateSummary();
         drawPreview();
@@ -648,6 +688,10 @@
         studioWorkspace.classList.remove('is-hidden');
         setStage('crop');
         setStatus(`Loaded image: ${file.name}`);
+        trackStudioEvent('studio_image_prep_upload_started', {
+          file_type: file.type,
+          file_size_bucket: file.size < 500000 ? 'small' : file.size < 3000000 ? 'medium' : 'large',
+        });
         URL.revokeObjectURL(imageUrl);
       };
 
@@ -664,6 +708,7 @@
       workingCtx.clearRect(0, 0, workingCanvas.width, workingCanvas.height);
       workingCtx.drawImage(nextCanvas, 0, 0);
       finalBlob = null;
+      clearSuccessNote();
       resetCropSelection();
       updateResizeInputs();
       drawPreview();
@@ -690,6 +735,10 @@
       replaceWorkingCanvas(nextCanvas);
       setStage('resize');
       setStatus('Crop applied. Continue with resize.');
+      trackStudioEvent('studio_image_prep_crop_applied', {
+        width: workingCanvas.width,
+        height: workingCanvas.height,
+      });
     };
 
     const applyResize = () => {
@@ -704,6 +753,10 @@
       replaceWorkingCanvas(nextCanvas);
       setStage('compress');
       setStatus('Resize applied. Generate the final export when ready.');
+      trackStudioEvent('studio_image_prep_resize_applied', {
+        width,
+        height,
+      });
     };
 
     const generateFinalExport = () => {
@@ -726,7 +779,13 @@
         studioCompressMeta.textContent = `Final export ready: ${formatBytes(blob.size)} in ${extensionForMime(mime).toUpperCase()}`;
         updateSummary();
         setStage('export');
+        studioSuccessNote.hidden = false;
         setStatus('Final export ready to download.');
+        trackStudioEvent('studio_image_prep_export_generated', {
+          format: extensionForMime(mime),
+          width: workingCanvas.width,
+          height: workingCanvas.height,
+        });
       }, mime, mime === 'image/png' ? undefined : quality);
     };
 
@@ -739,6 +798,9 @@
       link.click();
       URL.revokeObjectURL(url);
       setStatus(`Downloaded ${workingName}-studio.${extensionForMime(finalMime)}`);
+      trackStudioEvent('studio_image_prep_export_downloaded', {
+        format: extensionForMime(finalMime),
+      });
     };
 
     const restartWorkflow = () => {
@@ -758,7 +820,15 @@
       studioExportDimensions.textContent = '-';
       studioExportSize.textContent = '-';
       studioDownloadButton.disabled = true;
+      clearSuccessNote();
       setStatus('No image selected yet.');
+    };
+
+    const applyPreset = (width, height, label) => {
+      studioResizeWidth.value = String(width);
+      studioResizeHeight.value = String(height);
+      studioKeepRatio.checked = false;
+      studioPreviewMeta.textContent = `${label} preset selected: ${width} x ${height}px`;
     };
 
     studioUploadButton.addEventListener('click', () => studioImageInput.click());
@@ -822,6 +892,7 @@
         height: cropSelection.height,
       });
     });
+    studioBackToUploadButton.addEventListener('click', () => setStage('upload'));
     studioApplyCropButton.addEventListener('click', applyCrop);
     studioSkipCropButton.addEventListener('click', () => {
       setStage('resize');
@@ -846,6 +917,10 @@
       studioResizeWidth.value = String(Math.max(1, Math.round(height * ratio)));
     });
 
+    studioPresetShopify.addEventListener('click', () => applyPreset(2048, 2048, 'Shopify Product'));
+    studioPresetInstagram.addEventListener('click', () => applyPreset(1080, 1350, 'Instagram Portrait'));
+    studioPresetBlog.addEventListener('click', () => applyPreset(1600, 900, 'Blog Image'));
+    studioBackToCropButton.addEventListener('click', () => setStage('crop'));
     studioApplyResizeButton.addEventListener('click', applyResize);
     studioSkipResizeButton.addEventListener('click', () => {
       setStage('compress');
@@ -866,6 +941,7 @@
 
     studioBackToResizeButton.addEventListener('click', () => setStage('resize'));
     studioGenerateExportButton.addEventListener('click', generateFinalExport);
+    studioBackToCompressButton.addEventListener('click', () => setStage('compress'));
     studioDownloadButton.addEventListener('click', downloadFinal);
     studioRestartButton.addEventListener('click', restartWorkflow);
     studioContinueButton.addEventListener('click', () => {

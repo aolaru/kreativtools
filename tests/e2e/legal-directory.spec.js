@@ -27,8 +27,9 @@ const pages = [
 test('all tools directory shows cards that link to tools', async ({ page }) => {
   await page.goto('/tools');
   const cards = page.locator('.tool-card');
-  await expect(cards).toHaveCount(22);
+  await expect(cards).toHaveCount(23);
 
+  await expect(page.locator('.tool-card[href="/studio/image-prep/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/image/crop/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/image/compress/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/image/resize/"]')).toBeVisible();
