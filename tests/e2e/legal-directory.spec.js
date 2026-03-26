@@ -18,6 +18,7 @@ const pages = [
   '/changes',
   '/studio',
   '/studio/image-prep',
+  '/studio/pdf-delivery',
   '/tools',
   '/privacy',
   '/terms',
@@ -27,9 +28,11 @@ const pages = [
 test('all tools directory shows cards that link to tools', async ({ page }) => {
   await page.goto('/tools');
   const cards = page.locator('.tool-card');
-  await expect(cards).toHaveCount(23);
+  await expect(cards).toHaveCount(25);
 
+  await expect(page.locator('.tool-card[href="/studio/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/studio/image-prep/"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/studio/pdf-delivery/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/image/crop/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/image/compress/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/image/resize/"]')).toBeVisible();

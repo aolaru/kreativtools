@@ -1,0 +1,714 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kreativ Studio | PDF Delivery Workflow</title>
+  <meta name="description" content="Public Kreativ Studio PDF workflow for arranging, optionally splitting, merging, optimizing, and exporting sendable PDFs in one guided browser flow." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://kreativtools.com/studio/pdf-delivery/" />
+  <meta property="og:title" content="Kreativ Studio | PDF Delivery Workflow" />
+  <meta property="og:description" content="Public Kreativ Studio PDF workflow for arranging, optionally splitting, merging, optimizing, and exporting sendable PDFs in one guided browser flow." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kreativtools.com/studio/pdf-delivery/" />
+  <meta property="og:image" content="https://kreativtools.com/og-image.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Kreativ Studio | PDF Delivery Workflow" />
+  <meta name="twitter:description" content="Public Kreativ Studio PDF workflow for arranging, optionally splitting, merging, optimizing, and exporting sendable PDFs in one guided browser flow." />
+  <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
+  <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="../../favicon-32x32.png" sizes="32x32" type="image/png" />
+  <link rel="icon" href="../../favicon-16x16.png" sizes="16x16" type="image/png" />
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="../../styles.css" />
+</head>
+<body>
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Kreativ Tools Home">
+      <div class="brand-mark">K</div>
+      <div class="brand-copy"><strong>Kreativ Tools</strong></div>
+    </a>
+
+    <nav class="top-nav" aria-label="Primary">
+      <a href="/image/">Image</a>
+      <a href="/pdf/">PDF</a>
+      <a href="/video/">Video</a>
+      <a href="/fonts/">Fonts</a>
+      <a href="/audio/">Audio</a>
+      <a href="/file/">File</a>
+      <a href="/learn/">Learn</a>
+      <a href="/changes/">Updates</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="ghost header-link" href="/tools/">All Tools</a>
+      <button id="shareButton" type="button" class="icon-toggle" aria-label="Share this page" title="Share this page"><i class="fa-solid fa-share-nodes" aria-hidden="true"></i></button>
+      <button id="themeToggle" type="button" class="icon-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><i class="fa-solid fa-moon" aria-hidden="true"></i></button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <p class="eyebrow">Studio Preview</p>
+      <h1>PDF Delivery Workflow</h1>
+      <p>Arrange, optionally split, merge, optimize, and export a final sendable PDF in one guided browser flow. This is the second public workflow in Kreativ Studio.</p>
+      <div class="hero-actions">
+        <a class="ghost header-link" href="/studio/">About Studio</a>
+        <a class="ghost header-link" href="/pdf/merge/">Open the standalone merge tool</a>
+      </div>
+    </section>
+
+    <section class="tool-intro" aria-label="PDF delivery workflow guidance">
+      <div class="tool-intro-card">
+        <h2>Best for</h2>
+        <p>Client handoff packs, review PDFs, stitched exports, approval files, and email-ready document delivery.</p>
+      </div>
+      <div class="tool-intro-card">
+        <h2>Workflow order</h2>
+        <p>Arrange first, split only if one file needs to become smaller parts, then merge the working queue and run a final optimization pass on the result you actually plan to send.</p>
+      </div>
+    </section>
+
+    <section class="upload-card">
+      <input id="studioPdfInput" type="file" accept="application/pdf,.pdf" multiple hidden />
+      <div id="studioPdfDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload PDF files for Kreativ Studio PDF Delivery">
+        <div class="drop-icon" aria-hidden="true"></div>
+        <button id="studioPdfUploadButton" type="button" class="primary upload-trigger">Upload PDFs</button>
+        <p>or drag and drop PDF files here</p>
+        <p id="studioPdfStatus" class="status status-empty">No PDF files selected yet.</p>
+      </div>
+    </section>
+
+    <section id="studioPdfWorkspace" class="studio-shell is-hidden">
+      <aside class="studio-sidebar">
+        <section class="studio-sidebar-card">
+          <h2>Workflow Steps</h2>
+          <div class="studio-step-nav" aria-label="PDF Delivery steps">
+            <button class="studio-step-button is-active" type="button" data-pdf-step="arrange" aria-current="step">
+              <strong>Arrange</strong>
+              <span>Build the queue in the order you want before any output is generated.</span>
+            </button>
+            <button class="studio-step-button" type="button" data-pdf-step="split">
+              <strong>Split</strong>
+              <span>Optional: break one queue item into smaller parts and replace it in the queue.</span>
+            </button>
+            <button class="studio-step-button" type="button" data-pdf-step="merge">
+              <strong>Merge</strong>
+              <span>Generate one working PDF from the current queue.</span>
+            </button>
+            <button class="studio-step-button" type="button" data-pdf-step="export">
+              <strong>Optimize & Export</strong>
+              <span>Run a final lightweight optimization pass and download the delivery file.</span>
+            </button>
+          </div>
+        </section>
+
+        <section class="studio-summary-card">
+          <h2>Working Queue</h2>
+          <ul class="studio-summary-list">
+            <li><strong>Queue items:</strong> <span id="studioPdfSummaryCount">0</span></li>
+            <li><strong>Total input size:</strong> <span id="studioPdfSummarySize">-</span></li>
+            <li><strong>Merged output:</strong> <span id="studioPdfSummaryMerged">Not generated yet</span></li>
+            <li><strong>Final export:</strong> <span id="studioPdfSummaryExport">Not generated yet</span></li>
+          </ul>
+          <p class="studio-preview-callout">This first Studio PDF workflow keeps everything in the browser and focuses on the most common delivery sequence rather than full document editing.</p>
+        </section>
+      </aside>
+
+      <div class="studio-stage-stack">
+        <section id="studioPdfStageArrange" class="studio-stage-card">
+          <h2>Arrange</h2>
+          <p>Build the queue in the exact order you want. Remove mistakes, add more files, and only move on when the delivery order is clear.</p>
+          <div class="studio-actions-row" style="margin-top:16px;">
+            <button id="studioPdfAddMoreButton" type="button" class="ghost header-link">Add More PDFs</button>
+            <button id="studioPdfContinueArrangeButton" type="button" class="primary" disabled>Continue to Split</button>
+          </div>
+          <div class="tool-results" style="margin-top:18px;">
+            <p id="studioPdfArrangeMeta" class="status status-empty">Add at least one PDF to begin building the queue.</p>
+            <div id="studioPdfQueueList" class="queue-list" aria-live="polite"></div>
+          </div>
+        </section>
+
+        <section id="studioPdfStageSplit" class="studio-stage-card" hidden>
+          <h2>Split</h2>
+          <p>Optional step. Choose one PDF from the queue if it should be broken into smaller parts before the final merge. Skip this step if the queue is already correct.</p>
+          <div class="studio-stage-grid" style="margin-top:16px;">
+            <div>
+              <label>
+                Queue item to split
+                <select id="studioPdfSplitSource"></select>
+              </label>
+              <label style="margin-top:14px;">
+                Split mode
+                <select id="studioPdfSplitMode">
+                  <option value="every">Every page to its own PDF</option>
+                  <option value="ranges">Custom page ranges</option>
+                </select>
+              </label>
+              <label class="stack-field" style="margin-top:14px;">
+                Custom ranges
+                <textarea id="studioPdfSplitRanges" rows="6" placeholder="1-2&#10;3&#10;4-6"></textarea>
+                <span id="studioPdfSplitHelp" class="field-help">One output per line. Example: 1-2 on one line, then 3,5-6 on the next.</span>
+              </label>
+            </div>
+            <div>
+              <div class="result-card">
+                <div class="result-row">
+                  <span>Selected source pages</span>
+                  <strong id="studioPdfSplitPageCount">-</strong>
+                </div>
+                <div class="result-row">
+                  <span>Queue after split</span>
+                  <strong id="studioPdfSplitPreview">-</strong>
+                </div>
+              </div>
+              <p id="studioPdfSplitMeta" class="studio-stage-note">Choose a queue item to preview the split options.</p>
+            </div>
+          </div>
+          <div class="studio-actions-row" style="margin-top:18px;">
+            <button id="studioPdfBackToArrangeButton" type="button" class="ghost header-link">Back to Arrange</button>
+            <button id="studioPdfSkipSplitButton" type="button" class="ghost header-link">Skip Split</button>
+            <button id="studioPdfApplySplitButton" type="button" class="primary">Split Selected PDF</button>
+          </div>
+        </section>
+
+        <section id="studioPdfStageMerge" class="studio-stage-card" hidden>
+          <h2>Merge</h2>
+          <p>Generate one working PDF from the current queue. This becomes the single file that moves into the final optimization and export step.</p>
+          <div class="result-card" style="margin-top:16px;">
+            <div class="result-row">
+              <span>Queue items</span>
+              <strong id="studioPdfMergeCount">0</strong>
+            </div>
+            <div class="result-row">
+              <span>Merged output</span>
+              <strong id="studioPdfMergeStatus">Waiting for merge</strong>
+            </div>
+          </div>
+          <div class="studio-actions-row" style="margin-top:18px;">
+            <button id="studioPdfBackToSplitButton" type="button" class="ghost header-link">Back to Split</button>
+            <button id="studioPdfMergeButton" type="button" class="primary" disabled>Merge Queue</button>
+            <button id="studioPdfContinueToExportButton" type="button" class="ghost header-link" disabled>Continue to Export</button>
+          </div>
+        </section>
+
+        <section id="studioPdfStageExport" class="studio-export-card" hidden>
+          <h2>Optimize & Export</h2>
+          <p>The final stage uses a lightweight client-side optimization pass. It helps with duplicate structure and object streams, but it will not dramatically shrink every PDF.</p>
+          <div class="result-card" style="margin-top:16px;">
+            <div class="result-row">
+              <span>Merged size</span>
+              <strong id="studioPdfExportInputSize">-</strong>
+            </div>
+            <div class="result-row">
+              <span>Optimized size</span>
+              <strong id="studioPdfExportOutputSize">-</strong>
+            </div>
+            <div class="result-row">
+              <span>Saved</span>
+              <strong id="studioPdfExportSavings">-</strong>
+            </div>
+          </div>
+          <div class="studio-actions-row" style="margin-top:18px;">
+            <button id="studioPdfBackToMergeButton" type="button" class="ghost header-link">Back to Merge</button>
+            <button id="studioPdfOptimizeButton" type="button" class="primary" disabled>Generate Final PDF</button>
+            <button id="studioPdfDownloadButton" type="button" class="ghost header-link" disabled>Download Final PDF</button>
+          </div>
+          <p id="studioPdfExportMeta" class="studio-success-note" hidden>Final PDF generated. Review the final size and download when ready.</p>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+  <div class="footer-topline"></div>
+  <div class="footer-inner">
+    <section class="footer-about">
+      <h3>Kreativ<span>Tools</span></h3>
+      <p>Kreativ Tools is a growing browser-based toolkit for image, PDF, video, font, audio, and file workflows. Explore focused utilities, practical Learn guides, and privacy-friendly tools for repeat creative work.</p>
+    </section>
+
+    <section>
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/tools/">All Tools</a></li>
+        <li><a href="/learn/">Learn</a></li>
+        <li><a href="/changes/">Updates</a></li>
+        <li><a href="/privacy/">Privacy Policy</a></li>
+        <li><a href="/terms/">Terms</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h4>Core Tools</h4>
+      <ul>
+        <li><a href="/image/compress/">Image Compress</a></li>
+        <li><a href="/pdf/merge/">PDF Merge</a></li>
+        <li><a href="/pdf/compress/">PDF Compress</a></li>
+        <li><a href="/fonts/webfont-convert/">Font to Webfont</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h4>More Tools</h4>
+      <ul>
+        <li><a href="/studio/">Studio Preview</a></li>
+        <li><a href="/learn/">Learn Guides</a></li>
+        <li><a href="/video/thumbnail/">Video Thumbnail</a></li>
+        <li><a href="/file/xml-to-csv/">XML to CSV</a></li>
+        <li><a href="/tools/">Browse Directory</a></li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="footer-bottom">
+    <p class="footer-brand-links"><a href="https://kreativfont.com/" target="_blank" rel="noopener noreferrer">Kreativ Font</a><span aria-hidden="true">·</span><a href="https://kreativsound.com/" target="_blank" rel="noopener noreferrer">Kreativ Sound</a><span aria-hidden="true">·</span><a href="https://kreativwp.com/" target="_blank" rel="noopener noreferrer">Kreativ WP</a><span aria-hidden="true">·</span><a href="/">Kreativ Tools</a></p>
+    <p>© 2026 <a href="https://madebykreativ.com/" target="_blank" rel="noopener noreferrer">Made by KREATIV</a> · Independent creative tools and assets by Andrei Olaru</p>
+    <p class="footer-meta-actions"></p>
+  </div>
+</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
+  <script>
+    const studioPdfInput = document.getElementById('studioPdfInput');
+    const studioPdfUploadButton = document.getElementById('studioPdfUploadButton');
+    const studioPdfDropzone = document.getElementById('studioPdfDropzone');
+    const studioPdfStatus = document.getElementById('studioPdfStatus');
+    const studioPdfWorkspace = document.getElementById('studioPdfWorkspace');
+    const studioPdfAddMoreButton = document.getElementById('studioPdfAddMoreButton');
+    const studioPdfContinueArrangeButton = document.getElementById('studioPdfContinueArrangeButton');
+    const studioPdfQueueList = document.getElementById('studioPdfQueueList');
+    const studioPdfArrangeMeta = document.getElementById('studioPdfArrangeMeta');
+    const studioPdfSummaryCount = document.getElementById('studioPdfSummaryCount');
+    const studioPdfSummarySize = document.getElementById('studioPdfSummarySize');
+    const studioPdfSummaryMerged = document.getElementById('studioPdfSummaryMerged');
+    const studioPdfSummaryExport = document.getElementById('studioPdfSummaryExport');
+    const studioPdfSplitSource = document.getElementById('studioPdfSplitSource');
+    const studioPdfSplitMode = document.getElementById('studioPdfSplitMode');
+    const studioPdfSplitRanges = document.getElementById('studioPdfSplitRanges');
+    const studioPdfSplitHelp = document.getElementById('studioPdfSplitHelp');
+    const studioPdfSplitPageCount = document.getElementById('studioPdfSplitPageCount');
+    const studioPdfSplitPreview = document.getElementById('studioPdfSplitPreview');
+    const studioPdfSplitMeta = document.getElementById('studioPdfSplitMeta');
+    const studioPdfBackToArrangeButton = document.getElementById('studioPdfBackToArrangeButton');
+    const studioPdfSkipSplitButton = document.getElementById('studioPdfSkipSplitButton');
+    const studioPdfApplySplitButton = document.getElementById('studioPdfApplySplitButton');
+    const studioPdfMergeCount = document.getElementById('studioPdfMergeCount');
+    const studioPdfMergeStatus = document.getElementById('studioPdfMergeStatus');
+    const studioPdfBackToSplitButton = document.getElementById('studioPdfBackToSplitButton');
+    const studioPdfMergeButton = document.getElementById('studioPdfMergeButton');
+    const studioPdfContinueToExportButton = document.getElementById('studioPdfContinueToExportButton');
+    const studioPdfExportInputSize = document.getElementById('studioPdfExportInputSize');
+    const studioPdfExportOutputSize = document.getElementById('studioPdfExportOutputSize');
+    const studioPdfExportSavings = document.getElementById('studioPdfExportSavings');
+    const studioPdfBackToMergeButton = document.getElementById('studioPdfBackToMergeButton');
+    const studioPdfOptimizeButton = document.getElementById('studioPdfOptimizeButton');
+    const studioPdfDownloadButton = document.getElementById('studioPdfDownloadButton');
+    const studioPdfExportMeta = document.getElementById('studioPdfExportMeta');
+
+    const pdfStageButtons = Array.from(document.querySelectorAll('[data-pdf-step]'));
+    const pdfStages = {
+      arrange: document.getElementById('studioPdfStageArrange'),
+      split: document.getElementById('studioPdfStageSplit'),
+      merge: document.getElementById('studioPdfStageMerge'),
+      export: document.getElementById('studioPdfStageExport'),
+    };
+
+    let queueFiles = [];
+    let mergedBytes = null;
+    let optimizedBytes = null;
+
+    const formatBytes = (bytes) => {
+      if (!Number.isFinite(bytes) || bytes <= 0) return '0 B';
+      if (bytes < 1024) return `${bytes} B`;
+      if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+      return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+    };
+
+    const setStatus = (message) => {
+      studioPdfStatus.textContent = message;
+    };
+
+    const trackStudioEvent = (eventName, properties = {}) => {
+      if (typeof window.kreativTrack === 'function') {
+        window.kreativTrack(eventName, { workflow: 'pdf-delivery', ...properties });
+      }
+    };
+
+    const setPdfStage = (step) => {
+      pdfStageButtons.forEach((button) => {
+        const isActive = button.dataset.pdfStep === step;
+        button.classList.toggle('is-active', isActive);
+        if (isActive) button.setAttribute('aria-current', 'step');
+        else button.removeAttribute('aria-current');
+      });
+      Object.entries(pdfStages).forEach(([key, element]) => {
+        element.hidden = key !== step;
+      });
+    };
+
+    const resetMergeState = () => {
+      mergedBytes = null;
+      optimizedBytes = null;
+      studioPdfMergeStatus.textContent = 'Waiting for merge';
+      studioPdfContinueToExportButton.disabled = true;
+      studioPdfOptimizeButton.disabled = true;
+      studioPdfDownloadButton.disabled = true;
+      studioPdfSummaryMerged.textContent = 'Not generated yet';
+      studioPdfSummaryExport.textContent = 'Not generated yet';
+      studioPdfExportInputSize.textContent = '-';
+      studioPdfExportOutputSize.textContent = '-';
+      studioPdfExportSavings.textContent = '-';
+      studioPdfExportMeta.hidden = true;
+    };
+
+    const totalQueueSize = () => queueFiles.reduce((sum, file) => sum + file.size, 0);
+
+    const updateSummary = () => {
+      studioPdfSummaryCount.textContent = String(queueFiles.length);
+      studioPdfSummarySize.textContent = queueFiles.length ? formatBytes(totalQueueSize()) : '-';
+      studioPdfMergeCount.textContent = String(queueFiles.length);
+      studioPdfContinueArrangeButton.disabled = queueFiles.length === 0;
+      studioPdfMergeButton.disabled = queueFiles.length === 0;
+      studioPdfArrangeMeta.textContent = queueFiles.length
+        ? `${queueFiles.length} queue item${queueFiles.length === 1 ? '' : 's'} ready. Reorder or remove before continuing.`
+        : 'Add at least one PDF to begin building the queue.';
+    };
+
+    const renderQueue = () => {
+      studioPdfQueueList.replaceChildren(
+        ...queueFiles.map((file, index) => {
+          const item = document.createElement('article');
+          item.className = 'queue-item';
+          const main = document.createElement('div');
+          main.className = 'queue-item-main';
+          const title = document.createElement('div');
+          title.className = 'queue-item-title';
+          title.textContent = `${index + 1}. ${file.name}`;
+          const meta = document.createElement('div');
+          meta.className = 'queue-item-meta';
+          meta.textContent = `${formatBytes(file.size)} • ${file.pageCount || '?'} page${file.pageCount === 1 ? '' : 's'}`;
+          const actions = document.createElement('div');
+          actions.className = 'queue-item-actions';
+
+          const upButton = document.createElement('button');
+          upButton.type = 'button';
+          upButton.className = 'secondary-button';
+          upButton.textContent = 'Move Up';
+          upButton.disabled = index === 0;
+          upButton.addEventListener('click', () => moveQueueItem(index, -1));
+
+          const downButton = document.createElement('button');
+          downButton.type = 'button';
+          downButton.className = 'secondary-button';
+          downButton.textContent = 'Move Down';
+          downButton.disabled = index === queueFiles.length - 1;
+          downButton.addEventListener('click', () => moveQueueItem(index, 1));
+
+          const removeButton = document.createElement('button');
+          removeButton.type = 'button';
+          removeButton.className = 'danger-button';
+          removeButton.textContent = 'Remove';
+          removeButton.addEventListener('click', () => removeQueueItem(index));
+
+          main.append(title, meta);
+          actions.append(upButton, downButton, removeButton);
+          item.append(main, actions);
+          return item;
+        })
+      );
+      refreshSplitSources();
+      updateSummary();
+    };
+
+    const refreshSplitSources = () => {
+      const currentValue = studioPdfSplitSource.value;
+      studioPdfSplitSource.replaceChildren(
+        ...queueFiles.map((file, index) => {
+          const option = document.createElement('option');
+          option.value = String(index);
+          option.textContent = `${index + 1}. ${file.name}`;
+          return option;
+        })
+      );
+      if (queueFiles.length) {
+        studioPdfSplitSource.value = currentValue && Number(currentValue) < queueFiles.length ? currentValue : '0';
+      }
+      updateSplitPreview();
+    };
+
+    const moveQueueItem = (index, offset) => {
+      const targetIndex = index + offset;
+      if (targetIndex < 0 || targetIndex >= queueFiles.length) return;
+      const nextQueue = queueFiles.slice();
+      const [item] = nextQueue.splice(index, 1);
+      nextQueue.splice(targetIndex, 0, item);
+      queueFiles = nextQueue;
+      resetMergeState();
+      renderQueue();
+      setStatus(`Moved ${item.name} ${offset < 0 ? 'up' : 'down'} in the queue.`);
+    };
+
+    const removeQueueItem = (index) => {
+      const [removed] = queueFiles.splice(index, 1);
+      resetMergeState();
+      renderQueue();
+      if (removed) setStatus(`Removed ${removed.name} from the queue.`);
+    };
+
+    const updateSplitModeUi = () => {
+      const useRanges = studioPdfSplitMode.value === 'ranges';
+      studioPdfSplitRanges.disabled = !useRanges;
+      studioPdfSplitHelp.textContent = useRanges
+        ? 'One output per line. Example: 1-2 on one line, then 3,5-6 on the next.'
+        : 'Every page mode replaces the selected queue item with one PDF per page.';
+    };
+
+    const parseLineToIndices = (line, pageCount) => {
+      const tokens = line.split(',').map((token) => token.trim()).filter(Boolean);
+      if (!tokens.length) throw new Error('Each custom output needs at least one page or range.');
+      const indices = [];
+      for (const token of tokens) {
+        const rangeMatch = token.match(/^(\\d+)\\s*-\\s*(\\d+)$/);
+        if (rangeMatch) {
+          const start = Number(rangeMatch[1]);
+          const end = Number(rangeMatch[2]);
+          if (start > end) throw new Error(`Range "${token}" is reversed.`);
+          if (start < 1 || end > pageCount) throw new Error(`Range "${token}" is outside the PDF page count.`);
+          for (let page = start; page <= end; page += 1) indices.push(page - 1);
+        } else {
+          if (!/^\\d+$/.test(token)) throw new Error(`"${token}" is not a valid page or range.`);
+          const page = Number(token);
+          if (page < 1 || page > pageCount) throw new Error(`Page "${token}" is outside the PDF page count.`);
+          indices.push(page - 1);
+        }
+      }
+      return [...new Set(indices)].sort((a, b) => a - b);
+    };
+
+    const buildRangeSets = (file) => {
+      if (!file) return [];
+      if (studioPdfSplitMode.value === 'every') {
+        return Array.from({ length: file.pageCount }, (_, index) => ({ label: `Page ${index + 1}`, indices: [index] }));
+      }
+      const lines = studioPdfSplitRanges.value.split('\\n').map((line) => line.trim()).filter(Boolean);
+      if (!lines.length) throw new Error('Add at least one custom range before splitting.');
+      return lines.map((line) => ({ label: `Pages ${line.replace(/\\s+/g, '')}`, indices: parseLineToIndices(line, file.pageCount) }));
+    };
+
+    const updateSplitPreview = () => {
+      const file = queueFiles[Number(studioPdfSplitSource.value)];
+      if (!file) {
+        studioPdfSplitPageCount.textContent = '-';
+        studioPdfSplitPreview.textContent = '-';
+        studioPdfSplitMeta.textContent = 'Choose a queue item to preview the split options.';
+        return;
+      }
+      studioPdfSplitPageCount.textContent = String(file.pageCount || '-');
+      try {
+        const rangeSets = buildRangeSets(file);
+        studioPdfSplitPreview.textContent = `${rangeSets.length} output file${rangeSets.length === 1 ? '' : 's'}`;
+        studioPdfSplitMeta.textContent = `Splitting ${file.name} will replace the original queue item with ${rangeSets.length} new part${rangeSets.length === 1 ? '' : 's'}.`;
+      } catch (error) {
+        studioPdfSplitPreview.textContent = 'Invalid ranges';
+        studioPdfSplitMeta.textContent = error.message;
+      }
+    };
+
+    const readPdfPageCount = async (file) => {
+      const bytes = await file.arrayBuffer();
+      const pdfDoc = await PDFLib.PDFDocument.load(bytes, { ignoreEncryption: true });
+      return { bytes: new Uint8Array(bytes), pageCount: pdfDoc.getPageCount() };
+    };
+
+    const makeQueueFile = (file, bytes, pageCount) => ({ name: file.name, size: file.size, bytes, pageCount });
+
+    const addPdfFiles = async (incoming) => {
+      const pdfFiles = Array.from(incoming || []).filter((file) => file && (file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')));
+      if (!pdfFiles.length) {
+        setStatus('Please add valid PDF files.');
+        return;
+      }
+      const nextItems = [];
+      for (const file of pdfFiles) {
+        const { bytes, pageCount } = await readPdfPageCount(file);
+        nextItems.push(makeQueueFile(file, bytes, pageCount));
+      }
+      queueFiles = queueFiles.concat(nextItems);
+      studioPdfWorkspace.classList.remove('is-hidden');
+      resetMergeState();
+      renderQueue();
+      setStatus(`${nextItems.length} PDF file${nextItems.length === 1 ? '' : 's'} added to the queue.`);
+      trackStudioEvent('studio_pdf_delivery_upload_started', { file_count: nextItems.length });
+    };
+
+    const buildOutputFilename = (baseName, label, index) => {
+      const safeLabel = label.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      return `${baseName}-part-${index + 1}-${safeLabel || 'pages'}.pdf`;
+    };
+
+    const applySplitToQueue = async () => {
+      const queueIndex = Number(studioPdfSplitSource.value);
+      const sourceFile = queueFiles[queueIndex];
+      if (!sourceFile) {
+        setStatus('Choose a queue item to split.');
+        return;
+      }
+      try {
+        const sourceDoc = await PDFLib.PDFDocument.load(sourceFile.bytes, { ignoreEncryption: true });
+        const rangeSets = buildRangeSets(sourceFile);
+        const baseName = sourceFile.name.replace(/\\.pdf$/i, '') || 'split';
+        const outputs = [];
+        for (let index = 0; index < rangeSets.length; index += 1) {
+          const rangeSet = rangeSets[index];
+          const outputDoc = await PDFLib.PDFDocument.create();
+          const copiedPages = await outputDoc.copyPages(sourceDoc, rangeSet.indices);
+          copiedPages.forEach((page) => outputDoc.addPage(page));
+          const bytes = await outputDoc.save();
+          outputs.push({ name: buildOutputFilename(baseName, rangeSet.label, index), size: bytes.byteLength, bytes: new Uint8Array(bytes), pageCount: rangeSet.indices.length });
+        }
+        queueFiles.splice(queueIndex, 1, ...outputs);
+        resetMergeState();
+        renderQueue();
+        setPdfStage('merge');
+        setStatus(`Split ${sourceFile.name} into ${outputs.length} queue item${outputs.length === 1 ? '' : 's'}.`);
+        trackStudioEvent('studio_pdf_delivery_split_applied', { outputs: outputs.length });
+      } catch (error) {
+        setStatus(error.message || 'Could not split the selected PDF.');
+      }
+    };
+
+    const mergeQueue = async () => {
+      if (!queueFiles.length) {
+        setStatus('Add PDF files to the queue first.');
+        return;
+      }
+      studioPdfMergeButton.disabled = true;
+      studioPdfMergeStatus.textContent = 'Merging in progress';
+      setStatus('Merging queue locally...');
+      try {
+        const mergedPdf = await PDFLib.PDFDocument.create();
+        for (const file of queueFiles) {
+          const srcPdf = await PDFLib.PDFDocument.load(file.bytes, { ignoreEncryption: true });
+          const pages = await mergedPdf.copyPages(srcPdf, srcPdf.getPageIndices());
+          pages.forEach((page) => mergedPdf.addPage(page));
+        }
+        mergedBytes = await mergedPdf.save();
+        studioPdfMergeStatus.textContent = `Ready (${formatBytes(mergedBytes.byteLength)})`;
+        studioPdfSummaryMerged.textContent = formatBytes(mergedBytes.byteLength);
+        studioPdfExportInputSize.textContent = formatBytes(mergedBytes.byteLength);
+        studioPdfContinueToExportButton.disabled = false;
+        studioPdfOptimizeButton.disabled = false;
+        setStatus('Merge complete. Continue to the final optimization and export step.');
+        trackStudioEvent('studio_pdf_delivery_merge_generated', { queue_items: queueFiles.length });
+      } catch {
+        mergedBytes = null;
+        studioPdfMergeStatus.textContent = 'Merge failed';
+        setStatus('Could not merge the current queue.');
+      } finally {
+        studioPdfMergeButton.disabled = false;
+      }
+    };
+
+    const optimizeMergedPdf = async () => {
+      if (!mergedBytes) {
+        setStatus('Merge the queue first.');
+        return;
+      }
+      studioPdfOptimizeButton.disabled = true;
+      studioPdfDownloadButton.disabled = true;
+      setStatus('Generating final PDF...');
+      try {
+        const pdfDoc = await PDFLib.PDFDocument.load(mergedBytes, { ignoreEncryption: true });
+        const outputBytes = await pdfDoc.save({ useObjectStreams: true, addDefaultPage: false, updateFieldAppearances: false, objectsPerTick: 25 });
+        optimizedBytes = outputBytes;
+        const savedBytes = mergedBytes.byteLength - outputBytes.byteLength;
+        const savedPercent = mergedBytes.byteLength > 0 ? ((savedBytes / mergedBytes.byteLength) * 100).toFixed(1) : '0.0';
+        studioPdfExportOutputSize.textContent = formatBytes(outputBytes.byteLength);
+        studioPdfExportSavings.textContent = `${savedBytes > 0 ? formatBytes(savedBytes) : '0 B'} (${savedBytes > 0 ? savedPercent : '0.0'}%)`;
+        studioPdfSummaryExport.textContent = formatBytes(outputBytes.byteLength);
+        studioPdfDownloadButton.disabled = false;
+        studioPdfExportMeta.hidden = false;
+        setStatus(savedBytes > 0 ? 'Final PDF generated and slightly optimized.' : 'Final PDF generated. This file did not shrink further.');
+        trackStudioEvent('studio_pdf_delivery_export_generated', { size_delta: savedBytes });
+      } catch {
+        optimizedBytes = null;
+        studioPdfExportOutputSize.textContent = '-';
+        studioPdfExportSavings.textContent = '-';
+        studioPdfDownloadButton.disabled = true;
+        studioPdfExportMeta.hidden = true;
+        setStatus('Could not generate the final PDF.');
+      } finally {
+        studioPdfOptimizeButton.disabled = false;
+      }
+    };
+
+    const downloadFinalPdf = () => {
+      if (!optimizedBytes) return;
+      const blob = new Blob([optimizedBytes], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'studio-pdf-delivery.pdf';
+      link.click();
+      URL.revokeObjectURL(url);
+      setStatus('Downloaded final PDF.');
+      trackStudioEvent('studio_pdf_delivery_export_downloaded');
+    };
+
+    studioPdfUploadButton.addEventListener('click', () => studioPdfInput.click());
+    studioPdfAddMoreButton.addEventListener('click', () => studioPdfInput.click());
+    studioPdfInput.addEventListener('change', async () => { await addPdfFiles(studioPdfInput.files); studioPdfInput.value = ''; });
+    studioPdfDropzone.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); studioPdfInput.click(); }
+    });
+    studioPdfDropzone.addEventListener('dragover', (event) => { event.preventDefault(); studioPdfDropzone.classList.add('drag-over'); });
+    studioPdfDropzone.addEventListener('dragleave', () => { studioPdfDropzone.classList.remove('drag-over'); });
+    studioPdfDropzone.addEventListener('drop', async (event) => {
+      event.preventDefault();
+      studioPdfDropzone.classList.remove('drag-over');
+      await addPdfFiles(event.dataTransfer.files);
+    });
+
+    pdfStageButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        if (!queueFiles.length) return;
+        if (button.dataset.pdfStep === 'export' && !mergedBytes) return;
+        setPdfStage(button.dataset.pdfStep);
+      });
+    });
+
+    studioPdfContinueArrangeButton.addEventListener('click', () => setPdfStage('split'));
+    studioPdfBackToArrangeButton.addEventListener('click', () => setPdfStage('arrange'));
+    studioPdfSkipSplitButton.addEventListener('click', () => setPdfStage('merge'));
+    studioPdfApplySplitButton.addEventListener('click', applySplitToQueue);
+    studioPdfSplitSource.addEventListener('change', updateSplitPreview);
+    studioPdfSplitMode.addEventListener('change', () => { updateSplitModeUi(); updateSplitPreview(); });
+    studioPdfSplitRanges.addEventListener('input', updateSplitPreview);
+    studioPdfBackToSplitButton.addEventListener('click', () => setPdfStage('split'));
+    studioPdfMergeButton.addEventListener('click', mergeQueue);
+    studioPdfContinueToExportButton.addEventListener('click', () => setPdfStage('export'));
+    studioPdfBackToMergeButton.addEventListener('click', () => setPdfStage('merge'));
+    studioPdfOptimizeButton.addEventListener('click', optimizeMergedPdf);
+    studioPdfDownloadButton.addEventListener('click', downloadFinalPdf);
+
+    updateSplitModeUi();
+    updateSummary();
+  </script>
+  <script src="../../cookie-consent.js"></script>
+  <script src="../../github-pages-prefix.js"></script>
+  <script src="../../analytics.js"></script>
+  <script src="../../theme.js"></script>
+</body>
+</html>

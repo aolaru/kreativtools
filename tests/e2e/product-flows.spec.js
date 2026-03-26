@@ -22,8 +22,8 @@ test('studio landing page introduces workflow lineup and image prep entry point'
   await page.goto('/studio');
   await expect(page.getByRole('heading', { level: 1, name: 'Kreativ Studio' })).toBeVisible();
   await expect(page.locator('.tool-card[href="/studio/image-prep/"]')).toBeVisible();
-  await expect(page.locator('text=PDF Delivery')).toBeVisible();
-  await expect(page.locator('text=Audio Delivery')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/studio/pdf-delivery/"]')).toBeVisible();
+  await expect(page.getByRole('heading', { level: 2, name: 'Audio Delivery' })).toBeVisible();
 });
 
 test('studio image prep runs through a basic guided export flow', async ({ page }) => {
@@ -52,6 +52,24 @@ test('studio image prep runs through a basic guided export flow', async ({ page 
   await expect(page.locator('#studioStageExport')).toBeVisible();
   await expect(page.locator('#studioDownloadButton')).toBeEnabled();
   await expect(page.locator('#studioExportFormat')).toHaveText('WEBP');
+});
+
+test('studio pdf delivery merges a queue and prepares a final export', async ({ page }) => {
+  await page.goto('/studio/pdf-delivery');
+  await page.setInputFiles('#studioPdfInput', [mergePdfA, mergePdfB]);
+  await expect(page.locator('#studioPdfWorkspace')).not.toHaveClass(/is-hidden/);
+  await expect(page.locator('#studioPdfSummaryCount')).toHaveText('2');
+  await page.click('#studioPdfContinueArrangeButton');
+  await expect(page.locator('#studioPdfStageSplit')).toBeVisible();
+  await page.click('#studioPdfSkipSplitButton');
+  await expect(page.locator('#studioPdfStageMerge')).toBeVisible();
+  await page.click('#studioPdfMergeButton');
+  await expect(page.locator('#studioPdfMergeStatus')).toContainText('Ready');
+  await page.click('#studioPdfContinueToExportButton');
+  await expect(page.locator('#studioPdfStageExport')).toBeVisible();
+  await page.click('#studioPdfOptimizeButton');
+  await expect(page.locator('#studioPdfDownloadButton')).toBeEnabled();
+  await expect(page.locator('#studioPdfExportOutputSize')).not.toHaveText('-');
 });
 
 test('learn landing page includes the core hero guides and expanded follow-up guides', async ({ page }) => {

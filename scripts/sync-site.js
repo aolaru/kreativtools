@@ -34,6 +34,7 @@ const REDIRECTS = {
   'terms.html': '/terms/',
   'studio.html': '/studio/',
   'studio-image-prep.html': '/studio/image-prep/',
+  'studio-pdf-delivery.html': '/studio/pdf-delivery/',
   'video-thumbnail.html': '/video/thumbnail/',
   'video-trim.html': '/video/trim/',
   'video.html': '/video/',

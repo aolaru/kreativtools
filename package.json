@@ -1,7 +1,7 @@
 {
   "name": "kreativtools",
   "private": true,
-  "version": "0.9.2",
+  "version": "0.9.3",
   "scripts": {
     "sync:site": "node scripts/sync-site.js",
     "version:patch": "npm version --no-git-tag-version patch && npm run sync:site",

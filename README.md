@@ -1,10 +1,10 @@
 # Kreativ Tools
 
-Kreativ Tools is a browser-based utility site for image, PDF, video, font, audio, and file workflows. The site includes dedicated tool pages, a Learn section with practical guides, a public Updates page, and a shared UI/metadata generation step to keep static pages consistent.
+Kreativ Tools is a browser-based utility site for image, PDF, video, font, audio, and file workflows. The site includes dedicated tool pages, a Learn section with practical guides, a public Updates page, a public Kreativ Studio preview, and a shared UI/metadata generation step to keep static pages consistent.
 
 ## Current version
 
-- Current product version: `v0.9.2`
+- Current product version: `v0.9.3`
 - Version source of truth: `package.json`
 - Current release stage: pre-`1.0`, stable enough to promote, still actively evolving
 
@@ -15,6 +15,7 @@ Kreativ Tools is a browser-based utility site for image, PDF, video, font, audio
 - Tools directory: full listing of available tools
 - Learn: practical how-to guides connected to real tools
 - Updates: public product log for launches, UX updates, and design improvements
+- Studio: guided workflow layer above the tool library, currently live with Image Prep and PDF Delivery
 
 ### Tool categories
 - Image: crop, compress, resize, convert to WebP
@@ -70,8 +71,8 @@ Use `npm run sync:site` after shared layout or metadata changes. The sync script
 
 Use lightweight semantic versioning for the product:
 
-- Patch: small fixes, copy changes, small UI polish, metadata cleanup, test-only maintenance
-- Minor: new tools, meaningful UX improvements, new Learn article batches, structural site improvements
+- Patch: single shipped tool or workflow, small fixes, copy changes, small UI polish, metadata cleanup, test-only maintenance
+- Minor: grouped tool or workflow expansions, meaningful UX improvements across multiple areas, new Learn article batches, structural site improvements
 - Major: a real public milestone, major product repositioning, or a release you want to promote as a stable foundation
 
 For Kreativ Tools right now:
@@ -91,7 +92,7 @@ For Kreativ Tools right now:
    - `bash tests/smoke.sh`
    - `npm run test:e2e`
 5. Commit the version bump and release notes.
-6. Optionally create a matching git tag like `v0.9.2`.
+6. Optionally create a matching git tag like `v0.9.3`.
 
 ## Notes
 
