@@ -56,3 +56,17 @@ test('social preview assets and favicon assets resolve', async ({ page, baseURL 
     expect(response.status(), `Asset failed: ${asset} returned ${response.status()}`).toBeLessThan(400);
   }
 });
+
+test('key pages expose canonical and social metadata for their own routes', async ({ page }) => {
+  const routes = ['/', '/learn/', '/studio/', '/studio/image-prep/', '/studio/pdf-delivery/', '/pdf/split/'];
+
+  for (const route of routes) {
+    await page.goto(route, { waitUntil: 'domcontentloaded' });
+
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `https://kreativtools.com${route}`);
+    await expect(page.locator('meta[property="og:url"]')).toHaveAttribute('content', `https://kreativtools.com${route}`);
+    await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute('content', 'summary_large_image');
+    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', 'https://kreativtools.com/og-image.png');
+    await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute('content', 'https://kreativtools.com/og-image.png');
+  }
+});

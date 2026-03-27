@@ -57,3 +57,17 @@ test('clean routes resolve without breaking tool pages', async ({ page }) => {
   await expect(page.locator('.tool-card[href="/image/compress/"]')).toBeVisible();
   await expect.poll(() => new URL(page.url()).pathname).toMatch(/^\/tools\/?$/);
 });
+
+test('legacy alias routes redirect to canonical clean routes', async ({ page }) => {
+  await page.goto('/learn.html');
+  await expect.poll(() => new URL(page.url()).pathname).toBe('/learn/');
+  await expect(page.getByRole('heading', { level: 1, name: 'Guides for Better Results' })).toBeVisible();
+
+  await page.goto('/studio-pdf-delivery.html');
+  await expect.poll(() => new URL(page.url()).pathname).toBe('/studio/pdf-delivery/');
+  await expect(page.getByRole('heading', { level: 1, name: 'PDF Delivery Workflow' })).toBeVisible();
+
+  await page.goto('/audio-to-mp3.html');
+  await expect.poll(() => new URL(page.url()).pathname).toBe('/audio/to-mp3/');
+  await expect(page.getByRole('heading', { level: 1, name: 'Audio to MP3' })).toBeVisible();
+});
