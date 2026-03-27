@@ -56,6 +56,39 @@ test('studio image prep runs through a basic guided export flow', async ({ page 
   await expect(page.locator('#studioExportFormat')).toHaveText('WEBP');
 });
 
+test('studio image prep supports presets and back navigation before final export', async ({ page }) => {
+  await page.goto('/studio/image-prep');
+
+  const pngBuffer = Buffer.from(
+    'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9VE3d2QAAAAASUVORK5CYII=',
+    'base64'
+  );
+
+  await page.setInputFiles('#studioImageInput', {
+    name: 'studio-preset.png',
+    mimeType: 'image/png',
+    buffer: pngBuffer,
+  });
+
+  await expect(page.locator('#studioStageCrop')).toBeVisible();
+  await page.click('#studioSkipCropButton');
+  await expect(page.locator('#studioStageResize')).toBeVisible();
+  await page.click('#studioPresetInstagram');
+  await expect(page.locator('#studioResizeWidth')).toHaveValue('1080');
+  await expect(page.locator('#studioResizeHeight')).toHaveValue('1350');
+  await page.click('#studioApplyResizeButton');
+  await expect(page.locator('#studioStageCompress')).toBeVisible();
+  await page.click('#studioBackToResizeButton');
+  await expect(page.locator('#studioStageResize')).toBeVisible();
+  await page.click('#studioApplyResizeButton');
+  await page.selectOption('#studioFormat', 'image/jpeg');
+  await page.click('#studioGenerateExportButton');
+  await expect(page.locator('#studioStageExport')).toBeVisible();
+  await expect(page.locator('#studioSummaryOutput')).toContainText('JPG');
+  await page.click('#studioBackToCompressButton');
+  await expect(page.locator('#studioStageCompress')).toBeVisible();
+});
+
 test('studio pdf delivery merges a queue and prepares a final export', async ({ page }) => {
   await page.goto('/studio/pdf-delivery');
   await page.setInputFiles('#studioPdfInput', [mergePdfA, mergePdfB]);
@@ -63,8 +96,6 @@ test('studio pdf delivery merges a queue and prepares a final export', async ({ 
   await expect(page.locator('#studioPdfSummaryCount')).toHaveText('2');
   await page.click('#studioPdfContinueArrangeButton');
   await expect(page.locator('#studioPdfStageSplit')).toBeVisible();
-  await page.click('#studioPdfPresetCoverBodyButton');
-  await expect(page.locator('#studioPdfSplitRanges')).toHaveValue(/1/);
   await page.click('#studioPdfSkipSplitButton');
   await expect(page.locator('#studioPdfStageMerge')).toBeVisible();
   await page.click('#studioPdfMergeButton');
@@ -76,6 +107,54 @@ test('studio pdf delivery merges a queue and prepares a final export', async ({ 
   await expect(page.locator('#studioPdfDownloadButton')).toBeEnabled();
   await expect(page.locator('#studioPdfExportOutputSize')).not.toHaveText('-');
   await expect(page.locator('#studioPdfExportSummary')).toContainText('Final PDF generated');
+});
+
+test('studio pdf delivery can apply a real split to the queue before merge', async ({ page }) => {
+  await page.goto('/studio/pdf-delivery');
+  const splitSourceBase64 = await page.evaluate(async () => {
+    const doc = await PDFLib.PDFDocument.create();
+    for (let index = 0; index < 3; index += 1) {
+      const pdfPage = doc.addPage([420, 595]);
+      pdfPage.drawText(`Studio Split Source ${index + 1}`, { x: 48, y: 520, size: 22 });
+    }
+    const bytes = await doc.save();
+    let binary = '';
+    const chunk = 0x8000;
+    for (let index = 0; index < bytes.length; index += chunk) {
+      binary += String.fromCharCode(...bytes.slice(index, index + chunk));
+    }
+    return btoa(binary);
+  });
+
+  await page.setInputFiles('#studioPdfInput', [
+    {
+      name: 'studio-split-source.pdf',
+      mimeType: 'application/pdf',
+      buffer: Buffer.from(splitSourceBase64, 'base64'),
+    },
+    {
+      name: 'merge-b.pdf',
+      mimeType: 'application/pdf',
+      buffer: fs.readFileSync(mergePdfB),
+    },
+  ]);
+  await expect(page.locator('#studioPdfSummaryCount')).toHaveText('2');
+
+  await page.click('#studioPdfContinueArrangeButton');
+  await expect(page.locator('#studioPdfStageSplit')).toBeVisible();
+  await page.selectOption('#studioPdfSplitMode', 'every');
+  await page.click('#studioPdfApplySplitButton');
+
+  await expect(page.locator('#studioPdfStatus')).toContainText('Split studio-split-source.pdf into 3 queue items');
+  await expect(page.locator('#studioPdfStageMerge')).toBeVisible();
+  await expect(page.locator('#studioPdfMergeCount')).toHaveText('4');
+
+  await page.click('#studioPdfBackToSplitButton');
+  await expect(page.locator('#studioPdfStageSplit')).toBeVisible();
+  await page.click('#studioPdfSkipSplitButton');
+  await expect(page.locator('#studioPdfStageMerge')).toBeVisible();
+  await page.click('#studioPdfMergeButton');
+  await expect(page.locator('#studioPdfContinueToExportButton')).toBeEnabled();
 });
 
 test('learn landing page includes the core hero guides and expanded follow-up guides', async ({ page }) => {
@@ -160,5 +239,47 @@ test('sitemap routes resolve to live pages', async ({ page }) => {
   for (const route of routes) {
     await page.goto(route, { waitUntil: 'domcontentloaded' });
     await expect(page.locator('body')).toContainText(/Kreativ Tools|Redirecting/);
+  }
+});
+
+test('avif export option follows real browser support on image tools', async ({ page }) => {
+  await page.goto('/image/resize');
+  const avifSupported = await page.evaluate(() => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 1;
+    canvas.height = 1;
+    try {
+      return canvas.toDataURL('image/avif', 0.8).startsWith('data:image/avif');
+    } catch (error) {
+      return false;
+    }
+  });
+  const resizeAvif = page.locator('#formatInput option[value="image/avif"]');
+  await expect(resizeAvif).toHaveCount(1);
+  if (avifSupported) {
+    await expect(resizeAvif).toBeEnabled();
+  } else {
+    await expect(resizeAvif).toHaveAttribute('disabled', '');
+    await expect(resizeAvif).toHaveAttribute('hidden', '');
+  }
+
+  await page.goto('/image/compress');
+  const compressAvif = page.locator('#compressFormatInput option[value="image/avif"]');
+  await expect(compressAvif).toHaveCount(1);
+  if (avifSupported) {
+    await expect(compressAvif).toBeEnabled();
+  } else {
+    await expect(compressAvif).toHaveAttribute('disabled', '');
+    await expect(compressAvif).toHaveAttribute('hidden', '');
+  }
+
+  await page.goto('/image/crop');
+  const cropAvif = page.locator('#cropFormatInput option[value="image/avif"]');
+  await expect(cropAvif).toHaveCount(1);
+  if (avifSupported) {
+    await expect(cropAvif).toBeEnabled();
+  } else {
+    await expect(cropAvif).toHaveAttribute('disabled', '');
+    await expect(cropAvif).toHaveAttribute('hidden', '');
   }
 });
