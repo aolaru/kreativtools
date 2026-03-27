@@ -159,6 +159,16 @@
                 <textarea id="studioPdfSplitRanges" rows="6" placeholder="1-2&#10;3&#10;4-6"></textarea>
                 <span id="studioPdfSplitHelp" class="field-help">One output per line. Example: 1-2 on one line, then 3,5-6 on the next.</span>
               </label>
+              <div class="studio-preset-grid" style="margin-top:14px;">
+                <button id="studioPdfPresetCoverBodyButton" type="button" class="studio-preset-button">
+                  <strong>Cover + body</strong>
+                  <span>Split page 1 from the rest of the document.</span>
+                </button>
+                <button id="studioPdfPresetTwoPageChunksButton" type="button" class="studio-preset-button">
+                  <strong>Two-page chunks</strong>
+                  <span>Break the selected PDF into small review-ready pairs.</span>
+                </button>
+              </div>
             </div>
             <div>
               <div class="result-card">
@@ -172,6 +182,11 @@
                 </div>
               </div>
               <p id="studioPdfSplitMeta" class="studio-stage-note">Choose a queue item to preview the split options.</p>
+              <ul class="studio-meta-list">
+                <li>Use <strong>Every page</strong> when reviewers need one page per file.</li>
+                <li>Use <strong>Custom ranges</strong> when a cover, appendix, or grouped section should become its own file.</li>
+                <li>The split replaces the original queue item so the final merge stays accurate.</li>
+              </ul>
             </div>
           </div>
           <div class="studio-actions-row" style="margin-top:18px;">
@@ -218,6 +233,10 @@
               <strong id="studioPdfExportSavings">-</strong>
             </div>
           </div>
+          <ul class="studio-export-meta">
+            <li><strong>Queue used</strong><span id="studioPdfExportQueueCount">0 items</span></li>
+            <li><strong>Delivery note</strong><span id="studioPdfExportSummary">Merge the queue to generate the final document.</span></li>
+          </ul>
           <div class="studio-actions-row" style="margin-top:18px;">
             <button id="studioPdfBackToMergeButton" type="button" class="ghost header-link">Back to Merge</button>
             <button id="studioPdfOptimizeButton" type="button" class="primary" disabled>Generate Final PDF</button>
@@ -298,6 +317,8 @@
     const studioPdfSplitMode = document.getElementById('studioPdfSplitMode');
     const studioPdfSplitRanges = document.getElementById('studioPdfSplitRanges');
     const studioPdfSplitHelp = document.getElementById('studioPdfSplitHelp');
+    const studioPdfPresetCoverBodyButton = document.getElementById('studioPdfPresetCoverBodyButton');
+    const studioPdfPresetTwoPageChunksButton = document.getElementById('studioPdfPresetTwoPageChunksButton');
     const studioPdfSplitPageCount = document.getElementById('studioPdfSplitPageCount');
     const studioPdfSplitPreview = document.getElementById('studioPdfSplitPreview');
     const studioPdfSplitMeta = document.getElementById('studioPdfSplitMeta');
@@ -312,6 +333,8 @@
     const studioPdfExportInputSize = document.getElementById('studioPdfExportInputSize');
     const studioPdfExportOutputSize = document.getElementById('studioPdfExportOutputSize');
     const studioPdfExportSavings = document.getElementById('studioPdfExportSavings');
+    const studioPdfExportQueueCount = document.getElementById('studioPdfExportQueueCount');
+    const studioPdfExportSummary = document.getElementById('studioPdfExportSummary');
     const studioPdfBackToMergeButton = document.getElementById('studioPdfBackToMergeButton');
     const studioPdfOptimizeButton = document.getElementById('studioPdfOptimizeButton');
     const studioPdfDownloadButton = document.getElementById('studioPdfDownloadButton');
@@ -370,6 +393,8 @@
       studioPdfExportInputSize.textContent = '-';
       studioPdfExportOutputSize.textContent = '-';
       studioPdfExportSavings.textContent = '-';
+      studioPdfExportQueueCount.textContent = `${queueFiles.length} item${queueFiles.length === 1 ? '' : 's'}`;
+      studioPdfExportSummary.textContent = 'Merge the queue to generate the final document.';
       studioPdfExportMeta.hidden = true;
     };
 
@@ -379,6 +404,7 @@
       studioPdfSummaryCount.textContent = String(queueFiles.length);
       studioPdfSummarySize.textContent = queueFiles.length ? formatBytes(totalQueueSize()) : '-';
       studioPdfMergeCount.textContent = String(queueFiles.length);
+      studioPdfExportQueueCount.textContent = `${queueFiles.length} item${queueFiles.length === 1 ? '' : 's'}`;
       studioPdfContinueArrangeButton.disabled = queueFiles.length === 0;
       studioPdfMergeButton.disabled = queueFiles.length === 0;
       studioPdfArrangeMeta.textContent = queueFiles.length
@@ -470,9 +496,33 @@
     const updateSplitModeUi = () => {
       const useRanges = studioPdfSplitMode.value === 'ranges';
       studioPdfSplitRanges.disabled = !useRanges;
+      studioPdfPresetCoverBodyButton.disabled = !useRanges;
+      studioPdfPresetTwoPageChunksButton.disabled = !useRanges;
       studioPdfSplitHelp.textContent = useRanges
         ? 'One output per line. Example: 1-2 on one line, then 3,5-6 on the next.'
         : 'Every page mode replaces the selected queue item with one PDF per page.';
+    };
+
+    const applySplitPreset = (mode) => {
+      const file = queueFiles[Number(studioPdfSplitSource.value)];
+      if (!file || !file.pageCount || file.pageCount < 2) {
+        studioPdfSplitMeta.textContent = 'This preset needs a PDF with at least two pages.';
+        return;
+      }
+
+      studioPdfSplitMode.value = 'ranges';
+      if (mode === 'cover-body') {
+        studioPdfSplitRanges.value = `1\n2-${file.pageCount}`;
+      } else if (mode === 'two-page') {
+        const lines = [];
+        for (let page = 1; page <= file.pageCount; page += 2) {
+          const end = Math.min(page + 1, file.pageCount);
+          lines.push(page === end ? `${page}` : `${page}-${end}`);
+        }
+        studioPdfSplitRanges.value = lines.join('\n');
+      }
+      updateSplitModeUi();
+      updateSplitPreview();
     };
 
     const parseLineToIndices = (line, pageCount) => {
@@ -608,6 +658,7 @@
         studioPdfMergeStatus.textContent = `Ready (${formatBytes(mergedBytes.byteLength)})`;
         studioPdfSummaryMerged.textContent = formatBytes(mergedBytes.byteLength);
         studioPdfExportInputSize.textContent = formatBytes(mergedBytes.byteLength);
+        studioPdfExportSummary.textContent = `${queueFiles.length} queue item${queueFiles.length === 1 ? '' : 's'} merged and ready for final export.`;
         studioPdfContinueToExportButton.disabled = false;
         studioPdfOptimizeButton.disabled = false;
         setStatus('Merge complete. Continue to the final optimization and export step.');
@@ -640,6 +691,9 @@
         studioPdfSummaryExport.textContent = formatBytes(outputBytes.byteLength);
         studioPdfDownloadButton.disabled = false;
         studioPdfExportMeta.hidden = false;
+        studioPdfExportSummary.textContent = savedBytes > 0
+          ? 'Final PDF generated with a lighter delivery export.'
+          : 'Final PDF generated. Compression was limited, but the workflow completed successfully.';
         setStatus(savedBytes > 0 ? 'Final PDF generated and slightly optimized.' : 'Final PDF generated. This file did not shrink further.');
         trackStudioEvent('studio_pdf_delivery_export_generated', { size_delta: savedBytes });
       } catch {
@@ -696,6 +750,8 @@
     studioPdfSplitSource.addEventListener('change', updateSplitPreview);
     studioPdfSplitMode.addEventListener('change', () => { updateSplitModeUi(); updateSplitPreview(); });
     studioPdfSplitRanges.addEventListener('input', updateSplitPreview);
+    studioPdfPresetCoverBodyButton.addEventListener('click', () => applySplitPreset('cover-body'));
+    studioPdfPresetTwoPageChunksButton.addEventListener('click', () => applySplitPreset('two-page'));
     studioPdfBackToSplitButton.addEventListener('click', () => setPdfStage('split'));
     studioPdfMergeButton.addEventListener('click', mergeQueue);
     studioPdfContinueToExportButton.addEventListener('click', () => setPdfStage('export'));

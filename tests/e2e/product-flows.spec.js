@@ -10,9 +10,11 @@ const compressPdf = path.join(fixturesDir, 'compress-sample.pdf');
 test('homepage surfaces featured workflows and Learn entry points', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('heading', { level: 1, name: /Useful browser tools/i })).toBeVisible();
+  await expect(page.locator('.hero-actions a[href="/studio/"]')).toBeVisible();
+  await expect(page.locator('.quick-links a[href="/studio/"]')).toBeVisible();
   await expect(page.locator('.quick-links a[href="/studio/image-prep/"]')).toBeVisible();
+  await expect(page.locator('.quick-links a[href="/studio/pdf-delivery/"]')).toBeVisible();
   await expect(page.locator('.quick-links a[href="/image/compress/"]')).toBeVisible();
-  await expect(page.locator('.quick-links a[href="/pdf/merge/"]')).toBeVisible();
   await expect(page.locator('.home-panel a[href="/studio/"]').first()).toBeVisible();
   await expect(page.locator('.home-panel a[href="/learn/"]')).toBeVisible();
   await expect(page.locator('.home-panel a[href="/changes/"]')).toBeVisible();
@@ -61,21 +63,27 @@ test('studio pdf delivery merges a queue and prepares a final export', async ({ 
   await expect(page.locator('#studioPdfSummaryCount')).toHaveText('2');
   await page.click('#studioPdfContinueArrangeButton');
   await expect(page.locator('#studioPdfStageSplit')).toBeVisible();
+  await page.click('#studioPdfPresetCoverBodyButton');
+  await expect(page.locator('#studioPdfSplitRanges')).toHaveValue(/1/);
   await page.click('#studioPdfSkipSplitButton');
   await expect(page.locator('#studioPdfStageMerge')).toBeVisible();
   await page.click('#studioPdfMergeButton');
   await expect(page.locator('#studioPdfMergeStatus')).toContainText('Ready');
+  await expect(page.locator('#studioPdfExportSummary')).toContainText('merged and ready');
   await page.click('#studioPdfContinueToExportButton');
   await expect(page.locator('#studioPdfStageExport')).toBeVisible();
   await page.click('#studioPdfOptimizeButton');
   await expect(page.locator('#studioPdfDownloadButton')).toBeEnabled();
   await expect(page.locator('#studioPdfExportOutputSize')).not.toHaveText('-');
+  await expect(page.locator('#studioPdfExportSummary')).toContainText('Final PDF generated');
 });
 
 test('learn landing page includes the core hero guides and expanded follow-up guides', async ({ page }) => {
   await page.goto('/learn');
   await expect(page.getByRole('heading', { level: 1, name: 'Guides for Better Results' })).toBeVisible();
   await expect(page.locator('.tool-card[href="/learn/compress-pdf-for-email/"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/learn/use-kreativ-studio-image-prep-for-web-ready-images/"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/learn/prepare-a-sendable-pdf-in-kreativ-studio/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/learn/merge-pdf-files-in-order/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/learn/convert-otf-or-ttf-to-woff2/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/learn/compress-images-for-faster-websites/"]')).toBeVisible();
