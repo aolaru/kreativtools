@@ -59,6 +59,7 @@ main() {
 
   expect_file "styles.css"
   expect_file "theme.js"
+  expect_file "image-format-support.js"
 
   for p in "${pages[@]}"; do
     expect_file "$p"
@@ -72,9 +73,16 @@ main() {
   expect_pattern "image/resize/index.html" 'id="toolResize"'
   expect_pattern "image/resize/index.html" 'id="toolConvert"'
   expect_pattern "image/resize/index.html" 'id="toolPdf"'
+  expect_pattern "image/resize/index.html" 'image-format-support\.js'
+  expect_pattern "image/resize/index.html" 'image/avif'
   expect_pattern "image/crop/index.html" 'id="cropImageInput"'
   expect_pattern "image/crop/index.html" 'id="cropApplyButton"'
   expect_pattern "image/crop/index.html" 'id="cropDownloadButton"'
+  expect_pattern "image/crop/index.html" 'image-format-support\.js'
+  expect_pattern "image/crop/index.html" 'image/avif'
+  expect_pattern "image/compress/index.html" 'image-format-support\.js'
+  expect_pattern "image/compress/index.html" 'image/avif'
+  expect_pattern "image/to-webp/index.html" 'image-format-support\.js'
 
   expect_pattern "pdf/image-to-pdf/index.html" 'id="pdfImageInput"'
   expect_pattern "pdf/split/index.html" 'id="splitPdfInput"'

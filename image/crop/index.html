@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kreativ Tools | Image Crop</title>
-  <meta name="description" content="Crop images in your browser with freeform selection, aspect-ratio presets, and export as JPG, PNG, or WebP." />
+  <meta name="description" content="Crop images in your browser with freeform selection, aspect-ratio presets, and export as JPG, PNG, WebP, or AVIF." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://kreativtools.com/image/crop/" />
   <meta property="og:title" content="Kreativ Tools | Image Crop" />
-  <meta property="og:description" content="Crop images in your browser with freeform selection, aspect-ratio presets, and export as JPG, PNG, or WebP." />
+  <meta property="og:description" content="Crop images in your browser with freeform selection, aspect-ratio presets, and export as JPG, PNG, WebP, or AVIF." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://kreativtools.com/image/crop/" />
   <meta property="og:image" content="https://kreativtools.com/og-image.png" />
@@ -18,7 +18,7 @@
   <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Kreativ Tools | Image Crop" />
-  <meta name="twitter:description" content="Crop images in your browser with freeform selection, aspect-ratio presets, and export as JPG, PNG, or WebP." />
+  <meta name="twitter:description" content="Crop images in your browser with freeform selection, aspect-ratio presets, and export as JPG, PNG, WebP, or AVIF." />
   <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
   <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
@@ -75,11 +75,12 @@
     </section>
 
     <section class="upload-card">
-      <input id="cropImageInput" type="file" accept="image/*" hidden />
+      <input id="cropImageInput" type="file" accept="image/*,.avif,.gif,.bmp,.tif,.tiff" hidden />
       <div id="cropDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload image for crop">
         <div class="drop-icon" aria-hidden="true"></div>
         <button id="cropUploadButton" type="button" class="primary upload-trigger">Upload Image</button>
         <p>or drag and drop an image here</p>
+        <p>Supports JPG, PNG, WebP, AVIF, GIF, BMP, and TIFF when the browser can decode them.</p>
         <p id="cropStatus" class="status status-empty">No image selected yet.</p>
       </div>
     </section>
@@ -132,6 +133,7 @@
               <option value="image/png" selected>PNG</option>
               <option value="image/jpeg">JPG</option>
               <option value="image/webp">WEBP</option>
+              <option value="image/avif">AVIF</option>
             </select>
           </label>
 
@@ -181,7 +183,7 @@
       <ul>
         <li><strong>Should I crop before resizing?</strong> Yes, if the framing is wrong. Crop first so the final dimensions apply to the part of the image that actually matters.</li>
         <li><strong>Which aspect ratio should I choose?</strong> Use `1:1` for square cards, `4:5` for portrait posts, and `16:9` for wide preview layouts.</li>
-        <li><strong>Can I export to web-friendly formats?</strong> Yes. The cropped result can be downloaded as JPG, PNG, or WebP.</li>
+        <li><strong>Can I export to web-friendly formats?</strong> Yes. The cropped result can be downloaded as JPG, PNG, WebP, or AVIF when the current browser supports it.</li>
       </ul>
     </section>
   </main>
@@ -236,7 +238,9 @@
   </div>
 </footer>
 
+  <script src="../../image-format-support.js"></script>
   <script>
+    const imageFormats = window.kreativImageFormats;
     const cropImageInput = document.getElementById('cropImageInput');
     const cropUploadButton = document.getElementById('cropUploadButton');
     const cropDropzone = document.getElementById('cropDropzone');
@@ -292,7 +296,7 @@
     });
 
     const syncQualityUi = () => {
-      const lossy = cropFormatInput.value === 'image/jpeg' || cropFormatInput.value === 'image/webp';
+      const lossy = imageFormats.isLossyMime(cropFormatInput.value);
       cropQualityInput.disabled = !lossy;
       cropQualityValue.textContent = cropQualityInput.value;
     };
@@ -468,11 +472,7 @@
     const downloadCrop = () => {
       if (!outputBlob) return;
       const link = document.createElement('a');
-      const extension = cropFormatInput.value === 'image/jpeg'
-        ? 'jpg'
-        : cropFormatInput.value === 'image/webp'
-          ? 'webp'
-          : 'png';
+      const extension = imageFormats.extensionByMime[cropFormatInput.value] || 'png';
       link.href = URL.createObjectURL(outputBlob);
       link.download = `${sourceName}-crop.${extension}`;
       link.click();
@@ -542,26 +542,27 @@
     };
 
     const loadImageFile = (file) => {
-      if (!file || !file.type.startsWith('image/')) {
-        setStatus('Please upload a valid image file.');
+      if (!imageFormats.isSupportedImageFile(file)) {
+        setStatus('Please upload a valid image file. JPG, PNG, WebP, AVIF, GIF, BMP, and TIFF are supported when the browser can decode them.');
         return;
       }
 
-      const imageUrl = URL.createObjectURL(file);
+      const normalizedFile = imageFormats.normalizeImageFile(file);
+      const imageUrl = URL.createObjectURL(normalizedFile);
       const image = new Image();
 
       image.onload = () => {
         sourceImage = image;
-        sourceName = file.name.replace(/\.[^.]+$/, '');
+        sourceName = normalizedFile.name.replace(/\.[^.]+$/, '');
         cropWorkspace.classList.remove('is-hidden');
         resizeSelectionCanvas();
         resetSelection();
-        setStatus(`Loaded image: ${file.name}`);
+        setStatus(`Loaded image: ${normalizedFile.name}`);
         URL.revokeObjectURL(imageUrl);
       };
 
       image.onerror = () => {
-        setStatus('Could not load this image. Please try another file.');
+        setStatus('Could not load this image. AVIF, GIF, BMP, and TIFF support depends on the current browser.');
         URL.revokeObjectURL(imageUrl);
       };
 
@@ -615,13 +616,22 @@
     cropCenterButton.addEventListener('click', centerSelection);
     cropApplyButton.addEventListener('click', applyCrop);
     cropDownloadButton.addEventListener('click', downloadCrop);
-    cropFormatInput.addEventListener('change', syncQualityUi);
-    cropQualityInput.addEventListener('input', syncQualityUi);
+    cropFormatInput.addEventListener('change', () => {
+      outputBlob = null;
+      cropDownloadButton.disabled = true;
+      syncQualityUi();
+    });
+    cropQualityInput.addEventListener('input', () => {
+      outputBlob = null;
+      cropDownloadButton.disabled = true;
+      syncQualityUi();
+    });
 
     for (const button of presetButtons) {
       button.addEventListener('click', () => setPreset(button.dataset.ratio));
     }
 
+    imageFormats.syncFormatSelect(cropFormatInput, cropFormatInput.value);
     syncQualityUi();
   </script>
 

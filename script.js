@@ -40,11 +40,12 @@ let activeTool = 'resize';
 
 const MAX_DIMENSION = 16384;
 const MAX_CANVAS_PIXELS = 268435456;
-
-const extensionByMime = {
+const imageFormats = window.kreativImageFormats;
+const extensionByMime = imageFormats?.extensionByMime || {
   'image/jpeg': 'jpg',
   'image/png': 'png',
   'image/webp': 'webp',
+  'image/avif': 'avif',
 };
 
 const setStatus = (message) => {
@@ -80,7 +81,7 @@ const getOutputQuality = () => {
   return Math.min(1, Math.max(0.01, q / 100));
 };
 
-const isQualityActive = () => formatInput.value === 'image/jpeg' || formatInput.value === 'image/webp';
+const isQualityActive = () => imageFormats?.isLossyMime(formatInput.value) || formatInput.value === 'image/jpeg' || formatInput.value === 'image/webp' || formatInput.value === 'image/avif';
 
 const syncQualityUi = () => {
   const enabled = isQualityActive();
@@ -125,19 +126,21 @@ const enableWorkspace = () => {
 };
 
 const loadFile = (file) => {
-  if (!file || !file.type.startsWith('image/')) {
-    setStatus('Please select a valid image file.');
+  if (!imageFormats?.isSupportedImageFile(file) && (!file || !file.type.startsWith('image/'))) {
+    setStatus('Please select a valid image file. JPG, PNG, WebP, AVIF, GIF, BMP, and TIFF are supported when the browser can decode them.');
     return;
   }
 
-  const imageUrl = URL.createObjectURL(file);
+  const normalizedFile = imageFormats?.normalizeImageFile(file) || file;
+
+  const imageUrl = URL.createObjectURL(normalizedFile);
   const img = new Image();
 
   img.onload = () => {
     originalImage = img;
     originalWidth = img.naturalWidth;
     originalHeight = img.naturalHeight;
-    sourceBaseName = file.name.replace(/\.[^.]+$/, '');
+    sourceBaseName = normalizedFile.name.replace(/\.[^.]+$/, '');
 
     widthInput.value = String(originalWidth);
     heightInput.value = String(originalHeight);
@@ -150,12 +153,12 @@ const loadFile = (file) => {
 
     drawImageToCanvas(img, originalWidth, originalHeight);
     enableWorkspace();
-    setStatus(`Loaded image: ${file.name}`);
+    setStatus(`Loaded image: ${normalizedFile.name}`);
     URL.revokeObjectURL(imageUrl);
   };
 
   img.onerror = () => {
-    setStatus('Could not load this file. Please try another image.');
+    setStatus('Could not load this file. AVIF, GIF, BMP, and TIFF support depends on the current browser.');
     URL.revokeObjectURL(imageUrl);
   };
 
@@ -361,5 +364,6 @@ downloadButton.addEventListener('click', () => {
   );
 });
 
+imageFormats?.syncFormatSelect(formatInput, formatInput.value);
 syncQualityUi();
 syncToolUi();

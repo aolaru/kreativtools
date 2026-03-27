@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kreativ Tools | Image Compress</title>
-  <meta name="description" content="Compress images in your browser by adjusting quality and exporting optimized files." />
+  <meta name="description" content="Compress images in your browser by adjusting quality and exporting optimized JPG, PNG, WebP, or AVIF files." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://kreativtools.com/image/compress/" />
   <meta property="og:title" content="Kreativ Tools | Image Compress" />
-  <meta property="og:description" content="Compress images in your browser by adjusting quality and exporting optimized files." />
+  <meta property="og:description" content="Compress images in your browser by adjusting quality and exporting optimized JPG, PNG, WebP, or AVIF files." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://kreativtools.com/image/compress/" />
   <meta property="og:image" content="https://kreativtools.com/og-image.png" />
@@ -18,7 +18,7 @@
   <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Kreativ Tools | Image Compress" />
-  <meta name="twitter:description" content="Compress images in your browser by adjusting quality and exporting optimized files." />
+  <meta name="twitter:description" content="Compress images in your browser by adjusting quality and exporting optimized JPG, PNG, WebP, or AVIF files." />
   <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
   <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
@@ -70,16 +70,17 @@
       </div>
       <div class="tool-intro-card">
         <h2>What to expect</h2>
-        <p>JPG and WebP give the biggest size savings. PNG stays lossless, so it is useful for graphics but often will not shrink as much.</p>
+        <p>JPG, WebP, and AVIF give the biggest size savings. PNG stays lossless, so it is useful for graphics but often will not shrink as much.</p>
       </div>
     </section>
 
     <section class="upload-card">
-      <input id="compressImageInput" type="file" accept="image/*" hidden />
+      <input id="compressImageInput" type="file" accept="image/*,.avif,.gif,.bmp,.tif,.tiff" hidden />
       <div id="compressDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload image for compression">
         <div class="drop-icon" aria-hidden="true"></div>
         <button id="compressUploadButton" type="button" class="primary upload-trigger">Upload Image</button>
         <p>or drag and drop an image here</p>
+        <p>Supports JPG, PNG, WebP, AVIF, GIF, BMP, and TIFF when the browser can decode them.</p>
         <p id="compressStatus" class="status status-empty">No image selected yet.</p>
       </div>
     </section>
@@ -91,6 +92,7 @@
           <select id="compressFormatInput">
             <option value="image/jpeg" selected>JPG</option>
             <option value="image/webp">WEBP</option>
+            <option value="image/avif">AVIF</option>
             <option value="image/png">PNG (lossless)</option>
           </select>
         </label>
@@ -131,7 +133,7 @@
     <section class="article-section">
       <h2>Quick FAQ</h2>
       <ul>
-        <li><strong>Will compression always make the file smaller?</strong> Usually yes for JPG and WebP, but PNG can stay relatively large because it keeps lossless detail.</li>
+        <li><strong>Will compression always make the file smaller?</strong> Usually yes for JPG, WebP, and AVIF, but PNG can stay relatively large because it keeps lossless detail.</li>
         <li><strong>Should I resize or compress first?</strong> Resize first when the image is much larger than the actual layout needs.</li>
         <li><strong>Does the file leave my device?</strong> This tool works in the browser, so it is designed for local processing in the current session.</li>
       </ul>
@@ -188,7 +190,9 @@
   </div>
 </footer>
 
+  <script src="../../image-format-support.js"></script>
   <script>
+    const imageFormats = window.kreativImageFormats;
     const imageInput = document.getElementById('compressImageInput');
     const uploadButton = document.getElementById('compressUploadButton');
     const dropzone = document.getElementById('compressDropzone');
@@ -229,7 +233,7 @@
       dimensionsEl.textContent = `${img.naturalWidth} x ${img.naturalHeight}px`;
     };
 
-    const isQualityEnabled = () => formatInput.value === 'image/jpeg' || formatInput.value === 'image/webp';
+    const isQualityEnabled = () => imageFormats.isLossyMime(formatInput.value);
 
     const syncQualityUi = () => {
       qualityInput.disabled = !isQualityEnabled();
@@ -237,18 +241,19 @@
     };
 
     const loadImageFile = (file) => {
-      if (!file || !file.type.startsWith('image/')) {
-        setStatus('Please upload a valid image file.');
+      if (!imageFormats.isSupportedImageFile(file)) {
+        setStatus('Please upload a valid image file. JPG, PNG, WebP, AVIF, GIF, BMP, and TIFF are supported when the browser can decode them.');
         return;
       }
 
-      const imageUrl = URL.createObjectURL(file);
+      const normalizedFile = imageFormats.normalizeImageFile(file);
+      const imageUrl = URL.createObjectURL(normalizedFile);
       const img = new Image();
 
       img.onload = () => {
         sourceImage = img;
-        sourceName = file.name.replace(/\.[^.]+$/, '');
-        sourceFileSize = file.size;
+        sourceName = normalizedFile.name.replace(/\.[^.]+$/, '');
+        sourceFileSize = normalizedFile.size;
         compressedBlob = null;
 
         drawImage(img);
@@ -257,12 +262,12 @@
         downloadButton.disabled = true;
 
         metaEl.textContent = `Original size: ${formatBytes(sourceFileSize)}`;
-        setStatus(`Loaded image: ${file.name}`);
+        setStatus(`Loaded image: ${normalizedFile.name}`);
         URL.revokeObjectURL(imageUrl);
       };
 
       img.onerror = () => {
-        setStatus('Could not load this image. Please try another file.');
+        setStatus('Could not load this image. AVIF, GIF, BMP, and TIFF support depends on the current browser.');
         URL.revokeObjectURL(imageUrl);
       };
 
@@ -308,7 +313,7 @@
         return;
       }
 
-      const ext = formatInput.value === 'image/png' ? 'png' : formatInput.value === 'image/webp' ? 'webp' : 'jpg';
+      const ext = imageFormats.extensionByMime[formatInput.value] || 'png';
       const url = URL.createObjectURL(compressedBlob);
       const link = document.createElement('a');
       link.href = url;
@@ -361,6 +366,7 @@
     applyButton.addEventListener('click', compressImage);
     downloadButton.addEventListener('click', downloadCompressed);
 
+    imageFormats.syncFormatSelect(formatInput, formatInput.value);
     syncQualityUi();
   </script>
 

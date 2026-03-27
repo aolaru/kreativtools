@@ -10,6 +10,15 @@ const onePxPng = {
   ),
 };
 
+const onePxGif = {
+  name: 'tiny.gif',
+  mimeType: 'image/gif',
+  buffer: Buffer.from(
+    'R0lGODlhAQABAIABAP///wAAACwAAAAAAQABAAACAkQBADs=',
+    'base64'
+  ),
+};
+
 function createSilentWavBuffer({ sampleRate = 8000, durationSeconds = 0.2 } = {}) {
   const frameCount = Math.max(1, Math.floor(sampleRate * durationSeconds));
   const dataSize = frameCount * 2;
@@ -38,6 +47,13 @@ test('image tool uploads and enables workspace actions', async ({ page }) => {
   await expect(page.locator('#workspace')).not.toHaveClass(/is-hidden/);
   await expect(page.locator('#applyButton')).toBeEnabled();
   await expect(page.locator('#downloadButton')).toBeEnabled();
+});
+
+test('image tool accepts gif input and loads the workspace', async ({ page }) => {
+  await page.goto('/image/resize');
+  await page.setInputFiles('#imageInput', onePxGif);
+  await expect(page.locator('#workspace')).not.toHaveClass(/is-hidden/);
+  await expect(page.locator('#status')).toContainText('Loaded image: tiny.gif');
 });
 
 test('image crop uploads and enables crop export flow', async ({ page }) => {

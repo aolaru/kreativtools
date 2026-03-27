@@ -64,11 +64,12 @@
     </section>
 
     <section class="upload-card">
-      <input id="imageInput" type="file" accept="image/*" hidden />
+      <input id="imageInput" type="file" accept="image/*,.avif,.gif,.bmp,.tif,.tiff" hidden />
       <div id="dropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload image">
         <div class="drop-icon" aria-hidden="true"></div>
         <button id="uploadButton" type="button" class="primary upload-trigger">Upload from Device</button>
         <p>or drag and drop an image here</p>
+        <p>Supports JPG, PNG, WebP, AVIF, GIF, BMP, and TIFF when the browser can decode them.</p>
         <p id="status" class="status status-empty">No file selected yet.</p>
       </div>
     </section>
@@ -99,6 +100,7 @@
               <option value="image/jpeg">JPG</option>
               <option value="image/png" selected>PNG</option>
               <option value="image/webp">WEBP</option>
+              <option value="image/avif">AVIF</option>
             </select>
           </label>
 
@@ -199,6 +201,7 @@
 </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="../../image-format-support.js"></script>
   <script src="../../script.js"></script>
 
 
