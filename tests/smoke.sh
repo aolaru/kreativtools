@@ -9,6 +9,22 @@ fail() {
   exit 1
 }
 
+has_rg() {
+  command -v rg >/dev/null 2>&1
+}
+
+first_match_line() {
+  local file="$1"
+  local pattern="$2"
+
+  if has_rg; then
+    rg -n "$pattern" "$file" | head -n1 | cut -d: -f1
+    return
+  fi
+
+  grep -En "$pattern" "$file" | head -n1 | cut -d: -f1
+}
+
 expect_file() {
   local file="$1"
   [[ -f "$file" ]] || fail "Missing file: $file"
@@ -17,16 +33,21 @@ expect_file() {
 expect_pattern() {
   local file="$1"
   local pattern="$2"
-  rg -q "$pattern" "$file" || fail "Pattern not found in $file: $pattern"
+  if has_rg; then
+    rg -q "$pattern" "$file" || fail "Pattern not found in $file: $pattern"
+    return
+  fi
+
+  grep -Eq "$pattern" "$file" || fail "Pattern not found in $file: $pattern"
 }
 
 expect_nav_order() {
   local file="$1"
   local audio_line file_line learn_line changes_line
-  audio_line="$(rg -n '<a href="/audio/?\"' "$file" | head -n1 | cut -d: -f1)"
-  file_line="$(rg -n '<a href="/file/?\"' "$file" | head -n1 | cut -d: -f1)"
-  learn_line="$(rg -n '<a href="/learn/?\"' "$file" | head -n1 | cut -d: -f1)"
-  changes_line="$(rg -n '<a href="/changes/?\"' "$file" | head -n1 | cut -d: -f1)"
+  audio_line="$(first_match_line "$file" '<a href="/audio/?\"')"
+  file_line="$(first_match_line "$file" '<a href="/file/?\"')"
+  learn_line="$(first_match_line "$file" '<a href="/learn/?\"')"
+  changes_line="$(first_match_line "$file" '<a href="/changes/?\"')"
 
   [[ -n "$audio_line" && -n "$file_line" && -n "$learn_line" && -n "$changes_line" ]] || fail "Could not read nav order markers in $file"
   (( audio_line < file_line )) || fail "Expected audio before file in nav for $file"
