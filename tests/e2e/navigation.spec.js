@@ -72,14 +72,6 @@ test('clean routes resolve without breaking tool pages', async ({ page }) => {
 });
 
 test('legacy alias routes redirect to canonical clean routes', async ({ page }) => {
-  await page.goto('/studio');
-  await expect.poll(() => new URL(page.url()).pathname).toBe('/workflows/');
-  await expect(page.getByRole('heading', { level: 1, name: 'Workflows' })).toBeVisible();
-
-  await page.goto('/studio/image-prep');
-  await expect.poll(() => new URL(page.url()).pathname).toBe('/workflows/image-prep/');
-  await expect(page.getByRole('heading', { level: 1, name: 'Image Prep Workflow' })).toBeVisible();
-
   await page.goto('/learn/use-kreativ-studio-image-prep-for-web-ready-images/');
   await expect.poll(() => new URL(page.url()).pathname).toBe('/learn/use-kreativ-workflows-image-prep-for-web-ready-images/');
   await expect(page.getByRole('heading', { level: 1, name: /Web-Ready Images/i })).toBeVisible();
@@ -91,10 +83,6 @@ test('legacy alias routes redirect to canonical clean routes', async ({ page }) 
   await page.goto('/learn.html');
   await expect.poll(() => new URL(page.url()).pathname).toBe('/learn/');
   await expect(page.getByRole('heading', { level: 1, name: 'Guides for Better Results' })).toBeVisible();
-
-  await page.goto('/studio-pdf-delivery.html');
-  await expect.poll(() => new URL(page.url()).pathname).toBe('/workflows/pdf-delivery/');
-  await expect(page.getByRole('heading', { level: 1, name: 'PDF Delivery Workflow' })).toBeVisible();
 
   await page.goto('/audio-to-mp3.html');
   await expect.poll(() => new URL(page.url()).pathname).toBe('/audio/to-mp3/');

@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kreativ Studio | PDF Delivery Workflow</title>
-  <meta name="description" content="Public Kreativ Studio PDF workflow for arranging, optionally splitting, merging, optimizing, and exporting sendable PDFs in one guided browser flow." />
+  <title>Kreativ Tools | PDF Delivery Workflow</title>
+  <meta name="description" content="Use the PDF Delivery workflow in Kreativ Tools to arrange, optionally split, merge, optimize, and export sendable PDFs in one guided browser flow." />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://kreativtools.com/studio/pdf-delivery/" />
-  <meta property="og:title" content="Kreativ Studio | PDF Delivery Workflow" />
-  <meta property="og:description" content="Public Kreativ Studio PDF workflow for arranging, optionally splitting, merging, optimizing, and exporting sendable PDFs in one guided browser flow." />
+  <link rel="canonical" href="https://kreativtools.com/workflows/pdf-delivery/" />
+  <meta property="og:title" content="Kreativ Tools | PDF Delivery Workflow" />
+  <meta property="og:description" content="Use the PDF Delivery workflow in Kreativ Tools to arrange, optionally split, merge, optimize, and export sendable PDFs in one guided browser flow." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://kreativtools.com/studio/pdf-delivery/" />
+  <meta property="og:url" content="https://kreativtools.com/workflows/pdf-delivery/" />
   <meta property="og:image" content="https://kreativtools.com/og-image.png" />
   <meta property="og:image:type" content="image/png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Kreativ Studio | PDF Delivery Workflow" />
-  <meta name="twitter:description" content="Public Kreativ Studio PDF workflow for arranging, optionally splitting, merging, optimizing, and exporting sendable PDFs in one guided browser flow." />
+  <meta name="twitter:title" content="Kreativ Tools | PDF Delivery Workflow" />
+  <meta name="twitter:description" content="Use the PDF Delivery workflow in Kreativ Tools to arrange, optionally split, merge, optimize, and export sendable PDFs in one guided browser flow." />
   <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
   <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
@@ -45,6 +45,7 @@
       <a href="/fonts/">Fonts</a>
       <a href="/audio/">Audio</a>
       <a href="/file/">File</a>
+      <a href="/workflows/" aria-current="page">Workflows</a>
       <a href="/learn/">Learn</a>
       <a href="/changes/">Updates</a>
     </nav>
@@ -58,11 +59,11 @@
 
   <main class="container">
     <section class="hero">
-      <p class="eyebrow">Studio Preview</p>
+      <p class="eyebrow">Workflows</p>
       <h1>PDF Delivery Workflow</h1>
-      <p>Arrange, optionally split, merge, optimize, and export a final sendable PDF in one guided browser flow. This is the second public workflow in Kreativ Studio.</p>
+      <p>Arrange, optionally split, merge, optimize, and export a final sendable PDF in one guided browser flow. This is the second public workflow inside the new Workflows layer.</p>
       <div class="hero-actions">
-        <a class="ghost header-link" href="/studio/">About Studio</a>
+        <a class="ghost header-link" href="/workflows/">About Workflows</a>
         <a class="ghost header-link" href="/pdf/merge/">Open the standalone merge tool</a>
       </div>
     </section>
@@ -80,7 +81,7 @@
 
     <section class="upload-card">
       <input id="studioPdfInput" type="file" accept="application/pdf,.pdf" multiple hidden />
-      <div id="studioPdfDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload PDF files for Kreativ Studio PDF Delivery">
+      <div id="studioPdfDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload PDF files for the PDF Delivery workflow">
         <div class="drop-icon" aria-hidden="true"></div>
         <button id="studioPdfUploadButton" type="button" class="primary upload-trigger">Upload PDFs</button>
         <p>or drag and drop PDF files here</p>
@@ -120,7 +121,7 @@
             <li><strong>Merged output:</strong> <span id="studioPdfSummaryMerged">Not generated yet</span></li>
             <li><strong>Final export:</strong> <span id="studioPdfSummaryExport">Not generated yet</span></li>
           </ul>
-          <p class="studio-preview-callout">This first Studio PDF workflow keeps everything in the browser and focuses on the most common delivery sequence rather than full document editing.</p>
+          <p class="studio-preview-callout">This first Workflows PDF sequence keeps everything in the browser and focuses on the most common delivery path rather than full document editing.</p>
         </section>
       </aside>
 
@@ -282,7 +283,7 @@
     <section>
       <h4>More Tools</h4>
       <ul>
-        <li><a href="/studio/">Studio Preview</a></li>
+        <li><a href="/workflows/">Workflows</a></li>
         <li><a href="/learn/">Learn Guides</a></li>
         <li><a href="/video/thumbnail/">Video Thumbnail</a></li>
         <li><a href="/file/xml-to-csv/">XML to CSV</a></li>
@@ -363,7 +364,7 @@
       studioPdfStatus.textContent = message;
     };
 
-    const trackStudioEvent = (eventName, properties = {}) => {
+    const trackWorkflowEvent = (eventName, properties = {}) => {
       if (typeof window.kreativTrack === 'function') {
         window.kreativTrack(eventName, { workflow: 'pdf-delivery', ...properties });
       }
@@ -600,7 +601,7 @@
       resetMergeState();
       renderQueue();
       setStatus(`${nextItems.length} PDF file${nextItems.length === 1 ? '' : 's'} added to the queue.`);
-      trackStudioEvent('studio_pdf_delivery_upload_started', { file_count: nextItems.length });
+      trackWorkflowEvent('workflows_pdf_delivery_upload_started', { file_count: nextItems.length });
     };
 
     const buildOutputFilename = (baseName, label, index) => {
@@ -633,7 +634,7 @@
         renderQueue();
         setPdfStage('merge');
         setStatus(`Split ${sourceFile.name} into ${outputs.length} queue item${outputs.length === 1 ? '' : 's'}.`);
-        trackStudioEvent('studio_pdf_delivery_split_applied', { outputs: outputs.length });
+        trackWorkflowEvent('workflows_pdf_delivery_split_applied', { outputs: outputs.length });
       } catch (error) {
         setStatus(error.message || 'Could not split the selected PDF.');
       }
@@ -662,7 +663,7 @@
         studioPdfContinueToExportButton.disabled = false;
         studioPdfOptimizeButton.disabled = false;
         setStatus('Merge complete. Continue to the final optimization and export step.');
-        trackStudioEvent('studio_pdf_delivery_merge_generated', { queue_items: queueFiles.length });
+        trackWorkflowEvent('workflows_pdf_delivery_merge_generated', { queue_items: queueFiles.length });
       } catch {
         mergedBytes = null;
         studioPdfMergeStatus.textContent = 'Merge failed';
@@ -695,7 +696,7 @@
           ? 'Final PDF generated with a lighter delivery export.'
           : 'Final PDF generated. Compression was limited, but the workflow completed successfully.';
         setStatus(savedBytes > 0 ? 'Final PDF generated and slightly optimized.' : 'Final PDF generated. This file did not shrink further.');
-        trackStudioEvent('studio_pdf_delivery_export_generated', { size_delta: savedBytes });
+        trackWorkflowEvent('workflows_pdf_delivery_export_generated', { size_delta: savedBytes });
       } catch {
         optimizedBytes = null;
         studioPdfExportOutputSize.textContent = '-';
@@ -714,11 +715,11 @@
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = 'studio-pdf-delivery.pdf';
+      link.download = 'workflows-pdf-delivery.pdf';
       link.click();
       URL.revokeObjectURL(url);
       setStatus('Downloaded final PDF.');
-      trackStudioEvent('studio_pdf_delivery_export_downloaded');
+      trackWorkflowEvent('workflows_pdf_delivery_export_downloaded');
     };
 
     studioPdfUploadButton.addEventListener('click', () => studioPdfInput.click());

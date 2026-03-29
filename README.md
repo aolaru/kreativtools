@@ -1,10 +1,10 @@
 # Kreativ Tools
 
-Kreativ Tools is a browser-based utility site for image, PDF, video, font, audio, and file workflows. The site includes dedicated tool pages, a Learn section with practical guides, a public Updates page, a public Kreativ Studio preview, and a shared UI/metadata generation step to keep static pages consistent.
+Kreativ Tools is a browser-based utility site for image, PDF, video, font, audio, and file workflows. The site includes dedicated tool pages, a Learn section with practical guides, a public Updates page, a public Workflows hub, and a shared UI/metadata generation step to keep static pages consistent.
 
 ## Current version
 
-- Current product version: `v0.9.3`
+- Current product version: `v0.9.4`
 - Version source of truth: `package.json`
 - Current release stage: pre-`1.0`, stable enough to promote, still actively evolving
 
@@ -15,7 +15,7 @@ Kreativ Tools is a browser-based utility site for image, PDF, video, font, audio
 - Tools directory: full listing of available tools
 - Learn: practical how-to guides connected to real tools
 - Updates: public product log for launches, UX updates, and design improvements
-- Studio: guided workflow layer above the tool library, currently live with Image Prep and PDF Delivery
+- Workflows: guided workflow layer above the tool library, currently live with Image Prep and PDF Delivery
 
 ### Tool categories
 - Image: crop, compress, resize, convert to WebP
@@ -92,7 +92,7 @@ For Kreativ Tools right now:
    - `bash tests/smoke.sh`
    - `npm run test:e2e`
 5. Commit the version bump and release notes.
-6. Optionally create a matching git tag like `v0.9.3`.
+6. Optionally create a matching git tag like `v0.9.4`.
 
 ## Notes
 

@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kreativ Studio | Image Prep Workflow</title>
-  <meta name="description" content="Public Kreativ Studio preview for image prep: upload once, then crop, resize, compress, and export in one guided browser workflow." />
+  <title>Kreativ Tools | Image Prep Workflow</title>
+  <meta name="description" content="Use the Image Prep workflow in Kreativ Tools to upload once, then crop, resize, compress, and export in one guided browser flow." />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://kreativtools.com/studio/image-prep/" />
-  <meta property="og:title" content="Kreativ Studio | Image Prep Workflow" />
-  <meta property="og:description" content="Public Kreativ Studio preview for image prep: upload once, then crop, resize, compress, and export in one guided browser workflow." />
+  <link rel="canonical" href="https://kreativtools.com/workflows/image-prep/" />
+  <meta property="og:title" content="Kreativ Tools | Image Prep Workflow" />
+  <meta property="og:description" content="Use the Image Prep workflow in Kreativ Tools to upload once, then crop, resize, compress, and export in one guided browser flow." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://kreativtools.com/studio/image-prep/" />
+  <meta property="og:url" content="https://kreativtools.com/workflows/image-prep/" />
   <meta property="og:image" content="https://kreativtools.com/og-image.png" />
   <meta property="og:image:type" content="image/png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Kreativ Studio | Image Prep Workflow" />
-  <meta name="twitter:description" content="Public Kreativ Studio preview for image prep: upload once, then crop, resize, compress, and export in one guided browser workflow." />
+  <meta name="twitter:title" content="Kreativ Tools | Image Prep Workflow" />
+  <meta name="twitter:description" content="Use the Image Prep workflow in Kreativ Tools to upload once, then crop, resize, compress, and export in one guided browser flow." />
   <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
   <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
@@ -45,6 +45,7 @@
       <a href="/fonts/">Fonts</a>
       <a href="/audio/">Audio</a>
       <a href="/file/">File</a>
+      <a href="/workflows/" aria-current="page">Workflows</a>
       <a href="/learn/">Learn</a>
       <a href="/changes/">Updates</a>
     </nav>
@@ -58,11 +59,11 @@
 
   <main class="container">
     <section class="hero">
-      <p class="eyebrow">Studio Preview</p>
+      <p class="eyebrow">Workflows</p>
       <h1>Image Prep Workflow</h1>
-      <p>Upload once, then crop, resize, compress, and export in one guided browser flow. This is the first public preview of Kreativ Studio.</p>
+      <p>Upload once, then crop, resize, compress, and export in one guided browser flow. This is the first public workflow inside the new Workflows layer.</p>
       <div class="hero-actions">
-        <a class="ghost header-link" href="/studio/">About Studio</a>
+        <a class="ghost header-link" href="/workflows/">About Workflows</a>
         <a class="ghost header-link" href="/image/crop/">Open the standalone crop tool</a>
       </div>
     </section>
@@ -80,7 +81,7 @@
 
     <section class="upload-card">
       <input id="studioImageInput" type="file" accept="image/*" hidden />
-      <div id="studioDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload image for Kreativ Studio Image Prep">
+      <div id="studioDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload image for the Image Prep workflow">
         <div class="drop-icon" aria-hidden="true"></div>
         <button id="studioUploadButton" type="button" class="primary upload-trigger">Upload Image</button>
         <p>or drag and drop an image here</p>
@@ -124,14 +125,14 @@
             <li><strong>Current dimensions:</strong> <span id="studioSummaryDimensions">-</span></li>
             <li><strong>Final output:</strong> <span id="studioSummaryOutput">Not generated yet</span></li>
           </ul>
-          <p class="studio-preview-callout">This preview works on the current result at each step. You can revisit steps, but the workflow stays intentionally lightweight for this first public Studio pass.</p>
+          <p class="studio-preview-callout">This preview works on the current result at each step. You can revisit steps, but the workflow stays intentionally lightweight for this first public Workflows pass.</p>
         </section>
       </aside>
 
       <div class="studio-stage-stack">
         <section id="studioStageUpload" class="studio-stage-card">
           <h2>Upload Review</h2>
-          <p>Once a file is loaded, Kreativ Studio keeps the current working version in the browser and moves it through the steps below.</p>
+          <p>Once a file is loaded, Workflows keeps the current working version in the browser and moves it through the steps below.</p>
           <div class="studio-actions-row" style="margin-top:16px;">
             <button id="studioChooseAnotherButton" type="button" class="ghost header-link">Choose Another Image</button>
             <button id="studioContinueButton" type="button" class="primary">Continue to Crop</button>
@@ -151,7 +152,7 @@
           <div class="studio-stage-grid" style="margin-top:16px;">
             <div>
               <div class="studio-canvas-shell">
-                <canvas id="studioCropCanvas" aria-label="Studio crop selection preview"></canvas>
+                <canvas id="studioCropCanvas" aria-label="Workflows crop selection preview"></canvas>
               </div>
               <p id="studioCropMeta" class="studio-stage-note">Selection details will appear here after upload.</p>
             </div>
@@ -193,7 +194,7 @@
           <div class="studio-stage-grid" style="margin-top:16px;">
             <div>
               <div class="studio-preview-shell">
-                <canvas id="studioPreviewCanvas" aria-label="Studio current image preview"></canvas>
+                <canvas id="studioPreviewCanvas" aria-label="Workflows current image preview"></canvas>
               </div>
               <p id="studioPreviewMeta" class="studio-stage-note">Current preview dimensions will appear here.</p>
             </div>
@@ -242,7 +243,7 @@
           <div class="studio-stage-grid" style="margin-top:16px;">
             <div>
               <div class="studio-preview-shell">
-                <canvas id="studioCompressPreviewCanvas" aria-label="Studio compression preview"></canvas>
+                <canvas id="studioCompressPreviewCanvas" aria-label="Workflows compression preview"></canvas>
               </div>
               <p id="studioCompressMeta" class="studio-stage-note">The final output summary will appear here after export generation.</p>
             </div>
@@ -333,7 +334,7 @@
     <section>
       <h4>More Tools</h4>
       <ul>
-        <li><a href="/studio/">Studio Preview</a></li>
+        <li><a href="/workflows/">Workflows</a></li>
         <li><a href="/learn/">Learn Guides</a></li>
         <li><a href="/video/thumbnail/">Video Thumbnail</a></li>
         <li><a href="/file/xml-to-csv/">XML to CSV</a></li>
@@ -430,7 +431,7 @@
     let dragStart = null;
     let isDragging = false;
 
-    const trackStudioEvent = (eventName, properties = {}) => {
+    const trackWorkflowEvent = (eventName, properties = {}) => {
       if (typeof window.kreativTrack === 'function') {
         window.kreativTrack(eventName, {
           workflow: 'image-prep',
@@ -660,7 +661,7 @@
       dragStart = null;
     };
 
-    const loadStudioFile = (file) => {
+    const loadWorkflowFile = (file) => {
       if (!file || !file.type.startsWith('image/')) {
         setStatus('Please upload a valid image file.');
         return;
@@ -688,7 +689,7 @@
         studioWorkspace.classList.remove('is-hidden');
         setStage('crop');
         setStatus(`Loaded image: ${file.name}`);
-        trackStudioEvent('studio_image_prep_upload_started', {
+        trackWorkflowEvent('workflows_image_prep_upload_started', {
           file_type: file.type,
           file_size_bucket: file.size < 500000 ? 'small' : file.size < 3000000 ? 'medium' : 'large',
         });
@@ -735,7 +736,7 @@
       replaceWorkingCanvas(nextCanvas);
       setStage('resize');
       setStatus('Crop applied. Continue with resize.');
-      trackStudioEvent('studio_image_prep_crop_applied', {
+      trackWorkflowEvent('workflows_image_prep_crop_applied', {
         width: workingCanvas.width,
         height: workingCanvas.height,
       });
@@ -753,7 +754,7 @@
       replaceWorkingCanvas(nextCanvas);
       setStage('compress');
       setStatus('Resize applied. Generate the final export when ready.');
-      trackStudioEvent('studio_image_prep_resize_applied', {
+      trackWorkflowEvent('workflows_image_prep_resize_applied', {
         width,
         height,
       });
@@ -781,7 +782,7 @@
         setStage('export');
         studioSuccessNote.hidden = false;
         setStatus('Final export ready to download.');
-        trackStudioEvent('studio_image_prep_export_generated', {
+        trackWorkflowEvent('workflows_image_prep_export_generated', {
           format: extensionForMime(mime),
           width: workingCanvas.width,
           height: workingCanvas.height,
@@ -798,7 +799,7 @@
       link.click();
       URL.revokeObjectURL(url);
       setStatus(`Downloaded ${workingName}-studio.${extensionForMime(finalMime)}`);
-      trackStudioEvent('studio_image_prep_export_downloaded', {
+      trackWorkflowEvent('workflows_image_prep_export_downloaded', {
         format: extensionForMime(finalMime),
       });
     };
@@ -843,7 +844,7 @@
 
     studioImageInput.addEventListener('change', () => {
       const [file] = studioImageInput.files || [];
-      if (file) loadStudioFile(file);
+      if (file) loadWorkflowFile(file);
     });
 
     studioDropzone.addEventListener('dragover', (event) => {
@@ -859,7 +860,7 @@
       event.preventDefault();
       studioDropzone.classList.remove('drag-over');
       const [file] = event.dataTransfer?.files || [];
-      if (file) loadStudioFile(file);
+      if (file) loadWorkflowFile(file);
     });
 
     stageButtons.forEach((button) => {

@@ -32,12 +32,22 @@ const REDIRECTS = {
   'pdf.html': '/pdf/',
   'privacy.html': '/privacy/',
   'terms.html': '/terms/',
-  'studio.html': '/studio/',
-  'studio-image-prep.html': '/studio/image-prep/',
-  'studio-pdf-delivery.html': '/studio/pdf-delivery/',
+  'workflows.html': '/workflows/',
+  'workflows-image-prep.html': '/workflows/image-prep/',
+  'workflows-pdf-delivery.html': '/workflows/pdf-delivery/',
   'video-thumbnail.html': '/video/thumbnail/',
   'video-trim.html': '/video/trim/',
   'video.html': '/video/',
+};
+
+const LEGACY_CANONICAL_REDIRECTS = new Set([
+  'learn/use-kreativ-studio-image-prep-for-web-ready-images/index.html',
+  'learn/prepare-a-sendable-pdf-in-kreativ-studio/index.html',
+]);
+
+const LEGACY_DIRECTORY_REDIRECTS = {
+  'learn/use-kreativ-studio-image-prep-for-web-ready-images/index.html': '/learn/use-kreativ-workflows-image-prep-for-web-ready-images/',
+  'learn/prepare-a-sendable-pdf-in-kreativ-studio/index.html': '/learn/prepare-a-sendable-pdf-in-kreativ-workflows/',
 };
 
 const NAV_ITEMS = [
@@ -47,6 +57,7 @@ const NAV_ITEMS = [
   { label: 'Fonts', href: '/fonts/', key: 'fonts' },
   { label: 'Audio', href: '/audio/', key: 'audio' },
   { label: 'File', href: '/file/', key: 'file' },
+  { label: 'Workflows', href: '/workflows/', key: 'workflows' },
   { label: 'Learn', href: '/learn/', key: 'learn' },
   { label: 'Updates', href: '/changes/', key: 'changes' },
 ];
@@ -68,7 +79,7 @@ const FOOTER_SECTIONS = {
     ['Font to Webfont', '/fonts/webfont-convert/'],
   ],
   more: [
-    ['Studio Preview', '/studio/'],
+    ['Workflows', '/workflows/'],
     ['Learn Guides', '/learn/'],
     ['Video Thumbnail', '/video/thumbnail/'],
     ['XML to CSV', '/file/xml-to-csv/'],
@@ -102,7 +113,7 @@ function walk(dir) {
 function canonicalFiles() {
   return walk(ROOT).filter((file) => {
     const rel = path.relative(ROOT, file).replace(/\\/g, '/');
-    return rel === 'index.html' || rel.endsWith('/index.html');
+    return (rel === 'index.html' || rel.endsWith('/index.html')) && !LEGACY_CANONICAL_REDIRECTS.has(rel);
   });
 }
 
@@ -131,6 +142,7 @@ function normalizeInternalHref(href) {
 
 function navKeyForRoute(route) {
   if (route === '/changes/') return 'changes';
+  if (route.startsWith('/workflows')) return 'workflows';
   if (route.startsWith('/learn')) return 'learn';
   if (route.startsWith('/image')) return 'image';
   if (route.startsWith('/pdf')) return 'pdf';
@@ -346,6 +358,26 @@ function buildRedirectPage(route, title, description) {
 `;
 }
 
+function buildDirectoryRedirectPage(route) {
+  return `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Redirecting...</title>
+  <meta name="robots" content="noindex, follow" />
+  <link rel="canonical" href="${SITE_URL}${route}" />
+  <script>
+    window.location.replace(${JSON.stringify(route)});
+  </script>
+</head>
+<body>
+  <p>Redirecting to <a href="${route}">${route}</a>...</p>
+</body>
+</html>
+`;
+}
+
 function main() {
   const metaByRoute = new Map();
   for (const file of canonicalFiles()) {
@@ -359,6 +391,10 @@ function main() {
       throw new Error(`Missing canonical metadata for redirect target ${route}`);
     }
     fs.writeFileSync(path.join(ROOT, alias), buildRedirectPage(route, meta.title, meta.description));
+  }
+
+  for (const [legacyPath, route] of Object.entries(LEGACY_DIRECTORY_REDIRECTS)) {
+    fs.writeFileSync(path.join(ROOT, legacyPath), buildDirectoryRedirectPage(route));
   }
 }
 
