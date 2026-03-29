@@ -43,15 +43,17 @@ expect_pattern() {
 
 expect_nav_order() {
   local file="$1"
-  local audio_line file_line learn_line changes_line
+  local audio_line file_line workflows_line learn_line changes_line
   audio_line="$(first_match_line "$file" '<a href="/audio/?\"')"
   file_line="$(first_match_line "$file" '<a href="/file/?\"')"
+  workflows_line="$(first_match_line "$file" '<a href="/workflows/?\"')"
   learn_line="$(first_match_line "$file" '<a href="/learn/?\"')"
   changes_line="$(first_match_line "$file" '<a href="/changes/?\"')"
 
-  [[ -n "$audio_line" && -n "$file_line" && -n "$learn_line" && -n "$changes_line" ]] || fail "Could not read nav order markers in $file"
+  [[ -n "$audio_line" && -n "$file_line" && -n "$workflows_line" && -n "$learn_line" && -n "$changes_line" ]] || fail "Could not read nav order markers in $file"
   (( audio_line < file_line )) || fail "Expected audio before file in nav for $file"
-  (( file_line < learn_line )) || fail "Expected learn after file in nav for $file"
+  (( file_line < workflows_line )) || fail "Expected workflows after file in nav for $file"
+  (( workflows_line < learn_line )) || fail "Expected learn after workflows in nav for $file"
   (( learn_line < changes_line )) || fail "Expected changes after learn in nav for $file"
 }
 
@@ -72,6 +74,9 @@ main() {
     audio/to-mp3/index.html
     file/xml-to-csv/index.html
     changes/index.html
+    workflows/index.html
+    workflows/image-prep/index.html
+    workflows/pdf-delivery/index.html
     tools/index.html
     privacy/index.html
     terms/index.html
@@ -113,6 +118,9 @@ main() {
   expect_pattern "fonts/webfont-convert/index.html" 'id="fontInput"'
   expect_pattern "audio/to-wav/index.html" 'id="audioInput"'
   expect_pattern "audio/to-mp3/index.html" 'id="mp3AudioInput"'
+  expect_pattern "index.html" 'href="/workflows/"'
+  expect_pattern "workflows/index.html" '<link rel="canonical" href="https://kreativtools\.com/workflows/"'
+  expect_pattern "workflows/index.html" '<h1>Workflows</h1>'
   expect_pattern "file/xml-to-csv/index.html" 'id="xmlInput"'
 
   expect_pattern "changes/index.html" 'class="changelog-list"'

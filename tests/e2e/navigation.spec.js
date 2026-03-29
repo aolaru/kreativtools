@@ -14,22 +14,35 @@ const pages = [
   '/audio/to-wav',
   '/file/xml-to-csv',
   '/changes',
+  '/workflows',
   '/tools',
   '/privacy',
   '/terms',
   '/contact',
 ];
 
-test('main pages load and keep Learn before Updates with Updates last', async ({ page }) => {
+test('main pages load and keep Workflows before Learn with Updates last', async ({ page }) => {
   for (const route of pages) {
     await page.goto(route);
     await expect(page.locator('nav.top-nav')).toBeVisible();
     const labels = await page.locator('nav.top-nav a').allTextContents();
     const normalized = labels.map((label) => label.trim());
     expect(normalized[normalized.length - 1]).toBe('Updates');
+    expect(normalized).toContain('Workflows');
     expect(normalized).toContain('Learn');
+    expect(normalized.indexOf('Workflows')).toBe(normalized.indexOf('Learn') - 1);
     expect(normalized.indexOf('Learn')).toBe(normalized.indexOf('Updates') - 1);
   }
+});
+
+test('workflows nav item points to the canonical workflows route', async ({ page }) => {
+  await page.goto('/');
+  const workflowsLink = page.locator('nav.top-nav a[href="/workflows/"]').first();
+  await expect(workflowsLink).toBeVisible();
+  await expect(workflowsLink).toHaveText('Workflows');
+  await workflowsLink.click();
+  await expect.poll(() => new URL(page.url()).pathname).toBe('/workflows/');
+  await expect(page.getByRole('heading', { level: 1, name: 'Workflows' })).toBeVisible();
 });
 
 test('theme toggle switches data-theme attribute', async ({ page }) => {
@@ -59,12 +72,28 @@ test('clean routes resolve without breaking tool pages', async ({ page }) => {
 });
 
 test('legacy alias routes redirect to canonical clean routes', async ({ page }) => {
+  await page.goto('/studio');
+  await expect.poll(() => new URL(page.url()).pathname).toBe('/workflows/');
+  await expect(page.getByRole('heading', { level: 1, name: 'Workflows' })).toBeVisible();
+
+  await page.goto('/studio/image-prep');
+  await expect.poll(() => new URL(page.url()).pathname).toBe('/workflows/image-prep/');
+  await expect(page.getByRole('heading', { level: 1, name: 'Image Prep Workflow' })).toBeVisible();
+
+  await page.goto('/learn/use-kreativ-studio-image-prep-for-web-ready-images/');
+  await expect.poll(() => new URL(page.url()).pathname).toBe('/learn/use-kreativ-workflows-image-prep-for-web-ready-images/');
+  await expect(page.getByRole('heading', { level: 1, name: /Web-Ready Images/i })).toBeVisible();
+
+  await page.goto('/learn/prepare-a-sendable-pdf-in-kreativ-studio/');
+  await expect.poll(() => new URL(page.url()).pathname).toBe('/learn/prepare-a-sendable-pdf-in-kreativ-workflows/');
+  await expect(page.getByRole('heading', { level: 1, name: /Prepare a Sendable PDF/i })).toBeVisible();
+
   await page.goto('/learn.html');
   await expect.poll(() => new URL(page.url()).pathname).toBe('/learn/');
   await expect(page.getByRole('heading', { level: 1, name: 'Guides for Better Results' })).toBeVisible();
 
   await page.goto('/studio-pdf-delivery.html');
-  await expect.poll(() => new URL(page.url()).pathname).toBe('/studio/pdf-delivery/');
+  await expect.poll(() => new URL(page.url()).pathname).toBe('/workflows/pdf-delivery/');
   await expect(page.getByRole('heading', { level: 1, name: 'PDF Delivery Workflow' })).toBeVisible();
 
   await page.goto('/audio-to-mp3.html');
