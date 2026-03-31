@@ -33,6 +33,7 @@ const REDIRECTS = {
   'privacy.html': '/privacy/',
   'terms.html': '/terms/',
   'workflows.html': '/workflows/',
+  'workflows-audio-delivery.html': '/workflows/audio-delivery/',
   'workflows-image-prep.html': '/workflows/image-prep/',
   'workflows-pdf-delivery.html': '/workflows/pdf-delivery/',
   'video-thumbnail.html': '/video/thumbnail/',

@@ -16,9 +16,10 @@ const pages = [
   '/audio/to-mp3',
   '/file/xml-to-csv',
   '/changes',
-  '/studio',
-  '/studio/image-prep',
-  '/studio/pdf-delivery',
+  '/workflows',
+  '/workflows/image-prep',
+  '/workflows/pdf-delivery',
+  '/workflows/audio-delivery',
   '/tools',
   '/privacy',
   '/terms',
@@ -28,11 +29,12 @@ const pages = [
 test('all tools directory shows cards that link to tools', async ({ page }) => {
   await page.goto('/tools');
   const cards = page.locator('.tool-card');
-  await expect(cards).toHaveCount(25);
+  await expect(cards).toHaveCount(26);
 
-  await expect(page.locator('.tool-card[href="/studio/"]')).toBeVisible();
-  await expect(page.locator('.tool-card[href="/studio/image-prep/"]')).toBeVisible();
-  await expect(page.locator('.tool-card[href="/studio/pdf-delivery/"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/workflows/"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/workflows/image-prep/"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/workflows/pdf-delivery/"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/workflows/audio-delivery/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/image/crop/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/image/compress/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/image/resize/"]')).toBeVisible();

@@ -7,29 +7,52 @@ const mergePdfA = path.join(fixturesDir, 'merge-a.pdf');
 const mergePdfB = path.join(fixturesDir, 'merge-b.pdf');
 const compressPdf = path.join(fixturesDir, 'compress-sample.pdf');
 
+function createSilentWavBuffer({ sampleRate = 8000, durationSeconds = 0.2 } = {}) {
+  const frameCount = Math.max(1, Math.floor(sampleRate * durationSeconds));
+  const dataSize = frameCount * 2;
+  const buffer = Buffer.alloc(44 + dataSize);
+
+  buffer.write('RIFF', 0);
+  buffer.writeUInt32LE(36 + dataSize, 4);
+  buffer.write('WAVE', 8);
+  buffer.write('fmt ', 12);
+  buffer.writeUInt32LE(16, 16);
+  buffer.writeUInt16LE(1, 20);
+  buffer.writeUInt16LE(1, 22);
+  buffer.writeUInt32LE(sampleRate, 24);
+  buffer.writeUInt32LE(sampleRate * 2, 28);
+  buffer.writeUInt16LE(2, 32);
+  buffer.writeUInt16LE(16, 34);
+  buffer.write('data', 36);
+  buffer.writeUInt32LE(dataSize, 40);
+
+  return buffer;
+}
+
 test('homepage surfaces featured workflows and Learn entry points', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('heading', { level: 1, name: /Useful browser tools/i })).toBeVisible();
-  await expect(page.locator('.hero-actions a[href="/studio/"]')).toBeVisible();
-  await expect(page.locator('.quick-links a[href="/studio/"]')).toBeVisible();
-  await expect(page.locator('.quick-links a[href="/studio/image-prep/"]')).toBeVisible();
-  await expect(page.locator('.quick-links a[href="/studio/pdf-delivery/"]')).toBeVisible();
+  await expect(page.locator('.hero-actions a[href="/workflows/"]')).toBeVisible();
+  await expect(page.locator('.quick-links a[href="/workflows/"]')).toBeVisible();
+  await expect(page.locator('.quick-links a[href="/workflows/image-prep/"]')).toBeVisible();
+  await expect(page.locator('.quick-links a[href="/workflows/pdf-delivery/"]')).toBeVisible();
+  await expect(page.locator('.quick-links a[href="/workflows/audio-delivery/"]')).toBeVisible();
   await expect(page.locator('.quick-links a[href="/image/compress/"]')).toBeVisible();
-  await expect(page.locator('.home-panel a[href="/studio/"]').first()).toBeVisible();
+  await expect(page.locator('.home-panel a[href="/workflows/"]').first()).toBeVisible();
   await expect(page.locator('.home-panel a[href="/learn/"]')).toBeVisible();
   await expect(page.locator('.home-panel a[href="/changes/"]')).toBeVisible();
 });
 
-test('studio landing page introduces workflow lineup and image prep entry point', async ({ page }) => {
-  await page.goto('/studio');
-  await expect(page.getByRole('heading', { level: 1, name: 'Kreativ Studio' })).toBeVisible();
-  await expect(page.locator('.tool-card[href="/studio/image-prep/"]')).toBeVisible();
-  await expect(page.locator('.tool-card[href="/studio/pdf-delivery/"]')).toBeVisible();
-  await expect(page.getByRole('heading', { level: 2, name: 'Audio Delivery' })).toBeVisible();
+test('workflows landing page introduces workflow lineup and image prep entry point', async ({ page }) => {
+  await page.goto('/workflows');
+  await expect(page.getByRole('heading', { level: 1, name: 'Workflows' })).toBeVisible();
+  await expect(page.locator('.tool-card[href="/workflows/image-prep/"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/workflows/pdf-delivery/"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/workflows/audio-delivery/"]')).toBeVisible();
 });
 
 test('studio image prep runs through a basic guided export flow', async ({ page }) => {
-  await page.goto('/studio/image-prep');
+  await page.goto('/workflows/image-prep');
 
   const pngBuffer = Buffer.from(
     'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9VE3d2QAAAAASUVORK5CYII=',
@@ -57,7 +80,7 @@ test('studio image prep runs through a basic guided export flow', async ({ page 
 });
 
 test('studio image prep supports presets and back navigation before final export', async ({ page }) => {
-  await page.goto('/studio/image-prep');
+  await page.goto('/workflows/image-prep');
 
   const pngBuffer = Buffer.from(
     'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9VE3d2QAAAAASUVORK5CYII=',
@@ -90,7 +113,7 @@ test('studio image prep supports presets and back navigation before final export
 });
 
 test('studio pdf delivery merges a queue and prepares a final export', async ({ page }) => {
-  await page.goto('/studio/pdf-delivery');
+  await page.goto('/workflows/pdf-delivery');
   await page.setInputFiles('#studioPdfInput', [mergePdfA, mergePdfB]);
   await expect(page.locator('#studioPdfWorkspace')).not.toHaveClass(/is-hidden/);
   await expect(page.locator('#studioPdfSummaryCount')).toHaveText('2');
@@ -110,7 +133,7 @@ test('studio pdf delivery merges a queue and prepares a final export', async ({ 
 });
 
 test('studio pdf delivery can apply a real split to the queue before merge', async ({ page }) => {
-  await page.goto('/studio/pdf-delivery');
+  await page.goto('/workflows/pdf-delivery');
   const splitSourceBase64 = await page.evaluate(async () => {
     const doc = await PDFLib.PDFDocument.create();
     for (let index = 0; index < 3; index += 1) {
@@ -157,12 +180,41 @@ test('studio pdf delivery can apply a real split to the queue before merge', asy
   await expect(page.locator('#studioPdfContinueToExportButton')).toBeEnabled();
 });
 
+test('audio delivery workflow trims, levels, and exports an mp3', async ({ page }) => {
+  await page.goto('/workflows/audio-delivery');
+  await page.setInputFiles('#workflowAudioInput', {
+    name: 'workflow-fixture.wav',
+    mimeType: 'audio/wav',
+    buffer: createSilentWavBuffer({ durationSeconds: 0.4 }),
+  });
+
+  await expect(page.locator('#workflowAudioWorkspace')).not.toHaveClass(/is-hidden/);
+  await expect(page.locator('#workflowAudioStageUpload')).toBeVisible();
+  await page.click('#workflowAudioContinueButton');
+  await expect(page.locator('#workflowAudioStageTrim')).toBeVisible();
+  await page.fill('#workflowAudioTrimStart', '0');
+  await page.fill('#workflowAudioTrimEnd', '0.1');
+  await page.click('#workflowAudioApplyTrimButton');
+  await expect(page.locator('#workflowAudioStageLevel')).toBeVisible();
+  await page.fill('#workflowAudioGain', '120');
+  await page.click('#workflowAudioApplyLevelButton');
+  await expect(page.locator('#workflowAudioStageExport')).toBeVisible();
+  await page.selectOption('#workflowAudioFormat', 'audio/mpeg');
+  const downloadPromise = page.waitForEvent('download');
+  await page.click('#workflowAudioGenerateButton');
+  await expect(page.locator('#workflowAudioDownloadButton')).toBeEnabled();
+  await page.click('#workflowAudioDownloadButton');
+  const download = await downloadPromise;
+  expect(download.suggestedFilename()).toMatch(/workflow-fixture-delivery\.mp3$/);
+  await expect(page.locator('#workflowAudioStatus')).toContainText('Downloaded workflow-fixture-delivery.mp3');
+});
+
 test('learn landing page includes the core hero guides and expanded follow-up guides', async ({ page }) => {
   await page.goto('/learn');
   await expect(page.getByRole('heading', { level: 1, name: 'Guides for Better Results' })).toBeVisible();
   await expect(page.locator('.tool-card[href="/learn/compress-pdf-for-email/"]')).toBeVisible();
-  await expect(page.locator('.tool-card[href="/learn/use-kreativ-studio-image-prep-for-web-ready-images/"]')).toBeVisible();
-  await expect(page.locator('.tool-card[href="/learn/prepare-a-sendable-pdf-in-kreativ-studio/"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/learn/use-kreativ-workflows-image-prep-for-web-ready-images/"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/learn/prepare-a-sendable-pdf-in-kreativ-workflows/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/learn/merge-pdf-files-in-order/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/learn/convert-otf-or-ttf-to-woff2/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/learn/compress-images-for-faster-websites/"]')).toBeVisible();

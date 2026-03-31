@@ -15,6 +15,7 @@ const pages = [
   '/audio/to-wav',
   '/file/xml-to-csv',
   '/changes',
+  '/workflows',
   '/tools',
   '/privacy',
   '/terms',
@@ -58,7 +59,7 @@ test('social preview assets and favicon assets resolve', async ({ page, baseURL 
 });
 
 test('key pages expose canonical and social metadata for their own routes', async ({ page }) => {
-  const routes = ['/', '/learn/', '/studio/', '/studio/image-prep/', '/studio/pdf-delivery/', '/pdf/split/'];
+  const routes = ['/', '/learn/', '/workflows/', '/workflows/image-prep/', '/workflows/pdf-delivery/', '/workflows/audio-delivery/', '/pdf/split/'];
 
   for (const route of routes) {
     await page.goto(route, { waitUntil: 'domcontentloaded' });

@@ -1,0 +1,737 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kreativ Tools | Audio Delivery Workflow</title>
+  <meta name="description" content="Use the Audio Delivery workflow in Kreativ Tools to trim, level, convert, and export shareable audio in one guided browser flow." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://kreativtools.com/workflows/audio-delivery/" />
+  <meta property="og:title" content="Kreativ Tools | Audio Delivery Workflow" />
+  <meta property="og:description" content="Use the Audio Delivery workflow in Kreativ Tools to trim, level, convert, and export shareable audio in one guided browser flow." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kreativtools.com/workflows/audio-delivery/" />
+  <meta property="og:image" content="https://kreativtools.com/og-image.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Kreativ Tools | Audio Delivery Workflow" />
+  <meta name="twitter:description" content="Use the Audio Delivery workflow in Kreativ Tools to trim, level, convert, and export shareable audio in one guided browser flow." />
+  <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
+  <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="../../favicon-32x32.png" sizes="32x32" type="image/png" />
+  <link rel="icon" href="../../favicon-16x16.png" sizes="16x16" type="image/png" />
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="../../styles.css" />
+</head>
+<body>
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Kreativ Tools Home">
+      <div class="brand-mark">K</div>
+      <div class="brand-copy"><strong>Kreativ Tools</strong></div>
+    </a>
+
+    <nav class="top-nav" aria-label="Primary">
+      <a href="/image/">Image</a>
+      <a href="/pdf/">PDF</a>
+      <a href="/video/">Video</a>
+      <a href="/fonts/">Fonts</a>
+      <a href="/audio/">Audio</a>
+      <a href="/file/">File</a>
+      <a href="/workflows/" aria-current="page">Workflows</a>
+      <a href="/learn/">Learn</a>
+      <a href="/changes/">Updates</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="ghost header-link" href="/tools/">All Tools</a>
+      <button id="shareButton" type="button" class="icon-toggle" aria-label="Share this page" title="Share this page"><i class="fa-solid fa-share-nodes" aria-hidden="true"></i></button>
+      <button id="themeToggle" type="button" class="icon-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><i class="fa-solid fa-moon" aria-hidden="true"></i></button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <p class="eyebrow">Workflows</p>
+      <h1>Audio Delivery Workflow</h1>
+      <p>Trim, level, convert, and export one shareable audio file in a guided browser flow. This is the third public workflow inside the Workflows layer.</p>
+      <div class="hero-actions">
+        <a class="ghost header-link" href="/workflows/">About Workflows</a>
+        <a class="ghost header-link" href="/audio/to-mp3/">Open the standalone MP3 tool</a>
+      </div>
+    </section>
+
+    <section class="tool-intro" aria-label="Audio delivery workflow guidance">
+      <div class="tool-intro-card">
+        <h2>Best for</h2>
+        <p>Voice notes, review clips, podcast excerpts, client previews, and lightweight shareable audio where you want one final delivery file instead of multiple tool hops.</p>
+      </div>
+      <div class="tool-intro-card">
+        <h2>Workflow order</h2>
+        <p>Trim the usable section first, level the volume if needed, then choose the final export format and bitrate that fit the delivery channel.</p>
+      </div>
+    </section>
+
+    <section class="upload-card">
+      <input id="workflowAudioInput" type="file" accept="audio/*,.wav,.mp3,.m4a,.ogg,.flac,.aac" hidden />
+      <div id="workflowAudioDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload audio for the Audio Delivery workflow">
+        <div class="drop-icon" aria-hidden="true"></div>
+        <button id="workflowAudioUploadButton" type="button" class="primary upload-trigger">Upload Audio</button>
+        <p>or drag and drop an audio file here</p>
+        <p id="workflowAudioStatus" class="status status-empty">No audio selected yet.</p>
+      </div>
+    </section>
+
+    <section id="workflowAudioWorkspace" class="studio-shell is-hidden">
+      <aside class="studio-sidebar">
+        <section class="studio-sidebar-card">
+          <h2>Workflow Steps</h2>
+          <div class="studio-step-nav" aria-label="Audio Delivery steps">
+            <button class="studio-step-button is-active" type="button" data-audio-step="upload" aria-current="step">
+              <strong>Upload</strong>
+              <span>Load the working file and review the current source summary.</span>
+            </button>
+            <button class="studio-step-button" type="button" data-audio-step="trim">
+              <strong>Trim</strong>
+              <span>Set the usable start and end points before level or export.</span>
+            </button>
+            <button class="studio-step-button" type="button" data-audio-step="level">
+              <strong>Level</strong>
+              <span>Adjust the gain when the clip is too quiet or too hot.</span>
+            </button>
+            <button class="studio-step-button" type="button" data-audio-step="export">
+              <strong>Export</strong>
+              <span>Choose WAV or MP3 and generate the final delivery file.</span>
+            </button>
+          </div>
+        </section>
+
+        <section class="studio-summary-card">
+          <h2>Working Audio</h2>
+          <ul class="studio-summary-list">
+            <li><strong>Name:</strong> <span id="workflowAudioSummaryName">No file loaded</span></li>
+            <li><strong>Source:</strong> <span id="workflowAudioSummarySource">-</span></li>
+            <li><strong>Current clip:</strong> <span id="workflowAudioSummaryClip">-</span></li>
+            <li><strong>Final output:</strong> <span id="workflowAudioSummaryOutput">Not generated yet</span></li>
+          </ul>
+          <p class="studio-preview-callout">Audio Delivery keeps one working clip in the browser. Each step updates that working clip so you can hear the result before generating the final export.</p>
+        </section>
+      </aside>
+
+      <div class="studio-stage-stack">
+        <section id="workflowAudioStageUpload" class="studio-stage-card">
+          <h2>Upload Review</h2>
+          <p>Once the file is loaded, Workflows keeps the decoded audio in the browser and moves the current clip through trim, level, and export.</p>
+          <audio id="workflowAudioPreview" class="audio-preview" controls></audio>
+          <p id="workflowAudioMeta" class="studio-stage-note">Audio details will appear here after upload.</p>
+          <div class="studio-actions-row" style="margin-top:16px;">
+            <button id="workflowAudioChooseAnotherButton" type="button" class="ghost header-link">Choose Another File</button>
+            <button id="workflowAudioContinueButton" type="button" class="primary">Continue to Trim</button>
+          </div>
+        </section>
+
+        <section id="workflowAudioStageTrim" class="studio-stage-card" hidden>
+          <h2>Trim</h2>
+          <p>Set the section you actually want to deliver. This keeps the later level and export steps focused on the final clip instead of the whole source file.</p>
+          <div class="studio-stage-grid" style="margin-top:16px;">
+            <div>
+              <audio id="workflowAudioTrimPreview" class="audio-preview" controls></audio>
+              <p id="workflowAudioTrimMeta" class="studio-stage-note">Current trim window details will appear here.</p>
+            </div>
+            <div>
+              <div class="input-grid">
+                <label>
+                  Start (seconds)
+                  <input id="workflowAudioTrimStart" type="number" min="0" step="0.01" value="0" />
+                </label>
+                <label>
+                  End (seconds)
+                  <input id="workflowAudioTrimEnd" type="number" min="0.01" step="0.01" value="0" />
+                </label>
+              </div>
+              <div class="studio-actions-row" style="margin-top:18px;">
+                <button id="workflowAudioBackToUploadButton" type="button" class="ghost header-link">Back to Upload</button>
+                <button id="workflowAudioSkipTrimButton" type="button" class="ghost header-link">Keep Full Clip</button>
+                <button id="workflowAudioApplyTrimButton" type="button" class="primary">Apply Trim and Continue</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="workflowAudioStageLevel" class="studio-stage-card" hidden>
+          <h2>Level</h2>
+          <p>Raise or reduce the working clip level before export. For voice-heavy clips, a small boost is often enough. If the audio already sounds right, leave it at 100%.</p>
+          <div class="studio-stage-grid" style="margin-top:16px;">
+            <div>
+              <audio id="workflowAudioLevelPreview" class="audio-preview" controls></audio>
+              <p id="workflowAudioLevelMeta" class="studio-stage-note">Preview the current working clip after trim or level changes.</p>
+            </div>
+            <div>
+              <label>
+                <span class="quality-head">Gain <strong><span id="workflowAudioGainValue">100</span>%</strong></span>
+                <input id="workflowAudioGain" type="range" min="20" max="300" value="100" />
+              </label>
+              <p class="studio-stage-note" style="margin-top:14px;">Go above 100% when the clip is too quiet. Stay closer to 100% if the source already peaks near full volume.</p>
+              <div class="studio-actions-row" style="margin-top:18px;">
+                <button id="workflowAudioBackToTrimButton" type="button" class="ghost header-link">Back to Trim</button>
+                <button id="workflowAudioSkipLevelButton" type="button" class="ghost header-link">Keep Current Level</button>
+                <button id="workflowAudioApplyLevelButton" type="button" class="primary">Apply Level and Continue</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="workflowAudioStageExport" class="studio-export-card" hidden>
+          <h2>Export</h2>
+          <p>Generate the final delivery file. Use WAV for a lossless handoff or MP3 when smaller file size matters more than perfect fidelity.</p>
+          <div class="studio-stage-grid" style="margin-top:16px;">
+            <div>
+              <div class="input-grid">
+                <label>
+                  Output format
+                  <select id="workflowAudioFormat">
+                    <option value="audio/mpeg" selected>MP3</option>
+                    <option value="audio/wav">WAV</option>
+                  </select>
+                </label>
+                <label>
+                  MP3 bitrate
+                  <select id="workflowAudioBitrate">
+                    <option value="96">96 kbps</option>
+                    <option value="128" selected>128 kbps</option>
+                    <option value="192">192 kbps</option>
+                    <option value="256">256 kbps</option>
+                    <option value="320">320 kbps</option>
+                  </select>
+                </label>
+                <label>
+                  Sample rate
+                  <select id="workflowAudioSampleRate">
+                    <option value="keep" selected>Keep original</option>
+                    <option value="44100">44,100 Hz</option>
+                    <option value="48000">48,000 Hz</option>
+                  </select>
+                </label>
+              </div>
+              <label class="checkbox-row" style="margin-top:14px;">
+                <input id="workflowAudioMono" type="checkbox" />
+                Export mono for smaller files
+              </label>
+              <div class="studio-actions-row" style="margin-top:18px;">
+                <button id="workflowAudioBackToLevelButton" type="button" class="ghost header-link">Back to Level</button>
+                <button id="workflowAudioGenerateButton" type="button" class="primary">Generate Final Export</button>
+                <button id="workflowAudioDownloadButton" type="button" class="ghost header-link" disabled>Download Final Audio</button>
+              </div>
+            </div>
+            <div>
+              <div class="result-card">
+                <div class="result-row">
+                  <span>Clip length</span>
+                  <strong id="workflowAudioExportDuration">-</strong>
+                </div>
+                <div class="result-row">
+                  <span>Output format</span>
+                  <strong id="workflowAudioExportFormat">-</strong>
+                </div>
+                <div class="result-row">
+                  <span>Estimated output</span>
+                  <strong id="workflowAudioExportSize">-</strong>
+                </div>
+              </div>
+              <p id="workflowAudioExportMeta" class="studio-success-note" hidden>Final audio generated. Review the output and download it when ready.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+  <div class="footer-topline"></div>
+  <div class="footer-inner">
+    <section class="footer-about">
+      <h3>Kreativ<span>Tools</span></h3>
+      <p>Kreativ Tools is a growing browser-based toolkit for image, PDF, video, font, audio, and file workflows. Explore focused utilities, practical Learn guides, and privacy-friendly tools for repeat creative work.</p>
+    </section>
+
+    <section>
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/tools/">All Tools</a></li>
+        <li><a href="/learn/">Learn</a></li>
+        <li><a href="/changes/">Updates</a></li>
+        <li><a href="/privacy/">Privacy Policy</a></li>
+        <li><a href="/terms/">Terms</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h4>Core Tools</h4>
+      <ul>
+        <li><a href="/image/compress/">Image Compress</a></li>
+        <li><a href="/pdf/merge/">PDF Merge</a></li>
+        <li><a href="/pdf/compress/">PDF Compress</a></li>
+        <li><a href="/fonts/webfont-convert/">Font to Webfont</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h4>More Tools</h4>
+      <ul>
+        <li><a href="/workflows/">Workflows</a></li>
+        <li><a href="/learn/">Learn Guides</a></li>
+        <li><a href="/video/thumbnail/">Video Thumbnail</a></li>
+        <li><a href="/file/xml-to-csv/">XML to CSV</a></li>
+        <li><a href="/tools/">Browse Directory</a></li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="footer-bottom">
+    <p class="footer-brand-links"><a href="https://kreativfont.com/" target="_blank" rel="noopener noreferrer">Kreativ Font</a><span aria-hidden="true">·</span><a href="https://kreativsound.com/" target="_blank" rel="noopener noreferrer">Kreativ Sound</a><span aria-hidden="true">·</span><a href="https://kreativwp.com/" target="_blank" rel="noopener noreferrer">Kreativ WP</a><span aria-hidden="true">·</span><a href="/">Kreativ Tools</a></p>
+    <p>© 2026 <a href="https://madebykreativ.com/" target="_blank" rel="noopener noreferrer">Made by KREATIV</a> · Independent creative tools and assets by Andrei Olaru</p>
+    <p class="footer-meta-actions"></p>
+  </div>
+</footer>
+
+  <script src="../../audio/lame.min.js"></script>
+  <script>
+    const audioInput = document.getElementById('workflowAudioInput');
+    const uploadButton = document.getElementById('workflowAudioUploadButton');
+    const dropzone = document.getElementById('workflowAudioDropzone');
+    const statusEl = document.getElementById('workflowAudioStatus');
+    const workspace = document.getElementById('workflowAudioWorkspace');
+    const preview = document.getElementById('workflowAudioPreview');
+    const trimPreview = document.getElementById('workflowAudioTrimPreview');
+    const levelPreview = document.getElementById('workflowAudioLevelPreview');
+    const metaEl = document.getElementById('workflowAudioMeta');
+    const trimMetaEl = document.getElementById('workflowAudioTrimMeta');
+    const levelMetaEl = document.getElementById('workflowAudioLevelMeta');
+    const summaryName = document.getElementById('workflowAudioSummaryName');
+    const summarySource = document.getElementById('workflowAudioSummarySource');
+    const summaryClip = document.getElementById('workflowAudioSummaryClip');
+    const summaryOutput = document.getElementById('workflowAudioSummaryOutput');
+    const trimStartInput = document.getElementById('workflowAudioTrimStart');
+    const trimEndInput = document.getElementById('workflowAudioTrimEnd');
+    const gainInput = document.getElementById('workflowAudioGain');
+    const gainValue = document.getElementById('workflowAudioGainValue');
+    const formatInput = document.getElementById('workflowAudioFormat');
+    const bitrateInput = document.getElementById('workflowAudioBitrate');
+    const sampleRateInput = document.getElementById('workflowAudioSampleRate');
+    const monoInput = document.getElementById('workflowAudioMono');
+    const exportDuration = document.getElementById('workflowAudioExportDuration');
+    const exportFormat = document.getElementById('workflowAudioExportFormat');
+    const exportSize = document.getElementById('workflowAudioExportSize');
+    const exportMeta = document.getElementById('workflowAudioExportMeta');
+    const downloadButton = document.getElementById('workflowAudioDownloadButton');
+
+    const steps = {
+      upload: document.getElementById('workflowAudioStageUpload'),
+      trim: document.getElementById('workflowAudioStageTrim'),
+      level: document.getElementById('workflowAudioStageLevel'),
+      export: document.getElementById('workflowAudioStageExport'),
+    };
+    const stepButtons = Array.from(document.querySelectorAll('[data-audio-step]'));
+
+    const chooseAnotherButton = document.getElementById('workflowAudioChooseAnotherButton');
+    const continueButton = document.getElementById('workflowAudioContinueButton');
+    const backToUploadButton = document.getElementById('workflowAudioBackToUploadButton');
+    const skipTrimButton = document.getElementById('workflowAudioSkipTrimButton');
+    const applyTrimButton = document.getElementById('workflowAudioApplyTrimButton');
+    const backToTrimButton = document.getElementById('workflowAudioBackToTrimButton');
+    const skipLevelButton = document.getElementById('workflowAudioSkipLevelButton');
+    const applyLevelButton = document.getElementById('workflowAudioApplyLevelButton');
+    const backToLevelButton = document.getElementById('workflowAudioBackToLevelButton');
+    const generateButton = document.getElementById('workflowAudioGenerateButton');
+
+    let sourceName = 'audio';
+    let originalFileSize = 0;
+    let originalBuffer = null;
+    let workingBuffer = null;
+    let finalBlob = null;
+    let finalMime = 'audio/mpeg';
+    let previewUrls = [];
+
+    const setStatus = (message) => {
+      statusEl.textContent = message;
+    };
+
+    const trackWorkflowEvent = (eventName, properties = {}) => {
+      if (typeof window.kreativTrack === 'function') {
+        window.kreativTrack(eventName, { workflow: 'audio-delivery', ...properties });
+      }
+    };
+
+    const formatBytes = (bytes) => {
+      if (!Number.isFinite(bytes) || bytes <= 0) return '0 B';
+      if (bytes < 1024) return `${bytes} B`;
+      if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+      return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+    };
+
+    const formatDuration = (seconds) => {
+      const total = Math.max(0, Number(seconds) || 0);
+      const minutes = Math.floor(total / 60);
+      const remainder = total - minutes * 60;
+      return `${minutes}:${String(Math.floor(remainder)).padStart(2, '0')}.${String(Math.round((remainder % 1) * 10)).padStart(1, '0')}`;
+    };
+
+    const revokePreviewUrls = () => {
+      previewUrls.forEach((url) => URL.revokeObjectURL(url));
+      previewUrls = [];
+    };
+
+    const setStep = (step) => {
+      stepButtons.forEach((button) => {
+        const isActive = button.dataset.audioStep === step;
+        button.classList.toggle('is-active', isActive);
+        if (isActive) button.setAttribute('aria-current', 'step');
+        else button.removeAttribute('aria-current');
+      });
+      Object.entries(steps).forEach(([key, element]) => {
+        element.hidden = key !== step;
+      });
+    };
+
+    const toWavBlob = (audioBuffer) => {
+      const channels = audioBuffer.numberOfChannels;
+      const sampleRate = audioBuffer.sampleRate;
+      const samples = audioBuffer.length;
+      const bytesPerSample = 2;
+      const blockAlign = channels * bytesPerSample;
+      const dataSize = samples * blockAlign;
+      const buffer = new ArrayBuffer(44 + dataSize);
+      const view = new DataView(buffer);
+      let offset = 0;
+      const writeString = (str) => { for (let i = 0; i < str.length; i += 1) view.setUint8(offset++, str.charCodeAt(i)); };
+      writeString('RIFF');
+      view.setUint32(offset, 36 + dataSize, true); offset += 4;
+      writeString('WAVE');
+      writeString('fmt ');
+      view.setUint32(offset, 16, true); offset += 4;
+      view.setUint16(offset, 1, true); offset += 2;
+      view.setUint16(offset, channels, true); offset += 2;
+      view.setUint32(offset, sampleRate, true); offset += 4;
+      view.setUint32(offset, sampleRate * blockAlign, true); offset += 4;
+      view.setUint16(offset, blockAlign, true); offset += 2;
+      view.setUint16(offset, 16, true); offset += 2;
+      writeString('data');
+      view.setUint32(offset, dataSize, true); offset += 4;
+      const channelData = [];
+      for (let channel = 0; channel < channels; channel += 1) channelData.push(audioBuffer.getChannelData(channel));
+      for (let index = 0; index < samples; index += 1) {
+        for (let channel = 0; channel < channels; channel += 1) {
+          const sample = Math.max(-1, Math.min(1, channelData[channel][index]));
+          view.setInt16(offset, sample < 0 ? sample * 32768 : sample * 32767, true);
+          offset += 2;
+        }
+      }
+      return new Blob([buffer], { type: 'audio/wav' });
+    };
+
+    const floatToInt16 = (channelData) => {
+      const output = new Int16Array(channelData.length);
+      for (let i = 0; i < channelData.length; i += 1) {
+        const sample = Math.max(-1, Math.min(1, channelData[i]));
+        output[i] = sample < 0 ? sample * 32768 : sample * 32767;
+      }
+      return output;
+    };
+
+    const renderBuffer = async (inputBuffer, targetSampleRate, mono) => {
+      const targetChannels = mono ? 1 : Math.min(2, inputBuffer.numberOfChannels);
+      const length = Math.max(1, Math.ceil(inputBuffer.duration * targetSampleRate));
+      const offline = new OfflineAudioContext(targetChannels, length, targetSampleRate);
+      const source = offline.createBufferSource();
+      source.buffer = inputBuffer;
+      source.connect(offline.destination);
+      source.start();
+      return offline.startRendering();
+    };
+
+    const encodeMp3 = (audioBuffer, bitrate) => {
+      const channels = Math.min(2, audioBuffer.numberOfChannels);
+      const sampleRate = audioBuffer.sampleRate;
+      const encoder = new lamejs.Mp3Encoder(channels, sampleRate, bitrate);
+      const blockSize = 1152;
+      const left = floatToInt16(audioBuffer.getChannelData(0));
+      const right = channels > 1 ? floatToInt16(audioBuffer.getChannelData(1)) : null;
+      const chunks = [];
+
+      for (let offset = 0; offset < left.length; offset += blockSize) {
+        const leftChunk = left.subarray(offset, offset + blockSize);
+        let encoded;
+        if (channels > 1 && right) {
+          const rightChunk = right.subarray(offset, offset + blockSize);
+          encoded = encoder.encodeBuffer(leftChunk, rightChunk);
+        } else {
+          encoded = encoder.encodeBuffer(leftChunk);
+        }
+        if (encoded.length) chunks.push(new Uint8Array(encoded));
+      }
+
+      const flush = encoder.flush();
+      if (flush.length) chunks.push(new Uint8Array(flush));
+      return new Blob(chunks, { type: 'audio/mpeg' });
+    };
+
+    const updateSummary = () => {
+      summaryName.textContent = sourceName || 'audio';
+      summarySource.textContent = originalBuffer
+        ? `${originalBuffer.numberOfChannels} ch • ${Math.round(originalBuffer.sampleRate)} Hz • ${formatDuration(originalBuffer.duration)} • ${formatBytes(originalFileSize)}`
+        : '-';
+      summaryClip.textContent = workingBuffer
+        ? `${workingBuffer.numberOfChannels} ch • ${Math.round(workingBuffer.sampleRate)} Hz • ${formatDuration(workingBuffer.duration)}`
+        : '-';
+      summaryOutput.textContent = finalBlob
+        ? `${finalMime === 'audio/wav' ? 'WAV' : 'MP3'} • ${formatBytes(finalBlob.size)}`
+        : 'Not generated yet';
+    };
+
+    const updatePreviewUrls = () => {
+      revokePreviewUrls();
+      if (!workingBuffer) return;
+      const wavBlob = toWavBlob(workingBuffer);
+      const url = URL.createObjectURL(wavBlob);
+      previewUrls.push(url);
+      preview.src = url;
+      trimPreview.src = url;
+      levelPreview.src = url;
+    };
+
+    const resetFinalExport = () => {
+      finalBlob = null;
+      finalMime = formatInput.value;
+      exportMeta.hidden = true;
+      downloadButton.disabled = true;
+      exportFormat.textContent = '-';
+      exportSize.textContent = '-';
+      updateSummary();
+    };
+
+    const loadAudio = async (file) => {
+      if (!file || (!file.type.startsWith('audio/') && !/\.(wav|mp3|m4a|aac|ogg|flac)$/i.test(file.name))) {
+        setStatus('Please upload a valid audio file.');
+        return;
+      }
+      try {
+        const data = await file.arrayBuffer();
+        const context = new AudioContext();
+        const buffer = await context.decodeAudioData(data.slice(0));
+        await context.close();
+        sourceName = file.name.replace(/\.[^.]+$/, '');
+        originalFileSize = file.size;
+        originalBuffer = buffer;
+        workingBuffer = buffer;
+        trimStartInput.value = '0';
+        trimEndInput.value = buffer.duration.toFixed(2);
+        gainInput.value = '100';
+        gainValue.textContent = '100';
+        metaEl.textContent = `${buffer.numberOfChannels} ch • ${Math.round(buffer.sampleRate)} Hz • ${formatDuration(buffer.duration)}`;
+        trimMetaEl.textContent = `Current clip: 0.0s to ${buffer.duration.toFixed(2)}s`;
+        levelMetaEl.textContent = 'Preview the current working clip after trim or level changes.';
+        workspace.classList.remove('is-hidden');
+        updatePreviewUrls();
+        resetFinalExport();
+        updateSummary();
+        setStep('upload');
+        setStatus(`Loaded audio: ${file.name}`);
+        trackWorkflowEvent('workflows_audio_delivery_upload_started', {
+          file_type: file.type || 'unknown',
+          file_size_bucket: file.size < 500000 ? 'small' : file.size < 3000000 ? 'medium' : 'large',
+        });
+      } catch {
+        setStatus('Could not decode this audio file.');
+      }
+    };
+
+    const replaceWorkingBuffer = (buffer) => {
+      workingBuffer = buffer;
+      updatePreviewUrls();
+      resetFinalExport();
+      updateSummary();
+    };
+
+    const applyTrim = async () => {
+      if (!workingBuffer) return;
+      const start = Math.max(0, Number(trimStartInput.value) || 0);
+      const end = Math.min(workingBuffer.duration, Number(trimEndInput.value) || 0);
+      if (!(end > start)) {
+        setStatus('End time must be greater than start time.');
+        return;
+      }
+      try {
+        const duration = end - start;
+        const length = Math.max(1, Math.ceil(duration * workingBuffer.sampleRate));
+        const offline = new OfflineAudioContext(workingBuffer.numberOfChannels, length, workingBuffer.sampleRate);
+        const source = offline.createBufferSource();
+        source.buffer = workingBuffer;
+        source.connect(offline.destination);
+        source.start(0, start, duration);
+        const rendered = await offline.startRendering();
+        replaceWorkingBuffer(rendered);
+        trimStartInput.value = '0';
+        trimEndInput.value = rendered.duration.toFixed(2);
+        trimMetaEl.textContent = `Current clip: 0.0s to ${rendered.duration.toFixed(2)}s`;
+        setStep('level');
+        setStatus('Trim applied. Continue with level and export.');
+        trackWorkflowEvent('workflows_audio_delivery_trim_applied', {
+          duration: Number(rendered.duration.toFixed(2)),
+        });
+      } catch {
+        setStatus('Trim failed for this file.');
+      }
+    };
+
+    const applyLevel = () => {
+      if (!workingBuffer) return;
+      const gain = Math.max(0.2, Math.min(3, Number(gainInput.value) / 100));
+      const output = new AudioBuffer({
+        length: workingBuffer.length,
+        sampleRate: workingBuffer.sampleRate,
+        numberOfChannels: workingBuffer.numberOfChannels,
+      });
+      for (let channel = 0; channel < output.numberOfChannels; channel += 1) {
+        const src = workingBuffer.getChannelData(channel);
+        const dst = output.getChannelData(channel);
+        for (let i = 0; i < src.length; i += 1) {
+          dst[i] = Math.max(-1, Math.min(1, src[i] * gain));
+        }
+      }
+      replaceWorkingBuffer(output);
+      levelMetaEl.textContent = `Applied gain: ${gainInput.value}%`;
+      setStep('export');
+      setStatus('Level applied. Generate the final export when ready.');
+      trackWorkflowEvent('workflows_audio_delivery_level_applied', {
+        gain_percent: Number(gainInput.value),
+      });
+    };
+
+    const generateExport = async () => {
+      if (!workingBuffer) return;
+      generateButton.disabled = true;
+      downloadButton.disabled = true;
+      finalBlob = null;
+      exportMeta.hidden = true;
+      setStatus('Generating final audio...');
+      try {
+        const format = formatInput.value;
+        const sampleRate = sampleRateInput.value === 'keep'
+          ? workingBuffer.sampleRate
+          : Number(sampleRateInput.value);
+        const mono = monoInput.checked;
+        const rendered = (sampleRate !== workingBuffer.sampleRate || mono)
+          ? await renderBuffer(workingBuffer, sampleRate, mono)
+          : workingBuffer;
+        finalMime = format;
+        finalBlob = format === 'audio/wav'
+          ? toWavBlob(rendered)
+          : encodeMp3(rendered, Number(bitrateInput.value));
+        exportDuration.textContent = formatDuration(rendered.duration);
+        exportFormat.textContent = format === 'audio/wav'
+          ? 'WAV'
+          : `MP3 • ${bitrateInput.value} kbps`;
+        exportSize.textContent = formatBytes(finalBlob.size);
+        exportMeta.hidden = false;
+        downloadButton.disabled = false;
+        updateSummary();
+        setStatus('Final audio generated and ready to download.');
+        trackWorkflowEvent('workflows_audio_delivery_export_generated', {
+          format: format === 'audio/wav' ? 'wav' : 'mp3',
+          duration: Number(rendered.duration.toFixed(2)),
+        });
+      } catch {
+        setStatus('Could not generate the final audio export.');
+      } finally {
+        generateButton.disabled = false;
+      }
+    };
+
+    const downloadExport = () => {
+      if (!finalBlob) return;
+      const url = URL.createObjectURL(finalBlob);
+      previewUrls.push(url);
+      const link = document.createElement('a');
+      link.href = url;
+      const extension = finalMime === 'audio/wav' ? 'wav' : 'mp3';
+      link.download = `${sourceName}-delivery.${extension}`;
+      link.click();
+      setStatus(`Downloaded ${sourceName}-delivery.${extension}`);
+      trackWorkflowEvent('workflows_audio_delivery_export_downloaded', {
+        format: extension,
+      });
+    };
+
+    uploadButton.addEventListener('click', () => audioInput.click());
+    chooseAnotherButton.addEventListener('click', () => audioInput.click());
+    continueButton.addEventListener('click', () => setStep('trim'));
+    backToUploadButton.addEventListener('click', () => setStep('upload'));
+    skipTrimButton.addEventListener('click', () => {
+      setStep('level');
+      setStatus('Trim skipped. Continue with level or export.');
+    });
+    applyTrimButton.addEventListener('click', applyTrim);
+    backToTrimButton.addEventListener('click', () => setStep('trim'));
+    skipLevelButton.addEventListener('click', () => {
+      setStep('export');
+      setStatus('Level unchanged. Generate the final export when ready.');
+    });
+    applyLevelButton.addEventListener('click', applyLevel);
+    backToLevelButton.addEventListener('click', () => setStep('level'));
+    generateButton.addEventListener('click', generateExport);
+    downloadButton.addEventListener('click', downloadExport);
+    gainInput.addEventListener('input', () => {
+      gainValue.textContent = gainInput.value;
+      resetFinalExport();
+    });
+    formatInput.addEventListener('change', () => {
+      bitrateInput.disabled = formatInput.value === 'audio/wav';
+      resetFinalExport();
+    });
+    bitrateInput.addEventListener('change', resetFinalExport);
+    sampleRateInput.addEventListener('change', resetFinalExport);
+    monoInput.addEventListener('change', resetFinalExport);
+    trimStartInput.addEventListener('input', resetFinalExport);
+    trimEndInput.addEventListener('input', resetFinalExport);
+
+    audioInput.addEventListener('change', () => {
+      const [file] = audioInput.files || [];
+      if (file) loadAudio(file);
+      audioInput.value = '';
+    });
+
+    dropzone.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        audioInput.click();
+      }
+    });
+    dropzone.addEventListener('dragover', (event) => {
+      event.preventDefault();
+      dropzone.classList.add('drag-over');
+    });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag-over'));
+    dropzone.addEventListener('drop', (event) => {
+      event.preventDefault();
+      dropzone.classList.remove('drag-over');
+      const [file] = event.dataTransfer?.files || [];
+      if (file) loadAudio(file);
+    });
+
+    window.addEventListener('beforeunload', revokePreviewUrls);
+  </script>
+  <script src="../../cookie-consent.js"></script>
+  <script src="../../github-pages-prefix.js"></script>
+  <script src="../../analytics.js"></script>
+  <script src="../../theme.js"></script>
+</body>
+</html>

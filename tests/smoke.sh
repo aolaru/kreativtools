@@ -77,6 +77,7 @@ main() {
     workflows/index.html
     workflows/image-prep/index.html
     workflows/pdf-delivery/index.html
+    workflows/audio-delivery/index.html
     tools/index.html
     privacy/index.html
     terms/index.html
@@ -118,6 +119,8 @@ main() {
   expect_pattern "fonts/webfont-convert/index.html" 'id="fontInput"'
   expect_pattern "audio/to-wav/index.html" 'id="audioInput"'
   expect_pattern "audio/to-mp3/index.html" 'id="mp3AudioInput"'
+  expect_pattern "workflows/audio-delivery/index.html" 'id="workflowAudioInput"'
+  expect_pattern "workflows/audio-delivery/index.html" 'id="workflowAudioGenerateButton"'
   expect_pattern "index.html" 'href="/workflows/"'
   expect_pattern "workflows/index.html" '<link rel="canonical" href="https://kreativtools\.com/workflows/"'
   expect_pattern "workflows/index.html" '<h1>Workflows</h1>'

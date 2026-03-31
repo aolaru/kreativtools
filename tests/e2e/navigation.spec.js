@@ -15,6 +15,7 @@ const pages = [
   '/file/xml-to-csv',
   '/changes',
   '/workflows',
+  '/workflows/audio-delivery',
   '/tools',
   '/privacy',
   '/terms',
