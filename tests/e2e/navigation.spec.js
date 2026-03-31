@@ -68,8 +68,8 @@ test('clean routes resolve without breaking tool pages', async ({ page }) => {
   await expect.poll(() => new URL(page.url()).pathname).toMatch(/^\/image\/resize\/?$/);
 
   await page.goto('/tools');
-  await expect(page.locator('.tool-card[href="/image/compress/"]')).toBeVisible();
   await expect.poll(() => new URL(page.url()).pathname).toMatch(/^\/tools\/?$/);
+  await expect(page.getByRole('heading', { level: 1, name: 'All Kreativ Tools' })).toBeVisible();
 });
 
 test('legacy alias routes redirect to canonical clean routes', async ({ page }) => {

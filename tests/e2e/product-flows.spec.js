@@ -1,33 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 const { test, expect } = require('@playwright/test');
+const { createSilentWavBuffer } = require('./helpers/audio');
 
 const fixturesDir = path.resolve(__dirname, '..', 'fixtures');
 const mergePdfA = path.join(fixturesDir, 'merge-a.pdf');
 const mergePdfB = path.join(fixturesDir, 'merge-b.pdf');
 const compressPdf = path.join(fixturesDir, 'compress-sample.pdf');
-
-function createSilentWavBuffer({ sampleRate = 8000, durationSeconds = 0.2 } = {}) {
-  const frameCount = Math.max(1, Math.floor(sampleRate * durationSeconds));
-  const dataSize = frameCount * 2;
-  const buffer = Buffer.alloc(44 + dataSize);
-
-  buffer.write('RIFF', 0);
-  buffer.writeUInt32LE(36 + dataSize, 4);
-  buffer.write('WAVE', 8);
-  buffer.write('fmt ', 12);
-  buffer.writeUInt32LE(16, 16);
-  buffer.writeUInt16LE(1, 20);
-  buffer.writeUInt16LE(1, 22);
-  buffer.writeUInt32LE(sampleRate, 24);
-  buffer.writeUInt32LE(sampleRate * 2, 28);
-  buffer.writeUInt16LE(2, 32);
-  buffer.writeUInt16LE(16, 34);
-  buffer.write('data', 36);
-  buffer.writeUInt32LE(dataSize, 40);
-
-  return buffer;
-}
 
 test('homepage surfaces featured workflows and Learn entry points', async ({ page }) => {
   await page.goto('/');
@@ -207,6 +186,36 @@ test('audio delivery workflow trims, levels, and exports an mp3', async ({ page 
   const download = await downloadPromise;
   expect(download.suggestedFilename()).toMatch(/workflow-fixture-delivery\.mp3$/);
   await expect(page.locator('#workflowAudioStatus')).toContainText('Downloaded workflow-fixture-delivery.mp3');
+});
+
+test('audio delivery workflow supports back navigation and wav export', async ({ page }) => {
+  await page.goto('/workflows/audio-delivery');
+  await page.setInputFiles('#workflowAudioInput', {
+    name: 'workflow-wav-fixture.wav',
+    mimeType: 'audio/wav',
+    buffer: createSilentWavBuffer({ durationSeconds: 0.3 }),
+  });
+
+  await expect(page.locator('#workflowAudioStageUpload')).toBeVisible();
+  await page.click('#workflowAudioContinueButton');
+  await expect(page.locator('#workflowAudioStageTrim')).toBeVisible();
+  await page.click('#workflowAudioSkipTrimButton');
+  await expect(page.locator('#workflowAudioStageLevel')).toBeVisible();
+  await page.click('#workflowAudioBackToTrimButton');
+  await expect(page.locator('#workflowAudioStageTrim')).toBeVisible();
+  await page.click('#workflowAudioSkipTrimButton');
+  await page.click('#workflowAudioSkipLevelButton');
+  await expect(page.locator('#workflowAudioStageExport')).toBeVisible();
+  await page.selectOption('#workflowAudioFormat', 'audio/wav');
+  await expect(page.locator('#workflowAudioBitrate')).toBeDisabled();
+  const downloadPromise = page.waitForEvent('download');
+  await page.click('#workflowAudioGenerateButton');
+  await expect(page.locator('#workflowAudioExportFormat')).toHaveText('WAV');
+  await expect(page.locator('#workflowAudioDownloadButton')).toBeEnabled();
+  await page.click('#workflowAudioDownloadButton');
+  const download = await downloadPromise;
+  expect(download.suggestedFilename()).toMatch(/workflow-wav-fixture-delivery\.wav$/);
+  await expect(page.locator('#workflowAudioStatus')).toContainText('Downloaded workflow-wav-fixture-delivery.wav');
 });
 
 test('learn landing page includes the core hero guides and expanded follow-up guides', async ({ page }) => {
