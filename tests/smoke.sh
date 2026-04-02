@@ -123,7 +123,7 @@ main() {
   expect_pattern "workflows/audio-delivery/index.html" 'id="workflowAudioGenerateButton"'
   expect_pattern "index.html" 'href="/workflows/"'
   expect_pattern "workflows/index.html" '<link rel="canonical" href="https://kreativtools\.com/workflows/"'
-  expect_pattern "workflows/index.html" '<h1>Workflows</h1>'
+  expect_pattern "workflows/index.html" '<h1>Kreativ Workflows</h1>'
   expect_pattern "file/xml-to-csv/index.html" 'id="xmlInput"'
 
   expect_pattern "changes/index.html" 'class="changelog-list"'
