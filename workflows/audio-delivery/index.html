@@ -224,13 +224,31 @@
                 <input id="workflowAudioMono" type="checkbox" />
                 Export mono for smaller files
               </label>
+              <div class="workflow-prefs-card" style="margin-top:14px;">
+                <div class="workflow-prefs-header">
+                  <strong>Saved export defaults</strong>
+                  <span>Reuse your preferred format, bitrate, and channel setup.</span>
+                </div>
+                <div class="workflow-prefs-actions">
+                  <button id="workflowAudioSavePrefsButton" type="button" class="ghost header-link">Save as Default</button>
+                  <button id="workflowAudioApplyPrefsButton" type="button" class="ghost header-link">Use Saved</button>
+                  <button id="workflowAudioResetPrefsButton" type="button" class="ghost header-link">Reset Defaults</button>
+                </div>
+                <p id="workflowAudioPrefsStatus" class="studio-stage-note">Keep your standard export setup ready for repeat deliveries.</p>
+              </div>
               <div class="studio-actions-row" style="margin-top:18px;">
                 <button id="workflowAudioBackToLevelButton" type="button" class="ghost header-link">Back to Level</button>
                 <button id="workflowAudioGenerateButton" type="button" class="primary">Generate Final Export</button>
                 <button id="workflowAudioDownloadButton" type="button" class="ghost header-link" disabled>Download Final Audio</button>
+                <button id="workflowAudioRestartButton" type="button" class="ghost header-link">Start Another Audio</button>
               </div>
             </div>
             <div>
+              <div class="workflow-success-card" hidden id="workflowAudioSuccessCard">
+                <div class="workflow-success-badge">Ready to send</div>
+                <h3>Final audio prepared</h3>
+                <p>Your delivery file is generated with the selected format and export settings. Download it now or restart another audio workflow.</p>
+              </div>
               <div class="result-card">
                 <div class="result-row">
                   <span>Clip length</span>
@@ -246,6 +264,10 @@
                 </div>
               </div>
               <p id="workflowAudioExportMeta" class="studio-success-note" hidden>Final audio generated. Review the output and download it when ready.</p>
+              <div class="workflow-success-actions" hidden id="workflowAudioSuccessActions">
+                <a class="button-link" href="/audio/to-mp3/">Open Audio to MP3</a>
+                <a class="button-link" href="/workflows/">Browse all workflows</a>
+              </div>
             </div>
           </div>
         </section>
@@ -333,6 +355,13 @@
     const exportSize = document.getElementById('workflowAudioExportSize');
     const exportMeta = document.getElementById('workflowAudioExportMeta');
     const downloadButton = document.getElementById('workflowAudioDownloadButton');
+    const restartButton = document.getElementById('workflowAudioRestartButton');
+    const savePrefsButton = document.getElementById('workflowAudioSavePrefsButton');
+    const applyPrefsButton = document.getElementById('workflowAudioApplyPrefsButton');
+    const resetPrefsButton = document.getElementById('workflowAudioResetPrefsButton');
+    const prefsStatus = document.getElementById('workflowAudioPrefsStatus');
+    const successCard = document.getElementById('workflowAudioSuccessCard');
+    const successActions = document.getElementById('workflowAudioSuccessActions');
 
     const steps = {
       upload: document.getElementById('workflowAudioStageUpload'),
@@ -360,9 +389,54 @@
     let finalBlob = null;
     let finalMime = 'audio/mpeg';
     let previewUrls = [];
+    const prefsKey = 'kreativ_workflows_audio_delivery_prefs';
 
     const setStatus = (message) => {
       statusEl.textContent = message;
+    };
+
+    const readPrefs = () => {
+      try {
+        const raw = window.localStorage.getItem(prefsKey);
+        return raw ? JSON.parse(raw) : null;
+      } catch {
+        return null;
+      }
+    };
+
+    const updatePrefsStatus = (message) => {
+      prefsStatus.textContent = message;
+    };
+
+    const applyPrefs = (prefs) => {
+      if (!prefs) {
+        updatePrefsStatus('No saved audio delivery defaults yet.');
+        return false;
+      }
+      if (prefs.format) formatInput.value = prefs.format;
+      if (prefs.bitrate) bitrateInput.value = String(prefs.bitrate);
+      if (prefs.sampleRate) sampleRateInput.value = String(prefs.sampleRate);
+      monoInput.checked = Boolean(prefs.mono);
+      bitrateInput.disabled = formatInput.value === 'audio/wav';
+      resetFinalExport();
+      updatePrefsStatus(`Saved defaults applied: ${formatInput.value === 'audio/wav' ? 'WAV' : `MP3 ${bitrateInput.value} kbps`}.`);
+      return true;
+    };
+
+    const persistPrefs = () => {
+      const prefs = {
+        format: formatInput.value,
+        bitrate: Number(bitrateInput.value),
+        sampleRate: sampleRateInput.value,
+        mono: monoInput.checked,
+      };
+      window.localStorage.setItem(prefsKey, JSON.stringify(prefs));
+      updatePrefsStatus('Current audio export setup saved as your default.');
+    };
+
+    const resetPrefs = () => {
+      window.localStorage.removeItem(prefsKey);
+      updatePrefsStatus('Saved audio delivery defaults removed.');
     };
 
     const trackWorkflowEvent = (eventName, properties = {}) => {
@@ -512,6 +586,8 @@
       finalBlob = null;
       finalMime = formatInput.value;
       exportMeta.hidden = true;
+      successCard.hidden = true;
+      successActions.hidden = true;
       downloadButton.disabled = true;
       exportFormat.textContent = '-';
       exportSize.textContent = '-';
@@ -642,6 +718,8 @@
           : `MP3 • ${bitrateInput.value} kbps`;
         exportSize.textContent = formatBytes(finalBlob.size);
         exportMeta.hidden = false;
+        successCard.hidden = false;
+        successActions.hidden = false;
         downloadButton.disabled = false;
         updateSummary();
         setStatus('Final audio generated and ready to download.');
@@ -671,6 +749,33 @@
       });
     };
 
+    const restartWorkflow = () => {
+      audioInput.value = '';
+      sourceName = 'audio';
+      originalFileSize = 0;
+      originalBuffer = null;
+      workingBuffer = null;
+      finalBlob = null;
+      finalMime = formatInput.value;
+      revokePreviewUrls();
+      preview.removeAttribute('src');
+      trimPreview.removeAttribute('src');
+      levelPreview.removeAttribute('src');
+      workspace.classList.add('is-hidden');
+      metaEl.textContent = 'Audio details will appear here after upload.';
+      trimMetaEl.textContent = 'Trim the clip to the exact section you want to deliver.';
+      levelMetaEl.textContent = 'Preview the current working clip after trim or level changes.';
+      trimStartInput.value = '0';
+      trimEndInput.value = '0';
+      gainInput.value = '100';
+      gainValue.textContent = '100';
+      summaryName.textContent = 'audio';
+      setStep('upload');
+      resetFinalExport();
+      updateSummary();
+      setStatus('No audio selected yet.');
+    };
+
     uploadButton.addEventListener('click', () => audioInput.click());
     chooseAnotherButton.addEventListener('click', () => audioInput.click());
     continueButton.addEventListener('click', () => setStep('trim'));
@@ -689,6 +794,10 @@
     backToLevelButton.addEventListener('click', () => setStep('level'));
     generateButton.addEventListener('click', generateExport);
     downloadButton.addEventListener('click', downloadExport);
+    restartButton.addEventListener('click', restartWorkflow);
+    savePrefsButton.addEventListener('click', persistPrefs);
+    applyPrefsButton.addEventListener('click', () => applyPrefs(readPrefs()));
+    resetPrefsButton.addEventListener('click', resetPrefs);
     gainInput.addEventListener('input', () => {
       gainValue.textContent = gainInput.value;
       resetFinalExport();
@@ -727,6 +836,9 @@
       if (file) loadAudio(file);
     });
 
+    if (!applyPrefs(readPrefs())) {
+      updatePrefsStatus('Keep your standard export setup ready for repeat deliveries.');
+    }
     window.addEventListener('beforeunload', revokePreviewUrls);
   </script>
   <script src="../../cookie-consent.js"></script>

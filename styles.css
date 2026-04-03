@@ -1851,6 +1851,73 @@ input[type='range'] {
   color: #2589d8;
 }
 
+.workflow-prefs-card,
+.workflow-success-card {
+  border: 1px solid rgba(37, 137, 216, 0.18);
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(37, 137, 216, 0.06), rgba(37, 137, 216, 0.015));
+  padding: 14px 16px;
+}
+
+.workflow-prefs-header,
+.workflow-success-card {
+  display: grid;
+  gap: 6px;
+}
+
+.workflow-prefs-header span,
+.workflow-success-card p {
+  color: #607089;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.workflow-prefs-actions,
+.workflow-success-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.workflow-success-badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: rgba(37, 137, 216, 0.12);
+  color: #1768a8;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.workflow-success-card h3 {
+  margin: 4px 0 0;
+  font-size: 1.15rem;
+}
+
+.button-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  border-radius: 12px;
+  padding: 10px 14px;
+  border: 1px solid rgba(37, 137, 216, 0.18);
+  background: #fff;
+  color: #1768a8;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.button-link:hover {
+  border-color: rgba(37, 137, 216, 0.32);
+  background: rgba(37, 137, 216, 0.05);
+}
+
 [data-theme='dark'] .footer-bottom a,
 [data-theme='dark'] .footer-brand-links a {
   color: #9cb2cf;
@@ -1859,6 +1926,33 @@ input[type='range'] {
 [data-theme='dark'] .footer-bottom a:hover,
 [data-theme='dark'] .footer-brand-links a:hover {
   color: #6bb7ff;
+}
+
+[data-theme='dark'] .workflow-prefs-card,
+[data-theme='dark'] .workflow-success-card {
+  border-color: rgba(107, 183, 255, 0.18);
+  background: linear-gradient(180deg, rgba(107, 183, 255, 0.08), rgba(107, 183, 255, 0.02));
+}
+
+[data-theme='dark'] .workflow-prefs-header span,
+[data-theme='dark'] .workflow-success-card p {
+  color: #b3c4dc;
+}
+
+[data-theme='dark'] .workflow-success-badge {
+  background: rgba(107, 183, 255, 0.16);
+  color: #8ecbff;
+}
+
+[data-theme='dark'] .button-link {
+  background: #152033;
+  color: #9fd0ff;
+  border-color: rgba(107, 183, 255, 0.18);
+}
+
+[data-theme='dark'] .button-link:hover {
+  background: #1c2a42;
+  border-color: rgba(107, 183, 255, 0.32);
 }
 
 @media (max-width: 920px) {

@@ -262,6 +262,18 @@
                   <input id="studioQuality" type="range" min="1" max="100" value="82" />
                 </label>
               </div>
+              <div class="workflow-prefs-card" style="margin-top:14px;">
+                <div class="workflow-prefs-header">
+                  <strong>Saved delivery defaults</strong>
+                  <span>Reuse your preferred export settings next time.</span>
+                </div>
+                <div class="workflow-prefs-actions">
+                  <button id="studioSavePrefsButton" type="button" class="ghost header-link">Save as Default</button>
+                  <button id="studioApplyPrefsButton" type="button" class="ghost header-link">Use Saved</button>
+                  <button id="studioResetPrefsButton" type="button" class="ghost header-link">Reset Defaults</button>
+                </div>
+                <p id="studioPrefsStatus" class="studio-stage-note">Default export settings are available for repeat image delivery work.</p>
+              </div>
               <p class="studio-stage-note">PNG keeps lossless detail and may stay larger. JPG or WebP are better final choices when file weight matters.</p>
               <div class="studio-actions-row" style="margin-top:18px;">
                 <button id="studioBackToResizeButton" type="button" class="ghost header-link">Back to Resize</button>
@@ -274,6 +286,11 @@
         <section id="studioStageExport" class="studio-export-card" hidden>
           <h2>Export</h2>
           <p>The prepared image is ready. Download it now, or restart the workflow with another file.</p>
+          <div class="workflow-success-card" hidden id="studioSuccessCard">
+            <div class="workflow-success-badge">Ready for delivery</div>
+            <h3>Web-ready image prepared</h3>
+            <p>Your final file is generated with the selected format and sizing choices. Download it now or start another image with the same defaults.</p>
+          </div>
           <ul class="studio-export-meta">
             <li><strong>Format</strong><span id="studioExportFormat">-</span></li>
             <li><strong>Dimensions</strong><span id="studioExportDimensions">-</span></li>
@@ -285,6 +302,10 @@
             <button id="studioRestartButton" type="button" class="ghost header-link">Start Another Image</button>
           </div>
           <p id="studioSuccessNote" class="studio-success-note" hidden>Final image generated. Download it now or go back one step to adjust the format and quality.</p>
+          <div class="workflow-success-actions" hidden id="studioSuccessActions">
+            <a class="button-link" href="/workflows/pdf-delivery/">Try PDF Delivery</a>
+            <a class="button-link" href="/learn/use-kreativ-workflows-image-prep-for-web-ready-images/">Read the workflow guide</a>
+          </div>
           <div class="tool-intro" style="margin-top:20px;">
             <div class="tool-intro-card">
               <h2>Next step ideas</h2>
@@ -399,6 +420,10 @@
     const studioQualityValue = document.getElementById('studioQualityValue');
     const studioBackToResizeButton = document.getElementById('studioBackToResizeButton');
     const studioGenerateExportButton = document.getElementById('studioGenerateExportButton');
+    const studioSavePrefsButton = document.getElementById('studioSavePrefsButton');
+    const studioApplyPrefsButton = document.getElementById('studioApplyPrefsButton');
+    const studioResetPrefsButton = document.getElementById('studioResetPrefsButton');
+    const studioPrefsStatus = document.getElementById('studioPrefsStatus');
 
     const studioExportFormat = document.getElementById('studioExportFormat');
     const studioExportDimensions = document.getElementById('studioExportDimensions');
@@ -407,6 +432,8 @@
     const studioDownloadButton = document.getElementById('studioDownloadButton');
     const studioRestartButton = document.getElementById('studioRestartButton');
     const studioSuccessNote = document.getElementById('studioSuccessNote');
+    const studioSuccessCard = document.getElementById('studioSuccessCard');
+    const studioSuccessActions = document.getElementById('studioSuccessActions');
 
     const stageButtons = Array.from(document.querySelectorAll('.studio-step-button'));
     const ratioButtons = Array.from(document.querySelectorAll('[data-studio-ratio]'));
@@ -430,6 +457,7 @@
     let cropScale = 1;
     let dragStart = null;
     let isDragging = false;
+    const prefsKey = 'kreativ_workflows_image_prep_prefs';
 
     const trackWorkflowEvent = (eventName, properties = {}) => {
       if (typeof window.kreativTrack === 'function') {
@@ -459,6 +487,53 @@
       studioStatus.textContent = message;
     };
 
+    const readPrefs = () => {
+      try {
+        const raw = window.localStorage.getItem(prefsKey);
+        return raw ? JSON.parse(raw) : null;
+      } catch {
+        return null;
+      }
+    };
+
+    const updatePrefsStatus = (message) => {
+      studioPrefsStatus.textContent = message;
+    };
+
+    const applyPrefs = (prefs) => {
+      if (!prefs) {
+        updatePrefsStatus('No saved defaults yet. Choose settings you want to reuse first.');
+        return false;
+      }
+      if (prefs.format) studioFormat.value = prefs.format;
+      if (prefs.quality) studioQuality.value = String(prefs.quality);
+      studioQualityValue.textContent = studioQuality.value;
+      studioKeepRatio.checked = prefs.keepRatio !== false;
+      const qualityEnabled = studioFormat.value === 'image/jpeg' || studioFormat.value === 'image/webp';
+      studioQuality.disabled = !qualityEnabled;
+      finalBlob = null;
+      studioDownloadButton.disabled = true;
+      clearSuccessNote();
+      updateSummary();
+      updatePrefsStatus(`Saved defaults applied: ${extensionForMime(studioFormat.value).toUpperCase()} at ${studioQuality.value}% quality.`);
+      return true;
+    };
+
+    const persistPrefs = () => {
+      const prefs = {
+        format: studioFormat.value,
+        quality: Number(studioQuality.value),
+        keepRatio: studioKeepRatio.checked,
+      };
+      window.localStorage.setItem(prefsKey, JSON.stringify(prefs));
+      updatePrefsStatus(`Saved ${extensionForMime(prefs.format).toUpperCase()} at ${prefs.quality}% as your default image delivery setup.`);
+    };
+
+    const resetPrefs = () => {
+      window.localStorage.removeItem(prefsKey);
+      updatePrefsStatus('Saved image delivery defaults removed.');
+    };
+
     const hasWorkingImage = () => workingCanvas.width > 0 && workingCanvas.height > 0;
 
     const setStage = (step) => {
@@ -480,6 +555,8 @@
 
     const clearSuccessNote = () => {
       studioSuccessNote.hidden = true;
+      studioSuccessCard.hidden = true;
+      studioSuccessActions.hidden = true;
     };
 
     const updateSummary = () => {
@@ -780,7 +857,9 @@
         studioCompressMeta.textContent = `Final export ready: ${formatBytes(blob.size)} in ${extensionForMime(mime).toUpperCase()}`;
         updateSummary();
         setStage('export');
+        studioSuccessCard.hidden = false;
         studioSuccessNote.hidden = false;
+        studioSuccessActions.hidden = false;
         setStatus('Final export ready to download.');
         trackWorkflowEvent('workflows_image_prep_export_generated', {
           format: extensionForMime(mime),
@@ -945,10 +1024,16 @@
     studioBackToCompressButton.addEventListener('click', () => setStage('compress'));
     studioDownloadButton.addEventListener('click', downloadFinal);
     studioRestartButton.addEventListener('click', restartWorkflow);
+    studioSavePrefsButton.addEventListener('click', persistPrefs);
+    studioApplyPrefsButton.addEventListener('click', () => applyPrefs(readPrefs()));
+    studioResetPrefsButton.addEventListener('click', resetPrefs);
     studioContinueButton.addEventListener('click', () => {
       if (hasWorkingImage()) setStage('crop');
     });
 
+    if (!applyPrefs(readPrefs())) {
+      updatePrefsStatus('Default export settings are available for repeat image delivery work.');
+    }
     updateSummary();
   </script>
 

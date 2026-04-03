@@ -220,6 +220,23 @@
         <section id="studioPdfStageExport" class="studio-export-card" hidden>
           <h2>Optimize & Export</h2>
           <p>The final stage uses a lightweight client-side optimization pass. It helps with duplicate structure and object streams, but it will not dramatically shrink every PDF.</p>
+          <div class="workflow-prefs-card" style="margin-top:16px;">
+            <div class="workflow-prefs-header">
+              <strong>Saved split defaults</strong>
+              <span>Keep your preferred split mode ready for repeat delivery work.</span>
+            </div>
+            <div class="workflow-prefs-actions">
+              <button id="studioPdfSavePrefsButton" type="button" class="ghost header-link">Save as Default</button>
+              <button id="studioPdfApplyPrefsButton" type="button" class="ghost header-link">Use Saved</button>
+              <button id="studioPdfResetPrefsButton" type="button" class="ghost header-link">Reset Defaults</button>
+            </div>
+            <p id="studioPdfPrefsStatus" class="studio-stage-note">Save the split pattern you use most often before exporting.</p>
+          </div>
+          <div class="workflow-success-card" hidden id="studioPdfSuccessCard" style="margin-top:16px;">
+            <div class="workflow-success-badge">Delivery file ready</div>
+            <h3>Final PDF prepared</h3>
+            <p>Your queue is merged and optimized for a lighter handoff. Download the final PDF or start another delivery run.</p>
+          </div>
           <div class="result-card" style="margin-top:16px;">
             <div class="result-row">
               <span>Merged size</span>
@@ -242,8 +259,13 @@
             <button id="studioPdfBackToMergeButton" type="button" class="ghost header-link">Back to Merge</button>
             <button id="studioPdfOptimizeButton" type="button" class="primary" disabled>Generate Final PDF</button>
             <button id="studioPdfDownloadButton" type="button" class="ghost header-link" disabled>Download Final PDF</button>
+            <button id="studioPdfRestartButton" type="button" class="ghost header-link">Start Another PDF</button>
           </div>
           <p id="studioPdfExportMeta" class="studio-success-note" hidden>Final PDF generated. Review the final size and download when ready.</p>
+          <div class="workflow-success-actions" hidden id="studioPdfSuccessActions">
+            <a class="button-link" href="/workflows/audio-delivery/">Try Audio Delivery</a>
+            <a class="button-link" href="/learn/prepare-a-sendable-pdf-in-kreativ-workflows/">Read the workflow guide</a>
+          </div>
         </section>
       </div>
     </section>
@@ -340,6 +362,13 @@
     const studioPdfOptimizeButton = document.getElementById('studioPdfOptimizeButton');
     const studioPdfDownloadButton = document.getElementById('studioPdfDownloadButton');
     const studioPdfExportMeta = document.getElementById('studioPdfExportMeta');
+    const studioPdfRestartButton = document.getElementById('studioPdfRestartButton');
+    const studioPdfSavePrefsButton = document.getElementById('studioPdfSavePrefsButton');
+    const studioPdfApplyPrefsButton = document.getElementById('studioPdfApplyPrefsButton');
+    const studioPdfResetPrefsButton = document.getElementById('studioPdfResetPrefsButton');
+    const studioPdfPrefsStatus = document.getElementById('studioPdfPrefsStatus');
+    const studioPdfSuccessCard = document.getElementById('studioPdfSuccessCard');
+    const studioPdfSuccessActions = document.getElementById('studioPdfSuccessActions');
 
     const pdfStageButtons = Array.from(document.querySelectorAll('[data-pdf-step]'));
     const pdfStages = {
@@ -352,6 +381,7 @@
     let queueFiles = [];
     let mergedBytes = null;
     let optimizedBytes = null;
+    const prefsKey = 'kreativ_workflows_pdf_delivery_prefs';
 
     const formatBytes = (bytes) => {
       if (!Number.isFinite(bytes) || bytes <= 0) return '0 B';
@@ -362,6 +392,19 @@
 
     const setStatus = (message) => {
       studioPdfStatus.textContent = message;
+    };
+
+    const readPrefs = () => {
+      try {
+        const raw = window.localStorage.getItem(prefsKey);
+        return raw ? JSON.parse(raw) : null;
+      } catch {
+        return null;
+      }
+    };
+
+    const updatePrefsStatus = (message) => {
+      studioPdfPrefsStatus.textContent = message;
     };
 
     const trackWorkflowEvent = (eventName, properties = {}) => {
@@ -397,6 +440,39 @@
       studioPdfExportQueueCount.textContent = `${queueFiles.length} item${queueFiles.length === 1 ? '' : 's'}`;
       studioPdfExportSummary.textContent = 'Merge the queue to generate the final document.';
       studioPdfExportMeta.hidden = true;
+      studioPdfSuccessCard.hidden = true;
+      studioPdfSuccessActions.hidden = true;
+    };
+
+    const applyPrefs = (prefs) => {
+      if (!prefs) {
+        updatePrefsStatus('No saved PDF delivery defaults yet.');
+        return false;
+      }
+      if (prefs.mode) studioPdfSplitMode.value = prefs.mode;
+      if (typeof prefs.ranges === 'string') studioPdfSplitRanges.value = prefs.ranges;
+      updateSplitModeUi();
+      updateSplitPreview();
+      updatePrefsStatus(
+        studioPdfSplitMode.value === 'every'
+          ? 'Saved default applied: split every page before merge when needed.'
+          : 'Saved default applied: custom range split pattern restored.'
+      );
+      return true;
+    };
+
+    const persistPrefs = () => {
+      const prefs = {
+        mode: studioPdfSplitMode.value,
+        ranges: studioPdfSplitRanges.value,
+      };
+      window.localStorage.setItem(prefsKey, JSON.stringify(prefs));
+      updatePrefsStatus('Current PDF split choices saved as your default delivery setup.');
+    };
+
+    const resetPrefs = () => {
+      window.localStorage.removeItem(prefsKey);
+      updatePrefsStatus('Saved PDF delivery defaults removed.');
     };
 
     const totalQueueSize = () => queueFiles.reduce((sum, file) => sum + file.size, 0);
@@ -692,6 +768,8 @@
         studioPdfSummaryExport.textContent = formatBytes(outputBytes.byteLength);
         studioPdfDownloadButton.disabled = false;
         studioPdfExportMeta.hidden = false;
+        studioPdfSuccessCard.hidden = false;
+        studioPdfSuccessActions.hidden = false;
         studioPdfExportSummary.textContent = savedBytes > 0
           ? 'Final PDF generated with a lighter delivery export.'
           : 'Final PDF generated. Compression was limited, but the workflow completed successfully.';
@@ -720,6 +798,20 @@
       URL.revokeObjectURL(url);
       setStatus('Downloaded final PDF.');
       trackWorkflowEvent('workflows_pdf_delivery_export_downloaded');
+    };
+
+    const restartWorkflow = () => {
+      queueFiles = [];
+      resetMergeState();
+      renderQueue();
+      studioPdfWorkspace.classList.add('is-hidden');
+      studioPdfInput.value = '';
+      studioPdfSplitRanges.value = '';
+      studioPdfSplitPageCount.textContent = '-';
+      studioPdfSplitPreview.textContent = 'Add a PDF to preview how the selected split mode will behave.';
+      studioPdfSplitMeta.textContent = 'Choose a queue item first, then decide whether to split every page or custom ranges.';
+      setPdfStage('arrange');
+      setStatus('No PDFs selected yet.');
     };
 
     studioPdfUploadButton.addEventListener('click', () => studioPdfInput.click());
@@ -759,8 +851,15 @@
     studioPdfBackToMergeButton.addEventListener('click', () => setPdfStage('merge'));
     studioPdfOptimizeButton.addEventListener('click', optimizeMergedPdf);
     studioPdfDownloadButton.addEventListener('click', downloadFinalPdf);
+    studioPdfRestartButton.addEventListener('click', restartWorkflow);
+    studioPdfSavePrefsButton.addEventListener('click', persistPrefs);
+    studioPdfApplyPrefsButton.addEventListener('click', () => applyPrefs(readPrefs()));
+    studioPdfResetPrefsButton.addEventListener('click', resetPrefs);
 
     updateSplitModeUi();
+    if (!applyPrefs(readPrefs())) {
+      updatePrefsStatus('Save the split pattern you use most often before exporting.');
+    }
     updateSummary();
   </script>
   <script src="../../cookie-consent.js"></script>
