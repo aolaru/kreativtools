@@ -75,6 +75,7 @@ main() {
     file/xml-to-csv/index.html
     changes/index.html
     workflows/index.html
+    workflows/pricing/index.html
     workflows/image-prep/index.html
     workflows/pdf-delivery/index.html
     workflows/audio-delivery/index.html
@@ -124,6 +125,8 @@ main() {
   expect_pattern "index.html" 'href="/workflows/"'
   expect_pattern "workflows/index.html" '<link rel="canonical" href="https://kreativtools\.com/workflows/"'
   expect_pattern "workflows/index.html" '<h1>Kreativ Workflows</h1>'
+  expect_pattern "workflows/pricing/index.html" '<link rel="canonical" href="https://kreativtools\.com/workflows/pricing/"'
+  expect_pattern "workflows/pricing/index.html" 'Kreativ Workflows Pricing'
   expect_pattern "file/xml-to-csv/index.html" 'id="xmlInput"'
 
   expect_pattern "changes/index.html" 'class="changelog-list"'
