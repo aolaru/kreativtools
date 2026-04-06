@@ -1501,6 +1501,12 @@ input[type='range'] {
   color: #256fbe;
 }
 
+.tool-card-badge.is-premium {
+  background: #fff2d8;
+  border-color: #f0d294;
+  color: #8a5a00;
+}
+
 [data-theme='dark'] .tool-card {
   background: rgba(17, 30, 48, 0.9);
   border-color: #22344b;
@@ -1517,6 +1523,12 @@ input[type='range'] {
   background: rgba(37, 111, 190, 0.16);
   border-color: rgba(107, 175, 255, 0.24);
   color: #9ac7ff;
+}
+
+[data-theme='dark'] .tool-card-badge.is-premium {
+  background: rgba(245, 179, 59, 0.18);
+  border-color: rgba(255, 210, 122, 0.24);
+  color: #ffd27a;
 }
 
 .tool-card:hover {
@@ -1918,6 +1930,13 @@ input[type='range'] {
   background: rgba(37, 137, 216, 0.05);
 }
 
+.premium-cue-note {
+  margin: 14px 0 0;
+  color: #607089;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
 [data-theme='dark'] .footer-bottom a,
 [data-theme='dark'] .footer-brand-links a {
   color: #9cb2cf;
@@ -1953,6 +1972,10 @@ input[type='range'] {
 [data-theme='dark'] .button-link:hover {
   background: #1c2a42;
   border-color: rgba(107, 183, 255, 0.32);
+}
+
+[data-theme='dark'] .premium-cue-note {
+  color: #b3c4dc;
 }
 
 @media (max-width: 920px) {
