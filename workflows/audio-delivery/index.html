@@ -233,6 +233,26 @@
                 <input id="workflowAudioMono" type="checkbox" />
                 Export mono for smaller files
               </label>
+              <div class="premium-preview-card" style="margin-top:14px;">
+                <div class="premium-preview-head">
+                  <strong>Premium-ready delivery presets</strong>
+                  <span>Included free now to preview repeat-use audio workflows.</span>
+                </div>
+                <div class="studio-preset-grid" style="margin-top:14px;">
+                  <button id="workflowAudioPresetVoiceButton" type="button" class="studio-preset-button">
+                    <strong>Voice Preview MP3</strong>
+                    <span>128 kbps MP3, mono, original sample rate.</span>
+                  </button>
+                  <button id="workflowAudioPresetPodcastButton" type="button" class="studio-preset-button">
+                    <strong>Podcast Clip</strong>
+                    <span>192 kbps MP3, stereo, 44.1 kHz.</span>
+                  </button>
+                  <button id="workflowAudioPresetClientButton" type="button" class="studio-preset-button">
+                    <strong>Client WAV Handoff</strong>
+                    <span>WAV, stereo, keep original sample rate.</span>
+                  </button>
+                </div>
+              </div>
               <div class="workflow-prefs-card" style="margin-top:14px;">
                 <div class="workflow-prefs-header">
                   <strong>Saved export defaults</strong>
@@ -372,6 +392,9 @@
     const prefsStatus = document.getElementById('workflowAudioPrefsStatus');
     const successCard = document.getElementById('workflowAudioSuccessCard');
     const successActions = document.getElementById('workflowAudioSuccessActions');
+    const presetVoiceButton = document.getElementById('workflowAudioPresetVoiceButton');
+    const presetPodcastButton = document.getElementById('workflowAudioPresetPodcastButton');
+    const presetClientButton = document.getElementById('workflowAudioPresetClientButton');
 
     const steps = {
       upload: document.getElementById('workflowAudioStageUpload'),
@@ -442,6 +465,11 @@
       };
       window.localStorage.setItem(prefsKey, JSON.stringify(prefs));
       updatePrefsStatus('Current audio export setup saved as your default.');
+    };
+
+    const applyAudioPreset = (label, prefs) => {
+      applyPrefs(prefs);
+      updatePrefsStatus(`${label} preset applied. This previews the kind of reusable delivery template planned for Kreativ Workflows.`);
     };
 
     const resetPrefs = () => {
@@ -808,6 +836,24 @@
     savePrefsButton.addEventListener('click', persistPrefs);
     applyPrefsButton.addEventListener('click', () => applyPrefs(readPrefs()));
     resetPrefsButton.addEventListener('click', resetPrefs);
+    presetVoiceButton.addEventListener('click', () => applyAudioPreset('Voice Preview MP3', {
+      format: 'audio/mpeg',
+      bitrate: 128,
+      sampleRate: 'keep',
+      mono: true,
+    }));
+    presetPodcastButton.addEventListener('click', () => applyAudioPreset('Podcast Clip', {
+      format: 'audio/mpeg',
+      bitrate: 192,
+      sampleRate: '44100',
+      mono: false,
+    }));
+    presetClientButton.addEventListener('click', () => applyAudioPreset('Client WAV Handoff', {
+      format: 'audio/wav',
+      bitrate: 128,
+      sampleRate: 'keep',
+      mono: false,
+    }));
     gainInput.addEventListener('input', () => {
       gainValue.textContent = gainInput.value;
       resetFinalExport();

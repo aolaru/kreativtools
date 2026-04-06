@@ -169,6 +169,12 @@
                 <textarea id="studioPdfSplitRanges" rows="6" placeholder="1-2&#10;3&#10;4-6"></textarea>
                 <span id="studioPdfSplitHelp" class="field-help">One output per line. Example: 1-2 on one line, then 3,5-6 on the next.</span>
               </label>
+              <div class="premium-preview-card" style="margin-top:14px;">
+                <div class="premium-preview-head">
+                  <strong>Premium-ready split templates</strong>
+                  <span>Included free right now to preview repeat delivery patterns.</span>
+                </div>
+              </div>
               <div class="studio-preset-grid" style="margin-top:14px;">
                 <button id="studioPdfPresetCoverBodyButton" type="button" class="studio-preset-button">
                   <strong>Cover + body</strong>
@@ -229,6 +235,22 @@
         <section id="studioPdfStageExport" class="studio-export-card" hidden>
           <h2>Optimize & Export</h2>
           <p>The final stage uses a lightweight client-side optimization pass. It helps with duplicate structure and object streams, but it will not dramatically shrink every PDF.</p>
+          <div class="premium-preview-card" style="margin-top:16px;">
+            <div class="premium-preview-head">
+              <strong>Premium-ready delivery templates</strong>
+              <span>Apply a repeat-use export note before generating the final PDF.</span>
+            </div>
+            <div class="studio-preset-grid" style="margin-top:14px;">
+              <button id="studioPdfTemplateClientButton" type="button" class="studio-preset-button">
+                <strong>Client handoff</strong>
+                <span>Final merged PDF for external delivery.</span>
+              </button>
+              <button id="studioPdfTemplateReviewButton" type="button" class="studio-preset-button">
+                <strong>Internal review</strong>
+                <span>Review-ready PDF with lighter optimization expectations.</span>
+              </button>
+            </div>
+          </div>
           <div class="workflow-prefs-card" style="margin-top:16px;">
             <div class="workflow-prefs-header">
               <strong>Saved split defaults</strong>
@@ -379,6 +401,8 @@
     const studioPdfPrefsStatus = document.getElementById('studioPdfPrefsStatus');
     const studioPdfSuccessCard = document.getElementById('studioPdfSuccessCard');
     const studioPdfSuccessActions = document.getElementById('studioPdfSuccessActions');
+    const studioPdfTemplateClientButton = document.getElementById('studioPdfTemplateClientButton');
+    const studioPdfTemplateReviewButton = document.getElementById('studioPdfTemplateReviewButton');
 
     const pdfStageButtons = Array.from(document.querySelectorAll('[data-pdf-step]'));
     const pdfStages = {
@@ -452,6 +476,16 @@
       studioPdfExportMeta.hidden = true;
       studioPdfSuccessCard.hidden = true;
       studioPdfSuccessActions.hidden = true;
+    };
+
+    const applyDeliveryTemplate = (template) => {
+      if (template === 'client') {
+        studioPdfExportSummary.textContent = 'Client handoff selected: generate one clean merged PDF for external delivery.';
+        studioPdfPrefsStatus.textContent = 'Client handoff template selected for this export.';
+      } else {
+        studioPdfExportSummary.textContent = 'Internal review selected: generate a lighter review-ready PDF for fast sharing.';
+        studioPdfPrefsStatus.textContent = 'Internal review template selected for this export.';
+      }
     };
 
     const applyPrefs = (prefs) => {
@@ -865,6 +899,8 @@
     studioPdfSavePrefsButton.addEventListener('click', persistPrefs);
     studioPdfApplyPrefsButton.addEventListener('click', () => applyPrefs(readPrefs()));
     studioPdfResetPrefsButton.addEventListener('click', resetPrefs);
+    studioPdfTemplateClientButton.addEventListener('click', () => applyDeliveryTemplate('client'));
+    studioPdfTemplateReviewButton.addEventListener('click', () => applyDeliveryTemplate('review'));
 
     updateSplitModeUi();
     if (!applyPrefs(readPrefs())) {

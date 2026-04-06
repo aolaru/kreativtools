@@ -1507,6 +1507,28 @@ input[type='range'] {
   color: #8a5a00;
 }
 
+.premium-preview-card {
+  border: 1px solid #f0d294;
+  background: #fff7e8;
+  border-radius: 16px;
+  padding: 14px 16px;
+}
+
+.premium-preview-head {
+  display: grid;
+  gap: 4px;
+}
+
+.premium-preview-head strong {
+  font-size: 0.95rem;
+}
+
+.premium-preview-head span {
+  color: #8a6b33;
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
 [data-theme='dark'] .tool-card {
   background: rgba(17, 30, 48, 0.9);
   border-color: #22344b;
@@ -1529,6 +1551,15 @@ input[type='range'] {
   background: rgba(245, 179, 59, 0.18);
   border-color: rgba(255, 210, 122, 0.24);
   color: #ffd27a;
+}
+
+[data-theme='dark'] .premium-preview-card {
+  background: rgba(245, 179, 59, 0.1);
+  border-color: rgba(255, 210, 122, 0.24);
+}
+
+[data-theme='dark'] .premium-preview-head span {
+  color: #e6c98c;
 }
 
 .tool-card:hover {
