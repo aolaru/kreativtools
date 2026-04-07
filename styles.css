@@ -1923,6 +1923,44 @@ input[type='range'] {
   margin-top: 12px;
 }
 
+.workflow-template-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.workflow-template-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(37, 137, 216, 0.14);
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.workflow-template-copy {
+  display: grid;
+  gap: 4px;
+}
+
+.workflow-template-copy strong {
+  font-size: 0.95rem;
+}
+
+.workflow-template-copy span {
+  color: #607089;
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+.workflow-template-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
 .workflow-success-badge {
   display: inline-flex;
   align-items: center;
@@ -1984,8 +2022,14 @@ input[type='range'] {
   background: linear-gradient(180deg, rgba(107, 183, 255, 0.08), rgba(107, 183, 255, 0.02));
 }
 
+[data-theme='dark'] .workflow-template-item {
+  border-color: rgba(107, 183, 255, 0.16);
+  background: rgba(17, 27, 43, 0.72);
+}
+
 [data-theme='dark'] .workflow-prefs-header span,
-[data-theme='dark'] .workflow-success-card p {
+[data-theme='dark'] .workflow-success-card p,
+[data-theme='dark'] .workflow-template-copy span {
   color: #b3c4dc;
 }
 

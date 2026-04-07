@@ -289,6 +289,23 @@
                 </div>
                 <p id="studioPrefsStatus" class="studio-stage-note">Default export settings are available for repeat image delivery work.</p>
               </div>
+              <div class="workflow-prefs-card" style="margin-top:14px;">
+                <div class="workflow-prefs-header">
+                  <strong>Saved workflow templates</strong>
+                  <span>Save named image-delivery setups with dimensions and export settings for repeat work.</span>
+                </div>
+                <div class="input-grid" style="margin-top:12px;">
+                  <label>
+                    Template name
+                    <input id="studioTemplateName" type="text" maxlength="40" placeholder="Shopify Product" />
+                  </label>
+                </div>
+                <div class="workflow-prefs-actions">
+                  <button id="studioSaveTemplateButton" type="button" class="ghost header-link">Save as Template</button>
+                </div>
+                <p id="studioTemplateStatus" class="studio-stage-note">Save multiple named templates for repeat image-prep jobs.</p>
+                <div id="studioTemplateList" class="workflow-template-list" aria-live="polite"></div>
+              </div>
               <p class="studio-stage-note">PNG keeps lossless detail and may stay larger. JPG or WebP are better final choices when file weight matters.</p>
               <div class="studio-actions-row" style="margin-top:18px;">
                 <button id="studioBackToResizeButton" type="button" class="ghost header-link">Back to Resize</button>
@@ -440,6 +457,10 @@
     const studioApplyPrefsButton = document.getElementById('studioApplyPrefsButton');
     const studioResetPrefsButton = document.getElementById('studioResetPrefsButton');
     const studioPrefsStatus = document.getElementById('studioPrefsStatus');
+    const studioTemplateName = document.getElementById('studioTemplateName');
+    const studioSaveTemplateButton = document.getElementById('studioSaveTemplateButton');
+    const studioTemplateStatus = document.getElementById('studioTemplateStatus');
+    const studioTemplateList = document.getElementById('studioTemplateList');
 
     const studioExportFormat = document.getElementById('studioExportFormat');
     const studioExportDimensions = document.getElementById('studioExportDimensions');
@@ -474,6 +495,7 @@
     let dragStart = null;
     let isDragging = false;
     const prefsKey = 'kreativ_workflows_image_prep_prefs';
+    const templatesKey = 'kreativ_workflows_image_prep_templates';
 
     const trackWorkflowEvent = (eventName, properties = {}) => {
       if (typeof window.kreativTrack === 'function') {
@@ -516,6 +538,103 @@
       studioPrefsStatus.textContent = message;
     };
 
+    const updateTemplateStatus = (message) => {
+      studioTemplateStatus.textContent = message;
+    };
+
+    const readTemplates = () => {
+      try {
+        const raw = window.localStorage.getItem(templatesKey);
+        const parsed = raw ? JSON.parse(raw) : [];
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    };
+
+    const writeTemplates = (templates) => {
+      window.localStorage.setItem(templatesKey, JSON.stringify(templates));
+    };
+
+    const collectTemplateConfig = () => ({
+      width: clamp(Number(studioResizeWidth.value) || workingCanvas.width || 1, 1, 16384),
+      height: clamp(Number(studioResizeHeight.value) || workingCanvas.height || 1, 1, 16384),
+      keepRatio: studioKeepRatio.checked,
+      format: studioFormat.value,
+      quality: Number(studioQuality.value),
+    });
+
+    const applyTemplateConfig = (template) => {
+      studioResizeWidth.value = String(template.width);
+      studioResizeHeight.value = String(template.height);
+      studioKeepRatio.checked = template.keepRatio !== false;
+      if (template.format) studioFormat.value = template.format;
+      if (template.quality) studioQuality.value = String(template.quality);
+      studioQualityValue.textContent = studioQuality.value;
+      const qualityEnabled = studioFormat.value === 'image/jpeg' || studioFormat.value === 'image/webp';
+      studioQuality.disabled = !qualityEnabled;
+      finalBlob = null;
+      studioDownloadButton.disabled = true;
+      clearSuccessNote();
+      updateSummary();
+      drawPreview();
+      updateTemplateStatus(`${template.name} applied.`);
+      trackWorkflowEvent('workflows_image_prep_template_applied', { template_name: template.name });
+    };
+
+    const renderTemplates = () => {
+      const templates = readTemplates();
+      studioTemplateList.replaceChildren();
+      if (!templates.length) {
+        const empty = document.createElement('p');
+        empty.className = 'studio-stage-note';
+        empty.textContent = 'No saved templates yet.';
+        studioTemplateList.append(empty);
+        return;
+      }
+
+      templates.forEach((template) => {
+        const card = document.createElement('article');
+        card.className = 'workflow-template-item';
+
+        const meta = document.createElement('div');
+        meta.className = 'workflow-template-copy';
+
+        const title = document.createElement('strong');
+        title.textContent = template.name;
+        meta.append(title);
+
+        const details = document.createElement('span');
+        details.textContent = `${template.width} x ${template.height} • ${extensionForMime(template.format || 'image/jpeg').toUpperCase()} • ${template.quality}%`;
+        meta.append(details);
+
+        const actions = document.createElement('div');
+        actions.className = 'workflow-template-actions';
+
+        const applyButton = document.createElement('button');
+        applyButton.type = 'button';
+        applyButton.className = 'ghost header-link';
+        applyButton.textContent = 'Apply';
+        applyButton.addEventListener('click', () => applyTemplateConfig(template));
+
+        const deleteButton = document.createElement('button');
+        deleteButton.type = 'button';
+        deleteButton.className = 'ghost header-link';
+        deleteButton.textContent = 'Delete';
+        deleteButton.addEventListener('click', () => {
+          const nextTemplates = readTemplates().filter((entry) => entry.name !== template.name);
+          writeTemplates(nextTemplates);
+          renderTemplates();
+          updateTemplateStatus(`${template.name} removed.`);
+          trackWorkflowEvent('workflows_image_prep_template_deleted', { template_name: template.name });
+        });
+
+        actions.append(applyButton, deleteButton);
+        card.append(meta, actions);
+        studioTemplateList.append(card);
+      });
+    };
+
     const applyPrefs = (prefs) => {
       if (!prefs) {
         updatePrefsStatus('No saved defaults yet. Choose settings you want to reuse first.');
@@ -548,6 +667,28 @@
     const resetPrefs = () => {
       window.localStorage.removeItem(prefsKey);
       updatePrefsStatus('Saved image delivery defaults removed.');
+    };
+
+    const saveTemplate = () => {
+      if (!hasWorkingImage()) {
+        updateTemplateStatus('Load an image before saving a template.');
+        return;
+      }
+      const name = studioTemplateName.value.trim();
+      if (!name) {
+        updateTemplateStatus('Add a template name first.');
+        return;
+      }
+      const nextTemplate = { name, ...collectTemplateConfig() };
+      const templates = readTemplates();
+      const existingIndex = templates.findIndex((entry) => entry.name.toLowerCase() === name.toLowerCase());
+      if (existingIndex >= 0) templates[existingIndex] = nextTemplate;
+      else templates.unshift(nextTemplate);
+      writeTemplates(templates.slice(0, 8));
+      studioTemplateName.value = '';
+      renderTemplates();
+      updateTemplateStatus(`${name} saved as a workflow template.`);
+      trackWorkflowEvent('workflows_image_prep_template_saved', { template_name: name });
     };
 
     const hasWorkingImage = () => workingCanvas.width > 0 && workingCanvas.height > 0;
@@ -918,6 +1059,7 @@
       studioDownloadButton.disabled = true;
       clearSuccessNote();
       setStatus('No image selected yet.');
+      updateTemplateStatus(readTemplates().length ? 'Choose a saved template or create a new one.' : 'Save multiple named templates for repeat image-prep jobs.');
     };
 
     const applyPreset = (width, height, label) => {
@@ -1043,6 +1185,13 @@
     studioSavePrefsButton.addEventListener('click', persistPrefs);
     studioApplyPrefsButton.addEventListener('click', () => applyPrefs(readPrefs()));
     studioResetPrefsButton.addEventListener('click', resetPrefs);
+    studioSaveTemplateButton.addEventListener('click', saveTemplate);
+    studioTemplateName.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        saveTemplate();
+      }
+    });
     studioContinueButton.addEventListener('click', () => {
       if (hasWorkingImage()) setStage('crop');
     });
@@ -1050,6 +1199,7 @@
     if (!applyPrefs(readPrefs())) {
       updatePrefsStatus('Default export settings are available for repeat image delivery work.');
     }
+    renderTemplates();
     updateSummary();
   </script>
 

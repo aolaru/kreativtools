@@ -91,6 +91,54 @@ test('studio image prep supports presets and back navigation before final export
   await expect(page.locator('#studioStageCompress')).toBeVisible();
 });
 
+test('studio image prep saves and reapplies named workflow templates', async ({ page }) => {
+  await page.goto('/workflows/image-prep');
+
+  const pngBuffer = Buffer.from(
+    'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9VE3d2QAAAAASUVORK5CYII=',
+    'base64'
+  );
+
+  await page.setInputFiles('#studioImageInput', {
+    name: 'studio-template.png',
+    mimeType: 'image/png',
+    buffer: pngBuffer,
+  });
+
+  await page.click('#studioSkipCropButton');
+  await expect(page.locator('#studioStageResize')).toBeVisible();
+  await page.uncheck('#studioKeepRatio');
+  await page.fill('#studioResizeWidth', '1200');
+  await page.fill('#studioResizeHeight', '800');
+  await page.click('#studioApplyResizeButton');
+  await expect(page.locator('#studioStageCompress')).toBeVisible();
+
+  await page.selectOption('#studioFormat', 'image/webp');
+  await page.fill('#studioTemplateName', 'Content Hero');
+  await page.click('#studioSaveTemplateButton');
+  await expect(page.locator('#studioTemplateStatus')).toContainText('Content Hero saved');
+
+  await page.click('#studioBackToResizeButton');
+  await expect(page.locator('#studioStageResize')).toBeVisible();
+  await page.fill('#studioResizeWidth', '640');
+  await page.fill('#studioResizeHeight', '360');
+  await page.click('#studioApplyResizeButton');
+  await expect(page.locator('#studioStageCompress')).toBeVisible();
+  await page.selectOption('#studioFormat', 'image/jpeg');
+
+  const templateItem = page.locator('.workflow-template-item').filter({ hasText: 'Content Hero' });
+  await expect(templateItem).toBeVisible();
+  await templateItem.getByRole('button', { name: 'Apply' }).click();
+
+  await page.click('#studioBackToResizeButton');
+  await expect(page.locator('#studioStageResize')).toBeVisible();
+  await expect(page.locator('#studioResizeWidth')).toHaveValue('1200');
+  await expect(page.locator('#studioResizeHeight')).toHaveValue('800');
+  await page.click('#studioApplyResizeButton');
+  await expect(page.locator('#studioStageCompress')).toBeVisible();
+  await expect(page.locator('#studioFormat')).toHaveValue('image/webp');
+});
+
 test('studio pdf delivery merges a queue and prepares a final export', async ({ page }) => {
   await page.goto('/workflows/pdf-delivery');
   await page.setInputFiles('#studioPdfInput', [mergePdfA, mergePdfB]);
