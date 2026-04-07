@@ -292,7 +292,7 @@
               <div class="workflow-prefs-card" style="margin-top:14px;">
                 <div class="workflow-prefs-header">
                   <strong>Saved workflow templates</strong>
-                  <span>Save named image-delivery setups with dimensions and export settings for repeat work.</span>
+                  <span>Free includes 1 named template on this browser. Kreativ Workflows unlocks up to 8 image-delivery templates.</span>
                 </div>
                 <div class="input-grid" style="margin-top:12px;">
                   <label>
@@ -305,6 +305,11 @@
                 </div>
                 <p id="studioTemplateStatus" class="studio-stage-note">Save multiple named templates for repeat image-prep jobs.</p>
                 <div id="studioTemplateList" class="workflow-template-list" aria-live="polite"></div>
+                <div id="studioTemplateUpgradeCard" class="workflow-upgrade-card" hidden>
+                  <strong>Unlock more templates</strong>
+                  <p>Save beyond one named template with Kreativ Workflows. The first paid release focuses on reusable templates across Image, PDF, and Audio workflows.</p>
+                  <a class="button-link" href="/workflows/pricing/">Unlock Kreativ Workflows</a>
+                </div>
               </div>
               <p class="studio-stage-note">PNG keeps lossless detail and may stay larger. JPG or WebP are better final choices when file weight matters.</p>
               <div class="studio-actions-row" style="margin-top:18px;">
@@ -404,6 +409,7 @@
   </div>
 </footer>
 
+  <script src="../../workflows-access.js"></script>
   <script>
     const studioImageInput = document.getElementById('studioImageInput');
     const studioUploadButton = document.getElementById('studioUploadButton');
@@ -461,6 +467,7 @@
     const studioSaveTemplateButton = document.getElementById('studioSaveTemplateButton');
     const studioTemplateStatus = document.getElementById('studioTemplateStatus');
     const studioTemplateList = document.getElementById('studioTemplateList');
+    const studioTemplateUpgradeCard = document.getElementById('studioTemplateUpgradeCard');
 
     const studioExportFormat = document.getElementById('studioExportFormat');
     const studioExportDimensions = document.getElementById('studioExportDimensions');
@@ -625,6 +632,7 @@
           const nextTemplates = readTemplates().filter((entry) => entry.name !== template.name);
           writeTemplates(nextTemplates);
           renderTemplates();
+          studioTemplateUpgradeCard.hidden = true;
           updateTemplateStatus(`${template.name} removed.`);
           trackWorkflowEvent('workflows_image_prep_template_deleted', { template_name: template.name });
         });
@@ -682,11 +690,19 @@
       const nextTemplate = { name, ...collectTemplateConfig() };
       const templates = readTemplates();
       const existingIndex = templates.findIndex((entry) => entry.name.toLowerCase() === name.toLowerCase());
+      const access = window.kreativWorkflowsAccess;
+      if (access && !access.canSaveAnotherTemplate(templates.length, existingIndex >= 0)) {
+        updateTemplateStatus(access.upgradeMessage());
+        studioTemplateUpgradeCard.hidden = false;
+        trackWorkflowEvent('workflows_image_prep_template_upgrade_prompt_shown', { template_limit: access.templateLimit() });
+        return;
+      }
       if (existingIndex >= 0) templates[existingIndex] = nextTemplate;
       else templates.unshift(nextTemplate);
       writeTemplates(templates.slice(0, 8));
       studioTemplateName.value = '';
       renderTemplates();
+      studioTemplateUpgradeCard.hidden = true;
       updateTemplateStatus(`${name} saved as a workflow template.`);
       trackWorkflowEvent('workflows_image_prep_template_saved', { template_name: name });
     };

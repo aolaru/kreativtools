@@ -268,7 +268,7 @@
               <div class="workflow-prefs-card" style="margin-top:14px;">
                 <div class="workflow-prefs-header">
                   <strong>Saved workflow templates</strong>
-                  <span>Save named audio delivery setups for repeat export jobs.</span>
+                  <span>Free includes 1 named template on this browser. Kreativ Workflows unlocks up to 8 audio delivery templates.</span>
                 </div>
                 <div class="workflow-prefs-actions">
                   <input id="workflowAudioTemplateName" type="text" placeholder="Voice preview" />
@@ -276,6 +276,11 @@
                 </div>
                 <p id="workflowAudioTemplateStatus" class="studio-stage-note">Save multiple named templates for repeat audio delivery jobs.</p>
                 <div id="workflowAudioTemplateList" class="workflow-template-list" aria-live="polite"></div>
+                <div id="workflowAudioTemplateUpgradeCard" class="workflow-upgrade-card" hidden>
+                  <strong>Unlock more templates</strong>
+                  <p>Save beyond one named template with Kreativ Workflows. The first paid release focuses on reusable templates across Image, PDF, and Audio workflows.</p>
+                  <a class="button-link" href="/workflows/pricing/">Unlock Kreativ Workflows</a>
+                </div>
               </div>
               <div class="studio-actions-row" style="margin-top:18px;">
                 <button id="workflowAudioBackToLevelButton" type="button" class="ghost header-link">Back to Level</button>
@@ -368,6 +373,7 @@
 </footer>
 
   <script src="../../audio/lame.min.js"></script>
+  <script src="../../workflows-access.js"></script>
   <script>
     const audioInput = document.getElementById('workflowAudioInput');
     const uploadButton = document.getElementById('workflowAudioUploadButton');
@@ -406,6 +412,7 @@
     const saveTemplateButton = document.getElementById('workflowAudioSaveTemplateButton');
     const templateStatus = document.getElementById('workflowAudioTemplateStatus');
     const templateList = document.getElementById('workflowAudioTemplateList');
+    const templateUpgradeCard = document.getElementById('workflowAudioTemplateUpgradeCard');
     const successCard = document.getElementById('workflowAudioSuccessCard');
     const successActions = document.getElementById('workflowAudioSuccessActions');
     const presetVoiceButton = document.getElementById('workflowAudioPresetVoiceButton');
@@ -568,6 +575,7 @@
           const nextTemplates = readTemplates().filter((entry) => entry.name !== template.name);
           writeTemplates(nextTemplates);
           renderTemplates();
+          templateUpgradeCard.hidden = true;
           updateTemplateStatus(`${template.name} removed.`);
           trackWorkflowEvent('workflows_audio_delivery_template_deleted', { template_name: template.name });
         });
@@ -587,11 +595,19 @@
       const nextTemplate = { name, ...collectTemplateConfig() };
       const templates = readTemplates();
       const existingIndex = templates.findIndex((entry) => entry.name.toLowerCase() === name.toLowerCase());
+      const access = window.kreativWorkflowsAccess;
+      if (access && !access.canSaveAnotherTemplate(templates.length, existingIndex >= 0)) {
+        updateTemplateStatus(access.upgradeMessage());
+        templateUpgradeCard.hidden = false;
+        trackWorkflowEvent('workflows_audio_delivery_template_upgrade_prompt_shown', { template_limit: access.templateLimit() });
+        return;
+      }
       if (existingIndex >= 0) templates[existingIndex] = nextTemplate;
       else templates.unshift(nextTemplate);
       writeTemplates(templates.slice(0, 8));
       templateNameInput.value = '';
       renderTemplates();
+      templateUpgradeCard.hidden = true;
       updateTemplateStatus(`${name} saved as a workflow template.`);
       trackWorkflowEvent('workflows_audio_delivery_template_saved', { template_name: name });
     };

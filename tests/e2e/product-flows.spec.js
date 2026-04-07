@@ -139,6 +139,35 @@ test('studio image prep saves and reapplies named workflow templates', async ({ 
   await expect(page.locator('#studioFormat')).toHaveValue('image/webp');
 });
 
+test('studio image prep shows the paid gate when saving a second named template', async ({ page }) => {
+  await page.goto('/workflows/image-prep');
+
+  const pngBuffer = Buffer.from(
+    'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9VE3d2QAAAAASUVORK5CYII=',
+    'base64'
+  );
+
+  await page.setInputFiles('#studioImageInput', {
+    name: 'studio-paid-gate.png',
+    mimeType: 'image/png',
+    buffer: pngBuffer,
+  });
+
+  await page.click('#studioSkipCropButton');
+  await page.click('#studioApplyResizeButton');
+  await expect(page.locator('#studioStageCompress')).toBeVisible();
+
+  await page.fill('#studioTemplateName', 'First Template');
+  await page.click('#studioSaveTemplateButton');
+  await expect(page.locator('#studioTemplateStatus')).toContainText('First Template saved');
+
+  await page.fill('#studioTemplateName', 'Second Template');
+  await page.click('#studioSaveTemplateButton');
+  await expect(page.locator('#studioTemplateStatus')).toContainText('Free includes 1 saved template per workflow');
+  await expect(page.locator('#studioTemplateUpgradeCard')).toBeVisible();
+  await expect(page.locator('.workflow-template-item')).toHaveCount(1);
+});
+
 test('studio pdf delivery merges a queue and prepares a final export', async ({ page }) => {
   await page.goto('/workflows/pdf-delivery');
   await page.setInputFiles('#studioPdfInput', [mergePdfA, mergePdfB]);

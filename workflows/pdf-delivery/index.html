@@ -266,7 +266,7 @@
           <div class="workflow-prefs-card" style="margin-top:16px;">
             <div class="workflow-prefs-header">
               <strong>Saved workflow templates</strong>
-              <span>Save named PDF delivery setups for repeat handoff jobs.</span>
+              <span>Free includes 1 named template on this browser. Kreativ Workflows unlocks up to 8 PDF delivery templates.</span>
             </div>
             <div class="workflow-prefs-actions">
               <input id="studioPdfTemplateName" type="text" placeholder="Client handoff" />
@@ -274,6 +274,11 @@
             </div>
             <p id="studioPdfTemplateStatus" class="studio-stage-note">Save multiple named templates for repeat PDF delivery jobs.</p>
             <div id="studioPdfTemplateList" class="workflow-template-list" aria-live="polite"></div>
+            <div id="studioPdfTemplateUpgradeCard" class="workflow-upgrade-card" hidden>
+              <strong>Unlock more templates</strong>
+              <p>Save beyond one named template with Kreativ Workflows. The first paid release focuses on reusable templates across Image, PDF, and Audio workflows.</p>
+              <a class="button-link" href="/workflows/pricing/">Unlock Kreativ Workflows</a>
+            </div>
           </div>
           <div class="workflow-success-card" hidden id="studioPdfSuccessCard" style="margin-top:16px;">
             <div class="workflow-success-badge">Delivery file ready</div>
@@ -366,6 +371,7 @@
 </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
+  <script src="../../workflows-access.js"></script>
   <script>
     const studioPdfInput = document.getElementById('studioPdfInput');
     const studioPdfUploadButton = document.getElementById('studioPdfUploadButton');
@@ -415,6 +421,7 @@
     const studioPdfSaveTemplateButton = document.getElementById('studioPdfSaveTemplateButton');
     const studioPdfTemplateStatus = document.getElementById('studioPdfTemplateStatus');
     const studioPdfTemplateList = document.getElementById('studioPdfTemplateList');
+    const studioPdfTemplateUpgradeCard = document.getElementById('studioPdfTemplateUpgradeCard');
     const studioPdfSuccessCard = document.getElementById('studioPdfSuccessCard');
     const studioPdfSuccessActions = document.getElementById('studioPdfSuccessActions');
     const studioPdfTemplateClientButton = document.getElementById('studioPdfTemplateClientButton');
@@ -583,6 +590,7 @@
           const nextTemplates = readTemplates().filter((entry) => entry.name !== template.name);
           writeTemplates(nextTemplates);
           renderTemplates();
+          studioPdfTemplateUpgradeCard.hidden = true;
           updateTemplateStatus(`${template.name} removed.`);
           trackWorkflowEvent('workflows_pdf_delivery_template_deleted', { template_name: template.name });
         });
@@ -633,11 +641,19 @@
       const nextTemplate = { name, ...collectTemplateConfig() };
       const templates = readTemplates();
       const existingIndex = templates.findIndex((entry) => entry.name.toLowerCase() === name.toLowerCase());
+      const access = window.kreativWorkflowsAccess;
+      if (access && !access.canSaveAnotherTemplate(templates.length, existingIndex >= 0)) {
+        updateTemplateStatus(access.upgradeMessage());
+        studioPdfTemplateUpgradeCard.hidden = false;
+        trackWorkflowEvent('workflows_pdf_delivery_template_upgrade_prompt_shown', { template_limit: access.templateLimit() });
+        return;
+      }
       if (existingIndex >= 0) templates[existingIndex] = nextTemplate;
       else templates.unshift(nextTemplate);
       writeTemplates(templates.slice(0, 8));
       studioPdfTemplateName.value = '';
       renderTemplates();
+      studioPdfTemplateUpgradeCard.hidden = true;
       updateTemplateStatus(`${name} saved as a workflow template.`);
       trackWorkflowEvent('workflows_pdf_delivery_template_saved', { template_name: name });
     };

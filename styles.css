@@ -1961,6 +1961,28 @@ input[type='range'] {
   gap: 8px;
 }
 
+.workflow-upgrade-card {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid #f0d294;
+  background: #fff7e8;
+  display: grid;
+  gap: 8px;
+}
+
+.workflow-upgrade-card strong {
+  font-size: 0.95rem;
+  color: #8a5a00;
+}
+
+.workflow-upgrade-card p {
+  margin: 0;
+  color: #8a6b33;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
 .workflow-success-badge {
   display: inline-flex;
   align-items: center;
@@ -2025,6 +2047,19 @@ input[type='range'] {
 [data-theme='dark'] .workflow-template-item {
   border-color: rgba(107, 183, 255, 0.16);
   background: rgba(17, 27, 43, 0.72);
+}
+
+[data-theme='dark'] .workflow-upgrade-card {
+  background: rgba(245, 179, 59, 0.1);
+  border-color: rgba(255, 210, 122, 0.24);
+}
+
+[data-theme='dark'] .workflow-upgrade-card strong {
+  color: #ffd27a;
+}
+
+[data-theme='dark'] .workflow-upgrade-card p {
+  color: #e6c98c;
 }
 
 [data-theme='dark'] .workflow-prefs-header span,
