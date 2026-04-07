@@ -207,6 +207,44 @@ test('studio pdf delivery can apply a real split to the queue before merge', asy
   await expect(page.locator('#studioPdfContinueToExportButton')).toBeEnabled();
 });
 
+test('studio pdf delivery saves and reapplies named workflow templates', async ({ page }) => {
+  await page.goto('/workflows/pdf-delivery');
+  await page.setInputFiles('#studioPdfInput', [mergePdfA, mergePdfB]);
+  await page.click('#studioPdfContinueArrangeButton');
+  await expect(page.locator('#studioPdfStageSplit')).toBeVisible();
+
+  await page.selectOption('#studioPdfSplitMode', 'ranges');
+  await page.fill('#studioPdfSplitRanges', '1\n2-3');
+  await page.click('#studioPdfSkipSplitButton');
+  await expect(page.locator('#studioPdfStageMerge')).toBeVisible();
+  await page.click('#studioPdfMergeButton');
+  await page.click('#studioPdfContinueToExportButton');
+  await expect(page.locator('#studioPdfStageExport')).toBeVisible();
+  await page.click('#studioPdfTemplateReviewButton');
+  await page.fill('#studioPdfTemplateName', 'Review Pack');
+  await page.click('#studioPdfSaveTemplateButton');
+  await expect(page.locator('#studioPdfTemplateStatus')).toContainText('Review Pack saved');
+
+  await page.click('#studioPdfBackToMergeButton');
+  await expect(page.locator('#studioPdfStageMerge')).toBeVisible();
+  await page.click('#studioPdfBackToSplitButton');
+  await expect(page.locator('#studioPdfStageSplit')).toBeVisible();
+  await page.selectOption('#studioPdfSplitMode', 'every');
+  await page.click('#studioPdfSkipSplitButton');
+  await page.click('#studioPdfContinueToExportButton');
+  await expect(page.locator('#studioPdfStageExport')).toBeVisible();
+  await page.click('#studioPdfTemplateClientButton');
+
+  const templateItem = page.locator('.workflow-template-item').filter({ hasText: 'Review Pack' });
+  await expect(templateItem).toBeVisible();
+  await templateItem.getByRole('button', { name: 'Apply' }).click();
+  await expect(page.locator('#studioPdfTemplateStatus')).toContainText('Review Pack applied');
+  await page.click('#studioPdfBackToMergeButton');
+  await page.click('#studioPdfBackToSplitButton');
+  await expect(page.locator('#studioPdfSplitMode')).toHaveValue('ranges');
+  await expect(page.locator('#studioPdfSplitRanges')).toHaveValue('1\n2-3');
+});
+
 test('audio delivery workflow trims, levels, and exports an mp3', async ({ page }) => {
   await page.goto('/workflows/audio-delivery');
   await page.setInputFiles('#workflowAudioInput', {
@@ -264,6 +302,38 @@ test('audio delivery workflow supports back navigation and wav export', async ({
   const download = await downloadPromise;
   expect(download.suggestedFilename()).toMatch(/workflow-wav-fixture-delivery\.wav$/);
   await expect(page.locator('#workflowAudioStatus')).toContainText('Downloaded workflow-wav-fixture-delivery.wav');
+});
+
+test('audio delivery workflow saves and reapplies named workflow templates', async ({ page }) => {
+  await page.goto('/workflows/audio-delivery');
+  await page.setInputFiles('#workflowAudioInput', {
+    name: 'workflow-template.wav',
+    mimeType: 'audio/wav',
+    buffer: createSilentWavBuffer({ durationSeconds: 0.3 }),
+  });
+
+  await page.click('#workflowAudioContinueButton');
+  await page.click('#workflowAudioSkipTrimButton');
+  await page.click('#workflowAudioSkipLevelButton');
+  await expect(page.locator('#workflowAudioStageExport')).toBeVisible();
+
+  await page.click('#workflowAudioPresetPodcastButton');
+  await page.fill('#workflowAudioTemplateName', 'Podcast Delivery');
+  await page.click('#workflowAudioSaveTemplateButton');
+  await expect(page.locator('#workflowAudioTemplateStatus')).toContainText('Podcast Delivery saved');
+
+  await page.selectOption('#workflowAudioFormat', 'audio/wav');
+  await page.selectOption('#workflowAudioSampleRate', 'keep');
+  await page.check('#workflowAudioMono');
+
+  const templateItem = page.locator('.workflow-template-item').filter({ hasText: 'Podcast Delivery' });
+  await expect(templateItem).toBeVisible();
+  await templateItem.getByRole('button', { name: 'Apply' }).click();
+
+  await expect(page.locator('#workflowAudioFormat')).toHaveValue('audio/mpeg');
+  await expect(page.locator('#workflowAudioBitrate')).toHaveValue('192');
+  await expect(page.locator('#workflowAudioSampleRate')).toHaveValue('44100');
+  await expect(page.locator('#workflowAudioMono')).not.toBeChecked();
 });
 
 test('learn landing page includes the core hero guides and expanded follow-up guides', async ({ page }) => {
