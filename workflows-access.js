@@ -4,6 +4,8 @@
     name: 'Kreativ Workflows',
     launchPrice: '$19',
     launchBilling: 'one-time early access',
+    checkoutProvider: 'Lemon Squeezy',
+    checkoutUrl: '',
     freeTemplateLimit: 1,
     paidTemplateLimit: 8,
   };
@@ -18,10 +20,40 @@
   };
 
   const isPaid = () => Boolean(readAccess().paid);
+  const hasCheckout = () => /^https?:\/\//.test(plan.checkoutUrl);
+
+  const wireCheckoutLinks = () => {
+    const configured = hasCheckout();
+    document.querySelectorAll('[data-workflows-checkout-link]').forEach((link) => {
+      if (!(link instanceof HTMLAnchorElement)) return;
+      if (configured) {
+        link.href = plan.checkoutUrl;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        if (link.dataset.checkoutLabel) link.textContent = link.dataset.checkoutLabel;
+      } else {
+        link.removeAttribute('target');
+        link.removeAttribute('rel');
+      }
+    });
+
+    document.querySelectorAll('[data-workflows-checkout-status]').forEach((node) => {
+      node.textContent = configured
+        ? `Checkout runs through ${plan.checkoutProvider}.`
+        : `Add your ${plan.checkoutProvider} checkout URL in workflows-access.js to turn this into a live buy flow.`;
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', wireCheckoutLinks, { once: true });
+  } else {
+    wireCheckoutLinks();
+  }
 
   window.kreativWorkflowsAccess = {
     plan,
     isPaid,
+    hasCheckout,
     templateLimit() {
       return isPaid() ? plan.paidTemplateLimit : plan.freeTemplateLimit;
     },
