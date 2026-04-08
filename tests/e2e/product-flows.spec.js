@@ -8,6 +8,12 @@ const mergePdfA = path.join(fixturesDir, 'merge-a.pdf');
 const mergePdfB = path.join(fixturesDir, 'merge-b.pdf');
 const compressPdf = path.join(fixturesDir, 'compress-sample.pdf');
 
+async function enablePaidWorkflows(page) {
+  await page.addInitScript(() => {
+    window.localStorage.setItem('kreativ_workflows_access', JSON.stringify({ paid: true }));
+  });
+}
+
 test('homepage surfaces featured workflows and Learn entry points', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('heading', { level: 1, name: /Useful browser tools/i })).toBeVisible();
@@ -31,6 +37,7 @@ test('workflows landing page introduces workflow lineup and image prep entry poi
 });
 
 test('studio image prep runs through a basic guided export flow', async ({ page }) => {
+  await enablePaidWorkflows(page);
   await page.goto('/workflows/image-prep');
 
   const pngBuffer = Buffer.from(
@@ -59,6 +66,7 @@ test('studio image prep runs through a basic guided export flow', async ({ page 
 });
 
 test('studio image prep supports presets and back navigation before final export', async ({ page }) => {
+  await enablePaidWorkflows(page);
   await page.goto('/workflows/image-prep');
 
   const pngBuffer = Buffer.from(
@@ -92,6 +100,7 @@ test('studio image prep supports presets and back navigation before final export
 });
 
 test('studio image prep saves and reapplies named workflow templates', async ({ page }) => {
+  await enablePaidWorkflows(page);
   await page.goto('/workflows/image-prep');
 
   const pngBuffer = Buffer.from(
@@ -139,36 +148,18 @@ test('studio image prep saves and reapplies named workflow templates', async ({ 
   await expect(page.locator('#studioFormat')).toHaveValue('image/webp');
 });
 
-test('studio image prep shows the paid gate when saving a second named template', async ({ page }) => {
+test('studio image prep shows the paid access lock for unpaid users', async ({ page }) => {
   await page.goto('/workflows/image-prep');
-
-  const pngBuffer = Buffer.from(
-    'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9VE3d2QAAAAASUVORK5CYII=',
-    'base64'
-  );
-
-  await page.setInputFiles('#studioImageInput', {
-    name: 'studio-paid-gate.png',
-    mimeType: 'image/png',
-    buffer: pngBuffer,
-  });
-
-  await page.click('#studioSkipCropButton');
-  await page.click('#studioApplyResizeButton');
-  await expect(page.locator('#studioStageCompress')).toBeVisible();
-
-  await page.fill('#studioTemplateName', 'First Template');
-  await page.click('#studioSaveTemplateButton');
-  await expect(page.locator('#studioTemplateStatus')).toContainText('First Template saved');
-
-  await page.fill('#studioTemplateName', 'Second Template');
-  await page.click('#studioSaveTemplateButton');
-  await expect(page.locator('#studioTemplateStatus')).toContainText('Free includes 1 saved template per workflow');
-  await expect(page.locator('#studioTemplateUpgradeCard')).toBeVisible();
-  await expect(page.locator('.workflow-template-item')).toHaveCount(1);
+  const lockCard = page.locator('[data-workflows-locked-content]');
+  await expect(lockCard).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Unlock Image Prep with Kreativ Workflows' })).toBeVisible();
+  await expect(lockCard.locator('[data-workflows-checkout-link]')).toBeVisible();
+  await expect(page.locator('#studioImageInput')).toBeHidden();
+  await expect(page.locator('#studioWorkspace')).toBeHidden();
 });
 
 test('studio pdf delivery merges a queue and prepares a final export', async ({ page }) => {
+  await enablePaidWorkflows(page);
   await page.goto('/workflows/pdf-delivery');
   await page.setInputFiles('#studioPdfInput', [mergePdfA, mergePdfB]);
   await expect(page.locator('#studioPdfWorkspace')).not.toHaveClass(/is-hidden/);
@@ -189,6 +180,7 @@ test('studio pdf delivery merges a queue and prepares a final export', async ({ 
 });
 
 test('studio pdf delivery can apply a real split to the queue before merge', async ({ page }) => {
+  await enablePaidWorkflows(page);
   await page.goto('/workflows/pdf-delivery');
   const splitSourceBase64 = await page.evaluate(async () => {
     const doc = await PDFLib.PDFDocument.create();
@@ -237,6 +229,7 @@ test('studio pdf delivery can apply a real split to the queue before merge', asy
 });
 
 test('studio pdf delivery saves and reapplies named workflow templates', async ({ page }) => {
+  await enablePaidWorkflows(page);
   await page.goto('/workflows/pdf-delivery');
   await page.setInputFiles('#studioPdfInput', [mergePdfA, mergePdfB]);
   await page.click('#studioPdfContinueArrangeButton');
@@ -275,6 +268,7 @@ test('studio pdf delivery saves and reapplies named workflow templates', async (
 });
 
 test('audio delivery workflow trims, levels, and exports an mp3', async ({ page }) => {
+  await enablePaidWorkflows(page);
   await page.goto('/workflows/audio-delivery');
   await page.setInputFiles('#workflowAudioInput', {
     name: 'workflow-fixture.wav',
@@ -304,6 +298,7 @@ test('audio delivery workflow trims, levels, and exports an mp3', async ({ page 
 });
 
 test('audio delivery workflow supports back navigation and wav export', async ({ page }) => {
+  await enablePaidWorkflows(page);
   await page.goto('/workflows/audio-delivery');
   await page.setInputFiles('#workflowAudioInput', {
     name: 'workflow-wav-fixture.wav',
@@ -334,6 +329,7 @@ test('audio delivery workflow supports back navigation and wav export', async ({
 });
 
 test('audio delivery workflow saves and reapplies named workflow templates', async ({ page }) => {
+  await enablePaidWorkflows(page);
   await page.goto('/workflows/audio-delivery');
   await page.setInputFiles('#workflowAudioInput', {
     name: 'workflow-template.wav',

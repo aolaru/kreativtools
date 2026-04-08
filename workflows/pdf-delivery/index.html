@@ -61,10 +61,10 @@
     <section class="hero">
       <p class="eyebrow">Kreativ Workflows</p>
       <h1>PDF Delivery Workflow</h1>
-      <p>Arrange, optionally split, merge, optimize, and export a final sendable PDF in one guided browser flow. This is the second public workflow inside the Kreativ Workflows product layer.</p>
+      <p>Arrange, optionally split, merge, optimize, and export a final sendable PDF in one guided browser flow. PDF Delivery is part of the paid Kreativ Workflows layer.</p>
       <div class="article-meta">
-        <span class="article-pill">Included free today</span>
-        <span class="article-pill">Premium templates and higher limits planned</span>
+        <span class="article-pill">Paid workflow access required</span>
+        <span class="article-pill">Includes saved templates</span>
       </div>
       <div class="hero-actions">
         <a class="ghost header-link" href="/workflows/">About Kreativ Workflows</a>
@@ -84,11 +84,11 @@
       </div>
       <div class="tool-intro-card">
         <h2>Premium direction</h2>
-        <p>Basic PDF delivery stays public. The paid edge is planned around repeatable templates, higher queue limits, and future batch delivery runs for recurring document handoff work.</p>
+        <p>PDF Delivery now sits inside paid Kreativ Workflows access. The launch unlock includes guided PDF handoff flow, named templates, and the first paid productivity layer.</p>
       </div>
     </section>
 
-    <section class="upload-card">
+    <section class="upload-card" data-workflows-paid-content>
       <input id="studioPdfInput" type="file" accept="application/pdf,.pdf" multiple hidden />
       <div id="studioPdfDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload PDF files for the PDF Delivery workflow">
         <div class="drop-icon" aria-hidden="true"></div>
@@ -98,7 +98,7 @@
       </div>
     </section>
 
-    <section id="studioPdfWorkspace" class="studio-shell is-hidden">
+    <section id="studioPdfWorkspace" class="studio-shell is-hidden" data-workflows-paid-content>
       <aside class="studio-sidebar">
         <section class="studio-sidebar-card">
           <h2>Workflow Steps</h2>
@@ -317,6 +317,17 @@
           </div>
         </section>
       </div>
+    </section>
+
+    <section class="home-panel" data-workflows-locked-content hidden>
+      <p class="eyebrow">Paid Access</p>
+      <h2>Unlock PDF Delivery with Kreativ Workflows</h2>
+      <p>This workflow is now part of the paid Kreativ Workflows layer. Unlock it to run the full PDF delivery flow and save named templates for repeat document handoff jobs.</p>
+      <div class="workflow-success-actions">
+        <a class="button-link" href="/workflows/pricing/" data-workflows-checkout-link data-checkout-label="Buy Kreativ Workflows">Buy Kreativ Workflows</a>
+        <a class="button-link" href="/pdf/">Browse Free PDF Tools</a>
+      </div>
+      <p class="studio-stage-note" data-workflows-checkout-status>Add your Lemon Squeezy checkout URL to make this live.</p>
     </section>
   </main>
 

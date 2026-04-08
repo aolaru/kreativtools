@@ -22,6 +22,17 @@
   const isPaid = () => Boolean(readAccess().paid);
   const hasCheckout = () => /^https?:\/\//.test(plan.checkoutUrl);
 
+  const applyPageAccess = () => {
+    const paid = isPaid();
+    document.querySelectorAll('[data-workflows-paid-content]').forEach((node) => {
+      node.hidden = !paid;
+    });
+    document.querySelectorAll('[data-workflows-locked-content]').forEach((node) => {
+      node.hidden = paid;
+    });
+    document.body.dataset.workflowsAccess = paid ? 'paid' : 'locked';
+  };
+
   const wireCheckoutLinks = () => {
     const configured = hasCheckout();
     document.querySelectorAll('[data-workflows-checkout-link]').forEach((link) => {
@@ -45,8 +56,12 @@
   };
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', wireCheckoutLinks, { once: true });
+    document.addEventListener('DOMContentLoaded', () => {
+      applyPageAccess();
+      wireCheckoutLinks();
+    }, { once: true });
   } else {
+    applyPageAccess();
     wireCheckoutLinks();
   }
 
@@ -54,6 +69,11 @@
     plan,
     isPaid,
     hasCheckout,
+    setPaidAccess(paid) {
+      window.localStorage.setItem(accessKey, JSON.stringify({ paid: Boolean(paid) }));
+      applyPageAccess();
+      wireCheckoutLinks();
+    },
     templateLimit() {
       return isPaid() ? plan.paidTemplateLimit : plan.freeTemplateLimit;
     },

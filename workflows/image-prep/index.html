@@ -61,10 +61,10 @@
     <section class="hero">
       <p class="eyebrow">Kreativ Workflows</p>
       <h1>Image Prep Workflow</h1>
-      <p>Upload once, then crop, resize, compress, and export in one guided browser flow. This is the first public workflow inside the Kreativ Workflows product layer.</p>
+      <p>Upload once, then crop, resize, compress, and export in one guided browser flow. Image Prep is part of the paid Kreativ Workflows layer.</p>
       <div class="article-meta">
-        <span class="article-pill">Included free today</span>
-        <span class="article-pill">Premium presets and batch prep planned</span>
+        <span class="article-pill">Paid workflow access required</span>
+        <span class="article-pill">Includes saved templates</span>
       </div>
       <div class="hero-actions">
         <a class="ghost header-link" href="/workflows/">About Kreativ Workflows</a>
@@ -84,11 +84,11 @@
       </div>
       <div class="tool-intro-card">
         <h2>Premium direction</h2>
-        <p>Basic single-image runs stay public. Planned premium upgrades for Kreativ Workflows focus on saved templates, stronger destination presets, and future batch image prep.</p>
+        <p>Image Prep now sits inside paid Kreativ Workflows access. The launch unlock includes named templates, guided export flow, and future template-led upgrades.</p>
       </div>
     </section>
 
-    <section class="upload-card">
+    <section class="upload-card" data-workflows-paid-content>
       <input id="studioImageInput" type="file" accept="image/*" hidden />
       <div id="studioDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload image for the Image Prep workflow">
         <div class="drop-icon" aria-hidden="true"></div>
@@ -98,7 +98,7 @@
       </div>
     </section>
 
-    <section id="studioWorkspace" class="studio-shell is-hidden">
+    <section id="studioWorkspace" class="studio-shell is-hidden" data-workflows-paid-content>
       <aside class="studio-sidebar">
         <section class="studio-sidebar-card">
           <h2>Workflow Steps</h2>
@@ -356,6 +356,17 @@
           </div>
         </section>
       </div>
+    </section>
+
+    <section class="home-panel" data-workflows-locked-content hidden>
+      <p class="eyebrow">Paid Access</p>
+      <h2>Unlock Image Prep with Kreativ Workflows</h2>
+      <p>This workflow is now part of the paid Kreativ Workflows layer. Unlock it to run the full Image Prep flow and save named templates for repeat delivery jobs.</p>
+      <div class="workflow-success-actions">
+        <a class="button-link" href="/workflows/pricing/" data-workflows-checkout-link data-checkout-label="Buy Kreativ Workflows">Buy Kreativ Workflows</a>
+        <a class="button-link" href="/tools/">Browse Free Tools</a>
+      </div>
+      <p class="studio-stage-note" data-workflows-checkout-status>Add your Lemon Squeezy checkout URL to make this live.</p>
     </section>
   </main>
 

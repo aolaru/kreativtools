@@ -61,10 +61,10 @@
     <section class="hero">
       <p class="eyebrow">Kreativ Workflows</p>
       <h1>Audio Delivery Workflow</h1>
-      <p>Trim, level, convert, and export one shareable audio file in a guided browser flow. This is the third public workflow inside the Kreativ Workflows product layer.</p>
+      <p>Trim, level, convert, and export one shareable audio file in a guided browser flow. Audio Delivery is part of the paid Kreativ Workflows layer.</p>
       <div class="article-meta">
-        <span class="article-pill">Included free today</span>
-        <span class="article-pill">Premium presets and repeat-use history planned</span>
+        <span class="article-pill">Paid workflow access required</span>
+        <span class="article-pill">Includes saved templates</span>
       </div>
       <div class="hero-actions">
         <a class="ghost header-link" href="/workflows/">About Kreativ Workflows</a>
@@ -84,11 +84,11 @@
       </div>
       <div class="tool-intro-card">
         <h2>Premium direction</h2>
-        <p>Basic one-file audio delivery stays public. Planned premium additions focus on reusable delivery presets, saved workflow templates, and stronger repeat-use convenience.</p>
+        <p>Audio Delivery now sits inside paid Kreativ Workflows access. The launch unlock includes guided audio export flow, named templates, and future repeat-use delivery improvements.</p>
       </div>
     </section>
 
-    <section class="upload-card">
+    <section class="upload-card" data-workflows-paid-content>
       <input id="workflowAudioInput" type="file" accept="audio/*,.wav,.mp3,.m4a,.ogg,.flac,.aac" hidden />
       <div id="workflowAudioDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload audio for the Audio Delivery workflow">
         <div class="drop-icon" aria-hidden="true"></div>
@@ -98,7 +98,7 @@
       </div>
     </section>
 
-    <section id="workflowAudioWorkspace" class="studio-shell is-hidden">
+    <section id="workflowAudioWorkspace" class="studio-shell is-hidden" data-workflows-paid-content>
       <aside class="studio-sidebar">
         <section class="studio-sidebar-card">
           <h2>Workflow Steps</h2>
@@ -319,6 +319,17 @@
           </div>
         </section>
       </div>
+    </section>
+
+    <section class="home-panel" data-workflows-locked-content hidden>
+      <p class="eyebrow">Paid Access</p>
+      <h2>Unlock Audio Delivery with Kreativ Workflows</h2>
+      <p>This workflow is now part of the paid Kreativ Workflows layer. Unlock it to run the full audio delivery flow and save named templates for repeat export jobs.</p>
+      <div class="workflow-success-actions">
+        <a class="button-link" href="/workflows/pricing/" data-workflows-checkout-link data-checkout-label="Buy Kreativ Workflows">Buy Kreativ Workflows</a>
+        <a class="button-link" href="/audio/">Browse Free Audio Tools</a>
+      </div>
+      <p class="studio-stage-note" data-workflows-checkout-status>Add your Lemon Squeezy checkout URL to make this live.</p>
     </section>
   </main>
 
