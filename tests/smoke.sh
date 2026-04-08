@@ -88,6 +88,7 @@ main() {
   expect_file "styles.css"
   expect_file "theme.js"
   expect_file "image-format-support.js"
+  expect_file "analytics.js"
 
   for p in "${pages[@]}"; do
     expect_file "$p"
@@ -97,6 +98,10 @@ main() {
     expect_pattern "$p" 'href="https://madebykreativ\.com/"'
     expect_nav_order "$p"
   done
+
+  expect_pattern "analytics.js" "G-52WXEBLJY7"
+  expect_pattern "analytics.js" "googletagmanager\\.com/gtag/js\\?id="
+  expect_pattern "analytics.js" "window\\.gtag"
 
   expect_pattern "image/resize/index.html" 'id="toolResize"'
   expect_pattern "image/resize/index.html" 'id="toolConvert"'
