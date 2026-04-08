@@ -6,6 +6,7 @@
     launchBilling: 'one-time early access',
     checkoutProvider: 'Lemon Squeezy',
     checkoutUrl: '',
+    restoreContact: '/contact/',
     freeTemplateLimit: 1,
     paidTemplateLimit: 8,
   };
@@ -55,14 +56,43 @@
     });
   };
 
+  const wireRestoreAccess = () => {
+    document.querySelectorAll('[data-workflows-restore-access]').forEach((button) => {
+      if (!(button instanceof HTMLButtonElement)) return;
+
+      button.addEventListener('click', () => {
+        const paid = isPaid();
+        const scope = button.dataset.workflowsRestoreScope || plan.name;
+        const statusTarget = button.dataset.workflowsRestoreStatus;
+        const statusNode = statusTarget ? document.getElementById(statusTarget) : null;
+
+        if (paid) {
+          if (statusNode) statusNode.textContent = `${scope} is already unlocked on this browser.`;
+          applyPageAccess();
+          return;
+        }
+
+        const message = `Restore access is not connected yet. If you already purchased ${plan.name}, contact support via ${plan.restoreContact} and we can help you re-enable access on this browser.`;
+
+        if (statusNode) {
+          statusNode.textContent = message;
+        } else {
+          window.alert(message);
+        }
+      });
+    });
+  };
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
       applyPageAccess();
       wireCheckoutLinks();
+      wireRestoreAccess();
     }, { once: true });
   } else {
     applyPageAccess();
     wireCheckoutLinks();
+    wireRestoreAccess();
   }
 
   window.kreativWorkflowsAccess = {

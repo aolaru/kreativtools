@@ -17,14 +17,13 @@ async function enablePaidWorkflows(page) {
 test('homepage surfaces featured workflows and Learn entry points', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('heading', { level: 1, name: /Useful browser tools/i })).toBeVisible();
-  await expect(page.locator('.hero-actions a[href="/workflows/"]')).toBeVisible();
+  await expect(page.locator('.hero-actions a[href="/workflows/pricing/"]')).toBeVisible();
   await expect(page.locator('.quick-links a[href="/workflows/"]')).toBeVisible();
   await expect(page.locator('.quick-links a[href="/workflows/image-prep/"]')).toBeVisible();
-  await expect(page.locator('.quick-links a[href="/workflows/pdf-delivery/"]')).toBeVisible();
-  await expect(page.locator('.quick-links a[href="/workflows/audio-delivery/"]')).toBeVisible();
+  await expect(page.locator('.quick-links a[href="/workflows/pricing/"]')).toBeVisible();
   await expect(page.locator('.quick-links a[href="/image/compress/"]')).toBeVisible();
   await expect(page.locator('.home-panel a[href="/workflows/"]').first()).toBeVisible();
-  await expect(page.locator('.home-panel a[href="/learn/"]')).toBeVisible();
+  await expect(page.locator('.home-panel a[href="/tools/"]').first()).toBeVisible();
   await expect(page.locator('.home-panel a[href="/changes/"]')).toBeVisible();
 });
 
