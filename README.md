@@ -1,6 +1,6 @@
 # Kreativ Tools
 
-Kreativ Tools is a browser-based utility site for image, PDF, video, font, audio, and file workflows. The site includes dedicated tool pages, a Learn section with practical guides, a public Updates page, a public Workflows hub, and a shared UI/metadata generation step to keep static pages consistent. The guided workflow product layer inside the site is called Kreativ Workflows.
+Kreativ Tools is a browser-based utility site for image, PDF, video, font, audio, and file workflows. The site includes dedicated tool pages, a Learn section with practical guides, a public Updates page, and a shared UI/metadata generation step to keep static pages consistent. The guided workflow product layer inside the site is called Kreativ Workflows and now sits behind paid access.
 
 ## Current version
 
@@ -15,7 +15,7 @@ Kreativ Tools is a browser-based utility site for image, PDF, video, font, audio
 - Tools directory: full listing of available tools
 - Learn: practical how-to guides connected to real tools
 - Updates: public product log for launches, UX updates, and design improvements
-- Workflows: the public hub for Kreativ Workflows, the guided workflow product layer above the tool library, currently live with Image Prep, PDF Delivery, Audio Delivery, and a pricing-direction page for the planned free-vs-paid split
+- Workflows: the hub for Kreativ Workflows, the paid workflow product layer above the tool library, currently live with Image Prep, PDF Delivery, Audio Delivery, and the pricing page for paid access
 
 ### Tool categories
 - Image: crop, compress, resize, convert to WebP
