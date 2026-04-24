@@ -63,6 +63,7 @@ main() {
     image/index.html
     image/crop/index.html
     pdf/index.html
+    pdf/fill-sign/index.html
     image/resize/index.html
     image/compress/index.html
     pdf/image-to-pdf/index.html
@@ -118,6 +119,10 @@ main() {
   expect_pattern "image/to-webp/index.html" 'image-format-support\.js'
 
   expect_pattern "pdf/image-to-pdf/index.html" 'id="pdfImageInput"'
+  expect_pattern "pdf/fill-sign/index.html" 'id="pdfFillInput"'
+  expect_pattern "pdf/fill-sign/index.html" 'id="pdfFillPages"'
+  expect_pattern "pdf/fill-sign/index.html" 'id="pdfFillExportButton"'
+  expect_pattern "pdf/fill-sign/index.html" 'pdfjs-dist@3\.11\.174'
   expect_pattern "pdf/split/index.html" 'id="splitPdfInput"'
   expect_pattern "pdf/split/index.html" 'id="splitPdfActionButton"'
   expect_pattern "pdf/split/index.html" 'id="splitPdfDownloadAllButton"'

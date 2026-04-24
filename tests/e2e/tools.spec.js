@@ -44,6 +44,49 @@ test('image crop uploads and enables crop export flow', async ({ page }) => {
   await expect(page.locator('#cropDownloadButton')).toBeEnabled();
 });
 
+test('pdf fill and sign places text and a signature image, then exports a filled pdf', async ({ page }) => {
+  await page.goto('/pdf/fill-sign');
+  const mergePdfA = path.resolve(__dirname, '..', 'fixtures', 'merge-a.pdf');
+
+  await page.setInputFiles('#pdfFillInput', mergePdfA);
+  await expect(page.locator('#pdfFillWorkspace')).not.toHaveClass(/is-hidden/);
+  const pageStage = page.locator('.pdf-fill-page-stage').first();
+  await expect(pageStage).toBeVisible();
+  const clickPdfStage = async (x, y) => {
+    await pageStage.evaluate((stage, point) => {
+      const overlay = stage.querySelector('.pdf-fill-page-overlay');
+      const rect = stage.getBoundingClientRect();
+      const event = new MouseEvent('click', {
+        bubbles: true,
+        clientX: rect.left + point.x,
+        clientY: rect.top + point.y,
+      });
+      overlay.dispatchEvent(event);
+    }, { x, y });
+  };
+
+  await page.fill('#pdfFillText', 'John Doe');
+  await clickPdfStage(110, 120);
+  await expect(page.locator('#pdfFillPlacementCount')).toHaveText('1');
+  await expect(page.locator('#pdfFillPlacementList')).toContainText('John Doe');
+
+  await page.setInputFiles('#pdfSignatureInput', onePxPng);
+  await expect(page.locator('#pdfSignaturePreview')).toBeVisible();
+  await expect(page.locator('#pdfSignatureStatus')).toContainText('Loaded');
+  await page.click('#pdfFillToolSignature');
+  await clickPdfStage(260, 240);
+  await expect(page.locator('#pdfFillPlacementCount')).toHaveText('2');
+  await expect(page.locator('#pdfFillPlacementList')).toContainText('Signature');
+
+  await page.click('#pdfFillExportButton');
+  await expect(page.locator('#pdfFillDownloadButton')).toBeEnabled();
+  const downloadPromise = page.waitForEvent('download');
+  await page.click('#pdfFillDownloadButton');
+  const download = await downloadPromise;
+  expect(download.suggestedFilename()).toMatch(/merge-a-filled\.pdf$/);
+  await expect(page.locator('#pdfFillStatus')).toContainText('Downloaded merge-a-filled.pdf');
+});
+
 test('file tool converts sample XML and renders CSV preview', async ({ page }) => {
   await page.goto('/file/xml-to-csv');
   const sampleXmlPath = path.resolve(__dirname, '..', 'fixtures', 'sample.xml');

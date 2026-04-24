@@ -1,0 +1,867 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kreativ Tools | PDF Fill &amp; Sign</title>
+  <meta name="description" content="Add text and signature images to PDF files directly in your browser." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://kreativtools.com/pdf/fill-sign/" />
+  <meta property="og:title" content="Kreativ Tools | PDF Fill &amp; Sign" />
+  <meta property="og:description" content="Add text and signature images to PDF files directly in your browser." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kreativtools.com/pdf/fill-sign/" />
+  <meta property="og:image" content="https://kreativtools.com/og-image.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Kreativ Tools | PDF Fill &amp; Sign" />
+  <meta name="twitter:description" content="Add text and signature images to PDF files directly in your browser." />
+  <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
+  <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="../../favicon-32x32.png" sizes="32x32" type="image/png" />
+  <link rel="icon" href="../../favicon-16x16.png" sizes="16x16" type="image/png" />
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="../../styles.css" />
+</head>
+<body>
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Kreativ Tools Home">
+      <div class="brand-mark">K</div>
+      <div class="brand-copy"><strong>Kreativ Tools</strong></div>
+    </a>
+
+    <nav class="top-nav" aria-label="Primary">
+      <a href="/image/">Image</a>
+      <a href="/pdf/" aria-current="page">PDF</a>
+      <a href="/video/">Video</a>
+      <a href="/fonts/">Fonts</a>
+      <a href="/audio/">Audio</a>
+      <a href="/file/">File</a>
+      <a href="/workflows/">Workflows</a>
+      <a href="/learn/">Learn</a>
+      <a href="/changes/">Updates</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="ghost header-link" href="/tools/">All Tools</a>
+      <button id="shareButton" type="button" class="icon-toggle" aria-label="Share this page" title="Share this page"><i class="fa-solid fa-share-nodes" aria-hidden="true"></i></button>
+      <button id="themeToggle" type="button" class="icon-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><i class="fa-solid fa-moon" aria-hidden="true"></i></button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <p class="eyebrow">PDF Tools</p>
+      <h1>PDF Fill &amp; Sign</h1>
+      <p>Add names, addresses, dates, notes, and signature images on top of an existing PDF form directly in your browser.</p>
+    </section>
+
+    <section class="tool-intro" aria-label="How this tool works">
+      <div class="tool-intro-card">
+        <h2>Before you upload</h2>
+        <ul class="tool-intro-list">
+          <li>Upload one PDF file, then click any page preview to place text or a signature image.</li>
+          <li>Signature uploads support PNG, JPG, and SVG. SVG signatures are rasterized locally in the browser.</li>
+          <li>This tool places overlay content on top of the PDF. It does not rewrite existing text already inside the document.</li>
+        </ul>
+      </div>
+      <div class="tool-intro-card">
+        <h2>What you get</h2>
+        <p>Review the PDF visually, drag placed items to adjust them, then export one filled-and-signed PDF without upload limits.</p>
+      </div>
+    </section>
+
+    <section class="upload-card">
+      <input id="pdfFillInput" type="file" accept="application/pdf,.pdf" hidden />
+      <div id="pdfFillDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload a PDF file to fill and sign">
+        <div class="drop-icon" aria-hidden="true"></div>
+        <button id="pdfFillUploadButton" type="button" class="primary upload-trigger">Upload PDF</button>
+        <p>or drag and drop a PDF file here</p>
+        <p class="status">Private by default. Your PDF, text, and signature stay in this browser session.</p>
+        <p id="pdfFillStatus" class="status">Ready for upload.</p>
+      </div>
+    </section>
+
+    <section id="pdfFillWorkspace" class="workspace is-hidden">
+      <div class="controls">
+        <p id="pdfFillMeta" class="status status-empty">Upload a PDF file to begin placing text and signatures.</p>
+        <div class="inline-actions">
+          <button id="pdfFillExportButton" type="button" class="primary" disabled>Generate Filled PDF</button>
+          <button id="pdfFillDownloadButton" type="button" class="secondary-button" disabled>Download Filled PDF</button>
+          <button id="pdfFillResetButton" type="button" class="ghost">Choose Another PDF</button>
+        </div>
+      </div>
+
+      <div class="pdf-fill-layout">
+        <aside class="pdf-fill-sidebar">
+          <section class="tool-intro-card pdf-fill-card">
+            <h2>Placement Mode</h2>
+            <div class="pdf-fill-mode-row">
+              <button id="pdfFillToolText" type="button" class="ghost is-active">Add Text</button>
+              <button id="pdfFillToolSignature" type="button" class="ghost">Add Signature</button>
+            </div>
+            <p class="status">Click a page preview to place the active item. Drag any placed item to fine-tune its position.</p>
+          </section>
+
+          <section class="tool-intro-card pdf-fill-card">
+            <h2>Text Content</h2>
+            <label class="field-label" for="pdfFillText">Text</label>
+            <textarea id="pdfFillText" class="input-like pdf-fill-textarea" rows="4" placeholder="Type a name, address, date, or note"></textarea>
+            <div class="pdf-fill-field-row">
+              <label class="field-label" for="pdfFillFontSize">Font size</label>
+              <input id="pdfFillFontSize" class="text-input" type="number" min="8" max="48" value="16" />
+            </div>
+            <div class="pdf-fill-field-row">
+              <label class="field-label" for="pdfFillColor">Text color</label>
+              <input id="pdfFillColor" type="color" value="#111827" />
+            </div>
+          </section>
+
+          <section class="tool-intro-card pdf-fill-card">
+            <h2>Signature Image</h2>
+            <input id="pdfSignatureInput" type="file" accept="image/png,image/jpeg,image/svg+xml,.png,.jpg,.jpeg,.svg" />
+            <div class="pdf-fill-field-row">
+              <label class="field-label" for="pdfSignatureWidth">Width on page</label>
+              <input id="pdfSignatureWidth" class="text-input" type="number" min="40" max="360" value="140" />
+            </div>
+            <div id="pdfSignaturePreviewWrap" class="pdf-signature-preview-wrap" hidden>
+              <img id="pdfSignaturePreview" alt="Signature preview" />
+            </div>
+            <p id="pdfSignatureStatus" class="status">Upload a signature image before placing it on the PDF.</p>
+          </section>
+
+          <section class="tool-intro-card pdf-fill-card">
+            <h2>Selected Item</h2>
+            <p id="pdfFillSelectionStatus" class="status">No placement selected yet.</p>
+            <div class="pdf-fill-field-row">
+              <label class="field-label" for="pdfFillSelectedWidth">Selected signature width</label>
+              <input id="pdfFillSelectedWidth" class="text-input" type="number" min="40" max="360" value="140" />
+            </div>
+            <button id="pdfFillDeleteButton" type="button" class="ghost" disabled>Delete Selected Item</button>
+          </section>
+
+          <section class="tool-intro-card pdf-fill-card">
+            <h2>Placed Items</h2>
+            <div id="pdfFillPlacementList" class="queue-list"></div>
+          </section>
+        </aside>
+
+        <div class="preview-panel pdf-fill-preview-panel">
+          <div class="tool-results pdf-fill-results">
+            <h2>PDF Preview</h2>
+            <p id="pdfFillSummary">No PDF loaded yet.</p>
+            <div class="result-card">
+              <div class="result-row">
+                <span>Pages</span>
+                <strong id="pdfFillPageCount">0</strong>
+              </div>
+              <div class="result-row">
+                <span>Placed items</span>
+                <strong id="pdfFillPlacementCount">0</strong>
+              </div>
+              <div class="result-row">
+                <span>Export status</span>
+                <strong id="pdfFillExportStatus">Waiting for changes</strong>
+              </div>
+            </div>
+            <div id="pdfFillPages" class="pdf-fill-pages" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tool-intro" aria-label="PDF fill and sign notes">
+      <div class="tool-intro-card">
+        <h2>Best fit</h2>
+        <ul class="tool-intro-list">
+          <li>Typing names, dates, and addresses onto a form PDF</li>
+          <li>Adding a scanned or exported signature image to contracts and approvals</li>
+          <li>Placing short notes or labels on top of a fixed PDF layout</li>
+        </ul>
+      </div>
+      <div class="tool-intro-card">
+        <h2>What to do next</h2>
+        <p>If the final file needs to be smaller, continue with <a href="/pdf/compress/">PDF Compress</a>. If you need to reorder or split the document first, use <a href="/pdf/merge/">PDF Merge</a> or <a href="/pdf/split/">PDF Split</a>.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+  <div class="footer-topline"></div>
+  <div class="footer-inner">
+    <section class="footer-about">
+      <h3>Kreativ<span>Tools</span></h3>
+      <p>Kreativ Tools is a growing browser-based toolkit for image, PDF, video, font, audio, and file workflows. Explore focused utilities, practical Learn guides, and privacy-friendly tools for repeat creative work.</p>
+    </section>
+
+    <section>
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/tools/">All Tools</a></li>
+        <li><a href="/learn/">Learn</a></li>
+        <li><a href="/changes/">Updates</a></li>
+        <li><a href="/privacy/">Privacy Policy</a></li>
+        <li><a href="/terms/">Terms</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h4>Core Tools</h4>
+      <ul>
+        <li><a href="/image/compress/">Image Compress</a></li>
+        <li><a href="/pdf/merge/">PDF Merge</a></li>
+        <li><a href="/pdf/compress/">PDF Compress</a></li>
+        <li><a href="/fonts/webfont-convert/">Font to Webfont</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h4>More Tools</h4>
+      <ul>
+        <li><a href="/workflows/">Workflows</a></li>
+        <li><a href="/learn/">Learn Guides</a></li>
+        <li><a href="/video/thumbnail/">Video Thumbnail</a></li>
+        <li><a href="/file/xml-to-csv/">XML to CSV</a></li>
+        <li><a href="/tools/">Browse Directory</a></li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="footer-bottom">
+    <p class="footer-brand-links"><a href="https://kreativfont.com/" target="_blank" rel="noopener noreferrer">Kreativ Font</a><span aria-hidden="true">·</span><a href="https://kreativsound.com/" target="_blank" rel="noopener noreferrer">Kreativ Sound</a><span aria-hidden="true">·</span><a href="https://kreativwp.com/" target="_blank" rel="noopener noreferrer">Kreativ WP</a><span aria-hidden="true">·</span><a href="/">Kreativ Tools</a></p>
+    <p>© 2026 <a href="https://madebykreativ.com/" target="_blank" rel="noopener noreferrer">Made by KREATIV</a> · Independent creative tools and assets by Andrei Olaru</p>
+    <p class="footer-meta-actions"></p>
+  </div>
+</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+  <script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+
+    const pdfFillInput = document.getElementById('pdfFillInput');
+    const pdfFillUploadButton = document.getElementById('pdfFillUploadButton');
+    const pdfFillDropzone = document.getElementById('pdfFillDropzone');
+    const pdfFillStatus = document.getElementById('pdfFillStatus');
+    const pdfFillMeta = document.getElementById('pdfFillMeta');
+    const pdfFillWorkspace = document.getElementById('pdfFillWorkspace');
+    const pdfFillPages = document.getElementById('pdfFillPages');
+    const pdfFillSummary = document.getElementById('pdfFillSummary');
+    const pdfFillPageCount = document.getElementById('pdfFillPageCount');
+    const pdfFillPlacementCount = document.getElementById('pdfFillPlacementCount');
+    const pdfFillExportStatus = document.getElementById('pdfFillExportStatus');
+    const pdfFillExportButton = document.getElementById('pdfFillExportButton');
+    const pdfFillDownloadButton = document.getElementById('pdfFillDownloadButton');
+    const pdfFillResetButton = document.getElementById('pdfFillResetButton');
+    const pdfFillToolText = document.getElementById('pdfFillToolText');
+    const pdfFillToolSignature = document.getElementById('pdfFillToolSignature');
+    const pdfFillText = document.getElementById('pdfFillText');
+    const pdfFillFontSize = document.getElementById('pdfFillFontSize');
+    const pdfFillColor = document.getElementById('pdfFillColor');
+    const pdfSignatureInput = document.getElementById('pdfSignatureInput');
+    const pdfSignatureWidth = document.getElementById('pdfSignatureWidth');
+    const pdfSignaturePreviewWrap = document.getElementById('pdfSignaturePreviewWrap');
+    const pdfSignaturePreview = document.getElementById('pdfSignaturePreview');
+    const pdfSignatureStatus = document.getElementById('pdfSignatureStatus');
+    const pdfFillSelectionStatus = document.getElementById('pdfFillSelectionStatus');
+    const pdfFillSelectedWidth = document.getElementById('pdfFillSelectedWidth');
+    const pdfFillDeleteButton = document.getElementById('pdfFillDeleteButton');
+    const pdfFillPlacementList = document.getElementById('pdfFillPlacementList');
+
+    let originalBytes = null;
+    let pdfPreviewDoc = null;
+    let sourceFileName = '';
+    let outputBytes = null;
+    let outputName = '';
+    let activeMode = 'text';
+    let placements = [];
+    let selectedPlacementId = '';
+    let signatureAsset = null;
+    let placementCounter = 0;
+    let dragState = null;
+
+    const pageState = [];
+
+    function setStatus(message) {
+      pdfFillStatus.textContent = message;
+    }
+
+    function setActiveMode(mode) {
+      activeMode = mode;
+      pdfFillToolText.classList.toggle('is-active', mode === 'text');
+      pdfFillToolSignature.classList.toggle('is-active', mode === 'signature');
+    }
+
+    function createPlacementId() {
+      placementCounter += 1;
+      return `placement-${placementCounter}`;
+    }
+
+    function clamp(value, min, max) {
+      return Math.min(Math.max(value, min), max);
+    }
+
+    function formatPlacementLabel(placement) {
+      return placement.type === 'text' ? placement.text.split('\n')[0] || 'Text' : 'Signature';
+    }
+
+    function extensionFromMime(mime) {
+      if (mime === 'image/jpeg') return 'jpg';
+      if (mime === 'image/png') return 'png';
+      return 'svg';
+    }
+
+    function dataUrlToUint8Array(dataUrl) {
+      const [, data] = dataUrl.split(',');
+      const binary = atob(data);
+      const bytes = new Uint8Array(binary.length);
+      for (let index = 0; index < binary.length; index += 1) {
+        bytes[index] = binary.charCodeAt(index);
+      }
+      return bytes;
+    }
+
+    async function fileToDataUrl(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result));
+        reader.onerror = () => reject(new Error('Could not read the image file.'));
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function rasterizeSvg(dataUrl) {
+      const image = new Image();
+      image.decoding = 'async';
+      image.src = dataUrl;
+      await image.decode();
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.max(1, image.naturalWidth || 240);
+      canvas.height = Math.max(1, image.naturalHeight || 80);
+      canvas.getContext('2d').drawImage(image, 0, 0);
+      return canvas.toDataURL('image/png');
+    }
+
+    async function normalizeSignatureFile(file) {
+      const dataUrl = await fileToDataUrl(file);
+      if (file.type === 'image/svg+xml' || file.name.toLowerCase().endsWith('.svg')) {
+        const pngDataUrl = await rasterizeSvg(dataUrl);
+        const image = new Image();
+        image.src = pngDataUrl;
+        await image.decode();
+        return {
+          dataUrl: pngDataUrl,
+          mime: 'image/png',
+          naturalWidth: image.naturalWidth || 240,
+          naturalHeight: image.naturalHeight || 80,
+          name: file.name,
+        };
+      }
+
+      const image = new Image();
+      image.src = dataUrl;
+      await image.decode();
+      return {
+        dataUrl,
+        mime: file.type === 'image/jpeg' ? 'image/jpeg' : 'image/png',
+        naturalWidth: image.naturalWidth || 240,
+        naturalHeight: image.naturalHeight || 80,
+        name: file.name,
+      };
+    }
+
+    function resetExport() {
+      outputBytes = null;
+      outputName = '';
+      pdfFillExportStatus.textContent = placements.length ? 'Ready to generate' : 'Waiting for changes';
+      pdfFillDownloadButton.disabled = true;
+    }
+
+    function markDirty() {
+      resetExport();
+      pdfFillExportButton.disabled = !originalBytes || placements.length === 0;
+    }
+
+    function updateSelectionUi() {
+      const selected = placements.find((placement) => placement.id === selectedPlacementId);
+      pdfFillDeleteButton.disabled = !selected;
+      pdfFillSelectedWidth.disabled = !(selected && selected.type === 'signature');
+
+      if (!selected) {
+        pdfFillSelectionStatus.textContent = 'No placement selected yet.';
+        return;
+      }
+
+      if (selected.type === 'signature') {
+        pdfFillSelectedWidth.value = String(Math.round(selected.previewWidth));
+        pdfFillSelectionStatus.textContent = `Selected signature on page ${selected.pageIndex + 1}.`;
+      } else {
+        pdfFillSelectionStatus.textContent = `Selected text on page ${selected.pageIndex + 1}. Edit the text fields above to update it.`;
+      }
+    }
+
+    function renderPlacementList() {
+      pdfFillPlacementList.innerHTML = '';
+
+      if (!placements.length) {
+        pdfFillPlacementList.innerHTML = '<p class="status">No text or signatures placed yet.</p>';
+        return;
+      }
+
+      placements.forEach((placement) => {
+        const item = document.createElement('div');
+        item.className = 'queue-item workflow-template-item';
+        if (placement.id === selectedPlacementId) item.classList.add('is-selected');
+
+        const details = document.createElement('div');
+        details.className = 'queue-item-meta';
+        details.innerHTML = `<strong>Page ${placement.pageIndex + 1}</strong><span>${placement.type === 'text' ? 'Text' : 'Signature'} • ${formatPlacementLabel(placement)}</span>`;
+
+        const actions = document.createElement('div');
+        actions.className = 'queue-actions';
+
+        const selectButton = document.createElement('button');
+        selectButton.type = 'button';
+        selectButton.className = 'ghost';
+        selectButton.textContent = 'Select';
+        selectButton.addEventListener('click', () => {
+          selectedPlacementId = placement.id;
+          renderPlacements();
+        });
+
+        const deleteButton = document.createElement('button');
+        deleteButton.type = 'button';
+        deleteButton.className = 'ghost';
+        deleteButton.textContent = 'Delete';
+        deleteButton.addEventListener('click', () => deletePlacement(placement.id));
+
+        actions.append(selectButton, deleteButton);
+        item.append(details, actions);
+        pdfFillPlacementList.append(item);
+      });
+    }
+
+    function renderPlacements() {
+      pageState.forEach((page) => {
+        page.overlay.innerHTML = '';
+        const pagePlacements = placements.filter((placement) => placement.pageIndex === page.pageIndex);
+        pagePlacements.forEach((placement) => {
+          const overlay = document.createElement('button');
+          overlay.type = 'button';
+          overlay.className = `pdf-fill-placement pdf-fill-placement-${placement.type}`;
+          if (placement.id === selectedPlacementId) overlay.classList.add('is-selected');
+          overlay.dataset.placementId = placement.id;
+          overlay.style.left = `${placement.xRatio * 100}%`;
+          overlay.style.top = `${placement.yRatio * 100}%`;
+
+          if (placement.type === 'text') {
+            overlay.style.fontSize = `${placement.fontSize}px`;
+            overlay.style.color = placement.color;
+            overlay.textContent = placement.text;
+          } else {
+            overlay.style.width = `${placement.widthRatio * 100}%`;
+            overlay.style.height = `${placement.heightRatio * 100}%`;
+            const image = document.createElement('img');
+            image.src = placement.dataUrl;
+            image.alt = 'Placed signature';
+            overlay.appendChild(image);
+          }
+
+          overlay.addEventListener('click', (event) => {
+            event.stopPropagation();
+            selectedPlacementId = placement.id;
+            updateSelectionFromSelected();
+            renderPlacements();
+          });
+
+          overlay.addEventListener('pointerdown', (event) => {
+            event.preventDefault();
+            selectedPlacementId = placement.id;
+            updateSelectionFromSelected();
+            dragState = {
+              placementId: placement.id,
+              pageIndex: placement.pageIndex,
+              pointerId: event.pointerId,
+              startX: event.clientX,
+              startY: event.clientY,
+              startRatioX: placement.xRatio,
+              startRatioY: placement.yRatio,
+              pageWidth: page.stage.clientWidth,
+              pageHeight: page.stage.clientHeight,
+            };
+            renderPlacements();
+          });
+
+          page.overlay.appendChild(overlay);
+        });
+      });
+
+      pdfFillPlacementCount.textContent = String(placements.length);
+      renderPlacementList();
+      updateSelectionUi();
+    }
+
+    function updateSelectionFromSelected() {
+      const selected = placements.find((placement) => placement.id === selectedPlacementId);
+      if (!selected) return;
+
+      if (selected.type === 'text') {
+        pdfFillText.value = selected.text;
+        pdfFillFontSize.value = String(selected.fontSize);
+        pdfFillColor.value = selected.color;
+        setActiveMode('text');
+      } else {
+        pdfFillSelectedWidth.value = String(Math.round(selected.previewWidth));
+        setActiveMode('signature');
+      }
+    }
+
+    function deletePlacement(placementId) {
+      placements = placements.filter((placement) => placement.id !== placementId);
+      if (selectedPlacementId === placementId) selectedPlacementId = '';
+      markDirty();
+      renderPlacements();
+      setStatus('Removed the selected placement.');
+    }
+
+    function updateSelectedTextPlacement() {
+      const selected = placements.find((placement) => placement.id === selectedPlacementId && placement.type === 'text');
+      if (!selected) return;
+      selected.text = pdfFillText.value || 'Text';
+      selected.fontSize = Number(pdfFillFontSize.value) || 16;
+      selected.color = pdfFillColor.value || '#111827';
+      markDirty();
+      renderPlacements();
+    }
+
+    function updateSelectedSignaturePlacement() {
+      const selected = placements.find((placement) => placement.id === selectedPlacementId && placement.type === 'signature');
+      if (!selected) return;
+      const previewWidth = clamp(Number(pdfFillSelectedWidth.value) || 140, 40, 360);
+      selected.previewWidth = previewWidth;
+      const stageWidth = pageState[selected.pageIndex]?.stage.clientWidth || 700;
+      const stageHeight = pageState[selected.pageIndex]?.stage.clientHeight || 900;
+      selected.widthRatio = clamp(previewWidth / stageWidth, 0.04, 0.9);
+      selected.heightRatio = clamp((previewWidth / selected.aspectRatio) / stageHeight, 0.02, 0.4);
+      markDirty();
+      renderPlacements();
+    }
+
+    function buildTextPlacement(pageIndex, x, y, stageWidth, stageHeight) {
+      const text = pdfFillText.value.trim();
+      if (!text) {
+        setStatus('Type some text before placing it on the PDF.');
+        return null;
+      }
+
+      return {
+        id: createPlacementId(),
+        type: 'text',
+        pageIndex,
+        text,
+        fontSize: Number(pdfFillFontSize.value) || 16,
+        color: pdfFillColor.value || '#111827',
+        xRatio: clamp(x / stageWidth, 0.01, 0.95),
+        yRatio: clamp(y / stageHeight, 0.01, 0.95),
+      };
+    }
+
+    function buildSignaturePlacement(pageIndex, x, y, stageWidth, stageHeight) {
+      if (!signatureAsset) {
+        setStatus('Upload a signature image before placing it on the PDF.');
+        return null;
+      }
+
+      const previewWidth = clamp(Number(pdfSignatureWidth.value) || 140, 40, 360);
+      const aspectRatio = signatureAsset.naturalWidth / Math.max(signatureAsset.naturalHeight, 1);
+      return {
+        id: createPlacementId(),
+        type: 'signature',
+        pageIndex,
+        dataUrl: signatureAsset.dataUrl,
+        mime: signatureAsset.mime,
+        aspectRatio,
+        previewWidth,
+        widthRatio: clamp(previewWidth / stageWidth, 0.04, 0.9),
+        heightRatio: clamp((previewWidth / aspectRatio) / stageHeight, 0.02, 0.4),
+        xRatio: clamp(x / stageWidth, 0.01, 0.95),
+        yRatio: clamp(y / stageHeight, 0.01, 0.95),
+      };
+    }
+
+    function addPlacement(pageIndex, event, stage) {
+      const bounds = stage.getBoundingClientRect();
+      const x = event.clientX - bounds.left;
+      const y = event.clientY - bounds.top;
+      const placement = activeMode === 'text'
+        ? buildTextPlacement(pageIndex, x, y, bounds.width, bounds.height)
+        : buildSignaturePlacement(pageIndex, x, y, bounds.width, bounds.height);
+
+      if (!placement) return;
+      placements.push(placement);
+      selectedPlacementId = placement.id;
+      markDirty();
+      updateSelectionFromSelected();
+      renderPlacements();
+      setStatus(`Placed ${placement.type === 'text' ? 'text' : 'signature'} on page ${pageIndex + 1}.`);
+    }
+
+    async function renderPdfPages() {
+      pdfFillPages.innerHTML = '';
+      pageState.length = 0;
+
+      for (let pageIndex = 0; pageIndex < pdfPreviewDoc.numPages; pageIndex += 1) {
+        const pageNumber = pageIndex + 1;
+        const page = await pdfPreviewDoc.getPage(pageNumber);
+        const viewport = page.getViewport({ scale: 1.15 });
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'pdf-fill-page-card';
+
+        const label = document.createElement('div');
+        label.className = 'pdf-fill-page-label';
+        label.textContent = `Page ${pageNumber}`;
+
+        const stage = document.createElement('div');
+        stage.className = 'pdf-fill-page-stage';
+        stage.dataset.pageIndex = String(pageIndex);
+
+        const canvas = document.createElement('canvas');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        canvas.className = 'pdf-fill-page-canvas';
+        const context = canvas.getContext('2d');
+
+        const overlay = document.createElement('div');
+        overlay.className = 'pdf-fill-page-overlay';
+
+        stage.addEventListener('click', (event) => {
+          if (
+            event.target !== stage &&
+            !event.target.classList.contains('pdf-fill-page-canvas') &&
+            !event.target.classList.contains('pdf-fill-page-overlay')
+          ) return;
+          addPlacement(pageIndex, event, stage);
+        });
+
+        stage.append(canvas, overlay);
+        wrapper.append(label, stage);
+        pdfFillPages.appendChild(wrapper);
+        pageState.push({ pageIndex, stage, overlay, viewport });
+
+        await page.render({ canvasContext: context, viewport }).promise;
+      }
+
+      renderPlacements();
+    }
+
+    async function loadPdfFile(file) {
+      const isPdf = file && (file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf'));
+      if (!isPdf) {
+        setStatus('Please upload a valid PDF file.');
+        return;
+      }
+
+      originalBytes = await file.arrayBuffer();
+      pdfPreviewDoc = await pdfjsLib.getDocument({ data: new Uint8Array(originalBytes.slice(0)) }).promise;
+      sourceFileName = file.name.replace(/\.pdf$/i, '');
+      placements = [];
+      selectedPlacementId = '';
+      outputBytes = null;
+      outputName = '';
+
+      await renderPdfPages();
+
+      pdfFillWorkspace.classList.remove('is-hidden');
+      pdfFillSummary.textContent = `Loaded ${file.name}. Click a page to place text or a signature.`;
+      pdfFillPageCount.textContent = String(pdfPreviewDoc.numPages);
+      pdfFillPlacementCount.textContent = '0';
+      pdfFillMeta.textContent = `${file.name} • ${pdfPreviewDoc.numPages} page${pdfPreviewDoc.numPages === 1 ? '' : 's'}`;
+      pdfFillExportButton.disabled = true;
+      pdfFillDownloadButton.disabled = true;
+      pdfFillExportStatus.textContent = 'Waiting for changes';
+      pdfFillSelectionStatus.textContent = 'No placement selected yet.';
+      setStatus(`Loaded ${file.name}. Place text or a signature on any page.`);
+    }
+
+    async function exportPdf() {
+      if (!originalBytes || !placements.length) return;
+
+      const pdfDoc = await PDFLib.PDFDocument.load(new Uint8Array(originalBytes.slice(0)), { ignoreEncryption: true });
+      const font = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+      const imageCache = new Map();
+
+      for (const placement of placements) {
+        const page = pdfDoc.getPages()[placement.pageIndex];
+        const { width, height } = page.getSize();
+        const x = placement.xRatio * width;
+
+        if (placement.type === 'text') {
+          const lines = placement.text.split('\n');
+          const lineHeight = placement.fontSize * 1.15;
+          const yTop = placement.yRatio * height;
+          let y = height - yTop - placement.fontSize;
+          lines.forEach((line) => {
+            page.drawText(line, {
+              x,
+              y,
+              size: placement.fontSize,
+              font,
+              color: PDFLib.rgb(
+                parseInt(placement.color.slice(1, 3), 16) / 255,
+                parseInt(placement.color.slice(3, 5), 16) / 255,
+                parseInt(placement.color.slice(5, 7), 16) / 255
+              ),
+            });
+            y -= lineHeight;
+          });
+          continue;
+        }
+
+        let embeddedImage = imageCache.get(placement.dataUrl);
+        if (!embeddedImage) {
+          const imageBytes = dataUrlToUint8Array(placement.dataUrl);
+          embeddedImage = placement.mime === 'image/jpeg'
+            ? await pdfDoc.embedJpg(imageBytes)
+            : await pdfDoc.embedPng(imageBytes);
+          imageCache.set(placement.dataUrl, embeddedImage);
+        }
+
+        const drawWidth = placement.widthRatio * width;
+        const drawHeight = placement.heightRatio * height;
+        const y = height - (placement.yRatio * height) - drawHeight;
+        page.drawImage(embeddedImage, {
+          x,
+          y,
+          width: drawWidth,
+          height: drawHeight,
+        });
+      }
+
+      outputBytes = await pdfDoc.save();
+      outputName = `${sourceFileName || 'filled-document'}-filled.pdf`;
+      pdfFillExportStatus.textContent = 'Filled PDF ready';
+      pdfFillDownloadButton.disabled = false;
+      setStatus(`Generated ${outputName}.`);
+    }
+
+    function downloadOutput() {
+      if (!outputBytes || !outputName) return;
+      const blob = new Blob([outputBytes], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = outputName;
+      anchor.click();
+      URL.revokeObjectURL(url);
+      setStatus(`Downloaded ${outputName}.`);
+    }
+
+    function handleDrop(files) {
+      if (!files || !files.length) return;
+      loadPdfFile(files[0]).catch((error) => {
+        console.error(error);
+        setStatus('Could not load that PDF. Try another file.');
+      });
+    }
+
+    pdfFillUploadButton.addEventListener('click', () => pdfFillInput.click());
+    pdfFillInput.addEventListener('change', () => handleDrop(pdfFillInput.files));
+    pdfFillDropzone.addEventListener('click', () => pdfFillInput.click());
+    pdfFillDropzone.addEventListener('dragover', (event) => {
+      event.preventDefault();
+      pdfFillDropzone.classList.add('drag-over');
+    });
+    pdfFillDropzone.addEventListener('dragleave', () => pdfFillDropzone.classList.remove('drag-over'));
+    pdfFillDropzone.addEventListener('drop', (event) => {
+      event.preventDefault();
+      pdfFillDropzone.classList.remove('drag-over');
+      handleDrop(event.dataTransfer.files);
+    });
+    pdfFillDropzone.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        pdfFillInput.click();
+      }
+    });
+
+    pdfFillToolText.addEventListener('click', () => setActiveMode('text'));
+    pdfFillToolSignature.addEventListener('click', () => setActiveMode('signature'));
+    window.addEventListener('pointermove', (event) => {
+      if (!dragState) return;
+      const placement = placements.find((item) => item.id === dragState.placementId);
+      if (!placement) return;
+      const dx = (event.clientX - dragState.startX) / dragState.pageWidth;
+      const dy = (event.clientY - dragState.startY) / dragState.pageHeight;
+      placement.xRatio = clamp(dragState.startRatioX + dx, 0.01, 0.95);
+      placement.yRatio = clamp(dragState.startRatioY + dy, 0.01, 0.95);
+      markDirty();
+      renderPlacements();
+    });
+    window.addEventListener('pointerup', () => {
+      dragState = null;
+    });
+    pdfFillDeleteButton.addEventListener('click', () => {
+      if (selectedPlacementId) deletePlacement(selectedPlacementId);
+    });
+    pdfFillResetButton.addEventListener('click', () => {
+      originalBytes = null;
+      pdfPreviewDoc = null;
+      sourceFileName = '';
+      outputBytes = null;
+      outputName = '';
+      placements = [];
+      selectedPlacementId = '';
+      signatureAsset = null;
+      pdfFillWorkspace.classList.add('is-hidden');
+      pdfFillPages.innerHTML = '';
+      pdfSignaturePreviewWrap.hidden = true;
+      pdfSignatureStatus.textContent = 'Upload a signature image before placing it on the PDF.';
+      setStatus('Ready for upload.');
+    });
+    pdfFillExportButton.addEventListener('click', () => {
+      exportPdf().catch((error) => {
+        console.error(error);
+        setStatus('Could not generate the filled PDF. Try again.');
+      });
+    });
+    pdfFillDownloadButton.addEventListener('click', downloadOutput);
+
+    pdfFillText.addEventListener('input', updateSelectedTextPlacement);
+    pdfFillFontSize.addEventListener('input', updateSelectedTextPlacement);
+    pdfFillColor.addEventListener('input', updateSelectedTextPlacement);
+    pdfFillSelectedWidth.addEventListener('input', updateSelectedSignaturePlacement);
+
+    pdfSignatureInput.addEventListener('change', async () => {
+      const file = pdfSignatureInput.files?.[0];
+      if (!file) return;
+      try {
+        signatureAsset = await normalizeSignatureFile(file);
+        pdfSignaturePreview.src = signatureAsset.dataUrl;
+        pdfSignaturePreviewWrap.hidden = false;
+        pdfSignatureStatus.textContent = `Loaded ${file.name}. Click any page to place this signature.`;
+        setActiveMode('signature');
+      } catch (error) {
+        console.error(error);
+        pdfSignatureStatus.textContent = 'Could not load that signature image.';
+      }
+    });
+
+    setActiveMode('text');
+  </script>
+  <script src="../../cookie-consent.js"></script>
+  <script src="../../github-pages-prefix.js"></script>
+  <script src="../../analytics.js"></script>
+  <script src="../../theme.js"></script>
+</body>
+</html>

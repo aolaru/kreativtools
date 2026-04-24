@@ -27,6 +27,7 @@ const REDIRECTS = {
   'image-tools.html': '/image/resize/',
   'learn.html': '/learn/',
   'pdf-compress.html': '/pdf/compress/',
+  'pdf-fill-sign.html': '/pdf/fill-sign/',
   'pdf-split.html': '/pdf/split/',
   'pdf-merge.html': '/pdf/merge/',
   'pdf.html': '/pdf/',
