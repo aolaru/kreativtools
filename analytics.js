@@ -2,8 +2,7 @@
   const CONSENT_KEY = 'kreativ_cookie_consent';
   const CONFIG = {
     enabled: true,
-    provider: 'cloudflare',
-    cloudflareToken: 'f7acecd16c454cfbbb4704b4e665a173',
+    provider: 'google',
     googleAnalyticsId: 'G-52WXEBLJY7'
   };
 
@@ -50,7 +49,6 @@
     return false;
   };
 
-  if (CONFIG.provider !== 'cloudflare') return;
   if (!canTrack()) return;
 
   if (CONFIG.googleAnalyticsId && !document.querySelector('script[data-kreativ-analytics="google"]')) {
@@ -68,14 +66,4 @@
     gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(CONFIG.googleAnalyticsId)}`;
     document.head.appendChild(gaScript);
   }
-
-  if (!CONFIG.cloudflareToken) return;
-  if (document.querySelector('script[data-kreativ-analytics="cloudflare"]')) return;
-
-  const script = document.createElement('script');
-  script.defer = true;
-  script.dataset.cfBeacon = JSON.stringify({ token: CONFIG.cloudflareToken });
-  script.dataset.kreativAnalytics = 'cloudflare';
-  script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
-  document.head.appendChild(script);
 })();
