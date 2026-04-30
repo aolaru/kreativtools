@@ -115,6 +115,9 @@
             <h2>Text Content</h2>
             <label class="field-label" for="pdfFillText">Text</label>
             <textarea id="pdfFillText" class="input-like pdf-fill-textarea" rows="4" placeholder="Type a name, address, date, or note"></textarea>
+            <div class="inline-actions">
+              <button id="pdfFillInsertTodayButton" type="button" class="ghost">Insert Today</button>
+            </div>
             <div class="pdf-fill-field-row">
               <label class="field-label" for="pdfFillFontSize">Font size</label>
               <input id="pdfFillFontSize" class="text-input" type="number" min="8" max="48" value="16" />
@@ -145,7 +148,10 @@
               <label class="field-label" for="pdfFillSelectedWidth">Selected signature width</label>
               <input id="pdfFillSelectedWidth" class="text-input" type="number" min="40" max="360" value="140" />
             </div>
-            <button id="pdfFillDeleteButton" type="button" class="ghost" disabled>Delete Selected Item</button>
+            <div class="inline-actions">
+              <button id="pdfFillDuplicateButton" type="button" class="ghost" disabled>Duplicate Selected Item</button>
+              <button id="pdfFillDeleteButton" type="button" class="ghost" disabled>Delete Selected Item</button>
+            </div>
           </section>
 
           <section class="tool-intro-card pdf-fill-card">
@@ -266,6 +272,7 @@
     const pdfFillToolText = document.getElementById('pdfFillToolText');
     const pdfFillToolSignature = document.getElementById('pdfFillToolSignature');
     const pdfFillText = document.getElementById('pdfFillText');
+    const pdfFillInsertTodayButton = document.getElementById('pdfFillInsertTodayButton');
     const pdfFillFontSize = document.getElementById('pdfFillFontSize');
     const pdfFillColor = document.getElementById('pdfFillColor');
     const pdfSignatureInput = document.getElementById('pdfSignatureInput');
@@ -275,6 +282,7 @@
     const pdfSignatureStatus = document.getElementById('pdfSignatureStatus');
     const pdfFillSelectionStatus = document.getElementById('pdfFillSelectionStatus');
     const pdfFillSelectedWidth = document.getElementById('pdfFillSelectedWidth');
+    const pdfFillDuplicateButton = document.getElementById('pdfFillDuplicateButton');
     const pdfFillDeleteButton = document.getElementById('pdfFillDeleteButton');
     const pdfFillPlacementList = document.getElementById('pdfFillPlacementList');
 
@@ -294,6 +302,14 @@
 
     function setStatus(message) {
       pdfFillStatus.textContent = message;
+    }
+
+    function todayStamp() {
+      return new Intl.DateTimeFormat('en-CA', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      }).format(new Date());
     }
 
     function setActiveMode(mode) {
@@ -395,6 +411,7 @@
     function updateSelectionUi() {
       const selected = placements.find((placement) => placement.id === selectedPlacementId);
       pdfFillDeleteButton.disabled = !selected;
+      pdfFillDuplicateButton.disabled = !selected;
       pdfFillSelectedWidth.disabled = !(selected && selected.type === 'signature');
 
       if (!selected) {
@@ -532,6 +549,25 @@
       markDirty();
       renderPlacements();
       setStatus('Removed the selected placement.');
+    }
+
+    function duplicateSelectedPlacement() {
+      const selected = placements.find((placement) => placement.id === selectedPlacementId);
+      if (!selected) return;
+
+      const nextPlacement = {
+        ...selected,
+        id: createPlacementId(),
+        xRatio: clamp(selected.xRatio + 0.03, 0.01, 0.95),
+        yRatio: clamp(selected.yRatio + 0.03, 0.01, 0.95),
+      };
+
+      placements.push(nextPlacement);
+      selectedPlacementId = nextPlacement.id;
+      markDirty();
+      updateSelectionFromSelected();
+      renderPlacements();
+      setStatus(`Duplicated ${selected.type === 'text' ? 'text' : 'signature'} on page ${selected.pageIndex + 1}.`);
     }
 
     function updateSelectedTextPlacement() {
@@ -797,6 +833,12 @@
 
     pdfFillToolText.addEventListener('click', () => setActiveMode('text'));
     pdfFillToolSignature.addEventListener('click', () => setActiveMode('signature'));
+    pdfFillInsertTodayButton.addEventListener('click', () => {
+      pdfFillText.value = todayStamp();
+      updateSelectedTextPlacement();
+      setStatus(`Inserted ${pdfFillText.value} into the text field.`);
+      setActiveMode('text');
+    });
     window.addEventListener('pointermove', (event) => {
       if (!dragState) return;
       const placement = placements.find((item) => item.id === dragState.placementId);
@@ -811,6 +853,7 @@
     window.addEventListener('pointerup', () => {
       dragState = null;
     });
+    pdfFillDuplicateButton.addEventListener('click', duplicateSelectedPlacement);
     pdfFillDeleteButton.addEventListener('click', () => {
       if (selectedPlacementId) deletePlacement(selectedPlacementId);
     });
