@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kreativ Tools | PDF to DOCX</title>
-  <meta name="description" content="Convert text-based PDF files into DOCX documents directly in your browser." />
+  <title>Kreativ Tools | PDF Text to DOCX</title>
+  <meta name="description" content="Convert text-based PDF files into structured DOCX documents directly in your browser." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://kreativtools.com/pdf/to-docx/" />
-  <meta property="og:title" content="Kreativ Tools | PDF to DOCX" />
-  <meta property="og:description" content="Convert text-based PDF files into DOCX documents directly in your browser." />
+  <meta property="og:title" content="Kreativ Tools | PDF Text to DOCX" />
+  <meta property="og:description" content="Convert text-based PDF files into structured DOCX documents directly in your browser." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://kreativtools.com/pdf/to-docx/" />
   <meta property="og:image" content="https://kreativtools.com/og-image.png" />
@@ -17,8 +17,8 @@
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Kreativ Tools | PDF to DOCX" />
-  <meta name="twitter:description" content="Convert text-based PDF files into DOCX documents directly in your browser." />
+  <meta name="twitter:title" content="Kreativ Tools | PDF Text to DOCX" />
+  <meta name="twitter:description" content="Convert text-based PDF files into structured DOCX documents directly in your browser." />
   <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
   <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
@@ -60,8 +60,8 @@
   <main class="container">
     <section class="hero">
       <p class="eyebrow">PDF Tools</p>
-      <h1>PDF to DOCX</h1>
-      <p>Extract readable text from a PDF and download it as a DOCX document directly in your browser.</p>
+      <h1>PDF Text to DOCX</h1>
+      <p>Extract readable PDF text, preserve more structure where possible, and download it as a DOCX document directly in your browser.</p>
     </section>
 
     <section class="tool-intro" aria-label="How this converter works">
@@ -69,13 +69,13 @@
         <h2>Best fit</h2>
         <ul class="tool-intro-list">
           <li>Text-based PDFs with selectable text already inside the document</li>
-          <li>Contracts, drafts, handoffs, and exports where readable text matters more than exact layout</li>
+          <li>Contracts, drafts, handoffs, and exports where readable structure matters more than exact layout</li>
           <li>Quick DOCX conversion without upload limits or third-party document quotas</li>
         </ul>
       </div>
       <div class="tool-intro-card">
         <h2>Important limit</h2>
-        <p>This converter extracts text and rebuilds a clean DOCX. It does not preserve exact PDF layout, and scanned image-only PDFs will need OCR elsewhere before they convert well.</p>
+        <p>This converter rebuilds structured text with heading and paragraph heuristics. It does not preserve exact PDF visuals, and scanned image-only PDFs will need OCR elsewhere before they convert well.</p>
       </div>
     </section>
 
@@ -106,7 +106,7 @@
             <h2>Conversion Notes</h2>
             <ul class="tool-intro-list">
               <li>Each PDF page becomes a separate section in the DOCX.</li>
-              <li>Line order is preserved as well as the PDF text layer allows.</li>
+              <li>Heading sizes, line spacing, and paragraph breaks are used to rebuild cleaner structure.</li>
               <li>Empty or image-only pages are marked clearly in the export.</li>
             </ul>
           </section>
@@ -132,7 +132,7 @@
 
         <div class="preview-panel pdf-fill-preview-panel">
           <div class="tool-results pdf-fill-results">
-            <h2>Extracted Text Preview</h2>
+            <h2>Structured Text Preview</h2>
             <p id="pdfDocxSummary">No PDF loaded yet.</p>
             <textarea id="pdfDocxPreview" class="input-like pdf-fill-textarea" rows="18" readonly placeholder="Extracted text preview will appear here."></textarea>
           </div>
@@ -271,7 +271,9 @@
         ? 'Review the extracted text preview below, then generate the DOCX export.'
         : 'Upload a text-based PDF to begin conversion.';
       const previewSections = extractedPages.map((page, index) => {
-        const body = page.lines.length ? page.lines.join('\n') : '[No extractable text detected on this page.]';
+        const body = page.blocks.length
+          ? page.blocks.map((block) => block.text).join('\n\n')
+          : '[No extractable text detected on this page.]';
         return `Page ${index + 1}\n${body}`;
       });
       pdfDocxPreview.value = previewSections.join('\n\n');
@@ -283,18 +285,19 @@
       const positioned = items
         .map((item) => {
           const transform = item.transform || [];
+          const fontSize = Number(item.height || Math.hypot(transform[0] || 0, transform[1] || 0) || 0);
           return {
             text: String(item.str || '').trim(),
             x: Number(transform[4] || 0),
             y: Number(transform[5] || 0),
+            fontSize: Number.isFinite(fontSize) && fontSize > 0 ? fontSize : 12,
           };
         })
         .filter((item) => item.text);
 
       const lines = [];
-      const threshold = 4;
-
       positioned.forEach((item) => {
+        const threshold = Math.max(3, item.fontSize * 0.35);
         let line = lines.find((candidate) => Math.abs(candidate.y - item.y) <= threshold);
         if (!line) {
           line = { y: item.y, items: [] };
@@ -305,9 +308,68 @@
 
       return lines
         .sort((a, b) => b.y - a.y)
-        .map((line) => line.items.sort((a, b) => a.x - b.x).map((item) => item.text).join(' '))
-        .map((line) => line.replace(/\s+/g, ' ').trim())
-        .filter(Boolean);
+        .map((line) => {
+          const sortedItems = line.items.sort((a, b) => a.x - b.x);
+          const text = sortedItems.map((item) => item.text).join(' ').replace(/\s+/g, ' ').trim();
+          const averageFontSize = sortedItems.reduce((total, item) => total + item.fontSize, 0) / sortedItems.length;
+          return {
+            text,
+            y: line.y,
+            x: sortedItems[0] ? sortedItems[0].x : 0,
+            fontSize: averageFontSize || 12,
+          };
+        })
+        .filter((line) => line.text);
+    }
+
+    function median(values) {
+      if (!values.length) return 12;
+      const sorted = [...values].sort((a, b) => a - b);
+      const mid = Math.floor(sorted.length / 2);
+      return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+    }
+
+    function classifyLine(line, bodyFontSize) {
+      if (line.fontSize >= bodyFontSize * 1.5 && line.text.length <= 90) return 'Heading1';
+      if (line.fontSize >= bodyFontSize * 1.2 && line.text.length <= 110) return 'Heading2';
+      if (/^(\u2022|-|\*|\d+[.)])\s+/.test(line.text)) return 'ListParagraph';
+      return 'BodyText';
+    }
+
+    function buildStructuredBlocks(lines) {
+      if (!lines.length) return [];
+
+      const bodyFontSize = median(lines.map((line) => line.fontSize));
+      const blocks = [];
+      let current = null;
+
+      lines.forEach((line, index) => {
+        const style = classifyLine(line, bodyFontSize);
+        const previousLine = index > 0 ? lines[index - 1] : null;
+        const gap = previousLine ? previousLine.y - line.y : 0;
+        const startsNewBlock =
+          !current ||
+          style !== current.style ||
+          gap > Math.max(line.fontSize * 1.35, bodyFontSize * 1.6) ||
+          Math.abs(line.x - current.x) > 28;
+
+        if (startsNewBlock) {
+          current = {
+            style,
+            x: line.x,
+            lines: [line.text],
+          };
+          blocks.push(current);
+          return;
+        }
+
+        current.lines.push(line.text);
+      });
+
+      return blocks.map((block) => ({
+        style: block.style,
+        text: block.lines.join(block.style === 'BodyText' ? ' ' : '\n').replace(/\s+/g, ' ').trim(),
+      })).filter((block) => block.text);
     }
 
     async function extractPdfText(bytes) {
@@ -318,9 +380,11 @@
       for (let index = 1; index <= pdf.numPages; index += 1) {
         const page = await pdf.getPage(index);
         const textContent = await page.getTextContent();
+        const lines = groupItemsIntoLines(textContent.items);
         pages.push({
           pageNumber: index,
-          lines: groupItemsIntoLines(textContent.items),
+          lines,
+          blocks: buildStructuredBlocks(lines),
         });
       }
 
@@ -344,8 +408,8 @@
 
       pages.forEach((page, index) => {
         parts.push(paragraphXml(`Page ${index + 1}`, 'Heading1'));
-        if (page.lines.length) {
-          page.lines.forEach((line) => parts.push(paragraphXml(line)));
+        if (page.blocks.length) {
+          page.blocks.forEach((block) => parts.push(paragraphXml(block.text, block.style)));
         } else {
           parts.push(paragraphXml('[No extractable text detected on this page.]'));
         }
@@ -414,10 +478,22 @@
     <w:qFormat/>
     <w:rPr><w:b/><w:sz w:val="28"/></w:rPr>
   </w:style>
+  <w:style w:type="paragraph" w:styleId="Heading2">
+    <w:name w:val="heading 2"/>
+    <w:basedOn w:val="Normal"/>
+    <w:qFormat/>
+    <w:rPr><w:b/><w:sz w:val="24"/></w:rPr>
+  </w:style>
   <w:style w:type="paragraph" w:styleId="BodyText">
     <w:name w:val="Body Text"/>
     <w:basedOn w:val="Normal"/>
     <w:qFormat/>
+  </w:style>
+  <w:style w:type="paragraph" w:styleId="ListParagraph">
+    <w:name w:val="List Paragraph"/>
+    <w:basedOn w:val="Normal"/>
+    <w:qFormat/>
+    <w:pPr><w:ind w:left="720"/></w:pPr>
   </w:style>
 </w:styles>`);
       wordFolder.folder('_rels').file('document.xml.rels', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
