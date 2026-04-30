@@ -94,6 +94,25 @@ test('pdf fill and sign places text and a signature image, then exports a filled
   await expect(page.locator('#pdfFillStatus')).toContainText('Downloaded merge-a-filled.pdf');
 });
 
+test('pdf to docx extracts text and downloads a docx export', async ({ page }) => {
+  await page.goto('/pdf/to-docx');
+  const mergePdfA = path.resolve(__dirname, '..', 'fixtures', 'merge-a.pdf');
+
+  await page.setInputFiles('#pdfDocxInput', mergePdfA);
+  await expect(page.locator('#pdfDocxWorkspace')).not.toHaveClass(/is-hidden/);
+  await expect(page.locator('#pdfDocxConvertButton')).toBeEnabled();
+
+  await page.click('#pdfDocxConvertButton');
+  await expect(page.locator('#pdfDocxDownloadButton')).toBeEnabled();
+  await expect(page.locator('#pdfDocxExportStatus')).toContainText('DOCX ready');
+
+  const downloadPromise = page.waitForEvent('download');
+  await page.click('#pdfDocxDownloadButton');
+  const download = await downloadPromise;
+  expect(download.suggestedFilename()).toMatch(/merge-a\.docx$/);
+  await expect(page.locator('#pdfDocxStatus')).toContainText('Downloaded merge-a.docx');
+});
+
 test('file tool converts sample XML and renders CSV preview', async ({ page }) => {
   await page.goto('/file/xml-to-csv');
   const sampleXmlPath = path.resolve(__dirname, '..', 'fixtures', 'sample.xml');

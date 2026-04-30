@@ -64,6 +64,7 @@ main() {
     image/crop/index.html
     pdf/index.html
     pdf/fill-sign/index.html
+    pdf/to-docx/index.html
     image/resize/index.html
     image/compress/index.html
     pdf/image-to-pdf/index.html
@@ -123,6 +124,10 @@ main() {
   expect_pattern "pdf/fill-sign/index.html" 'id="pdfFillPages"'
   expect_pattern "pdf/fill-sign/index.html" 'id="pdfFillExportButton"'
   expect_pattern "pdf/fill-sign/index.html" 'pdfjs-dist@3\.11\.174'
+  expect_pattern "pdf/to-docx/index.html" 'id="pdfDocxInput"'
+  expect_pattern "pdf/to-docx/index.html" 'id="pdfDocxConvertButton"'
+  expect_pattern "pdf/to-docx/index.html" 'id="pdfDocxDownloadButton"'
+  expect_pattern "pdf/to-docx/index.html" 'jszip@3\.10\.1'
   expect_pattern "pdf/split/index.html" 'id="splitPdfInput"'
   expect_pattern "pdf/split/index.html" 'id="splitPdfActionButton"'
   expect_pattern "pdf/split/index.html" 'id="splitPdfDownloadAllButton"'

@@ -28,6 +28,7 @@ const REDIRECTS = {
   'learn.html': '/learn/',
   'pdf-compress.html': '/pdf/compress/',
   'pdf-fill-sign.html': '/pdf/fill-sign/',
+  'pdf-to-docx.html': '/pdf/to-docx/',
   'pdf-split.html': '/pdf/split/',
   'pdf-merge.html': '/pdf/merge/',
   'pdf.html': '/pdf/',
@@ -53,15 +54,15 @@ const LEGACY_DIRECTORY_REDIRECTS = {
 };
 
 const NAV_ITEMS = [
-  { label: 'Image', href: '/image/', key: 'image' },
-  { label: 'PDF', href: '/pdf/', key: 'pdf' },
-  { label: 'Video', href: '/video/', key: 'video' },
-  { label: 'Fonts', href: '/fonts/', key: 'fonts' },
-  { label: 'Audio', href: '/audio/', key: 'audio' },
-  { label: 'File', href: '/file/', key: 'file' },
-  { label: 'Workflows', href: '/workflows/', key: 'workflows' },
-  { label: 'Learn', href: '/learn/', key: 'learn' },
-  { label: 'Updates', href: '/changes/', key: 'changes' },
+  { label: 'Image', href: '/image/', key: 'image', icon: 'fa-image' },
+  { label: 'PDF', href: '/pdf/', key: 'pdf', icon: 'fa-file-pdf' },
+  { label: 'Video', href: '/video/', key: 'video', icon: 'fa-film' },
+  { label: 'Fonts', href: '/fonts/', key: 'fonts', icon: 'fa-font' },
+  { label: 'Audio', href: '/audio/', key: 'audio', icon: 'fa-wave-square' },
+  { label: 'File', href: '/file/', key: 'file', icon: 'fa-folder-tree' },
+  { label: 'Workflows', href: '/workflows/', key: 'workflows', icon: 'fa-layer-group' },
+  { label: 'Learn', href: '/learn/', key: 'learn', icon: 'fa-book-open' },
+  { label: 'Updates', href: '/changes/', key: 'changes', icon: 'fa-clock-rotate-left' },
 ];
 
 const FOOTER_SECTIONS = {
@@ -197,7 +198,7 @@ function buildHeader(route) {
   const activeKey = navKeyForRoute(route);
   const navLinks = NAV_ITEMS.map((item) => {
     const current = item.key === activeKey ? ' aria-current="page"' : '';
-    return `      <a href="${item.href}"${current}>${item.label}</a>`;
+    return `      <a href="${item.href}"${current}><i class="fa-solid ${item.icon}" aria-hidden="true"></i><span>${item.label}</span></a>`;
   }).join('\n');
 
   const allToolsCurrent = route === '/tools/' ? ' aria-current="page"' : '';

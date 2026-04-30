@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kreativ Tools | PDF to DOCX</title>
+  <meta name="description" content="Convert text-based PDF files into DOCX documents directly in your browser." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://kreativtools.com/pdf/to-docx/" />
+  <meta property="og:title" content="Kreativ Tools | PDF to DOCX" />
+  <meta property="og:description" content="Convert text-based PDF files into DOCX documents directly in your browser." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kreativtools.com/pdf/to-docx/" />
+  <meta property="og:image" content="https://kreativtools.com/og-image.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Kreativ Tools | PDF to DOCX" />
+  <meta name="twitter:description" content="Convert text-based PDF files into DOCX documents directly in your browser." />
+  <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
+  <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="../../favicon-32x32.png" sizes="32x32" type="image/png" />
+  <link rel="icon" href="../../favicon-16x16.png" sizes="16x16" type="image/png" />
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="../../styles.css" />
+</head>
+<body>
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Kreativ Tools Home">
+      <div class="brand-mark">K</div>
+      <div class="brand-copy"><strong>Kreativ Tools</strong></div>
+    </a>
+
+    <nav class="top-nav" aria-label="Primary">
+      <a href="/image/"><i class="fa-solid fa-image" aria-hidden="true"></i><span>Image</span></a>
+      <a href="/pdf/" aria-current="page"><i class="fa-solid fa-file-pdf" aria-hidden="true"></i><span>PDF</span></a>
+      <a href="/video/"><i class="fa-solid fa-film" aria-hidden="true"></i><span>Video</span></a>
+      <a href="/fonts/"><i class="fa-solid fa-font" aria-hidden="true"></i><span>Fonts</span></a>
+      <a href="/audio/"><i class="fa-solid fa-wave-square" aria-hidden="true"></i><span>Audio</span></a>
+      <a href="/file/"><i class="fa-solid fa-folder-tree" aria-hidden="true"></i><span>File</span></a>
+      <a href="/workflows/"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span>Workflows</span></a>
+      <a href="/learn/"><i class="fa-solid fa-book-open" aria-hidden="true"></i><span>Learn</span></a>
+      <a href="/changes/"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i><span>Updates</span></a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="ghost header-link" href="/tools/">All Tools</a>
+      <button id="shareButton" type="button" class="icon-toggle" aria-label="Share this page" title="Share this page"><i class="fa-solid fa-share-nodes" aria-hidden="true"></i></button>
+      <button id="themeToggle" type="button" class="icon-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><i class="fa-solid fa-moon" aria-hidden="true"></i></button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <p class="eyebrow">PDF Tools</p>
+      <h1>PDF to DOCX</h1>
+      <p>Extract readable text from a PDF and download it as a DOCX document directly in your browser.</p>
+    </section>
+
+    <section class="tool-intro" aria-label="How this converter works">
+      <div class="tool-intro-card">
+        <h2>Best fit</h2>
+        <ul class="tool-intro-list">
+          <li>Text-based PDFs with selectable text already inside the document</li>
+          <li>Contracts, drafts, handoffs, and exports where readable text matters more than exact layout</li>
+          <li>Quick DOCX conversion without upload limits or third-party document quotas</li>
+        </ul>
+      </div>
+      <div class="tool-intro-card">
+        <h2>Important limit</h2>
+        <p>This converter extracts text and rebuilds a clean DOCX. It does not preserve exact PDF layout, and scanned image-only PDFs will need OCR elsewhere before they convert well.</p>
+      </div>
+    </section>
+
+    <section class="upload-card">
+      <input id="pdfDocxInput" type="file" accept="application/pdf,.pdf" hidden />
+      <div id="pdfDocxDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload a PDF file to convert to DOCX">
+        <div class="drop-icon" aria-hidden="true"></div>
+        <button id="pdfDocxUploadButton" type="button" class="primary upload-trigger">Upload PDF</button>
+        <p>or drag and drop a PDF file here</p>
+        <p class="status">Private by default. PDF text extraction and DOCX generation stay in this browser session.</p>
+        <p id="pdfDocxStatus" class="status">Ready for upload.</p>
+      </div>
+    </section>
+
+    <section id="pdfDocxWorkspace" class="workspace is-hidden">
+      <div class="controls">
+        <p id="pdfDocxMeta" class="status status-empty">Upload a text-based PDF to begin conversion.</p>
+        <div class="inline-actions">
+          <button id="pdfDocxConvertButton" type="button" class="primary" disabled>Convert to DOCX</button>
+          <button id="pdfDocxDownloadButton" type="button" class="secondary-button" disabled>Download DOCX</button>
+          <button id="pdfDocxResetButton" type="button" class="ghost">Choose Another PDF</button>
+        </div>
+      </div>
+
+      <div class="pdf-fill-layout">
+        <aside class="pdf-fill-sidebar">
+          <section class="tool-intro-card pdf-fill-card">
+            <h2>Conversion Notes</h2>
+            <ul class="tool-intro-list">
+              <li>Each PDF page becomes a separate section in the DOCX.</li>
+              <li>Line order is preserved as well as the PDF text layer allows.</li>
+              <li>Empty or image-only pages are marked clearly in the export.</li>
+            </ul>
+          </section>
+
+          <section class="tool-intro-card pdf-fill-card">
+            <h2>Document Summary</h2>
+            <div class="result-card">
+              <div class="result-row">
+                <span>Pages</span>
+                <strong id="pdfDocxPageCount">0</strong>
+              </div>
+              <div class="result-row">
+                <span>Text lines</span>
+                <strong id="pdfDocxLineCount">0</strong>
+              </div>
+              <div class="result-row">
+                <span>Export status</span>
+                <strong id="pdfDocxExportStatus">Waiting for PDF</strong>
+              </div>
+            </div>
+          </section>
+        </aside>
+
+        <div class="preview-panel pdf-fill-preview-panel">
+          <div class="tool-results pdf-fill-results">
+            <h2>Extracted Text Preview</h2>
+            <p id="pdfDocxSummary">No PDF loaded yet.</p>
+            <textarea id="pdfDocxPreview" class="input-like pdf-fill-textarea" rows="18" readonly placeholder="Extracted text preview will appear here."></textarea>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tool-intro" aria-label="What to do next">
+      <div class="tool-intro-card">
+        <h2>After export</h2>
+        <p>Open the DOCX in Word, Pages, or Google Docs to continue editing. If the original PDF is still too large to send, use <a href="/pdf/compress/">PDF Compress</a> on the source file first.</p>
+      </div>
+      <div class="tool-intro-card">
+        <h2>Need exact form filling instead?</h2>
+        <p>Use <a href="/pdf/fill-sign/">PDF Fill &amp; Sign</a> when the goal is to place text and signatures on top of a fixed PDF layout instead of converting it into an editable document.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+  <div class="footer-topline"></div>
+  <div class="footer-inner">
+    <section class="footer-about">
+      <h3>Kreativ<span>Tools</span></h3>
+      <p>Kreativ Tools is a growing browser-based toolkit for image, PDF, video, font, audio, and file workflows. Explore focused utilities, practical Learn guides, and privacy-friendly tools for repeat creative work.</p>
+    </section>
+
+    <section>
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/tools/">All Tools</a></li>
+        <li><a href="/learn/">Learn</a></li>
+        <li><a href="/changes/">Updates</a></li>
+        <li><a href="/privacy/">Privacy Policy</a></li>
+        <li><a href="/terms/">Terms</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h4>Core Tools</h4>
+      <ul>
+        <li><a href="/image/compress/">Image Compress</a></li>
+        <li><a href="/pdf/merge/">PDF Merge</a></li>
+        <li><a href="/pdf/compress/">PDF Compress</a></li>
+        <li><a href="/fonts/webfont-convert/">Font to Webfont</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h4>More Tools</h4>
+      <ul>
+        <li><a href="/workflows/">Workflows</a></li>
+        <li><a href="/learn/">Learn Guides</a></li>
+        <li><a href="/video/thumbnail/">Video Thumbnail</a></li>
+        <li><a href="/file/xml-to-csv/">XML to CSV</a></li>
+        <li><a href="/tools/">Browse Directory</a></li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="footer-bottom">
+    <p class="footer-brand-links"><a href="https://kreativfont.com/" target="_blank" rel="noopener noreferrer">Kreativ Font</a><span aria-hidden="true">·</span><a href="https://kreativsound.com/" target="_blank" rel="noopener noreferrer">Kreativ Sound</a><span aria-hidden="true">·</span><a href="https://kreativwp.com/" target="_blank" rel="noopener noreferrer">Kreativ WP</a><span aria-hidden="true">·</span><a href="/">Kreativ Tools</a></p>
+    <p>© 2026 <a href="https://madebykreativ.com/" target="_blank" rel="noopener noreferrer">Made by KREATIV</a> · Independent creative tools and assets by Andrei Olaru</p>
+    <p class="footer-meta-actions"></p>
+  </div>
+</footer>
+
+  <script src="../../cookie-consent.js"></script>
+  <script src="../../github-pages-prefix.js"></script>
+  <script src="../../analytics.js"></script>
+  <script src="../../theme.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+
+    const pdfDocxInput = document.getElementById('pdfDocxInput');
+    const pdfDocxUploadButton = document.getElementById('pdfDocxUploadButton');
+    const pdfDocxDropzone = document.getElementById('pdfDocxDropzone');
+    const pdfDocxStatus = document.getElementById('pdfDocxStatus');
+    const pdfDocxWorkspace = document.getElementById('pdfDocxWorkspace');
+    const pdfDocxMeta = document.getElementById('pdfDocxMeta');
+    const pdfDocxSummary = document.getElementById('pdfDocxSummary');
+    const pdfDocxPreview = document.getElementById('pdfDocxPreview');
+    const pdfDocxPageCount = document.getElementById('pdfDocxPageCount');
+    const pdfDocxLineCount = document.getElementById('pdfDocxLineCount');
+    const pdfDocxExportStatus = document.getElementById('pdfDocxExportStatus');
+    const pdfDocxConvertButton = document.getElementById('pdfDocxConvertButton');
+    const pdfDocxDownloadButton = document.getElementById('pdfDocxDownloadButton');
+    const pdfDocxResetButton = document.getElementById('pdfDocxResetButton');
+
+    let sourceFile = null;
+    let sourceBytes = null;
+    let extractedPages = [];
+    let outputBlob = null;
+    let outputName = '';
+
+    function setStatus(message) {
+      pdfDocxStatus.textContent = message;
+    }
+
+    function resetOutputState() {
+      outputBlob = null;
+      outputName = '';
+      pdfDocxDownloadButton.disabled = true;
+      pdfDocxExportStatus.textContent = extractedPages.length ? 'Ready to convert' : 'Waiting for PDF';
+    }
+
+    function slugBaseName(filename) {
+      return (filename || 'converted-document').replace(/\.pdf$/i, '') || 'converted-document';
+    }
+
+    function escapeXml(value) {
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&apos;');
+    }
+
+    function isPdfFile(file) {
+      return file && (file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf'));
+    }
+
+    function updateSummary() {
+      const lineCount = extractedPages.reduce((total, page) => total + page.lines.length, 0);
+      pdfDocxPageCount.textContent = String(extractedPages.length);
+      pdfDocxLineCount.textContent = String(lineCount);
+      pdfDocxSummary.textContent = extractedPages.length
+        ? `Loaded ${extractedPages.length} page${extractedPages.length === 1 ? '' : 's'} from ${sourceFile.name}.`
+        : 'No PDF loaded yet.';
+      pdfDocxMeta.textContent = extractedPages.length
+        ? 'Review the extracted text preview below, then generate the DOCX export.'
+        : 'Upload a text-based PDF to begin conversion.';
+      const previewSections = extractedPages.map((page, index) => {
+        const body = page.lines.length ? page.lines.join('\n') : '[No extractable text detected on this page.]';
+        return `Page ${index + 1}\n${body}`;
+      });
+      pdfDocxPreview.value = previewSections.join('\n\n');
+      pdfDocxConvertButton.disabled = !extractedPages.length;
+      resetOutputState();
+    }
+
+    function groupItemsIntoLines(items) {
+      const positioned = items
+        .map((item) => {
+          const transform = item.transform || [];
+          return {
+            text: String(item.str || '').trim(),
+            x: Number(transform[4] || 0),
+            y: Number(transform[5] || 0),
+          };
+        })
+        .filter((item) => item.text);
+
+      const lines = [];
+      const threshold = 4;
+
+      positioned.forEach((item) => {
+        let line = lines.find((candidate) => Math.abs(candidate.y - item.y) <= threshold);
+        if (!line) {
+          line = { y: item.y, items: [] };
+          lines.push(line);
+        }
+        line.items.push(item);
+      });
+
+      return lines
+        .sort((a, b) => b.y - a.y)
+        .map((line) => line.items.sort((a, b) => a.x - b.x).map((item) => item.text).join(' '))
+        .map((line) => line.replace(/\s+/g, ' ').trim())
+        .filter(Boolean);
+    }
+
+    async function extractPdfText(bytes) {
+      const loadingTask = pdfjsLib.getDocument({ data: bytes });
+      const pdf = await loadingTask.promise;
+      const pages = [];
+
+      for (let index = 1; index <= pdf.numPages; index += 1) {
+        const page = await pdf.getPage(index);
+        const textContent = await page.getTextContent();
+        pages.push({
+          pageNumber: index,
+          lines: groupItemsIntoLines(textContent.items),
+        });
+      }
+
+      return pages;
+    }
+
+    function paragraphXml(text, style = 'BodyText') {
+      return `<w:p><w:pPr><w:pStyle w:val="${style}"/></w:pPr><w:r><w:t xml:space="preserve">${escapeXml(text)}</w:t></w:r></w:p>`;
+    }
+
+    function pageBreakXml() {
+      return '<w:p><w:r><w:br w:type="page"/></w:r></w:p>';
+    }
+
+    function buildDocumentXml(pages, sourceName) {
+      const parts = [
+        paragraphXml('Converted from PDF', 'Title'),
+        paragraphXml(`Source file: ${sourceName}`),
+        paragraphXml('This DOCX preserves extracted text content only. Exact PDF layout, graphics, and scanned image text may not carry over.'),
+      ];
+
+      pages.forEach((page, index) => {
+        parts.push(paragraphXml(`Page ${index + 1}`, 'Heading1'));
+        if (page.lines.length) {
+          page.lines.forEach((line) => parts.push(paragraphXml(line)));
+        } else {
+          parts.push(paragraphXml('[No extractable text detected on this page.]'));
+        }
+        if (index < pages.length - 1) parts.push(pageBreakXml());
+      });
+
+      return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:wpc="http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:wp14="http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:w10="urn:schemas-microsoft-com:office:word" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:w14="http://schemas.microsoft.com/office/word/2010/wordml" xmlns:wpg="http://schemas.microsoft.com/office/word/2010/wordprocessingGroup" xmlns:wpi="http://schemas.microsoft.com/office/word/2010/wordprocessingInk" xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml" xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape" mc:Ignorable="w14 wp14">
+  <w:body>
+    ${parts.join('')}
+    <w:sectPr>
+      <w:pgSz w:w="12240" w:h="15840"/>
+      <w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440" w:header="708" w:footer="708" w:gutter="0"/>
+    </w:sectPr>
+  </w:body>
+</w:document>`;
+    }
+
+    async function buildDocxBlob(pages, sourceName) {
+      const zip = new JSZip();
+      zip.file('[Content_Types].xml', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
+  <Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>
+  <Default Extension="xml" ContentType="application/xml"/>
+  <Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>
+  <Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/>
+  <Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/>
+  <Override PartName="/docProps/app.xml" ContentType="application/vnd.openxmlformats-officedocument.extended-properties+xml"/>
+</Types>`);
+      zip.folder('_rels').file('.rels', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+  <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>
+  <Relationship Id="rId2" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/>
+  <Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties" Target="docProps/app.xml"/>
+</Relationships>`);
+      zip.folder('docProps').file('core.xml', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:dcmitype="http://purl.org/dc/dcmitype/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <dc:title>${escapeXml(sourceName)}</dc:title>
+  <dc:creator>Kreativ Tools</dc:creator>
+  <cp:lastModifiedBy>Kreativ Tools</cp:lastModifiedBy>
+  <dcterms:created xsi:type="dcterms:W3CDTF">${new Date().toISOString()}</dcterms:created>
+  <dcterms:modified xsi:type="dcterms:W3CDTF">${new Date().toISOString()}</dcterms:modified>
+</cp:coreProperties>`);
+      zip.folder('docProps').file('app.xml', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties" xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes">
+  <Application>Kreativ Tools</Application>
+</Properties>`);
+      const wordFolder = zip.folder('word');
+      wordFolder.file('document.xml', buildDocumentXml(pages, sourceName));
+      wordFolder.file('styles.xml', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:style w:type="paragraph" w:default="1" w:styleId="Normal">
+    <w:name w:val="Normal"/>
+    <w:qFormat/>
+    <w:rPr><w:sz w:val="22"/></w:rPr>
+  </w:style>
+  <w:style w:type="paragraph" w:styleId="Title">
+    <w:name w:val="Title"/>
+    <w:basedOn w:val="Normal"/>
+    <w:qFormat/>
+    <w:rPr><w:b/><w:sz w:val="32"/></w:rPr>
+  </w:style>
+  <w:style w:type="paragraph" w:styleId="Heading1">
+    <w:name w:val="heading 1"/>
+    <w:basedOn w:val="Normal"/>
+    <w:qFormat/>
+    <w:rPr><w:b/><w:sz w:val="28"/></w:rPr>
+  </w:style>
+  <w:style w:type="paragraph" w:styleId="BodyText">
+    <w:name w:val="Body Text"/>
+    <w:basedOn w:val="Normal"/>
+    <w:qFormat/>
+  </w:style>
+</w:styles>`);
+      wordFolder.folder('_rels').file('document.xml.rels', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"></Relationships>`);
+      return zip.generateAsync({
+        type: 'blob',
+        mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      });
+    }
+
+    function downloadBlob(blob, filename) {
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = filename;
+      anchor.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    async function handleFile(file) {
+      if (!isPdfFile(file)) {
+        setStatus('Choose a valid PDF file first.');
+        return;
+      }
+
+      sourceFile = file;
+      sourceBytes = new Uint8Array(await file.arrayBuffer());
+      extractedPages = [];
+      pdfDocxWorkspace.classList.add('is-hidden');
+      setStatus(`Reading ${file.name}...`);
+
+      try {
+        extractedPages = await extractPdfText(sourceBytes);
+        pdfDocxWorkspace.classList.remove('is-hidden');
+        updateSummary();
+        setStatus(`Loaded ${file.name}. Review the preview, then convert to DOCX.`);
+      } catch (error) {
+        console.error(error);
+        sourceFile = null;
+        sourceBytes = null;
+        extractedPages = [];
+        pdfDocxWorkspace.classList.add('is-hidden');
+        setStatus('Could not extract text from that PDF.');
+      }
+    }
+
+    function resetWorkspace() {
+      sourceFile = null;
+      sourceBytes = null;
+      extractedPages = [];
+      outputBlob = null;
+      outputName = '';
+      pdfDocxInput.value = '';
+      pdfDocxWorkspace.classList.add('is-hidden');
+      pdfDocxPreview.value = '';
+      pdfDocxSummary.textContent = 'No PDF loaded yet.';
+      pdfDocxMeta.textContent = 'Upload a text-based PDF to begin conversion.';
+      pdfDocxPageCount.textContent = '0';
+      pdfDocxLineCount.textContent = '0';
+      pdfDocxExportStatus.textContent = 'Waiting for PDF';
+      pdfDocxConvertButton.disabled = true;
+      pdfDocxDownloadButton.disabled = true;
+      setStatus('Ready for upload.');
+    }
+
+    pdfDocxUploadButton.addEventListener('click', () => pdfDocxInput.click());
+    pdfDocxInput.addEventListener('change', async (event) => {
+      const [file] = event.target.files || [];
+      if (file) await handleFile(file);
+    });
+
+    pdfDocxDropzone.addEventListener('click', () => pdfDocxInput.click());
+    pdfDocxDropzone.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        pdfDocxInput.click();
+      }
+    });
+    ['dragenter', 'dragover'].forEach((eventName) => {
+      pdfDocxDropzone.addEventListener(eventName, (event) => {
+        event.preventDefault();
+        pdfDocxDropzone.classList.add('is-dragover');
+      });
+    });
+    ['dragleave', 'drop'].forEach((eventName) => {
+      pdfDocxDropzone.addEventListener(eventName, (event) => {
+        event.preventDefault();
+        pdfDocxDropzone.classList.remove('is-dragover');
+      });
+    });
+    pdfDocxDropzone.addEventListener('drop', async (event) => {
+      const [file] = event.dataTransfer.files || [];
+      if (file) await handleFile(file);
+    });
+
+    pdfDocxConvertButton.addEventListener('click', async () => {
+      if (!sourceFile || !extractedPages.length) return;
+      pdfDocxConvertButton.disabled = true;
+      pdfDocxExportStatus.textContent = 'Building DOCX';
+      setStatus(`Generating DOCX from ${sourceFile.name}...`);
+
+      try {
+        outputName = `${slugBaseName(sourceFile.name)}.docx`;
+        outputBlob = await buildDocxBlob(extractedPages, sourceFile.name);
+        pdfDocxDownloadButton.disabled = false;
+        pdfDocxExportStatus.textContent = 'DOCX ready';
+        setStatus(`DOCX ready: ${outputName}`);
+      } catch (error) {
+        console.error(error);
+        outputBlob = null;
+        outputName = '';
+        pdfDocxDownloadButton.disabled = true;
+        pdfDocxExportStatus.textContent = 'Conversion failed';
+        setStatus('Could not generate the DOCX file.');
+      } finally {
+        pdfDocxConvertButton.disabled = false;
+      }
+    });
+
+    pdfDocxDownloadButton.addEventListener('click', () => {
+      if (!outputBlob || !outputName) return;
+      downloadBlob(outputBlob, outputName);
+      setStatus(`Downloaded ${outputName}`);
+    });
+
+    pdfDocxResetButton.addEventListener('click', resetWorkspace);
+  </script>
+</body>
+</html>
