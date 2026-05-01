@@ -29,7 +29,7 @@ const pages = [
 test('all tools directory shows cards that link to tools', async ({ page }) => {
   await page.goto('/tools');
   const cards = page.locator('.tool-card');
-  await expect(cards).toHaveCount(26);
+  await expect(cards).toHaveCount(28);
 
   await expect(page.locator('.tool-card[href="/workflows/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/workflows/image-prep/"]')).toBeVisible();
@@ -40,6 +40,8 @@ test('all tools directory shows cards that link to tools', async ({ page }) => {
   await expect(page.locator('.tool-card[href="/image/resize/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/image/to-webp/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/pdf/image-to-pdf/"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/pdf/to-docx/"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/pdf/fill-sign/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/pdf/split/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/pdf/merge/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/pdf/compress/"]')).toBeVisible();

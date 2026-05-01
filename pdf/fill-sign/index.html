@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kreativ Tools | PDF Fill &amp;amp;amp; Sign</title>
+  <title>Kreativ Tools | PDF Fill &amp; Sign</title>
   <meta name="description" content="Add text and signature images to PDF files directly in your browser." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://kreativtools.com/pdf/fill-sign/" />
-  <meta property="og:title" content="Kreativ Tools | PDF Fill &amp;amp;amp; Sign" />
+  <meta property="og:title" content="Kreativ Tools | PDF Fill &amp; Sign" />
   <meta property="og:description" content="Add text and signature images to PDF files directly in your browser." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://kreativtools.com/pdf/fill-sign/" />
@@ -17,7 +17,7 @@
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Kreativ Tools | PDF Fill &amp;amp;amp; Sign" />
+  <meta name="twitter:title" content="Kreativ Tools | PDF Fill &amp; Sign" />
   <meta name="twitter:description" content="Add text and signature images to PDF files directly in your browser." />
   <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
   <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
@@ -61,14 +61,14 @@
     <section class="hero">
       <p class="eyebrow">PDF Tools</p>
       <h1>PDF Fill &amp; Sign</h1>
-      <p>Add names, addresses, dates, notes, and signature images on top of an existing PDF form directly in your browser.</p>
+      <p>Add names, addresses, dates, notes, checkboxes, and signature images on top of an existing PDF form directly in your browser.</p>
     </section>
 
     <section class="tool-intro" aria-label="How this tool works">
       <div class="tool-intro-card">
         <h2>Before you upload</h2>
         <ul class="tool-intro-list">
-          <li>Upload one PDF file, then click any page preview to place text or a signature image.</li>
+          <li>Upload one PDF file, then click any page preview to place text, a checkbox, or a signature image.</li>
           <li>Signature uploads support PNG, JPG, and SVG. SVG signatures are rasterized locally in the browser.</li>
           <li>This tool places overlay content on top of the PDF. It does not rewrite existing text already inside the document.</li>
         </ul>
@@ -85,14 +85,14 @@
         <div class="drop-icon" aria-hidden="true"></div>
         <button id="pdfFillUploadButton" type="button" class="primary upload-trigger">Upload PDF</button>
         <p>or drag and drop a PDF file here</p>
-        <p class="status">Private by default. Your PDF, text, and signature stay in this browser session.</p>
+        <p class="status">Private by default. Your PDF, text, checkboxes, and signatures stay in this browser session.</p>
         <p id="pdfFillStatus" class="status">Ready for upload.</p>
       </div>
     </section>
 
     <section id="pdfFillWorkspace" class="workspace is-hidden">
       <div class="controls">
-        <p id="pdfFillMeta" class="status status-empty">Upload a PDF file to begin placing text and signatures.</p>
+        <p id="pdfFillMeta" class="status status-empty">Upload a PDF file to begin placing text, checkboxes, and signatures.</p>
         <div class="inline-actions">
           <button id="pdfFillExportButton" type="button" class="primary" disabled>Generate Filled PDF</button>
           <button id="pdfFillDownloadButton" type="button" class="secondary-button" disabled>Download Filled PDF</button>
@@ -106,9 +106,22 @@
             <h2>Placement Mode</h2>
             <div class="pdf-fill-mode-row">
               <button id="pdfFillToolText" type="button" class="ghost is-active">Add Text</button>
+              <button id="pdfFillToolCheckbox" type="button" class="ghost">Add Checkbox</button>
               <button id="pdfFillToolSignature" type="button" class="ghost">Add Signature</button>
             </div>
             <p class="status">Click a page preview to place the active item. Drag any placed item to fine-tune its position.</p>
+          </section>
+
+          <section class="tool-intro-card pdf-fill-card">
+            <h2>Checkbox</h2>
+            <div class="pdf-fill-field-row">
+              <label class="field-label" for="pdfFillCheckboxSize">Box size</label>
+              <input id="pdfFillCheckboxSize" class="text-input" type="number" min="10" max="42" value="18" />
+            </div>
+            <div class="inline-actions">
+              <label class="field-label" for="pdfFillCheckboxChecked">Checked</label>
+              <input id="pdfFillCheckboxChecked" type="checkbox" checked />
+            </div>
           </section>
 
           <section class="tool-intro-card pdf-fill-card">
@@ -135,18 +148,22 @@
               <label class="field-label" for="pdfSignatureWidth">Width on page</label>
               <input id="pdfSignatureWidth" class="text-input" type="number" min="40" max="360" value="140" />
             </div>
+            <div class="inline-actions">
+              <button id="pdfSignatureSaveButton" type="button" class="ghost" disabled>Save Signature</button>
+            </div>
             <div id="pdfSignaturePreviewWrap" class="pdf-signature-preview-wrap" hidden>
               <img id="pdfSignaturePreview" alt="Signature preview" />
             </div>
             <p id="pdfSignatureStatus" class="status">Upload a signature image before placing it on the PDF.</p>
+            <div id="pdfSavedSignatureList" class="queue-list"></div>
           </section>
 
           <section class="tool-intro-card pdf-fill-card">
             <h2>Selected Item</h2>
             <p id="pdfFillSelectionStatus" class="status">No placement selected yet.</p>
             <div class="pdf-fill-field-row">
-              <label class="field-label" for="pdfFillSelectedWidth">Selected signature width</label>
-              <input id="pdfFillSelectedWidth" class="text-input" type="number" min="40" max="360" value="140" />
+              <label class="field-label" for="pdfFillSelectedWidth">Selected item size</label>
+              <input id="pdfFillSelectedWidth" class="text-input" type="number" min="10" max="360" value="140" />
             </div>
             <div class="inline-actions">
               <button id="pdfFillDuplicateButton" type="button" class="ghost" disabled>Duplicate Selected Item</button>
@@ -190,6 +207,7 @@
         <ul class="tool-intro-list">
           <li>Typing names, dates, and addresses onto a form PDF</li>
           <li>Adding a scanned or exported signature image to contracts and approvals</li>
+          <li>Ticking simple checkboxes in forms that were not built as interactive PDF fields</li>
           <li>Placing short notes or labels on top of a fixed PDF layout</li>
         </ul>
       </div>
@@ -270,16 +288,21 @@
     const pdfFillDownloadButton = document.getElementById('pdfFillDownloadButton');
     const pdfFillResetButton = document.getElementById('pdfFillResetButton');
     const pdfFillToolText = document.getElementById('pdfFillToolText');
+    const pdfFillToolCheckbox = document.getElementById('pdfFillToolCheckbox');
     const pdfFillToolSignature = document.getElementById('pdfFillToolSignature');
     const pdfFillText = document.getElementById('pdfFillText');
     const pdfFillInsertTodayButton = document.getElementById('pdfFillInsertTodayButton');
     const pdfFillFontSize = document.getElementById('pdfFillFontSize');
     const pdfFillColor = document.getElementById('pdfFillColor');
+    const pdfFillCheckboxSize = document.getElementById('pdfFillCheckboxSize');
+    const pdfFillCheckboxChecked = document.getElementById('pdfFillCheckboxChecked');
     const pdfSignatureInput = document.getElementById('pdfSignatureInput');
+    const pdfSignatureSaveButton = document.getElementById('pdfSignatureSaveButton');
     const pdfSignatureWidth = document.getElementById('pdfSignatureWidth');
     const pdfSignaturePreviewWrap = document.getElementById('pdfSignaturePreviewWrap');
     const pdfSignaturePreview = document.getElementById('pdfSignaturePreview');
     const pdfSignatureStatus = document.getElementById('pdfSignatureStatus');
+    const pdfSavedSignatureList = document.getElementById('pdfSavedSignatureList');
     const pdfFillSelectionStatus = document.getElementById('pdfFillSelectionStatus');
     const pdfFillSelectedWidth = document.getElementById('pdfFillSelectedWidth');
     const pdfFillDuplicateButton = document.getElementById('pdfFillDuplicateButton');
@@ -295,10 +318,12 @@
     let placements = [];
     let selectedPlacementId = '';
     let signatureAsset = null;
+    let savedSignatures = [];
     let placementCounter = 0;
     let dragState = null;
 
     const pageState = [];
+    const SAVED_SIGNATURES_KEY = 'kreativ-pdf-fill-signatures';
 
     function setStatus(message) {
       pdfFillStatus.textContent = message;
@@ -315,6 +340,7 @@
     function setActiveMode(mode) {
       activeMode = mode;
       pdfFillToolText.classList.toggle('is-active', mode === 'text');
+      pdfFillToolCheckbox.classList.toggle('is-active', mode === 'checkbox');
       pdfFillToolSignature.classList.toggle('is-active', mode === 'signature');
     }
 
@@ -328,7 +354,84 @@
     }
 
     function formatPlacementLabel(placement) {
-      return placement.type === 'text' ? placement.text.split('\n')[0] || 'Text' : 'Signature';
+      if (placement.type === 'text') return placement.text.split('\n')[0] || 'Text';
+      if (placement.type === 'checkbox') return placement.checked ? 'Checked box' : 'Empty box';
+      return placement.label || 'Signature';
+    }
+
+    function loadSavedSignatures() {
+      try {
+        const raw = localStorage.getItem(SAVED_SIGNATURES_KEY);
+        savedSignatures = raw ? JSON.parse(raw) : [];
+      } catch (error) {
+        console.error(error);
+        savedSignatures = [];
+      }
+    }
+
+    function persistSavedSignatures() {
+      localStorage.setItem(SAVED_SIGNATURES_KEY, JSON.stringify(savedSignatures));
+    }
+
+    function setSignatureAsset(asset, statusMessage = '') {
+      signatureAsset = asset;
+      if (!asset) {
+        pdfSignaturePreviewWrap.hidden = true;
+        pdfSignaturePreview.removeAttribute('src');
+        pdfSignatureSaveButton.disabled = true;
+        pdfSignatureStatus.textContent = statusMessage || 'Upload a signature image before placing it on the PDF.';
+        return;
+      }
+
+      pdfSignaturePreview.src = asset.dataUrl;
+      pdfSignaturePreviewWrap.hidden = false;
+      pdfSignatureSaveButton.disabled = false;
+      pdfSignatureStatus.textContent = statusMessage || `Loaded ${asset.name}. Click any page to place this signature.`;
+      setActiveMode('signature');
+    }
+
+    function renderSavedSignatures() {
+      pdfSavedSignatureList.innerHTML = '';
+
+      if (!savedSignatures.length) {
+        pdfSavedSignatureList.innerHTML = '<p class="status">No saved signatures yet.</p>';
+        return;
+      }
+
+      savedSignatures.forEach((asset) => {
+        const item = document.createElement('div');
+        item.className = 'queue-item workflow-template-item';
+
+        const meta = document.createElement('div');
+        meta.className = 'queue-item-meta';
+        meta.innerHTML = `<strong>${asset.name}</strong><span>Saved signature</span>`;
+
+        const actions = document.createElement('div');
+        actions.className = 'queue-actions';
+
+        const useButton = document.createElement('button');
+        useButton.type = 'button';
+        useButton.className = 'ghost';
+        useButton.textContent = 'Use';
+        useButton.addEventListener('click', () => {
+          setSignatureAsset(asset, `Loaded saved signature ${asset.name}. Click any page to place it.`);
+        });
+
+        const deleteButton = document.createElement('button');
+        deleteButton.type = 'button';
+        deleteButton.className = 'ghost';
+        deleteButton.textContent = 'Delete';
+        deleteButton.addEventListener('click', () => {
+          savedSignatures = savedSignatures.filter((entry) => entry.id !== asset.id);
+          persistSavedSignatures();
+          renderSavedSignatures();
+          setStatus(`Removed saved signature ${asset.name}.`);
+        });
+
+        actions.append(useButton, deleteButton);
+        item.append(meta, actions);
+        pdfSavedSignatureList.append(item);
+      });
     }
 
     function extensionFromMime(mime) {
@@ -412,7 +515,7 @@
       const selected = placements.find((placement) => placement.id === selectedPlacementId);
       pdfFillDeleteButton.disabled = !selected;
       pdfFillDuplicateButton.disabled = !selected;
-      pdfFillSelectedWidth.disabled = !(selected && selected.type === 'signature');
+      pdfFillSelectedWidth.disabled = !(selected && (selected.type === 'signature' || selected.type === 'checkbox'));
 
       if (!selected) {
         pdfFillSelectionStatus.textContent = 'No placement selected yet.';
@@ -422,6 +525,9 @@
       if (selected.type === 'signature') {
         pdfFillSelectedWidth.value = String(Math.round(selected.previewWidth));
         pdfFillSelectionStatus.textContent = `Selected signature on page ${selected.pageIndex + 1}.`;
+      } else if (selected.type === 'checkbox') {
+        pdfFillSelectedWidth.value = String(Math.round(selected.previewWidth));
+        pdfFillSelectionStatus.textContent = `Selected checkbox on page ${selected.pageIndex + 1}.`;
       } else {
         pdfFillSelectionStatus.textContent = `Selected text on page ${selected.pageIndex + 1}. Edit the text fields above to update it.`;
       }
@@ -442,7 +548,12 @@
 
         const details = document.createElement('div');
         details.className = 'queue-item-meta';
-        details.innerHTML = `<strong>Page ${placement.pageIndex + 1}</strong><span>${placement.type === 'text' ? 'Text' : 'Signature'} • ${formatPlacementLabel(placement)}</span>`;
+        const placementTypeLabel = placement.type === 'text'
+          ? 'Text'
+          : placement.type === 'checkbox'
+            ? 'Checkbox'
+            : 'Signature';
+        details.innerHTML = `<strong>Page ${placement.pageIndex + 1}</strong><span>${placementTypeLabel} • ${formatPlacementLabel(placement)}</span>`;
 
         const actions = document.createElement('div');
         actions.className = 'queue-actions';
@@ -485,6 +596,12 @@
             overlay.style.fontSize = `${placement.fontSize}px`;
             overlay.style.color = placement.color;
             overlay.textContent = placement.text;
+          } else if (placement.type === 'checkbox') {
+            overlay.style.width = `${placement.widthRatio * 100}%`;
+            overlay.style.height = `${placement.heightRatio * 100}%`;
+            overlay.style.fontSize = `${placement.previewWidth}px`;
+            overlay.style.color = placement.color;
+            overlay.textContent = placement.checked ? '☑' : '☐';
           } else {
             overlay.style.width = `${placement.widthRatio * 100}%`;
             overlay.style.height = `${placement.heightRatio * 100}%`;
@@ -537,6 +654,12 @@
         pdfFillFontSize.value = String(selected.fontSize);
         pdfFillColor.value = selected.color;
         setActiveMode('text');
+      } else if (selected.type === 'checkbox') {
+        pdfFillSelectedWidth.value = String(Math.round(selected.previewWidth));
+        pdfFillCheckboxSize.value = String(Math.round(selected.previewWidth));
+        pdfFillCheckboxChecked.checked = Boolean(selected.checked);
+        pdfFillColor.value = selected.color || '#111827';
+        setActiveMode('checkbox');
       } else {
         pdfFillSelectedWidth.value = String(Math.round(selected.previewWidth));
         setActiveMode('signature');
@@ -567,7 +690,8 @@
       markDirty();
       updateSelectionFromSelected();
       renderPlacements();
-      setStatus(`Duplicated ${selected.type === 'text' ? 'text' : 'signature'} on page ${selected.pageIndex + 1}.`);
+      const kind = selected.type === 'text' ? 'text' : selected.type === 'checkbox' ? 'checkbox' : 'signature';
+      setStatus(`Duplicated ${kind} on page ${selected.pageIndex + 1}.`);
     }
 
     function updateSelectedTextPlacement() {
@@ -589,6 +713,21 @@
       const stageHeight = pageState[selected.pageIndex]?.stage.clientHeight || 900;
       selected.widthRatio = clamp(previewWidth / stageWidth, 0.04, 0.9);
       selected.heightRatio = clamp((previewWidth / selected.aspectRatio) / stageHeight, 0.02, 0.4);
+      markDirty();
+      renderPlacements();
+    }
+
+    function updateSelectedCheckboxPlacement() {
+      const selected = placements.find((placement) => placement.id === selectedPlacementId && placement.type === 'checkbox');
+      if (!selected) return;
+      const previewWidth = clamp(Number(pdfFillSelectedWidth.value || pdfFillCheckboxSize.value) || 18, 10, 42);
+      selected.previewWidth = previewWidth;
+      const stageWidth = pageState[selected.pageIndex]?.stage.clientWidth || 700;
+      const stageHeight = pageState[selected.pageIndex]?.stage.clientHeight || 900;
+      selected.widthRatio = clamp(previewWidth / stageWidth, 0.01, 0.15);
+      selected.heightRatio = clamp(previewWidth / stageHeight, 0.01, 0.12);
+      selected.checked = Boolean(pdfFillCheckboxChecked.checked);
+      selected.color = pdfFillColor.value || '#111827';
       markDirty();
       renderPlacements();
     }
@@ -635,13 +774,31 @@
       };
     }
 
+    function buildCheckboxPlacement(pageIndex, x, y, stageWidth, stageHeight) {
+      const previewWidth = clamp(Number(pdfFillCheckboxSize.value) || 18, 10, 42);
+      return {
+        id: createPlacementId(),
+        type: 'checkbox',
+        pageIndex,
+        previewWidth,
+        checked: Boolean(pdfFillCheckboxChecked.checked),
+        color: pdfFillColor.value || '#111827',
+        widthRatio: clamp(previewWidth / stageWidth, 0.01, 0.15),
+        heightRatio: clamp(previewWidth / stageHeight, 0.01, 0.12),
+        xRatio: clamp(x / stageWidth, 0.01, 0.95),
+        yRatio: clamp(y / stageHeight, 0.01, 0.95),
+      };
+    }
+
     function addPlacement(pageIndex, event, stage) {
       const bounds = stage.getBoundingClientRect();
       const x = event.clientX - bounds.left;
       const y = event.clientY - bounds.top;
       const placement = activeMode === 'text'
         ? buildTextPlacement(pageIndex, x, y, bounds.width, bounds.height)
-        : buildSignaturePlacement(pageIndex, x, y, bounds.width, bounds.height);
+        : activeMode === 'checkbox'
+          ? buildCheckboxPlacement(pageIndex, x, y, bounds.width, bounds.height)
+          : buildSignaturePlacement(pageIndex, x, y, bounds.width, bounds.height);
 
       if (!placement) return;
       placements.push(placement);
@@ -649,7 +806,8 @@
       markDirty();
       updateSelectionFromSelected();
       renderPlacements();
-      setStatus(`Placed ${placement.type === 'text' ? 'text' : 'signature'} on page ${pageIndex + 1}.`);
+      const kind = placement.type === 'text' ? 'text' : placement.type === 'checkbox' ? 'checkbox' : 'signature';
+      setStatus(`Placed ${kind} on page ${pageIndex + 1}.`);
     }
 
     async function renderPdfPages() {
@@ -719,7 +877,7 @@
       await renderPdfPages();
 
       pdfFillWorkspace.classList.remove('is-hidden');
-      pdfFillSummary.textContent = `Loaded ${file.name}. Click a page to place text or a signature.`;
+      pdfFillSummary.textContent = `Loaded ${file.name}. Click a page to place text, checkboxes, or a signature.`;
       pdfFillPageCount.textContent = String(pdfPreviewDoc.numPages);
       pdfFillPlacementCount.textContent = '0';
       pdfFillMeta.textContent = `${file.name} • ${pdfPreviewDoc.numPages} page${pdfPreviewDoc.numPages === 1 ? '' : 's'}`;
@@ -727,7 +885,7 @@
       pdfFillDownloadButton.disabled = true;
       pdfFillExportStatus.textContent = 'Waiting for changes';
       pdfFillSelectionStatus.textContent = 'No placement selected yet.';
-      setStatus(`Loaded ${file.name}. Place text or a signature on any page.`);
+      setStatus(`Loaded ${file.name}. Place text, checkboxes, or a signature on any page.`);
     }
 
     async function exportPdf() {
@@ -761,6 +919,40 @@
             });
             y -= lineHeight;
           });
+          continue;
+        }
+
+        if (placement.type === 'checkbox') {
+          const drawWidth = placement.widthRatio * width;
+          const drawHeight = placement.heightRatio * height;
+          const y = height - (placement.yRatio * height) - drawHeight;
+          const color = PDFLib.rgb(
+            parseInt((placement.color || '#111827').slice(1, 3), 16) / 255,
+            parseInt((placement.color || '#111827').slice(3, 5), 16) / 255,
+            parseInt((placement.color || '#111827').slice(5, 7), 16) / 255
+          );
+          page.drawRectangle({
+            x,
+            y,
+            width: drawWidth,
+            height: drawHeight,
+            borderColor: color,
+            borderWidth: 1.2,
+          });
+          if (placement.checked) {
+            page.drawLine({
+              start: { x: x + drawWidth * 0.2, y: y + drawHeight * 0.45 },
+              end: { x: x + drawWidth * 0.42, y: y + drawHeight * 0.18 },
+              thickness: 1.4,
+              color,
+            });
+            page.drawLine({
+              start: { x: x + drawWidth * 0.42, y: y + drawHeight * 0.18 },
+              end: { x: x + drawWidth * 0.82, y: y + drawHeight * 0.78 },
+              thickness: 1.4,
+              color,
+            });
+          }
           continue;
         }
 
@@ -832,6 +1024,7 @@
     });
 
     pdfFillToolText.addEventListener('click', () => setActiveMode('text'));
+    pdfFillToolCheckbox.addEventListener('click', () => setActiveMode('checkbox'));
     pdfFillToolSignature.addEventListener('click', () => setActiveMode('signature'));
     pdfFillInsertTodayButton.addEventListener('click', () => {
       pdfFillText.value = todayStamp();
@@ -865,11 +1058,9 @@
       outputName = '';
       placements = [];
       selectedPlacementId = '';
-      signatureAsset = null;
       pdfFillWorkspace.classList.add('is-hidden');
       pdfFillPages.innerHTML = '';
-      pdfSignaturePreviewWrap.hidden = true;
-      pdfSignatureStatus.textContent = 'Upload a signature image before placing it on the PDF.';
+      setSignatureAsset(null);
       setStatus('Ready for upload.');
     });
     pdfFillExportButton.addEventListener('click', () => {
@@ -884,21 +1075,37 @@
     pdfFillFontSize.addEventListener('input', updateSelectedTextPlacement);
     pdfFillColor.addEventListener('input', updateSelectedTextPlacement);
     pdfFillSelectedWidth.addEventListener('input', updateSelectedSignaturePlacement);
+    pdfFillSelectedWidth.addEventListener('input', updateSelectedCheckboxPlacement);
+    pdfFillCheckboxSize.addEventListener('input', updateSelectedCheckboxPlacement);
+    pdfFillCheckboxChecked.addEventListener('input', updateSelectedCheckboxPlacement);
 
     pdfSignatureInput.addEventListener('change', async () => {
       const file = pdfSignatureInput.files?.[0];
       if (!file) return;
       try {
-        signatureAsset = await normalizeSignatureFile(file);
-        pdfSignaturePreview.src = signatureAsset.dataUrl;
-        pdfSignaturePreviewWrap.hidden = false;
-        pdfSignatureStatus.textContent = `Loaded ${file.name}. Click any page to place this signature.`;
-        setActiveMode('signature');
+        const asset = await normalizeSignatureFile(file);
+        asset.id = `signature-${Date.now()}`;
+        setSignatureAsset(asset, `Loaded ${file.name}. Click any page to place this signature.`);
       } catch (error) {
         console.error(error);
-        pdfSignatureStatus.textContent = 'Could not load that signature image.';
+        setSignatureAsset(null, 'Could not load that signature image.');
       }
     });
+
+    pdfSignatureSaveButton.addEventListener('click', () => {
+      if (!signatureAsset) return;
+      const savedAsset = {
+        ...signatureAsset,
+        id: signatureAsset.id || `signature-${Date.now()}`,
+      };
+      savedSignatures = [savedAsset, ...savedSignatures.filter((entry) => entry.dataUrl !== savedAsset.dataUrl)].slice(0, 8);
+      persistSavedSignatures();
+      renderSavedSignatures();
+      setStatus(`Saved signature ${savedAsset.name}.`);
+    });
+
+    loadSavedSignatures();
+    renderSavedSignatures();
 
     setActiveMode('text');
   </script>

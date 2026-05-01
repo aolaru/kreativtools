@@ -98,6 +98,22 @@ function escapeHtml(value) {
   return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
+function decodeHtmlEntities(value) {
+  let decoded = value;
+  for (let index = 0; index < 5; index += 1) {
+    const next = decoded
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+      .replace(/&apos;/g, "'")
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&amp;/g, '&');
+    if (next === decoded) break;
+    decoded = next;
+  }
+  return decoded;
+}
+
 function walk(dir) {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
   const results = [];
@@ -267,7 +283,7 @@ ${listMarkup(FOOTER_SECTIONS.more)}
 function extractMeta(content, pattern, label, file) {
   const match = content.match(pattern);
   if (!match) throw new Error(`Missing ${label} in ${file}`);
-  return match[1].trim();
+  return decodeHtmlEntities(match[1].trim());
 }
 
 function replaceBlock(content, pattern, replacement, label, file) {

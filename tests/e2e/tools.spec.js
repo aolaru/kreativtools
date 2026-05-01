@@ -77,12 +77,19 @@ test('pdf fill and sign places text and a signature image, then exports a filled
   await clickPdfStage(160, 170);
   await expect(page.locator('#pdfFillPlacementCount')).toHaveText('3');
 
+  await page.click('#pdfFillToolCheckbox');
+  await clickPdfStage(210, 205);
+  await expect(page.locator('#pdfFillPlacementCount')).toHaveText('4');
+  await expect(page.locator('#pdfFillPlacementList')).toContainText('Checkbox');
+
   await page.setInputFiles('#pdfSignatureInput', onePxPng);
   await expect(page.locator('#pdfSignaturePreview')).toBeVisible();
   await expect(page.locator('#pdfSignatureStatus')).toContainText('Loaded');
-  await page.click('#pdfFillToolSignature');
+  await page.click('#pdfSignatureSaveButton');
+  await expect(page.locator('#pdfSavedSignatureList')).toContainText('tiny.png');
+  await page.locator('#pdfSavedSignatureList').getByRole('button', { name: 'Use' }).first().click();
   await clickPdfStage(260, 240);
-  await expect(page.locator('#pdfFillPlacementCount')).toHaveText('4');
+  await expect(page.locator('#pdfFillPlacementCount')).toHaveText('5');
   await expect(page.locator('#pdfFillPlacementList')).toContainText('Signature');
 
   await page.click('#pdfFillExportButton');
