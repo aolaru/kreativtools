@@ -18,13 +18,16 @@ test('homepage surfaces featured workflows and Learn entry points', async ({ pag
   await page.goto('/');
   await expect(page.getByRole('heading', { level: 1, name: /Useful browser tools/i })).toBeVisible();
   await expect(page.locator('.hero-actions a[href="/workflows/pricing/"]')).toBeVisible();
+  await expect(page.locator('.hero-actions a[href="/tools/"]')).toBeVisible();
   await expect(page.locator('.quick-links a[href="/workflows/"]')).toBeVisible();
   await expect(page.locator('.quick-links a[href="/workflows/image-prep/"]')).toBeVisible();
   await expect(page.locator('.quick-links a[href="/workflows/pricing/"]')).toBeVisible();
-  await expect(page.locator('.quick-links a[href="/image/compress/"]')).toBeVisible();
-  await expect(page.locator('.home-panel a[href="/workflows/"]').first()).toBeVisible();
-  await expect(page.locator('.home-panel a[href="/tools/"]').first()).toBeVisible();
-  await expect(page.locator('.home-panel a[href="/changes/"]')).toBeVisible();
+  await expect(page.locator('.tool-card.is-workflow-featured[href="/workflows/image-prep/"]')).toBeVisible();
+  await expect(page.locator('.tool-card.is-workflow-featured[href="/workflows/pdf-delivery/"]')).toBeVisible();
+  await expect(page.locator('.tool-card.is-workflow-featured[href="/workflows/audio-delivery/"]')).toBeVisible();
+  await expect(page.locator('.home-section-actions a[href="/tools/"]').first()).toBeVisible();
+  await expect(page.locator('.home-update-strip a[href="/changes/"]')).toBeVisible();
+  await expect(page.locator('.home-update-strip a[href="/learn/"]')).toBeVisible();
 });
 
 test('workflows landing page introduces workflow lineup and image prep entry point', async ({ page }) => {

@@ -699,6 +699,13 @@ button:disabled {
   max-width: 760px;
 }
 
+.home-section-actions {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .home-section-heading .eyebrow {
   margin-bottom: 10px;
 }
@@ -729,6 +736,39 @@ button:disabled {
 .home-link-list a:hover,
 .home-change-list li::marker {
   color: var(--accent-dark);
+}
+
+.is-workflow-featured {
+  --card-label: #8a5a00;
+  border-color: #f0d294;
+  background:
+    linear-gradient(180deg, rgba(255, 247, 232, 0.96) 0%, rgba(255, 252, 245, 0.92) 100%);
+  box-shadow: 0 22px 46px rgba(138, 90, 0, 0.08);
+}
+
+.is-workflow-featured:hover {
+  border-color: #e3bc66;
+  box-shadow: 0 26px 54px rgba(138, 90, 0, 0.12);
+}
+
+[data-theme='dark'] .is-workflow-featured {
+  border-color: rgba(255, 210, 122, 0.26);
+  background:
+    linear-gradient(180deg, rgba(53, 39, 14, 0.84) 0%, rgba(27, 24, 18, 0.9) 100%);
+  box-shadow: 0 22px 46px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme='dark'] .is-workflow-featured:hover {
+  border-color: rgba(255, 210, 122, 0.42);
+  box-shadow: 0 26px 54px rgba(0, 0, 0, 0.34);
+}
+
+.home-update-strip {
+  max-width: none;
+}
+
+.home-update-strip p {
+  max-width: 72ch;
 }
 
 .studio-overview {
@@ -2362,6 +2402,10 @@ input[type='range'] {
   }
 
   .hero-points {
+    display: grid;
+  }
+
+  .home-section-actions {
     display: grid;
   }
 
