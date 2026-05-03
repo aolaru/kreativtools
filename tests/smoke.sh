@@ -43,27 +43,16 @@ expect_pattern() {
 
 expect_nav_order() {
   local file="$1"
-  local audio_line file_line workflows_line tools_line learn_line changes_line
-  audio_line="$(first_match_line "$file" '<a href="/audio/?\"')"
-  file_line="$(first_match_line "$file" '<a href="/file/?\"')"
+  local workflows_line tools_line learn_line changes_line
   workflows_line="$(first_match_line "$file" '<a href="/workflows/?\"')"
+  tools_line="$(first_match_line "$file" '<a href="/tools/?\"')"
   learn_line="$(first_match_line "$file" '<a href="/learn/?\"')"
   changes_line="$(first_match_line "$file" '<a href="/changes/?\"')"
 
-  [[ -n "$workflows_line" && -n "$learn_line" && -n "$changes_line" ]] || fail "Could not read nav order markers in $file"
-
-  if [[ -z "$audio_line" || -z "$file_line" ]]; then
-    tools_line="$(first_match_line "$file" '<a href="/tools/?\"')"
-    [[ -n "$tools_line" ]] || fail "Could not read simplified nav order markers in $file"
-    (( workflows_line < tools_line )) || fail "Expected tools after workflows in nav for $file"
-    (( tools_line < learn_line )) || fail "Expected learn after tools in nav for $file"
-    (( learn_line < changes_line )) || fail "Expected changes after learn in nav for $file"
-    return
-  fi
-
-  (( audio_line < file_line )) || fail "Expected audio before file in nav for $file"
-  (( file_line < workflows_line )) || fail "Expected workflows after file in nav for $file"
+  [[ -n "$workflows_line" && -n "$tools_line" && -n "$learn_line" && -n "$changes_line" ]] || fail "Could not read nav order markers in $file"
   (( workflows_line < learn_line )) || fail "Expected learn after workflows in nav for $file"
+  (( workflows_line < tools_line )) || fail "Expected tools after workflows in nav for $file"
+  (( tools_line < learn_line )) || fail "Expected learn after tools in nav for $file"
   (( learn_line < changes_line )) || fail "Expected changes after learn in nav for $file"
 }
 
@@ -86,6 +75,7 @@ main() {
     audio/to-mp3/index.html
     file/xml-to-csv/index.html
     changes/index.html
+    learn/index.html
     workflows/index.html
     workflows/pricing/index.html
     workflows/image-prep/index.html

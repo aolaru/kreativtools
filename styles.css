@@ -694,9 +694,37 @@ button:disabled {
   margin-top: 32px;
 }
 
+.compact-panel {
+  margin-top: 16px;
+}
+
 .home-section-heading {
   margin-bottom: 16px;
   max-width: 760px;
+}
+
+.category-block {
+  margin-top: 20px;
+}
+
+.category-heading {
+  margin-bottom: 14px;
+  max-width: 720px;
+}
+
+.category-heading h2 {
+  margin: 0 0 8px;
+  font-size: clamp(1.18rem, 2vw, 1.55rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.category-grid {
+  gap: 14px;
+}
+
+.archive-panel {
+  margin-top: 16px;
 }
 
 .home-section-actions {
@@ -761,6 +789,20 @@ button:disabled {
 [data-theme='dark'] .is-workflow-featured:hover {
   border-color: rgba(255, 210, 122, 0.42);
   box-shadow: 0 26px 54px rgba(0, 0, 0, 0.34);
+}
+
+.premium-surface {
+  border-color: #e7c989;
+  background:
+    linear-gradient(180deg, rgba(255, 249, 237, 0.94) 0%, rgba(255, 253, 247, 0.9) 100%);
+  box-shadow: 0 20px 44px rgba(138, 90, 0, 0.09);
+}
+
+[data-theme='dark'] .premium-surface {
+  border-color: rgba(255, 210, 122, 0.28);
+  background:
+    linear-gradient(180deg, rgba(52, 39, 17, 0.86) 0%, rgba(26, 24, 18, 0.92) 100%);
+  box-shadow: 0 22px 46px rgba(0, 0, 0, 0.32);
 }
 
 .home-update-strip {

@@ -54,39 +54,29 @@ const LEGACY_DIRECTORY_REDIRECTS = {
 };
 
 const NAV_ITEMS = [
-  { label: 'Image', href: '/image/', key: 'image', icon: 'fa-image' },
-  { label: 'PDF', href: '/pdf/', key: 'pdf', icon: 'fa-file-pdf' },
-  { label: 'Video', href: '/video/', key: 'video', icon: 'fa-film' },
-  { label: 'Fonts', href: '/fonts/', key: 'fonts', icon: 'fa-font' },
-  { label: 'Audio', href: '/audio/', key: 'audio', icon: 'fa-wave-square' },
-  { label: 'File', href: '/file/', key: 'file', icon: 'fa-folder-tree' },
   { label: 'Workflows', href: '/workflows/', key: 'workflows', icon: 'fa-layer-group' },
+  { label: 'Tools', href: '/tools/', key: 'tools', icon: 'fa-toolbox' },
   { label: 'Learn', href: '/learn/', key: 'learn', icon: 'fa-book-open' },
   { label: 'Updates', href: '/changes/', key: 'changes', icon: 'fa-clock-rotate-left' },
 ];
 
 const FOOTER_SECTIONS = {
-  navigate: [
-    ['Home', '/'],
-    ['All Tools', '/tools/'],
+  product: [
+    ['Workflows', '/workflows/'],
+    ['Tools', '/tools/'],
     ['Learn', '/learn/'],
     ['Updates', '/changes/'],
+  ],
+  popular: [
+    ['PDF Fill & Sign', '/pdf/fill-sign/'],
+    ['Image Compress', '/image/compress/'],
+    ['PDF Merge', '/pdf/merge/'],
+    ['Font to Webfont', '/fonts/webfont-convert/'],
+  ],
+  company: [
     ['Privacy Policy', '/privacy/'],
     ['Terms', '/terms/'],
     ['Contact', '/contact/'],
-  ],
-  core: [
-    ['Image Compress', '/image/compress/'],
-    ['PDF Merge', '/pdf/merge/'],
-    ['PDF Compress', '/pdf/compress/'],
-    ['Font to Webfont', '/fonts/webfont-convert/'],
-  ],
-  more: [
-    ['Workflows', '/workflows/'],
-    ['Learn Guides', '/learn/'],
-    ['Video Thumbnail', '/video/thumbnail/'],
-    ['XML to CSV', '/file/xml-to-csv/'],
-    ['Browse Directory', '/tools/'],
   ],
 };
 
@@ -162,13 +152,16 @@ function normalizeInternalHref(href) {
 function navKeyForRoute(route) {
   if (route === '/changes/') return 'changes';
   if (route.startsWith('/workflows')) return 'workflows';
+  if (route.startsWith('/tools')) return 'tools';
   if (route.startsWith('/learn')) return 'learn';
-  if (route.startsWith('/image')) return 'image';
-  if (route.startsWith('/pdf')) return 'pdf';
-  if (route.startsWith('/video')) return 'video';
-  if (route.startsWith('/fonts')) return 'fonts';
-  if (route.startsWith('/audio')) return 'audio';
-  if (route.startsWith('/file')) return 'file';
+  if (
+    route.startsWith('/image') ||
+    route.startsWith('/pdf') ||
+    route.startsWith('/video') ||
+    route.startsWith('/fonts') ||
+    route.startsWith('/audio') ||
+    route.startsWith('/file')
+  ) return 'tools';
   return '';
 }
 
@@ -217,8 +210,6 @@ function buildHeader(route) {
     return `      <a href="${item.href}"${current}><i class="fa-solid ${item.icon}" aria-hidden="true"></i><span>${item.label}</span></a>`;
   }).join('\n');
 
-  const allToolsCurrent = route === '/tools/' ? ' aria-current="page"' : '';
-
   return `<header class="site-header">
     <a class="brand" href="/" aria-label="Kreativ Tools Home">
       <div class="brand-mark">K</div>
@@ -230,7 +221,6 @@ ${navLinks}
     </nav>
 
     <div class="header-actions">
-      <a class="ghost header-link" href="/tools/"${allToolsCurrent}>All Tools</a>
       <button id="shareButton" type="button" class="icon-toggle" aria-label="Share this page" title="Share this page"><i class="fa-solid fa-share-nodes" aria-hidden="true"></i></button>
       <button id="themeToggle" type="button" class="icon-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><i class="fa-solid fa-moon" aria-hidden="true"></i></button>
     </div>
@@ -247,27 +237,27 @@ function buildFooter() {
   <div class="footer-inner">
     <section class="footer-about">
       <h3>Kreativ<span>Tools</span></h3>
-      <p>Kreativ Tools is a growing browser-based toolkit for image, PDF, video, font, audio, and file workflows. Explore focused utilities, practical Learn guides, and privacy-friendly tools for repeat creative work.</p>
+      <p>Kreativ Tools is the free browser-based utility layer. Kreativ Workflows is the paid guided layer for repeat delivery work.</p>
     </section>
 
     <section>
-      <h4>Navigate</h4>
+      <h4>Product</h4>
       <ul>
-${listMarkup(FOOTER_SECTIONS.navigate)}
+${listMarkup(FOOTER_SECTIONS.product)}
       </ul>
     </section>
 
     <section>
-      <h4>Core Tools</h4>
+      <h4>Popular</h4>
       <ul>
-${listMarkup(FOOTER_SECTIONS.core)}
+${listMarkup(FOOTER_SECTIONS.popular)}
       </ul>
     </section>
 
     <section>
-      <h4>More Tools</h4>
+      <h4>Company</h4>
       <ul>
-${listMarkup(FOOTER_SECTIONS.more)}
+${listMarkup(FOOTER_SECTIONS.company)}
       </ul>
     </section>
   </div>

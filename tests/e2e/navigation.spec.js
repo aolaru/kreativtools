@@ -14,6 +14,7 @@ const pages = [
   '/audio/to-wav',
   '/file/xml-to-csv',
   '/changes',
+  '/learn',
   '/workflows',
   '/workflows/audio-delivery',
   '/tools',
@@ -28,15 +29,13 @@ test('main pages load and keep Workflows, Learn, and Updates in the expected ord
     await expect(page.locator('nav.top-nav')).toBeVisible();
     const labels = await page.locator('nav.top-nav a').allTextContents();
     const normalized = labels.map((label) => label.trim());
+    expect(normalized).toEqual(['Workflows', 'Tools', 'Learn', 'Updates']);
     expect(normalized[normalized.length - 1]).toBe('Updates');
     expect(normalized).toContain('Workflows');
+    expect(normalized).toContain('Tools');
     expect(normalized).toContain('Learn');
-    if (normalized.includes('Tools')) {
-      expect(normalized.indexOf('Workflows')).toBe(normalized.indexOf('Tools') - 1);
-      expect(normalized.indexOf('Tools')).toBe(normalized.indexOf('Learn') - 1);
-    } else {
-      expect(normalized.indexOf('Workflows')).toBe(normalized.indexOf('Learn') - 1);
-    }
+    expect(normalized.indexOf('Workflows')).toBe(normalized.indexOf('Tools') - 1);
+    expect(normalized.indexOf('Tools')).toBe(normalized.indexOf('Learn') - 1);
     expect(normalized.indexOf('Learn')).toBe(normalized.indexOf('Updates') - 1);
   }
 });
@@ -88,7 +87,7 @@ test('legacy alias routes redirect to canonical clean routes', async ({ page }) 
 
   await page.goto('/learn.html');
   await expect.poll(() => new URL(page.url()).pathname).toBe('/learn/');
-  await expect(page.getByRole('heading', { level: 1, name: 'Guides for Better Results' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: 'Practical guides for tools and workflows' })).toBeVisible();
 
   await page.goto('/audio-to-mp3.html');
   await expect.poll(() => new URL(page.url()).pathname).toBe('/audio/to-mp3/');
