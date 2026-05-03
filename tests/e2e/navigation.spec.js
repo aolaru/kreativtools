@@ -22,7 +22,7 @@ const pages = [
   '/contact',
 ];
 
-test('main pages load and keep Workflows before Learn with Updates last', async ({ page }) => {
+test('main pages load and keep Workflows, Learn, and Updates in the expected order', async ({ page }) => {
   for (const route of pages) {
     await page.goto(route);
     await expect(page.locator('nav.top-nav')).toBeVisible();
@@ -31,7 +31,12 @@ test('main pages load and keep Workflows before Learn with Updates last', async 
     expect(normalized[normalized.length - 1]).toBe('Updates');
     expect(normalized).toContain('Workflows');
     expect(normalized).toContain('Learn');
-    expect(normalized.indexOf('Workflows')).toBe(normalized.indexOf('Learn') - 1);
+    if (normalized.includes('Tools')) {
+      expect(normalized.indexOf('Workflows')).toBe(normalized.indexOf('Tools') - 1);
+      expect(normalized.indexOf('Tools')).toBe(normalized.indexOf('Learn') - 1);
+    } else {
+      expect(normalized.indexOf('Workflows')).toBe(normalized.indexOf('Learn') - 1);
+    }
     expect(normalized.indexOf('Learn')).toBe(normalized.indexOf('Updates') - 1);
   }
 });
