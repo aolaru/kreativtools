@@ -78,6 +78,16 @@
         <p>Supports JPG, PNG, WebP, AVIF, GIF, BMP, and TIFF when the browser can decode them.</p>
         <p id="compressStatus" class="status status-empty">No image selected yet.</p>
       </div>
+      <div id="compressLoadedBar" class="loaded-file-bar is-hidden" aria-live="polite">
+        <div class="loaded-file-copy">
+          <strong id="compressLoadedName">No image loaded</strong>
+          <span id="compressLoadedMeta">Upload an image to start compressing.</span>
+        </div>
+        <div class="loaded-file-actions">
+          <button id="compressReplaceButton" type="button" class="ghost">Replace File</button>
+          <button id="compressRemoveButton" type="button" class="ghost">Remove</button>
+        </div>
+      </div>
     </section>
 
     <section id="compressWorkspace" class="workspace is-hidden">
@@ -105,7 +115,9 @@
 
       <div class="preview-panel">
         <h2>Preview</h2>
-        <canvas id="compressPreviewCanvas" aria-label="Compressed image preview"></canvas>
+        <div class="compress-preview-shell">
+          <canvas id="compressPreviewCanvas" aria-label="Compressed image preview"></canvas>
+        </div>
         <p id="compressDimensions" class="dimensions"></p>
       </div>
     </section>
@@ -187,6 +199,11 @@
     const uploadButton = document.getElementById('compressUploadButton');
     const dropzone = document.getElementById('compressDropzone');
     const statusEl = document.getElementById('compressStatus');
+    const loadedBar = document.getElementById('compressLoadedBar');
+    const loadedNameEl = document.getElementById('compressLoadedName');
+    const loadedMetaEl = document.getElementById('compressLoadedMeta');
+    const replaceButton = document.getElementById('compressReplaceButton');
+    const removeButton = document.getElementById('compressRemoveButton');
 
     const workspace = document.getElementById('compressWorkspace');
     const formatInput = document.getElementById('compressFormatInput');
@@ -204,9 +221,30 @@
     let sourceName = 'image';
     let sourceFileSize = 0;
     let compressedBlob = null;
+    const MAX_PREVIEW_WIDTH = 960;
+    const MAX_PREVIEW_HEIGHT = 720;
+
+    const syncPreviewDisplaySize = (width, height) => {
+      const scale = Math.min(1, MAX_PREVIEW_WIDTH / width, MAX_PREVIEW_HEIGHT / height);
+      canvas.style.width = `${Math.max(1, Math.round(width * scale))}px`;
+      canvas.style.height = `${Math.max(1, Math.round(height * scale))}px`;
+    };
 
     const setStatus = (message) => {
       statusEl.textContent = message;
+    };
+
+    const setLoadedState = (isLoaded, fileName = '', fileSize = 0) => {
+      dropzone.classList.toggle('is-hidden', isLoaded);
+      loadedBar.classList.toggle('is-hidden', !isLoaded);
+
+      if (isLoaded) {
+        loadedNameEl.textContent = fileName;
+        loadedMetaEl.textContent = `${formatBytes(fileSize)} • Ready to preview and compress`;
+      } else {
+        loadedNameEl.textContent = 'No image loaded';
+        loadedMetaEl.textContent = 'Upload an image to start compressing.';
+      }
     };
 
     const formatBytes = (bytes) => {
@@ -218,6 +256,7 @@
     const drawImage = (img) => {
       canvas.width = img.naturalWidth;
       canvas.height = img.naturalHeight;
+      syncPreviewDisplaySize(img.naturalWidth, img.naturalHeight);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(img, 0, 0);
       dimensionsEl.textContent = `${img.naturalWidth} x ${img.naturalHeight}px`;
@@ -250,6 +289,7 @@
         workspace.classList.remove('is-hidden');
         applyButton.disabled = false;
         downloadButton.disabled = true;
+        setLoadedState(true, normalizedFile.name, normalizedFile.size);
 
         metaEl.textContent = `Original size: ${formatBytes(sourceFileSize)}`;
         setStatus(`Loaded image: ${normalizedFile.name}`);
@@ -313,7 +353,28 @@
       setStatus(`Downloaded ${sourceName}-compressed.${ext}`);
     };
 
+    const resetWorkspace = () => {
+      sourceImage = null;
+      sourceName = 'image';
+      sourceFileSize = 0;
+      compressedBlob = null;
+      imageInput.value = '';
+      canvas.width = 0;
+      canvas.height = 0;
+      canvas.style.width = '';
+      canvas.style.height = '';
+      dimensionsEl.textContent = '';
+      metaEl.textContent = 'Upload an image to view compression details.';
+      workspace.classList.add('is-hidden');
+      applyButton.disabled = true;
+      downloadButton.disabled = true;
+      setLoadedState(false);
+      setStatus('No image selected yet.');
+    };
+
     uploadButton.addEventListener('click', () => imageInput.click());
+    replaceButton.addEventListener('click', () => imageInput.click());
+    removeButton.addEventListener('click', resetWorkspace);
 
     dropzone.addEventListener('keydown', (event) => {
       if (event.key === 'Enter' || event.key === ' ') {
@@ -358,6 +419,7 @@
 
     imageFormats.syncFormatSelect(formatInput, formatInput.value);
     syncQualityUi();
+    setLoadedState(false);
   </script>
 
 

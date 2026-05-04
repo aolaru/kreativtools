@@ -1512,12 +1512,71 @@ input[type='range'] {
   gap: 8px;
 }
 
+.loaded-file-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border: 1px solid var(--outline);
+  border-radius: 16px;
+  background: var(--panel);
+  padding: 14px 16px;
+}
+
+.loaded-file-copy {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.loaded-file-copy strong,
+.loaded-file-copy span {
+  overflow-wrap: anywhere;
+}
+
+.loaded-file-copy strong {
+  font-size: 0.96rem;
+}
+
+.loaded-file-copy span {
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.loaded-file-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
 .preview-panel h2 {
   margin: 0 0 10px;
   font-size: 1rem;
   display: inline-flex;
   align-items: center;
   gap: 8px;
+}
+
+.compress-preview-shell {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  max-height: min(72vh, 760px);
+  overflow: auto;
+  border-radius: 12px;
+  background: repeating-conic-gradient(#eff4fb 0% 25%, #dde8f5 0% 50%) 50% / 18px 18px;
+  padding: 10px;
+}
+
+#compressPreviewCanvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+  background: transparent;
 }
 
 #previewCanvas {
@@ -1529,6 +1588,10 @@ input[type='range'] {
 }
 
 [data-theme='dark'] #previewCanvas {
+  background: repeating-conic-gradient(#1b2a3f 0% 25%, #132034 0% 50%) 50% / 18px 18px;
+}
+
+[data-theme='dark'] .compress-preview-shell {
   background: repeating-conic-gradient(#1b2a3f 0% 25%, #132034 0% 50%) 50% / 18px 18px;
 }
 
@@ -2470,6 +2533,16 @@ input[type='range'] {
   }
 
   .hero-points span {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .loaded-file-bar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .loaded-file-actions {
     width: 100%;
     justify-content: flex-start;
   }
