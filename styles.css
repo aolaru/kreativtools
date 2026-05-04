@@ -504,9 +504,10 @@ button:disabled {
 }
 
 .hero-home-copy {
-  padding: 28px;
+  padding: 34px 32px 30px;
   position: relative;
   overflow: hidden;
+  min-height: 460px;
 }
 
 .hero-home-copy::after {
@@ -560,12 +561,16 @@ button:disabled {
   font-size: 1.05rem;
 }
 
+.hero-home-copy > p:not(.eyebrow) {
+  max-width: 34rem;
+}
+
 .hero-home .hero-actions {
   justify-content: flex-start;
 }
 
 .hero-points {
-  margin-top: 18px;
+  margin-top: 22px;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -575,12 +580,12 @@ button:disabled {
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  padding: 11px 14px;
+  padding: 11px 15px;
   border-radius: 999px;
   border: 1px solid color-mix(in oklab, var(--accent) 18%, var(--outline));
   background: color-mix(in oklab, var(--accent) 6%, var(--panel));
   color: var(--text);
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   font-weight: 500;
 }
 
@@ -592,6 +597,11 @@ button:disabled {
 .hero-rail {
   display: grid;
   gap: 14px;
+}
+
+.hero-rail-card-premium {
+  border-width: 1px;
+  box-shadow: 0 24px 52px rgba(138, 90, 0, 0.12);
 }
 
 .hero-rail-card,
@@ -667,6 +677,10 @@ button:disabled {
   gap: 16px;
 }
 
+.compact-stats {
+  padding: 20px 22px;
+}
+
 .hero-rail-stats strong {
   display: block;
   margin-bottom: 5px;
@@ -674,7 +688,7 @@ button:disabled {
 }
 
 .home-band {
-  margin: 20px 0 28px;
+  margin: 18px 0 26px;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
@@ -696,6 +710,18 @@ button:disabled {
 
 .compact-panel {
   margin-top: 16px;
+}
+
+.slim-panel {
+  padding: 18px 22px;
+}
+
+.slim-panel h2 {
+  font-size: clamp(1.08rem, 1.8vw, 1.42rem);
+}
+
+.slim-panel p {
+  max-width: 60ch;
 }
 
 .home-section-heading {
@@ -768,15 +794,15 @@ button:disabled {
 
 .is-workflow-featured {
   --card-label: #8a5a00;
-  border-color: #f0d294;
+  border-color: #e7c478;
   background:
-    linear-gradient(180deg, rgba(255, 247, 232, 0.96) 0%, rgba(255, 252, 245, 0.92) 100%);
-  box-shadow: 0 22px 46px rgba(138, 90, 0, 0.08);
+    linear-gradient(180deg, rgba(255, 244, 221, 0.98) 0%, rgba(255, 250, 239, 0.94) 100%);
+  box-shadow: 0 24px 52px rgba(138, 90, 0, 0.1);
 }
 
 .is-workflow-featured:hover {
-  border-color: #e3bc66;
-  box-shadow: 0 26px 54px rgba(138, 90, 0, 0.12);
+  border-color: #d9ac49;
+  box-shadow: 0 28px 58px rgba(138, 90, 0, 0.14);
 }
 
 [data-theme='dark'] .is-workflow-featured {
@@ -792,10 +818,10 @@ button:disabled {
 }
 
 .premium-surface {
-  border-color: #e7c989;
+  border-color: #e2bd70;
   background:
-    linear-gradient(180deg, rgba(255, 249, 237, 0.94) 0%, rgba(255, 253, 247, 0.9) 100%);
-  box-shadow: 0 20px 44px rgba(138, 90, 0, 0.09);
+    linear-gradient(180deg, rgba(255, 245, 223, 0.96) 0%, rgba(255, 251, 241, 0.92) 100%);
+  box-shadow: 0 24px 52px rgba(138, 90, 0, 0.11);
 }
 
 [data-theme='dark'] .premium-surface {
@@ -803,14 +829,6 @@ button:disabled {
   background:
     linear-gradient(180deg, rgba(52, 39, 17, 0.86) 0%, rgba(26, 24, 18, 0.92) 100%);
   box-shadow: 0 22px 46px rgba(0, 0, 0, 0.32);
-}
-
-.home-update-strip {
-  max-width: none;
-}
-
-.home-update-strip p {
-  max-width: 72ch;
 }
 
 .studio-overview {
