@@ -229,6 +229,7 @@
 </footer>
 
   <script src="../../image-format-support.js"></script>
+  <script src="../../tool-upload-ui.js"></script>
   <script>
     const imageFormats = window.kreativImageFormats;
     const cropImageInput = document.getElementById('cropImageInput');
@@ -277,6 +278,12 @@
     const setStatus = (message) => {
       cropStatus.textContent = message;
     };
+
+    const uploadUi = window.kreativUploadUi?.init({
+      input: cropImageInput,
+      dropzone: cropDropzone,
+      workspace: cropWorkspace,
+    });
 
     const selectionToDisplay = () => ({
       x: Math.round(selection.x * displayScale),
@@ -548,6 +555,7 @@
         resizeSelectionCanvas();
         resetSelection();
         setStatus(`Loaded image: ${normalizedFile.name}`);
+        uploadUi?.setLoaded({ name: normalizedFile.name, size: normalizedFile.size });
         URL.revokeObjectURL(imageUrl);
       };
 
@@ -624,7 +632,6 @@
     imageFormats.syncFormatSelect(cropFormatInput, cropFormatInput.value);
     syncQualityUi();
   </script>
-
   <script src="../../cookie-consent.js"></script>
   <script src="../../github-pages-prefix.js"></script>
   <script src="../../analytics.js"></script>

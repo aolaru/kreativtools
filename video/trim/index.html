@@ -138,7 +138,7 @@
     <p class="footer-meta-actions"></p>
   </div>
 </footer>
-
+  <script src="../../tool-upload-ui.js"></script>
   <script>
     const input = document.getElementById('trimVideoInput');
     const uploadButton = document.getElementById('trimUploadButton');
@@ -157,6 +157,12 @@
     let drawFrameId = null;
 
     const setStatus = (message) => { statusEl.textContent = message; };
+
+    const uploadUi = window.kreativUploadUi?.init({
+      input: input,
+      dropzone: dropzone,
+      workspace: workspace,
+    });
 
     const getRecorderMime = () => {
       const candidates = ['video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/webm'];
@@ -180,6 +186,7 @@
         dimsEl.textContent = `${Math.round(preview.videoWidth)} x ${Math.round(preview.videoHeight)}px • ${preview.duration.toFixed(2)}s`;
         metaEl.textContent = 'Set start and end time, then click Trim and Download.';
         setStatus(`Loaded video: ${file.name}`);
+        uploadUi?.setLoaded({ name: file.name, size: file.size });
       };
     };
 
@@ -284,7 +291,6 @@
     });
     actionButton.addEventListener('click', trimVideo);
   </script>
-
   <script src="../../cookie-consent.js"></script>
   <script src="../../github-pages-prefix.js"></script>
   <script src="../../analytics.js"></script>

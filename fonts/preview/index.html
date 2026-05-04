@@ -107,7 +107,7 @@
     <p class="footer-meta-actions"></p>
   </div>
 </footer>
-
+  <script src="../../tool-upload-ui.js"></script>
   <script>
     const input = document.getElementById('fontPreviewInput');
     const uploadButton = document.getElementById('fontPreviewUploadButton');
@@ -123,6 +123,12 @@
     let fontName = 'UploadedPreviewFont';
 
     const setStatus = (m) => { statusEl.textContent = m; };
+
+    const uploadUi = window.kreativUploadUi?.init({
+      input: input,
+      dropzone: dropzone,
+      workspace: workspace,
+    });
 
     const applyPreview = () => {
       box.textContent = textInput.value || ' ';
@@ -149,6 +155,7 @@
       workspace.classList.remove('is-hidden');
       metaEl.textContent = `${file.name} loaded.`;
       setStatus(`Loaded font: ${file.name}`);
+        uploadUi?.setLoaded({ name: file.name, size: file.size });
       applyPreview();
     };
 
@@ -161,7 +168,6 @@
     textInput.addEventListener('input', applyPreview);
     sizeInput.addEventListener('input', applyPreview);
   </script>
-
   <script src="../../cookie-consent.js"></script><script src="../../github-pages-prefix.js"></script><script src="../../analytics.js"></script>
   <script src="../../theme.js"></script>
 </body>

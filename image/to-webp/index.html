@@ -136,6 +136,7 @@
 </footer>
 
   <script src="../../image-format-support.js"></script>
+  <script src="../../tool-upload-ui.js"></script>
   <script>
     const imageFormats = window.kreativImageFormats;
     const imageInput = document.getElementById('webpImageInput');
@@ -162,6 +163,12 @@
     const setStatus = (message) => {
       statusEl.textContent = message;
     };
+
+    const uploadUi = window.kreativUploadUi?.init({
+      input: imageInput,
+      dropzone: dropzone,
+      workspace: workspace,
+    });
 
     const formatBytes = (bytes) => {
       if (bytes < 1024) return `${bytes} B`;
@@ -200,6 +207,7 @@
 
         metaEl.textContent = `Original size: ${formatBytes(sourceFileSize)}`;
         setStatus(`Loaded image: ${normalizedFile.name}`);
+        uploadUi?.setLoaded({ name: normalizedFile.name, size: normalizedFile.size });
         URL.revokeObjectURL(imageUrl);
       };
 
@@ -295,8 +303,6 @@
     convertButton.addEventListener('click', convertToWebp);
     downloadButton.addEventListener('click', downloadWebp);
   </script>
-
-
   <script src="../../cookie-consent.js"></script>
   <script src="../../github-pages-prefix.js"></script>
   <script src="../../analytics.js"></script>

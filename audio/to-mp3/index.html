@@ -193,6 +193,7 @@
 </footer>
 
   <script src="../../audio/lame.min.js"></script>
+  <script src="../../tool-upload-ui.js"></script>
   <script>
     const audioInput = document.getElementById('mp3AudioInput');
     const uploadButton = document.getElementById('mp3AudioUploadButton');
@@ -214,6 +215,12 @@
     const setStatus = (message) => {
       statusEl.textContent = message;
     };
+
+    const uploadUi = window.kreativUploadUi?.init({
+      input: audioInput,
+      dropzone: dropzone,
+      workspace: workspace,
+    });
 
     const formatDuration = (seconds) => {
       const s = Math.max(0, Math.round(seconds));
@@ -297,6 +304,7 @@
 
         metaEl.textContent = `${decodedBuffer.numberOfChannels} ch • ${Math.round(decodedBuffer.sampleRate)} Hz • ${formatDuration(decodedBuffer.duration)}`;
         setStatus(`Loaded audio: ${file.name}`);
+        uploadUi?.setLoaded({ name: file.name, size: file.size });
       } catch {
         setStatus('Could not decode this audio file. Try WAV, MP3, M4A, OGG, or another browser-supported audio format.');
       }
@@ -368,7 +376,6 @@
 
     convertButton.addEventListener('click', convertAudio);
   </script>
-
   <script src="../../cookie-consent.js"></script>
   <script src="../../github-pages-prefix.js"></script>
   <script src="../../analytics.js"></script>

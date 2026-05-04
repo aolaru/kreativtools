@@ -109,7 +109,7 @@
     <p class="footer-meta-actions"></p>
   </div>
 </footer>
-
+  <script src="../../tool-upload-ui.js"></script>
   <script>
     const input = document.getElementById('cssFontInput');
     const uploadButton = document.getElementById('cssFontUploadButton');
@@ -131,6 +131,12 @@
 
     const setStatus = (m) => { statusEl.textContent = m; };
 
+    const uploadUi = window.kreativUploadUi?.init({
+      input: input,
+      dropzone: dropzone,
+      workspace: workspace,
+    });
+
     const inferFormat = (name) => {
       const lower = name.toLowerCase();
       if (lower.endsWith('.woff2')) return 'woff2';
@@ -151,6 +157,7 @@
         downloadButton.disabled = true;
         output.textContent = 'Click Generate CSS to build @font-face block.';
         setStatus(`Loaded font: ${file.name}`);
+        uploadUi?.setLoaded({ name: file.name, size: file.size });
       };
       reader.onerror = () => setStatus('Could not read this font file.');
       reader.readAsDataURL(file);
@@ -189,7 +196,6 @@
     generateButton.addEventListener('click', generateCss);
     downloadButton.addEventListener('click', downloadCss);
   </script>
-
   <script src="../../cookie-consent.js"></script><script src="../../github-pages-prefix.js"></script><script src="../../analytics.js"></script>
   <script src="../../theme.js"></script>
 </body>

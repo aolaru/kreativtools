@@ -142,7 +142,7 @@
     <p class="footer-meta-actions"></p>
   </div>
 </footer>
-
+  <script src="../../tool-upload-ui.js"></script>
   <script>
     const videoInput = document.getElementById('thumbVideoInput');
     const uploadButton = document.getElementById('thumbUploadButton');
@@ -169,6 +169,12 @@
       statusEl.textContent = message;
     };
 
+    const uploadUi = window.kreativUploadUi?.init({
+      input: videoInput,
+      dropzone: dropzone,
+      workspace: workspace,
+    });
+
     const syncQualityUi = () => {
       const isJpeg = formatInput.value === 'image/jpeg';
       qualityInput.disabled = !isJpeg;
@@ -194,6 +200,7 @@
         captureButton.disabled = false;
         metaEl.textContent = `${Math.round(preview.videoWidth)} x ${Math.round(preview.videoHeight)}px • ${Math.round(preview.duration)}s`;
         setStatus(`Loaded video: ${file.name}`);
+        uploadUi?.setLoaded({ name: file.name, size: file.size });
       };
     };
 
@@ -276,8 +283,6 @@
     downloadButton.addEventListener('click', downloadThumbnail);
     syncQualityUi();
   </script>
-
-
   <script src="../../cookie-consent.js"></script>
   <script src="../../github-pages-prefix.js"></script>
   <script src="../../analytics.js"></script>

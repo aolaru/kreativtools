@@ -151,6 +151,7 @@
 </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="../../tool-upload-ui.js"></script>
   <script>
     const imageInput = document.getElementById('pdfImageInput');
     const uploadButton = document.getElementById('pdfUploadButton');
@@ -175,6 +176,12 @@
     const setStatus = (message) => {
       statusEl.textContent = message;
     };
+
+    const uploadUi = window.kreativUploadUi?.init({
+      input: imageInput,
+      dropzone: dropzone,
+      workspace: workspace,
+    });
 
     const drawPreview = (img) => {
       canvas.width = img.naturalWidth;
@@ -201,6 +208,7 @@
         prepareButton.disabled = false;
         downloadButton.disabled = false;
         setStatus(`Loaded image: ${file.name}`);
+        uploadUi?.setLoaded({ name: file.name, size: file.size });
         URL.revokeObjectURL(imageUrl);
       };
 
@@ -293,8 +301,6 @@
     prepareButton.addEventListener('click', preparePdf);
     downloadButton.addEventListener('click', downloadPdf);
   </script>
-
-
   <script src="../../cookie-consent.js"></script>
   <script src="../../github-pages-prefix.js"></script>
   <script src="../../analytics.js"></script>

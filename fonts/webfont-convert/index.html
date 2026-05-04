@@ -138,6 +138,7 @@
   </div>
 </footer>
 
+  <script src="../../tool-upload-ui.js"></script>
   <script type="module">
     import * as FontEditorModule from 'https://cdn.jsdelivr.net/npm/fonteditor-core@2.6.3/+esm';
 
@@ -158,6 +159,12 @@
     const setStatus = (message) => {
       statusEl.textContent = message;
     };
+
+    const uploadUi = window.kreativUploadUi?.init({
+      input: fontInput,
+      dropzone: dropzone,
+      workspace: workspace,
+    });
 
     const inferInputType = (file) => {
       const lower = file.name.toLowerCase();
@@ -186,6 +193,7 @@
       metaEl.textContent = `${file.name} • ${formatBytes(file.size)}`;
       convertButton.disabled = false;
       setStatus(`Loaded font: ${file.name}`);
+        uploadUi?.setLoaded({ name: file.name, size: file.size });
     };
 
     const downloadBuffer = (buffer, filename, mime) => {
@@ -275,8 +283,6 @@
 
     convertButton.addEventListener('click', convertFont);
   </script>
-
-
   <script src="../../cookie-consent.js"></script>
   <script src="../../github-pages-prefix.js"></script>
   <script src="../../analytics.js"></script>

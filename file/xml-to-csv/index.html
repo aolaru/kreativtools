@@ -132,7 +132,7 @@
     <p class="footer-meta-actions"></p>
   </div>
 </footer>
-
+  <script src="../../tool-upload-ui.js"></script>
   <script>
     const xmlInput = document.getElementById('xmlInput');
     const uploadButton = document.getElementById('xmlUploadButton');
@@ -154,6 +154,12 @@
     const setStatus = (message) => {
       statusEl.textContent = message;
     };
+
+    const uploadUi = window.kreativUploadUi?.init({
+      input: xmlInput,
+      dropzone: dropzone,
+      workspace: workspace,
+    });
 
     const escapeCsv = (value) => {
       const str = String(value ?? '');
@@ -283,6 +289,7 @@
         csvPreview.textContent = 'Click "Convert to CSV" to generate preview.';
         metaEl.textContent = `${file.name} • detected record tags: ${candidates.slice(0, 5).join(', ')}`;
         setStatus(`Loaded XML: ${file.name}`);
+        uploadUi?.setLoaded({ name: file.name, size: file.size });
       } catch {
         setStatus('Could not read this file. Please try another XML file.');
       }
@@ -359,8 +366,6 @@
     convertButton.addEventListener('click', convertXml);
     downloadButton.addEventListener('click', downloadCsv);
   </script>
-
-
   <script src="../../cookie-consent.js"></script>
   <script src="../../github-pages-prefix.js"></script>
   <script src="../../analytics.js"></script>

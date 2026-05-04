@@ -190,13 +190,13 @@
     <p class="footer-meta-actions"></p>
   </div>
 </footer>
-
   <script src="../../cookie-consent.js"></script>
   <script src="../../github-pages-prefix.js"></script>
   <script src="../../analytics.js"></script>
   <script src="../../theme.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="../../tool-upload-ui.js"></script>
   <script>
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
 
@@ -224,6 +224,12 @@
     function setStatus(message) {
       pdfDocxStatus.textContent = message;
     }
+
+    const uploadUi = window.kreativUploadUi?.init({
+      input: pdfDocxInput,
+      dropzone: pdfDocxDropzone,
+      workspace: pdfDocxWorkspace,
+    });
 
     function resetOutputState() {
       outputBlob = null;
@@ -519,6 +525,7 @@
         pdfDocxWorkspace.classList.remove('is-hidden');
         updateSummary();
         setStatus(`Loaded ${file.name}. Review the preview, then convert to DOCX.`);
+        uploadUi?.setLoaded({ name: file.name, size: file.size });
       } catch (error) {
         console.error(error);
         sourceFile = null;

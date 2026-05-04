@@ -99,7 +99,7 @@
     <p class="footer-meta-actions"></p>
   </div>
 </footer>
-
+  <script src="../../tool-upload-ui.js"></script>
   <script>
     const input = document.getElementById('jsonInput');
     const uploadButton = document.getElementById('jsonUploadButton');
@@ -116,6 +116,12 @@
     let csv = '';
 
     const setStatus = (m) => { statusEl.textContent = m; };
+
+    const uploadUi = window.kreativUploadUi?.init({
+      input: input,
+      dropzone: dropzone,
+      workspace: workspace,
+    });
     const esc = (v) => { const s = String(v ?? ''); return /[",\n]/.test(s) ? `"${s.replaceAll('"', '""')}"` : s; };
 
     const normalizeRows = (json) => {
@@ -148,6 +154,7 @@
         preview.textContent = 'Click Convert to CSV.';
         metaEl.textContent = `${rows.length} object rows detected.`;
         setStatus(`Loaded JSON: ${file.name}`);
+        uploadUi?.setLoaded({ name: file.name, size: file.size });
       } catch { setStatus('Invalid JSON file.'); }
     };
 
@@ -179,7 +186,6 @@
     convertButton.addEventListener('click', convert);
     downloadButton.addEventListener('click', download);
   </script>
-
   <script src="../../cookie-consent.js"></script><script src="../../github-pages-prefix.js"></script><script src="../../analytics.js"></script>
   <script src="../../theme.js"></script>
 </body>

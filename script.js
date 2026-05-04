@@ -52,6 +52,12 @@ const setStatus = (message) => {
   statusEl.textContent = message;
 };
 
+const uploadUi = window.kreativUploadUi?.init({
+  input: imageInput,
+  dropzone,
+  workspace,
+});
+
 const drawImageToCanvas = (img, width, height) => {
   canvas.width = width;
   canvas.height = height;
@@ -154,6 +160,7 @@ const loadFile = (file) => {
     drawImageToCanvas(img, originalWidth, originalHeight);
     enableWorkspace();
     setStatus(`Loaded image: ${normalizedFile.name}`);
+    uploadUi?.setLoaded({ name: normalizedFile.name, size: normalizedFile.size });
     URL.revokeObjectURL(imageUrl);
   };
 

@@ -191,6 +191,7 @@
 </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
+  <script src="../../tool-upload-ui.js"></script>
   <script>
     const input = document.getElementById('compressPdfInput');
     const uploadButton = document.getElementById('compressPdfUploadButton');
@@ -215,6 +216,12 @@
     const setStatus = (message) => {
       statusEl.textContent = message;
     };
+
+    const uploadUi = window.kreativUploadUi?.init({
+      input: input,
+      dropzone: dropzone,
+      workspace: workspace,
+    });
 
     const formatBytes = (bytes) => {
       if (bytes < 1024) return `${bytes} B`;
@@ -256,6 +263,7 @@
       resetResults();
       summaryEl.textContent = 'File loaded. Run compression to compare the optimized version before downloading.';
       setStatus(`Loaded PDF: ${file.name}. Ready to compress.`);
+        uploadUi?.setLoaded({ name: file.name, size: file.size });
     };
 
     const downloadBuffer = (buffer, filename) => {
@@ -376,7 +384,6 @@
     resetButton.addEventListener('click', () => input.click());
     resetTool();
   </script>
-
   <script src="../../cookie-consent.js"></script>
   <script src="../../github-pages-prefix.js"></script>
   <script src="../../analytics.js"></script>

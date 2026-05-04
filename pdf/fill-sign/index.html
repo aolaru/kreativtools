@@ -259,6 +259,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+  <script src="../../tool-upload-ui.js"></script>
   <script>
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
 
@@ -317,6 +318,12 @@
     function setStatus(message) {
       pdfFillStatus.textContent = message;
     }
+
+    const uploadUi = window.kreativUploadUi?.init({
+      input: pdfFillInput,
+      dropzone: pdfFillDropzone,
+      workspace: pdfFillWorkspace,
+    });
 
     function todayStamp() {
       return new Intl.DateTimeFormat('en-CA', {
@@ -875,6 +882,7 @@
       pdfFillExportStatus.textContent = 'Waiting for changes';
       pdfFillSelectionStatus.textContent = 'No placement selected yet.';
       setStatus(`Loaded ${file.name}. Place text, checkboxes, or a signature on any page.`);
+        uploadUi?.setLoaded({ name: file.name, size: file.size });
     }
 
     async function exportPdf() {

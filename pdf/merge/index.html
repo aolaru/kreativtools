@@ -188,6 +188,7 @@
 </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
+  <script src="../../tool-upload-ui.js"></script>
   <script>
     const input = document.getElementById('mergePdfInput');
     const uploadButton = document.getElementById('mergePdfUploadButton');
@@ -211,6 +212,12 @@
     const setStatus = (message) => {
       statusEl.textContent = message;
     };
+
+    const uploadUi = window.kreativUploadUi?.init({
+      input: input,
+      dropzone,
+      workspace,
+    });
 
     const formatBytes = (bytes) => {
       if (bytes < 1024) return `${bytes} B`;
@@ -249,6 +256,7 @@
     const refreshUi = () => {
       if (!files.length) {
         workspace.classList.add('is-hidden');
+        uploadUi?.clear();
         mergeButton.disabled = true;
         listEl.replaceChildren();
         metaEl.textContent = 'Add at least 2 PDF files to merge.';
@@ -260,6 +268,10 @@
       }
 
       workspace.classList.remove('is-hidden');
+      uploadUi?.setLoaded({
+        countLabel: `${files.length} PDF file${files.length === 1 ? '' : 's'} in queue`,
+        meta: `${formatBytes(files.reduce((sum, file) => sum + file.size, 0))} • Queue ready to edit`,
+      });
       mergeButton.disabled = files.length < 2;
       countEl.textContent = String(files.length);
       totalSizeEl.textContent = formatBytes(files.reduce((sum, file) => sum + file.size, 0));
@@ -438,8 +450,6 @@
     addMoreButton.addEventListener('click', () => input.click());
     refreshUi();
   </script>
-
-
   <script src="../../cookie-consent.js"></script>
   <script src="../../github-pages-prefix.js"></script>
   <script src="../../analytics.js"></script>
