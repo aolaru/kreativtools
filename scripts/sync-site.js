@@ -55,7 +55,7 @@ const LEGACY_DIRECTORY_REDIRECTS = {
 
 const NAV_ITEMS = [
   { label: 'Workflows', href: '/workflows/', key: 'workflows', icon: 'fa-layer-group' },
-  { label: 'Tools', href: '/tools/', key: 'tools', icon: 'fa-toolbox' },
+  { label: 'Free Tools', href: '/tools/', key: 'tools', icon: 'fa-toolbox' },
   { label: 'Learn', href: '/learn/', key: 'learn', icon: 'fa-book-open' },
   { label: 'Updates', href: '/changes/', key: 'changes', icon: 'fa-clock-rotate-left' },
 ];
@@ -63,7 +63,7 @@ const NAV_ITEMS = [
 const FOOTER_SECTIONS = {
   product: [
     ['Workflows', '/workflows/'],
-    ['Tools', '/tools/'],
+    ['Free Tools', '/tools/'],
     ['Learn', '/learn/'],
     ['Updates', '/changes/'],
   ],

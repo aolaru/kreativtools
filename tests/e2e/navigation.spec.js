@@ -29,13 +29,13 @@ test('main pages load and keep Workflows, Learn, and Updates in the expected ord
     await expect(page.locator('nav.top-nav')).toBeVisible();
     const labels = await page.locator('nav.top-nav a').allTextContents();
     const normalized = labels.map((label) => label.trim());
-    expect(normalized).toEqual(['Workflows', 'Tools', 'Learn', 'Updates']);
+    expect(normalized).toEqual(['Workflows', 'Free Tools', 'Learn', 'Updates']);
     expect(normalized[normalized.length - 1]).toBe('Updates');
     expect(normalized).toContain('Workflows');
-    expect(normalized).toContain('Tools');
+    expect(normalized).toContain('Free Tools');
     expect(normalized).toContain('Learn');
-    expect(normalized.indexOf('Workflows')).toBe(normalized.indexOf('Tools') - 1);
-    expect(normalized.indexOf('Tools')).toBe(normalized.indexOf('Learn') - 1);
+    expect(normalized.indexOf('Workflows')).toBe(normalized.indexOf('Free Tools') - 1);
+    expect(normalized.indexOf('Free Tools')).toBe(normalized.indexOf('Learn') - 1);
     expect(normalized.indexOf('Learn')).toBe(normalized.indexOf('Updates') - 1);
   }
 });
@@ -73,7 +73,7 @@ test('clean routes resolve without breaking tool pages', async ({ page }) => {
 
   await page.goto('/tools');
   await expect.poll(() => new URL(page.url()).pathname).toMatch(/^\/tools\/?$/);
-  await expect(page.getByRole('heading', { level: 1, name: 'All Kreativ Tools' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: 'Free Kreativ Tools' })).toBeVisible();
 });
 
 test('legacy alias routes redirect to canonical clean routes', async ({ page }) => {
