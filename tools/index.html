@@ -51,51 +51,39 @@
     </div>
   </header>
 
-  <main class="container">
+  <main class="container tools-directory">
     <section class="hero">
       <p class="eyebrow">Free Tool Directory</p>
       <h1>Free Kreativ Tools</h1>
       <p>Use this page for the free utility layer. Browse by category, not by one long wall of cards.</p>
     </section>
 
-    <section class="home-section">
-      <div class="home-section-heading">
-        <p class="eyebrow">Paid Upgrade</p>
-        <h2>Kreativ Workflows handles the guided multi-step jobs</h2>
-        <p>Use Workflows when one converter is not enough and you want a clearer sequence with saved templates.</p>
-        <div class="home-section-actions">
-          <a class="ghost header-link" href="/workflows/">Browse Workflows</a>
-          <a class="ghost header-link" href="/workflows/pricing/">See pricing</a>
-        </div>
+    <section class="home-panel compact-panel slim-panel tools-upsell" aria-labelledby="toolsUpsellTitle">
+      <div>
+        <p class="eyebrow">Need more than one step?</p>
+        <h2 id="toolsUpsellTitle">Kreativ Workflows handles repeat delivery jobs.</h2>
+        <p>Use the free tools for one-off work. Use Workflows when image, PDF, or audio jobs need a guided sequence and saved templates.</p>
       </div>
-      <div class="tools-grid" aria-label="Workflows preview">
-        <a class="tool-card" data-category="Paid Workflow" href="/workflows/image-prep/">
-          <div class="tool-thumb thumb-image thumb-image-crop" aria-hidden="true"><i class="fa-solid fa-wand-magic-sparkles tool-thumb-icon"></i></div>
-          <h3>Image Prep Workflow</h3>
-          <p>Crop, resize, compress, and export in one guided image flow.</p>
-        </a>
-        <a class="tool-card" data-category="Paid Workflow" href="/workflows/pdf-delivery/">
-          <div class="tool-thumb thumb-pdf thumb-pdf-merge" aria-hidden="true"><i class="fa-solid fa-file-circle-check tool-thumb-icon"></i></div>
-          <h3>PDF Delivery Workflow</h3>
-          <p>Arrange, split, merge, optimize, and export one delivery-ready PDF.</p>
-        </a>
-        <a class="tool-card" data-category="Paid Workflow" href="/workflows/audio-delivery/">
-          <div class="tool-thumb thumb-audio thumb-audio-mp3" aria-hidden="true"><i class="fa-solid fa-sliders tool-thumb-icon"></i></div>
-          <h3>Audio Delivery Workflow</h3>
-          <p>Trim, level, convert, and export shareable audio in one guided pass.</p>
-        </a>
+      <div class="home-section-actions">
+        <a class="primary header-link" href="/workflows/pricing/">Unlock Workflows</a>
+        <a class="ghost header-link" href="/workflows/">Browse Workflows</a>
       </div>
     </section>
 
     <section class="home-section">
       <div class="home-section-heading">
         <p class="eyebrow">Free Tools</p>
-        <h2>Browse the standalone utility layer by category</h2>
+        <h2>Browse free tools by category</h2>
         <p>Each group below is for one type of task so the page is easier to scan.</p>
       </div>
+      <nav class="category-jump" aria-label="Free tool categories">
+        <a href="#imagePdfTools">Image &amp; PDF</a>
+        <a href="#mediaFontTools">Media &amp; Fonts</a>
+        <a href="#dataTools">Data</a>
+      </nav>
     </section>
 
-    <section class="home-section category-block">
+    <section id="imagePdfTools" class="home-section category-block">
       <div class="category-heading">
         <p class="eyebrow">Image &amp; PDF</p>
         <h2>The strongest visual and document tools</h2>
@@ -165,7 +153,7 @@
       </div>
     </section>
 
-    <section class="home-section category-block">
+    <section id="mediaFontTools" class="home-section category-block">
       <div class="category-heading">
         <p class="eyebrow">Audio, Video &amp; Fonts</p>
         <h2>Media and web-delivery utilities</h2>
@@ -234,12 +222,12 @@
       </div>
     </section>
 
-    <section class="home-section category-block">
+    <section id="dataTools" class="home-section category-block">
       <div class="category-heading">
-        <p class="eyebrow">Data &amp; Support</p>
-        <h2>Structured data tools and product references</h2>
+        <p class="eyebrow">Data Tools</p>
+        <h2>Structured data converters</h2>
       </div>
-      <div class="tools-grid category-grid" aria-label="Data tools and support pages">
+      <div class="tools-grid category-grid" aria-label="Data tools">
         <a class="tool-card" data-category="File Tools" href="/file/xml-to-csv/">
         <div class="tool-thumb thumb-file thumb-file-xml" aria-hidden="true"><i class="fa-solid fa-code tool-thumb-icon"></i></div>
         <h3>XML to CSV</h3>
@@ -258,11 +246,6 @@
         <p>Parse CSV rows into structured JSON objects directly in browser.</p>
         </a>
 
-        <a class="tool-card" data-category="Product Updates" href="/changes/">
-        <div class="tool-thumb thumb-change" aria-hidden="true">LOG</div>
-        <h3>Latest Updates</h3>
-        <p>Track all new tools, fixes, and updates released on Kreativ Tools.</p>
-        </a>
       </div>
     </section>
   </main>

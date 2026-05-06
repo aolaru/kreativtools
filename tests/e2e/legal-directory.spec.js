@@ -29,12 +29,10 @@ const pages = [
 test('all tools directory shows cards that link to tools', async ({ page }) => {
   await page.goto('/tools');
   const cards = page.locator('.tool-card');
-  await expect(cards).toHaveCount(28);
+  await expect(cards).toHaveCount(23);
 
-  await expect(page.locator('.tool-card[href="/workflows/"]')).toBeVisible();
-  await expect(page.locator('.tool-card[href="/workflows/image-prep/"]')).toBeVisible();
-  await expect(page.locator('.tool-card[href="/workflows/pdf-delivery/"]')).toBeVisible();
-  await expect(page.locator('.tool-card[href="/workflows/audio-delivery/"]')).toBeVisible();
+  await expect(page.locator('.tools-upsell a[href="/workflows/"]')).toBeVisible();
+  await expect(page.locator('.tools-upsell a[href="/workflows/pricing/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/image/crop/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/image/compress/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/image/resize/"]')).toBeVisible();
@@ -58,7 +56,6 @@ test('all tools directory shows cards that link to tools', async ({ page }) => {
   await expect(page.locator('.tool-card[href="/file/xml-to-csv/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/file/json-to-csv/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/file/csv-to-json/"]')).toBeVisible();
-  await expect(page.locator('.tool-card[href="/changes/"]')).toBeVisible();
 });
 
 test('footer legal links exist across all pages', async ({ page }) => {

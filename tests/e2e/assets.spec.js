@@ -1,5 +1,14 @@
 const { test, expect } = require('@playwright/test');
 
+const onePxPng = {
+  name: 'tiny.png',
+  mimeType: 'image/png',
+  buffer: Buffer.from(
+    'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO7Z8rkAAAAASUVORK5CYII=',
+    'base64'
+  ),
+};
+
 const pages = [
   '/',
   '/image',
@@ -70,4 +79,40 @@ test('key pages expose canonical and social metadata for their own routes', asyn
     await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', 'https://kreativtools.com/og-image.png');
     await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute('content', 'https://kreativtools.com/og-image.png');
   }
+});
+
+test('analytics emits privacy-safe tool usage events', async ({ page }) => {
+  await page.addInitScript(() => {
+    window.__kreativEvents = [];
+    window.addEventListener('kreativ:track', (event) => {
+      window.__kreativEvents.push(event.detail);
+    });
+  });
+
+  await page.goto('/image/resize');
+
+  await expect.poll(() => page.evaluate(() => window.__kreativEvents.some((event) => (
+    event.event === 'tool_opened'
+      && event.properties.tool_id === 'image_resize'
+      && event.properties.tool_type === 'free_tool'
+  )))).toBe(true);
+
+  await page.setInputFiles('#imageInput', onePxPng);
+
+  await expect.poll(() => page.evaluate(() => window.__kreativEvents.some((event) => (
+    event.event === 'tool_file_loaded'
+      && event.properties.tool_id === 'image_resize'
+      && event.properties.file_kind === 'image'
+      && event.properties.file_count === 1
+      && !Object.values(event.properties).includes('tiny.png')
+  )))).toBe(true);
+
+  await page.click('#applyButton');
+
+  await expect.poll(() => page.evaluate(() => window.__kreativEvents.some((event) => (
+    event.event === 'tool_export_clicked'
+      && event.properties.tool_id === 'image_resize'
+      && event.properties.action === 'resize'
+      && event.properties.control_id === 'applybutton'
+  )))).toBe(true);
 });
