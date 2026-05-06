@@ -8,9 +8,10 @@
     "version:minor": "npm version --no-git-tag-version minor && npm run sync:site",
     "version:major": "npm version --no-git-tag-version major && npm run sync:site",
     "test:smoke": "bash tests/smoke.sh",
+    "test:unit": "node --test tests/unit/*.test.js",
     "test:e2e": "playwright test",
     "test:lighthouse": "npx -y @lhci/cli@0.14.x autorun --config=.lighthouserc.json",
-    "test": "npm run test:smoke && npm run test:e2e"
+    "test": "npm run test:smoke && npm run test:unit && npm run test:e2e"
   },
   "devDependencies": {
     "@playwright/test": "^1.54.2"

@@ -48,6 +48,7 @@ Use `npm run sync:site` after shared layout or metadata changes. The sync script
 ## Tests
 
 - Smoke tests: `bash tests/smoke.sh`
+- Unit tests: `npm run test:unit`
 - E2E tests:
   1. `npm install`
   2. `npx playwright install`
@@ -63,9 +64,23 @@ Use `npm run sync:site` after shared layout or metadata changes. The sync script
 - `changes/index.html`: canonical Updates page
 - `styles.css`: shared visual system
 - `theme.js`: theme toggle and share menu behavior
+- `analytics.js`: Google Analytics plus anonymous product analytics event forwarding
+- `worker/`: Cloudflare Worker and D1 schema for private product analytics
 - `scripts/sync-site.js`: shared metadata/header/footer generator
 - `sitemap.xml`: canonical URL list
 - `favicon.svg`: primary branded favicon
+
+## Private Product Analytics
+
+The static site emits anonymous product events from `analytics.js` after analytics consent. Google Analytics receives the broad event stream, and `/api/analytics/events` can receive the same privacy-safe events for the owned Cloudflare D1 dashboard.
+
+The Worker implementation lives in `worker/`:
+
+- `worker/analytics-worker.mjs`: event ingest, protected JSON API, and private HTML dashboard
+- `worker/schema.sql`: D1 table and indexes
+- `worker/wrangler.toml.example`: deployment template
+
+Use `worker/README.md` for setup commands. The dashboard is designed for metrics like most used tools, upload starts, export/download completion, output formats, size buckets, and daily/weekly trends.
 
 ## Versioning
 

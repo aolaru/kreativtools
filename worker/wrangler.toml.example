@@ -1,0 +1,18 @@
+name = "kreativtools-analytics"
+main = "analytics-worker.mjs"
+compatibility_date = "2026-05-06"
+
+routes = [
+  { pattern = "kreativtools.com/api/analytics/*", zone_name = "kreativtools.com" },
+  { pattern = "kreativtools.com/api/admin/*", zone_name = "kreativtools.com" },
+  { pattern = "kreativtools.com/admin/stats", zone_name = "kreativtools.com" }
+]
+
+[vars]
+ALLOWED_ORIGINS = "https://kreativtools.com"
+ADMIN_USER = "admin"
+
+[[d1_databases]]
+binding = "ANALYTICS_DB"
+database_name = "kreativtools_analytics"
+database_id = "replace-with-cloudflare-d1-database-id"

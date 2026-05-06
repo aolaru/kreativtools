@@ -3,9 +3,18 @@
   const CONFIG = {
     enabled: true,
     provider: 'google',
-    googleAnalyticsId: 'G-52WXEBLJY7'
+    googleAnalyticsId: 'G-52WXEBLJY7',
+    productAnalyticsEndpoint: '/api/analytics/events',
   };
   const TOOL_CATEGORIES = new Set(['image', 'pdf', 'video', 'fonts', 'audio', 'file']);
+  const PRODUCT_ANALYTICS_EVENTS = new Set([
+    'tool_opened',
+    'workflow_opened',
+    'tool_file_loaded',
+    'tool_export_clicked',
+    'tool_download_clicked',
+    'workflow_completed',
+  ]);
   const ALLOWED_PROPERTY_KEYS = new Set([
     'action',
     'control_id',
@@ -174,6 +183,46 @@
     return '';
   };
 
+  const outputFormatFromPage = () => {
+    const formatSelect = Array.from(document.querySelectorAll('select')).find((select) => {
+      const labelText = select.labels ? Array.from(select.labels).map((label) => label.textContent || '').join(' ') : '';
+      const descriptor = `${select.id || ''} ${select.name || ''} ${labelText}`.toLowerCase();
+      return descriptor.includes('format') || descriptor.includes('output');
+    });
+
+    if (!formatSelect) return '';
+    const selectedText = formatSelect.options?.[formatSelect.selectedIndex]?.textContent || '';
+    return safeString(formatSelect.value || selectedText);
+  };
+
+  const forwardProductAnalytics = (eventName, safeProperties) => {
+    if (!CONFIG.productAnalyticsEndpoint) return false;
+    if (!PRODUCT_ANALYTICS_EVENTS.has(eventName)) return false;
+
+    const payload = JSON.stringify({
+      event: eventName,
+      properties: safeProperties,
+    });
+
+    if (navigator.sendBeacon) {
+      const blob = new Blob([payload], { type: 'application/json' });
+      if (navigator.sendBeacon(CONFIG.productAnalyticsEndpoint, blob)) return true;
+    }
+
+    if (typeof fetch === 'function') {
+      fetch(CONFIG.productAnalyticsEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: payload,
+        keepalive: true,
+        credentials: 'omit',
+      }).catch(() => {});
+      return true;
+    }
+
+    return false;
+  };
+
   window.kreativTrack = (eventName, eventProperties = {}) => {
     const safeProperties = sanitizeProperties(eventProperties);
     const detail = {
@@ -181,12 +230,14 @@
       properties: safeProperties,
       provider: CONFIG.provider,
       forwarded: false,
+      productForwarded: false,
     };
 
     window.dispatchEvent(new CustomEvent('kreativ:track', { detail }));
 
     if (!canTrack()) return false;
     ensureGoogleAnalytics();
+    detail.productForwarded = forwardProductAnalytics(eventName, safeProperties);
 
     if (window.zaraz && typeof window.zaraz.track === 'function') {
       window.zaraz.track(eventName, safeProperties);
@@ -246,6 +297,7 @@
       ...context,
       action,
       control_id: safeString(control.id || control.getAttribute('data-analytics-id') || action),
+      output_format: outputFormatFromPage(),
     });
   };
 
