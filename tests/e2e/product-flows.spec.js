@@ -366,7 +366,8 @@ test('audio delivery workflow saves and reapplies named workflow templates', asy
 test('learn landing page includes the core hero guides and expanded follow-up guides', async ({ page }) => {
   await page.goto('/learn');
   await expect(page.getByRole('heading', { level: 1, name: 'Practical guides for tools and workflows' })).toBeVisible();
-  await expect(page.locator('.tool-card')).toHaveCount(10);
+  await expect(page.locator('.tool-card')).toHaveCount(11);
+  await expect(page.locator('.tool-card[href="/learn/what-are-kreativ-workflows/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/learn/choose-kreativ-workflows-or-single-tools/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/learn/use-kreativ-workflows-image-prep-for-web-ready-images/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/learn/prepare-a-sendable-pdf-in-kreativ-workflows/"]')).toBeVisible();
