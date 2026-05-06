@@ -788,6 +788,86 @@ button:disabled {
   gap: 16px;
 }
 
+.workflow-offer {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.18fr) minmax(280px, 0.82fr);
+  gap: 22px;
+  align-items: center;
+  border: 1px solid #e2bd70;
+  border-radius: 26px;
+  padding: 26px;
+}
+
+.workflow-offer-copy {
+  max-width: 760px;
+}
+
+.workflow-offer-copy .eyebrow {
+  margin-bottom: 12px;
+}
+
+.workflow-offer h2 {
+  margin: 0 0 10px;
+  font-size: clamp(1.45rem, 2.7vw, 2.25rem);
+  line-height: 1.06;
+  letter-spacing: -0.035em;
+}
+
+.workflow-offer p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.6;
+}
+
+.workflow-offer-panel {
+  display: grid;
+  gap: 16px;
+  padding: 18px;
+  border: 1px solid rgba(226, 189, 112, 0.72);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.56);
+}
+
+.workflow-price {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  color: #8a5a00;
+}
+
+.workflow-price strong {
+  color: var(--text);
+  font-size: clamp(2.25rem, 4vw, 3.2rem);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+}
+
+.workflow-price span {
+  color: #8a6b33;
+  font-weight: 800;
+}
+
+.workflow-offer-list {
+  margin: 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 8px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+[data-theme='dark'] .workflow-offer-panel {
+  background: rgba(17, 30, 48, 0.42);
+  border-color: rgba(255, 210, 122, 0.24);
+}
+
+[data-theme='dark'] .workflow-price,
+[data-theme='dark'] .workflow-price span {
+  color: #ffd27a;
+}
+
 .home-link-list,
 .home-change-list {
   margin: 14px 0 18px;
@@ -2522,6 +2602,7 @@ input[type='range'] {
   }
 
   .hero-home,
+  .workflow-offer,
   .studio-hero-grid,
   .home-split,
   .home-band,
@@ -2550,6 +2631,7 @@ input[type='range'] {
   }
 
   .hero-home-copy,
+  .workflow-offer,
   .hero-rail-card,
   .hero-rail-stats,
   .home-band-card,
