@@ -279,7 +279,7 @@ body {
   width: 42px;
   height: 42px;
   border-radius: 12px;
-  background: center / cover no-repeat url('/favicon.svg');
+  background: center / cover no-repeat url('favicon.svg');
   display: block;
   color: transparent;
   font-size: 0;
@@ -416,7 +416,39 @@ button:disabled {
 .header-link {
   display: inline-grid;
   place-items: center;
+  min-height: 42px;
+  padding: 10px 15px;
+  border: 1px solid var(--outline);
+  border-radius: 12px;
+  font-weight: 800;
   text-decoration: none;
+  transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease, background 120ms ease;
+}
+
+.header-link:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(26, 73, 126, 0.14);
+}
+
+.primary.header-link {
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+  color: #fff;
+}
+
+.primary.header-link:hover {
+  background: linear-gradient(135deg, var(--accent-dark) 0%, #14598f 100%);
+}
+
+.ghost.header-link {
+  border-color: color-mix(in oklab, var(--accent) 16%, var(--outline));
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--text);
+}
+
+[data-theme='dark'] .ghost.header-link {
+  background: rgba(22, 40, 66, 0.86);
+  border-color: #2a3f5c;
 }
 
 .social-share-menu {
@@ -481,7 +513,7 @@ button:disabled {
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.85fr);
   gap: 22px;
-  align-items: stretch;
+  align-items: start;
 }
 
 .hero-home-copy,
@@ -504,10 +536,10 @@ button:disabled {
 }
 
 .hero-home-copy {
-  padding: 34px 32px 30px;
+  padding: 32px;
   position: relative;
   overflow: hidden;
-  min-height: 460px;
+  min-height: 390px;
 }
 
 .hero-home-copy::after {
@@ -550,7 +582,7 @@ button:disabled {
 
 .hero h1 {
   margin: 14px 0 10px;
-  font-size: clamp(2rem, 5vw, 3.8rem);
+  font-size: clamp(2rem, 4.45vw, 3.35rem);
   line-height: 1.05;
   letter-spacing: -0.04em;
 }
@@ -567,29 +599,9 @@ button:disabled {
 
 .hero-home .hero-actions {
   justify-content: flex-start;
+  margin-top: 16px;
 }
 
-.hero-points {
-  margin-top: 22px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.hero-points span {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  padding: 11px 15px;
-  border-radius: 999px;
-  border: 1px solid color-mix(in oklab, var(--accent) 18%, var(--outline));
-  background: color-mix(in oklab, var(--accent) 6%, var(--panel));
-  color: var(--text);
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
-.hero-points i,
 .home-band-card i {
   color: var(--accent-dark);
 }
@@ -597,6 +609,7 @@ button:disabled {
 .hero-rail {
   display: grid;
   gap: 14px;
+  align-content: start;
 }
 
 .hero-rail-card-premium {
@@ -609,6 +622,10 @@ button:disabled {
 .home-band-card,
 .home-panel {
   padding: 22px;
+}
+
+.hero-rail-card-premium {
+  padding: 26px 22px;
 }
 
 .hero-rail-label {
@@ -796,13 +813,30 @@ button:disabled {
   --card-label: #8a5a00;
   border-color: #e7c478;
   background:
-    linear-gradient(180deg, rgba(255, 244, 221, 0.98) 0%, rgba(255, 250, 239, 0.94) 100%);
-  box-shadow: 0 24px 52px rgba(138, 90, 0, 0.1);
+    linear-gradient(180deg, rgba(255, 246, 226, 0.98) 0%, rgba(255, 251, 243, 0.96) 100%);
+  box-shadow: 0 24px 52px rgba(138, 90, 0, 0.11);
 }
 
 .is-workflow-featured:hover {
   border-color: #d9ac49;
-  box-shadow: 0 28px 58px rgba(138, 90, 0, 0.14);
+  box-shadow: 0 30px 62px rgba(138, 90, 0, 0.16);
+}
+
+.is-workflow-featured .tool-card-cta {
+  grid-column: 2;
+  align-self: end;
+  margin-top: 8px;
+  color: #8a5a00;
+  font-size: 0.86rem;
+  font-weight: 850;
+}
+
+.is-workflow-featured .tool-card-cta::after {
+  content: '\f061';
+  margin-left: 8px;
+  font-family: 'Font Awesome 6 Free';
+  font-size: 0.78rem;
+  font-weight: 900;
 }
 
 [data-theme='dark'] .is-workflow-featured {
@@ -815,6 +849,10 @@ button:disabled {
 [data-theme='dark'] .is-workflow-featured:hover {
   border-color: rgba(255, 210, 122, 0.42);
   box-shadow: 0 26px 54px rgba(0, 0, 0, 0.34);
+}
+
+[data-theme='dark'] .is-workflow-featured .tool-card-cta {
+  color: #ffd27a;
 }
 
 .premium-surface {
@@ -2524,17 +2562,8 @@ input[type='range'] {
     padding: 18px;
   }
 
-  .hero-points {
-    display: grid;
-  }
-
   .home-section-actions {
     display: grid;
-  }
-
-  .hero-points span {
-    width: 100%;
-    justify-content: flex-start;
   }
 
   .loaded-file-bar {
