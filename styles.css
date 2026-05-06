@@ -994,6 +994,55 @@ button:disabled {
   color: #ffd27a;
 }
 
+.is-learn-featured {
+  --card-label: #2384d6;
+  grid-column: span 2;
+  min-height: 230px;
+  border-color: rgba(35, 132, 214, 0.32);
+  background:
+    radial-gradient(circle at 20% 20%, rgba(79, 163, 236, 0.18), transparent 36%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(238, 247, 255, 0.94) 100%);
+  box-shadow: 0 26px 58px rgba(28, 96, 154, 0.12);
+}
+
+.is-learn-featured h3 {
+  font-size: clamp(1.35rem, 2vw, 1.85rem);
+  max-width: 520px;
+}
+
+.is-learn-featured p {
+  grid-column: 2;
+  max-width: 620px;
+  font-size: 1rem;
+}
+
+.learn-card-cta {
+  grid-column: 2;
+  color: var(--accent-dark);
+  font-size: 0.9rem;
+  font-weight: 850;
+}
+
+.learn-card-cta::after {
+  content: '\f061';
+  margin-left: 8px;
+  font-family: 'Font Awesome 6 Free';
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+[data-theme='dark'] .is-learn-featured {
+  border-color: rgba(107, 183, 255, 0.26);
+  background:
+    radial-gradient(circle at 20% 20%, rgba(79, 163, 236, 0.18), transparent 36%),
+    linear-gradient(135deg, rgba(17, 30, 48, 0.94) 0%, rgba(20, 44, 70, 0.9) 100%);
+  box-shadow: 0 26px 58px rgba(0, 0, 0, 0.32);
+}
+
+[data-theme='dark'] .learn-card-cta {
+  color: #9fd0ff;
+}
+
 .premium-surface {
   border-color: #e2bd70;
   background:
@@ -2703,6 +2752,15 @@ input[type='range'] {
   .studio-shell,
   .studio-stage-grid {
     grid-template-columns: 1fr;
+  }
+
+  .is-learn-featured {
+    grid-column: auto;
+  }
+
+  .is-learn-featured p,
+  .learn-card-cta {
+    grid-column: 1 / -1;
   }
 
   .tools-upsell {
