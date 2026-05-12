@@ -44,6 +44,12 @@
         link.rel = 'noopener noreferrer';
         if (link.dataset.checkoutLabel) link.textContent = link.dataset.checkoutLabel;
       } else {
+        if (link.dataset.fallbackHref) {
+          link.href = link.dataset.fallbackHref;
+        }
+        if (link.dataset.fallbackLabel) {
+          link.textContent = link.dataset.fallbackLabel;
+        }
         link.removeAttribute('target');
         link.removeAttribute('rel');
       }
@@ -51,8 +57,8 @@
 
     document.querySelectorAll('[data-workflows-checkout-status]').forEach((node) => {
       node.textContent = configured
-        ? `Checkout runs through ${plan.checkoutProvider}.`
-        : `Add your ${plan.checkoutProvider} checkout URL in workflows-access.js to turn this into a live buy flow.`;
+        ? `Checkout opens in ${plan.checkoutProvider}.`
+        : `Paid access is currently handled manually. Use the contact page for early access or restore help.`;
     });
   };
 
@@ -72,7 +78,7 @@
           return;
         }
 
-        const message = `Restore access is not connected yet. If you already purchased ${plan.name}, contact support via ${plan.restoreContact} and we can help you re-enable access on this browser.`;
+        const message = `Restore access is handled manually right now. If you already purchased ${plan.name}, contact support via ${plan.restoreContact} and we can help you re-enable access on this browser.`;
 
         if (statusNode) {
           statusNode.textContent = message;
