@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kreativ Tools | Free Tools</title>
-  <meta name="description" content="Browse all free tools available on Kreativ Tools." />
+  <title>Free Kreativ Tools | Browser Utilities for Image, PDF, Audio, Video, Fonts, and Data</title>
+  <meta name="description" content="Browse and filter the full free Kreativ Tools directory for image, PDF, audio, video, font, and data utilities." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://kreativtools.com/tools/" />
-  <meta property="og:title" content="Kreativ Tools | Free Tools" />
-  <meta property="og:description" content="Browse all free tools available on Kreativ Tools." />
+  <meta property="og:title" content="Free Kreativ Tools | Browser Utilities for Image, PDF, Audio, Video, Fonts, and Data" />
+  <meta property="og:description" content="Browse and filter the full free Kreativ Tools directory for image, PDF, audio, video, font, and data utilities." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://kreativtools.com/tools/" />
   <meta property="og:image" content="https://kreativtools.com/og-image.png" />
@@ -17,8 +17,8 @@
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Kreativ Tools | Free Tools" />
-  <meta name="twitter:description" content="Browse all free tools available on Kreativ Tools." />
+  <meta name="twitter:title" content="Free Kreativ Tools | Browser Utilities for Image, PDF, Audio, Video, Fonts, and Data" />
+  <meta name="twitter:description" content="Browse and filter the full free Kreativ Tools directory for image, PDF, audio, video, font, and data utilities." />
   <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
   <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
@@ -55,7 +55,7 @@
     <section class="hero">
       <p class="eyebrow">Free Tool Directory</p>
       <h1>Free Kreativ Tools</h1>
-      <p>Use this page for the free utility layer. Browse by category, not by one long wall of cards.</p>
+      <p>Use this page for the free utility layer. Search, filter, and jump by category when the job only needs one browser tool.</p>
     </section>
 
     <section class="home-panel compact-panel slim-panel tools-upsell" aria-labelledby="toolsUpsellTitle">
@@ -74,7 +74,47 @@
       <div class="home-section-heading">
         <p class="eyebrow">Free Tools</p>
         <h2>Browse free tools by category</h2>
-        <p>Each group below is for one type of task so the page is easier to scan.</p>
+        <p>Start with search or a quick filter when you already know the job. Use the category links when you want to scan the whole free library.</p>
+      </div>
+      <div class="home-panel tool-directory-controls" role="search" aria-label="Find a free tool">
+        <div class="tool-directory-control-head">
+          <h3>Find the right free tool faster</h3>
+          <p>Search by task, file type, or output format, then narrow by media type when the library feels too broad.</p>
+        </div>
+        <div class="tool-directory-search-row">
+          <input id="toolDirectorySearch" class="tool-directory-search" type="search" placeholder="Search PDF, image, MP3, WebP, font, CSV..." aria-label="Search free tools" />
+          <p id="toolDirectorySummary" class="tool-directory-summary">Showing all 23 free tools.</p>
+        </div>
+        <div class="tool-filter-row" role="group" aria-label="Filter free tools by type">
+          <button class="tool-filter-button is-active" type="button" data-tool-filter="all" aria-pressed="true">All</button>
+          <button class="tool-filter-button" type="button" data-tool-filter="image" aria-pressed="false">Image</button>
+          <button class="tool-filter-button" type="button" data-tool-filter="pdf" aria-pressed="false">PDF</button>
+          <button class="tool-filter-button" type="button" data-tool-filter="audio" aria-pressed="false">Audio</button>
+          <button class="tool-filter-button" type="button" data-tool-filter="video" aria-pressed="false">Video</button>
+          <button class="tool-filter-button" type="button" data-tool-filter="font" aria-pressed="false">Font</button>
+          <button class="tool-filter-button" type="button" data-tool-filter="data" aria-pressed="false">Data</button>
+        </div>
+        <p id="toolsEmptyState" class="tools-empty-state" hidden>No free tools matched that filter. Try another keyword or reset back to all tools.</p>
+      </div>
+      <div class="home-band tool-directory-start" aria-label="Popular free tool starting points">
+        <article class="home-band-card">
+          <i class="fa-solid fa-file-image" aria-hidden="true"></i>
+          <h2>Start with Image Compress</h2>
+          <p>Best first stop when the job is website images, email uploads, or bulky screenshots.</p>
+          <a href="/image/compress/">Open Image Compress</a>
+        </article>
+        <article class="home-band-card">
+          <i class="fa-solid fa-signature" aria-hidden="true"></i>
+          <h2>Start with PDF Fill &amp; Sign</h2>
+          <p>Best first stop when the job is names, dates, checkboxes, or signatures on an existing PDF.</p>
+          <a href="/pdf/fill-sign/">Open PDF Fill &amp; Sign</a>
+        </article>
+        <article class="home-band-card">
+          <i class="fa-solid fa-font" aria-hidden="true"></i>
+          <h2>Start with Font to Webfont</h2>
+          <p>Best first stop when the job is turning OTF or TTF files into leaner browser formats.</p>
+          <a href="/fonts/webfont-convert/">Open Font to Webfont</a>
+        </article>
       </div>
       <nav class="category-jump" aria-label="Free tool categories">
         <a href="#imagePdfTools">Image &amp; PDF</a>
@@ -292,6 +332,81 @@
   <script src="../cookie-consent.js"></script>
   <script src="../github-pages-prefix.js"></script>
   <script src="../analytics.js"></script>
+  <script>
+    (() => {
+      const searchInput = document.getElementById('toolDirectorySearch');
+      const summary = document.getElementById('toolDirectorySummary');
+      const emptyState = document.getElementById('toolsEmptyState');
+      const filterButtons = Array.from(document.querySelectorAll('[data-tool-filter]'));
+      const cards = Array.from(document.querySelectorAll('.category-grid .tool-card'));
+      const blocks = Array.from(document.querySelectorAll('.category-block'));
+      const jumpLinks = Array.from(document.querySelectorAll('.category-jump a'));
+      if (!searchInput || !summary || !emptyState || cards.length === 0) return;
+
+      const totalTools = cards.length;
+      let activeFilter = 'all';
+
+      const inferGroup = (card) => {
+        const href = card.getAttribute('href') || '';
+        if (href.startsWith('/image/')) return 'image';
+        if (href.startsWith('/pdf/')) return 'pdf';
+        if (href.startsWith('/audio/')) return 'audio';
+        if (href.startsWith('/video/')) return 'video';
+        if (href.startsWith('/fonts/')) return 'font';
+        if (href.startsWith('/file/')) return 'data';
+        return 'other';
+      };
+
+      const updateDirectory = () => {
+        const query = searchInput.value.trim().toLowerCase();
+        let visibleCount = 0;
+
+        cards.forEach((card) => {
+          const text = [card.dataset.category || '', card.textContent || '', card.getAttribute('href') || '']
+            .join(' ')
+            .toLowerCase();
+          const group = inferGroup(card);
+          const matchesFilter = activeFilter === 'all' || group === activeFilter;
+          const matchesQuery = query === '' || text.includes(query);
+          const visible = matchesFilter && matchesQuery;
+          card.hidden = !visible;
+          if (visible) visibleCount += 1;
+        });
+
+        blocks.forEach((block) => {
+          block.hidden = !block.querySelector('.tool-card:not([hidden])');
+        });
+
+        jumpLinks.forEach((link) => {
+          const target = document.querySelector(link.getAttribute('href'));
+          link.classList.toggle('is-disabled', !target || target.hidden);
+        });
+
+        if (visibleCount === totalTools) {
+          summary.textContent = `Showing all ${totalTools} free tools.`;
+        } else {
+          summary.textContent = `Showing ${visibleCount} of ${totalTools} free tools.`;
+        }
+
+        emptyState.hidden = visibleCount > 0;
+      };
+
+      filterButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          activeFilter = button.dataset.toolFilter || 'all';
+          filterButtons.forEach((candidate) => {
+            const isActive = candidate === button;
+            candidate.classList.toggle('is-active', isActive);
+            candidate.setAttribute('aria-pressed', String(isActive));
+          });
+          updateDirectory();
+        });
+      });
+
+      searchInput.addEventListener('input', updateDirectory);
+      updateDirectory();
+    })();
+  </script>
   <script src="../theme.js"></script>
 </body>
 </html>

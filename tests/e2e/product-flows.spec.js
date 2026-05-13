@@ -32,10 +32,12 @@ test('homepage surfaces featured workflows and Learn entry points', async ({ pag
 
 test('workflows landing page introduces workflow lineup and image prep entry point', async ({ page }) => {
   await page.goto('/workflows');
-  await expect(page.getByRole('heading', { level: 1, name: 'Workflows' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: 'Kreativ Workflows' })).toBeVisible();
   await expect(page.locator('.tool-card[href="/workflows/image-prep/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/workflows/pdf-delivery/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/workflows/audio-delivery/"]')).toBeVisible();
+  await expect(page.getByText('From oversized product image to final web upload')).toBeVisible();
+  await expect(page.getByText('From scattered source files to one sendable client pack')).toBeVisible();
 });
 
 test('studio image prep runs through a basic guided export flow', async ({ page }) => {
@@ -367,12 +369,15 @@ test('learn landing page includes the core hero guides and expanded follow-up gu
   await page.goto('/learn');
   await expect(page.getByRole('heading', { level: 1, name: 'Practical guides for tools and workflows' })).toBeVisible();
   await expect(page.getByText('What this page does')).toHaveCount(0);
-  await expect(page.locator('.tool-card')).toHaveCount(11);
+  await expect(page.locator('.tool-card')).toHaveCount(12);
   await expect(page.locator('.tool-card.is-learn-featured[href="/learn/what-are-kreativ-workflows/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/learn/choose-kreativ-workflows-or-single-tools/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/learn/use-kreativ-workflows-image-prep-for-web-ready-images/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/learn/prepare-a-sendable-pdf-in-kreativ-workflows/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/learn/save-time-with-kreativ-workflows-defaults/"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/learn/use-kreativ-workflows-audio-delivery-for-shareable-audio/"]')).toBeVisible();
+  await expect(page.locator('a[href="/learn/resize-images-for-shopify-or-woocommerce/"]')).toBeVisible();
+  await expect(page.locator('a[href="/learn/organize-pdf-handoff-files-before-sending/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/learn/compress-pdf-for-email/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/learn/fill-and-sign-pdf-forms-without-upload-limits/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/learn/merge-pdf-files-in-order/"]')).toBeVisible();

@@ -58,6 +58,26 @@ test('all tools directory shows cards that link to tools', async ({ page }) => {
   await expect(page.locator('.tool-card[href="/file/csv-to-json/"]')).toBeVisible();
 });
 
+test('all tools directory supports search and media filters', async ({ page }) => {
+  await page.goto('/tools');
+  const visibleCards = page.locator('.category-grid .tool-card:not([hidden])');
+
+  await expect(visibleCards).toHaveCount(23);
+  await page.getByRole('button', { name: 'PDF' }).click();
+  await expect(visibleCards).toHaveCount(6);
+  await expect(page.locator('.tool-card[href="/pdf/merge/"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/audio/to-mp3/"]')).toBeHidden();
+
+  await page.fill('#toolDirectorySearch', 'signature');
+  await expect(visibleCards).toHaveCount(1);
+  await expect(page.locator('.tool-card[href="/pdf/fill-sign/"]')).toBeVisible();
+  await expect(page.locator('#toolDirectorySummary')).toContainText('Showing 1 of 23');
+
+  await page.getByRole('button', { name: 'All' }).click();
+  await page.fill('#toolDirectorySearch', 'zzz-no-match');
+  await expect(page.locator('#toolsEmptyState')).toBeVisible();
+});
+
 test('footer legal links exist across all pages', async ({ page }) => {
   for (const route of pages) {
     await page.goto(route, { waitUntil: 'domcontentloaded' });
