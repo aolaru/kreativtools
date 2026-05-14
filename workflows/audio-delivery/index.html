@@ -349,7 +349,7 @@
         <button class="button-link" type="button" data-workflows-restore-access data-workflows-restore-scope="Audio Delivery" data-workflows-restore-status="audioDeliveryRestoreStatus">Already purchased? Restore access</button>
         <a class="button-link" href="/audio/">Browse Free Audio Tools</a>
       </div>
-      <p id="audioDeliveryRestoreStatus" class="studio-stage-note">If you already purchased, restore support is handled per browser until the checkout return flow is connected.</p>
+      <p id="audioDeliveryRestoreStatus" class="studio-stage-note">If you already purchased, restore support is handled per browser until the checkout return flow is connected. Include your PayPal receipt or transaction ID if access needs manual help.</p>
       <p class="studio-stage-note" data-workflows-checkout-status>Paid access is currently handled manually. Use the contact page for early access or restore help.</p>
     </section>
   </main>
@@ -400,6 +400,7 @@
 </footer>
 
   <script src="../../audio/lame.min.js"></script>
+  <script src="../../payments-config.js"></script>
   <script src="../../workflows-access.js"></script>
   <script>
     const audioInput = document.getElementById('workflowAudioInput');

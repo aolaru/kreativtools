@@ -36,6 +36,26 @@ Kreativ Tools is a browser-based utility site for image, PDF, video, font, audio
 
 Serve the project root with any static file server.
 
+## PayPal setup for Workflows
+
+For the current lightweight paid launch, Workflows can use a hosted PayPal checkout link.
+
+1. Create a one-time PayPal payment link or button from the PayPal business dashboard.
+2. Copy the hosted checkout URL.
+3. Open `payments-config.js`.
+4. Set `window.KREATIV_PAYMENTS.workflows.checkoutUrl` to the real PayPal checkout URL.
+5. Keep `provider: 'PayPal'`.
+6. Re-run `bash tests/smoke.sh`.
+
+Optional:
+
+- Set the PayPal return URL to `/workflows/success/`
+- Keep `/contact/` as the manual restore path until webhook-based activation exists
+
+Current limitation:
+
+- Checkout can be live now, but paid activation and restore still need manual confirmation until a webhook-based license or access system is added
+
 ## Shared generation
 
 Canonical pages live at clean routes such as `section/index.html` and `tool/index.html`.

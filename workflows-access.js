@@ -1,14 +1,20 @@
 (function initKreativWorkflowsAccess() {
   const accessKey = 'kreativ_workflows_access';
+  const configuredPlan = window.KREATIV_PAYMENTS && window.KREATIV_PAYMENTS.workflows
+    ? window.KREATIV_PAYMENTS.workflows
+    : {};
+
   const plan = {
     name: 'Kreativ Workflows',
     launchPrice: '$19',
-    launchBilling: 'one-time early access',
-    checkoutProvider: 'Lemon Squeezy',
+    launchBilling: 'one-time access',
+    checkoutProvider: 'PayPal',
     checkoutUrl: '',
     restoreContact: '/contact/',
+    successUrl: '/workflows/success/',
     freeTemplateLimit: 1,
     paidTemplateLimit: 8,
+    ...configuredPlan,
   };
 
   const readAccess = () => {
@@ -78,7 +84,7 @@
           return;
         }
 
-        const message = `Restore access is handled manually right now. If you already purchased ${plan.name}, contact support via ${plan.restoreContact} and we can help you re-enable access on this browser.`;
+        const message = `Restore access is handled manually right now. If you already purchased ${plan.name}, contact support via ${plan.restoreContact} and include the PayPal receipt or transaction ID if available.`;
 
         if (statusNode) {
           statusNode.textContent = message;

@@ -78,6 +78,7 @@ main() {
     learn/index.html
     workflows/index.html
     workflows/pricing/index.html
+    workflows/success/index.html
     workflows/image-prep/index.html
     workflows/pdf-delivery/index.html
     workflows/audio-delivery/index.html
@@ -91,6 +92,7 @@ main() {
   expect_file "theme.js"
   expect_file "image-format-support.js"
   expect_file "analytics.js"
+  expect_file "payments-config.js"
 
   for p in "${pages[@]}"; do
     expect_file "$p"
@@ -145,8 +147,13 @@ main() {
   expect_pattern "workflows/index.html" '<h1>Kreativ Workflows</h1>'
   expect_pattern "workflows/pricing/index.html" '<link rel="canonical" href="https://kreativtools\.com/workflows/pricing/"'
   expect_pattern "workflows/pricing/index.html" 'Kreativ Workflows Pricing'
-  expect_pattern "workflows/pricing/index.html" 'Buy with Lemon Squeezy'
+  expect_pattern "workflows/pricing/index.html" 'Buy with PayPal'
   expect_pattern "workflows/pricing/index.html" 'data-workflows-checkout-status'
+  expect_pattern "workflows/pricing/index.html" 'payments-config\.js'
+  expect_pattern "workflows/image-prep/index.html" 'payments-config\.js'
+  expect_pattern "workflows/pdf-delivery/index.html" 'payments-config\.js'
+  expect_pattern "workflows/audio-delivery/index.html" 'payments-config\.js'
+  expect_pattern "workflows/success/index.html" '<meta name="robots" content="noindex, nofollow"'
   expect_pattern "file/xml-to-csv/index.html" 'id="xmlInput"'
 
   expect_pattern "changes/index.html" 'class="changelog-list"'

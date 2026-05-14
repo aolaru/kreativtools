@@ -16,7 +16,7 @@ async function enablePaidWorkflows(page) {
 
 test('homepage surfaces featured workflows and Learn entry points', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('heading', { level: 1, name: /Use the free tools/i })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: /Use Free Tools for one-off jobs/i })).toBeVisible();
   await expect(page.locator('.hero-actions a[href="/workflows/pricing/"]')).toBeVisible();
   await expect(page.locator('.hero-actions a[href="/tools/"]')).toBeVisible();
   await expect(page.locator('.quick-links a[href="/workflows/"]')).toBeVisible();
