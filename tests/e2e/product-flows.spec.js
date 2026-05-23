@@ -8,19 +8,13 @@ const mergePdfA = path.join(fixturesDir, 'merge-a.pdf');
 const mergePdfB = path.join(fixturesDir, 'merge-b.pdf');
 const compressPdf = path.join(fixturesDir, 'compress-sample.pdf');
 
-async function enablePaidWorkflows(page) {
-  await page.addInitScript(() => {
-    window.localStorage.setItem('kreativ_workflows_access', JSON.stringify({ paid: true }));
-  });
-}
-
 test('homepage surfaces featured workflows and Learn entry points', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('heading', { level: 1, name: /Free tools for quick jobs/i })).toBeVisible();
-  await expect(page.locator('.hero-actions a[href="/workflows/pricing/"]')).toBeVisible();
+  await expect(page.locator('.hero-actions a[href="/workflows/"]')).toBeVisible();
   await expect(page.locator('.hero-actions a[href="/tools/"]')).toBeVisible();
-  await expect(page.locator('.quick-links a[href="/workflows/"]')).toBeVisible();
-  await expect(page.locator('.quick-links a[href="/workflows/pricing/"]')).toBeVisible();
+  await expect(page.locator('.quick-links').getByRole('link', { name: 'Open Workflows' })).toBeVisible();
+  await expect(page.locator('.quick-links').getByRole('link', { name: 'Browse Workflows' })).toBeVisible();
   await expect(page.locator('.tool-card.is-workflow-featured[href="/workflows/image-prep/"]')).toBeVisible();
   await expect(page.getByText('Open Image Prep')).toBeVisible();
   await expect(page.locator('.tool-card.is-workflow-featured[href="/workflows/pdf-delivery/"]')).toBeVisible();
@@ -41,7 +35,6 @@ test('workflows landing page introduces workflow lineup and image prep entry poi
 });
 
 test('studio image prep runs through a basic guided export flow', async ({ page }) => {
-  await enablePaidWorkflows(page);
   await page.goto('/workflows/image-prep');
 
   const pngBuffer = Buffer.from(
@@ -70,7 +63,6 @@ test('studio image prep runs through a basic guided export flow', async ({ page 
 });
 
 test('studio image prep supports presets and back navigation before final export', async ({ page }) => {
-  await enablePaidWorkflows(page);
   await page.goto('/workflows/image-prep');
 
   const pngBuffer = Buffer.from(
@@ -104,7 +96,6 @@ test('studio image prep supports presets and back navigation before final export
 });
 
 test('studio image prep saves and reapplies named workflow templates', async ({ page }) => {
-  await enablePaidWorkflows(page);
   await page.goto('/workflows/image-prep');
 
   const pngBuffer = Buffer.from(
@@ -152,18 +143,13 @@ test('studio image prep saves and reapplies named workflow templates', async ({ 
   await expect(page.locator('#studioFormat')).toHaveValue('image/webp');
 });
 
-test('studio image prep shows the paid access lock for unpaid users', async ({ page }) => {
+test('studio image prep is available without access setup', async ({ page }) => {
   await page.goto('/workflows/image-prep');
-  const lockCard = page.locator('[data-workflows-locked-content]');
-  await expect(lockCard).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Unlock Image Prep with Kreativ Workflows' })).toBeVisible();
-  await expect(lockCard.locator('[data-workflows-checkout-link]')).toBeVisible();
-  await expect(page.locator('#studioImageInput')).toBeHidden();
-  await expect(page.locator('#studioWorkspace')).toBeHidden();
+  await expect(page.locator('#studioImageInput')).toBeAttached();
+  await expect(page.locator('#studioDropzone')).toBeVisible();
 });
 
 test('studio pdf delivery merges a queue and prepares a final export', async ({ page }) => {
-  await enablePaidWorkflows(page);
   await page.goto('/workflows/pdf-delivery');
   await page.setInputFiles('#studioPdfInput', [mergePdfA, mergePdfB]);
   await expect(page.locator('#studioPdfWorkspace')).not.toHaveClass(/is-hidden/);
@@ -184,7 +170,6 @@ test('studio pdf delivery merges a queue and prepares a final export', async ({ 
 });
 
 test('studio pdf delivery can apply a real split to the queue before merge', async ({ page }) => {
-  await enablePaidWorkflows(page);
   await page.goto('/workflows/pdf-delivery');
   const splitSourceBase64 = await page.evaluate(async () => {
     const doc = await PDFLib.PDFDocument.create();
@@ -233,7 +218,6 @@ test('studio pdf delivery can apply a real split to the queue before merge', asy
 });
 
 test('studio pdf delivery saves and reapplies named workflow templates', async ({ page }) => {
-  await enablePaidWorkflows(page);
   await page.goto('/workflows/pdf-delivery');
   await page.setInputFiles('#studioPdfInput', [mergePdfA, mergePdfB]);
   await page.click('#studioPdfContinueArrangeButton');
@@ -272,7 +256,6 @@ test('studio pdf delivery saves and reapplies named workflow templates', async (
 });
 
 test('audio delivery workflow trims, levels, and exports an mp3', async ({ page }) => {
-  await enablePaidWorkflows(page);
   await page.goto('/workflows/audio-delivery');
   await page.setInputFiles('#workflowAudioInput', {
     name: 'workflow-fixture.wav',
@@ -302,7 +285,6 @@ test('audio delivery workflow trims, levels, and exports an mp3', async ({ page 
 });
 
 test('audio delivery workflow supports back navigation and wav export', async ({ page }) => {
-  await enablePaidWorkflows(page);
   await page.goto('/workflows/audio-delivery');
   await page.setInputFiles('#workflowAudioInput', {
     name: 'workflow-wav-fixture.wav',
@@ -333,7 +315,6 @@ test('audio delivery workflow supports back navigation and wav export', async ({
 });
 
 test('audio delivery workflow saves and reapplies named workflow templates', async ({ page }) => {
-  await enablePaidWorkflows(page);
   await page.goto('/workflows/audio-delivery');
   await page.setInputFiles('#workflowAudioInput', {
     name: 'workflow-template.wav',
@@ -370,6 +351,7 @@ test('learn landing page includes the core hero guides and expanded follow-up gu
   await expect(page.getByRole('heading', { level: 1, name: 'Practical guides for tools and workflows' })).toBeVisible();
   await expect(page.getByText('What this page does')).toHaveCount(0);
   await expect(page.locator('.tool-card')).toHaveCount(12);
+  await expect(page.locator('.job-router-card')).toHaveCount(6);
   await expect(page.locator('.tool-card.is-learn-featured[href="/learn/what-are-kreativ-workflows/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/learn/choose-kreativ-workflows-or-single-tools/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/learn/use-kreativ-workflows-image-prep-for-web-ready-images/"]')).toBeVisible();

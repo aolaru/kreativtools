@@ -54,11 +54,11 @@
   <main class="container">
     <section class="hero hero-home">
       <div class="hero-home-copy">
-        <p class="eyebrow">Free Tools + Paid Workflows</p>
+        <p class="eyebrow">Free Tools + Guided Workflows</p>
         <h1>Free tools for quick jobs. Workflows for repeat handoffs.</h1>
         <p>Open a single browser tool when you need one fix. Use Workflows when image, PDF, or audio delivery needs the same steps again.</p>
         <div class="hero-actions">
-          <a class="primary header-link" href="/workflows/pricing/">Unlock Kreativ Workflows</a>
+          <a class="primary header-link" href="/workflows/">Open Kreativ Workflows</a>
           <a class="ghost header-link" href="/tools/">Browse Free Tools</a>
         </div>
       </div>
@@ -69,42 +69,90 @@
           <h2>Workflows keeps repeat jobs in one guided sequence.</h2>
           <p>Choose the final outcome, reuse the setup, and export the delivery file without jumping between separate tools.</p>
           <div class="quick-links">
-            <a href="/workflows/pricing/"><i class="fa-solid fa-credit-card" aria-hidden="true"></i><span>Unlock Workflows</span></a>
+            <a href="/workflows/"><i class="fa-solid fa-route" aria-hidden="true"></i><span>Open Workflows</span></a>
             <a href="/workflows/"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span>Browse Workflows</span></a>
           </div>
         </div>
       </aside>
     </section>
 
+<!-- job-router:start home -->
+    <section class="home-section job-router-section" aria-labelledby="homeJobRouterTitle">
+      <div class="home-section-heading">
+        <p class="eyebrow">Start With the Job</p>
+        <h2 id="homeJobRouterTitle">Tell the site what you need done.</h2>
+        <p>Choose by outcome first. This avoids category browsing when you already know the job.</p>
+      </div>
+      <div class="job-router-grid">
+        <a class="job-router-card" href="/image/compress/">
+          <span class="job-router-label"><i class="fa-solid fa-file-image" aria-hidden="true"></i>Image</span>
+          <strong>Make an image smaller</strong>
+          <span>Compress one image for web, email, ecommerce, or quick upload limits.</span>
+          <span class="job-router-tags"><span>JPG</span><span>PNG</span><span>WebP</span></span>
+        </a>
+        <a class="job-router-card" href="/pdf/fill-sign/">
+          <span class="job-router-label"><i class="fa-solid fa-signature" aria-hidden="true"></i>PDF</span>
+          <strong>Sign or fill a PDF</strong>
+          <span>Add names, dates, checkboxes, and signatures to an existing PDF.</span>
+          <span class="job-router-tags"><span>forms</span><span>signature</span></span>
+        </a>
+        <a class="job-router-card" href="/pdf/merge/">
+          <span class="job-router-label"><i class="fa-solid fa-layer-group" aria-hidden="true"></i>PDF</span>
+          <strong>Combine PDF files</strong>
+          <span>Merge several PDFs into one ordered handoff document.</span>
+          <span class="job-router-tags"><span>merge</span><span>handoff</span></span>
+        </a>
+        <a class="job-router-card is-featured" href="/workflows/">
+          <span class="job-router-label"><i class="fa-solid fa-route" aria-hidden="true"></i>Workflow</span>
+          <strong>Prepare repeat delivery</strong>
+          <span>Use Image Prep, PDF Delivery, or Audio Delivery when the same sequence repeats.</span>
+          <span class="job-router-tags"><span>guided</span><span>templates</span></span>
+        </a>
+        <a class="job-router-card" href="/audio/to-mp3/">
+          <span class="job-router-label"><i class="fa-solid fa-music" aria-hidden="true"></i>Audio</span>
+          <strong>Convert audio for sharing</strong>
+          <span>Turn heavier audio into MP3 or build a cleaner repeat audio export.</span>
+          <span class="job-router-tags"><span>MP3</span><span>WAV</span></span>
+        </a>
+        <a class="job-router-card" href="/fonts/webfont-convert/">
+          <span class="job-router-label"><i class="fa-solid fa-font" aria-hidden="true"></i>Fonts</span>
+          <strong>Prepare fonts for a website</strong>
+          <span>Convert OTF or TTF files into webfont formats and CSS.</span>
+          <span class="job-router-tags"><span>WOFF2</span><span>CSS</span></span>
+        </a>
+      </div>
+    </section>
+<!-- job-router:end -->
+
     <section class="home-section">
       <div class="home-section-heading">
-        <p class="eyebrow">Paid Workflows</p>
+        <p class="eyebrow">Guided Workflows</p>
         <h2>Pick the workflow by final file</h2>
         <p>Image, PDF, and audio workflows are for jobs where the same sequence comes back.</p>
         <div class="home-section-actions">
           <a class="ghost header-link" href="/workflows/">View all Workflows</a>
-          <a class="ghost header-link" href="/workflows/pricing/">See pricing</a>
+          <a class="ghost header-link" href="/workflows/">Browse workflows</a>
         </div>
       </div>
       <div class="tools-grid" aria-label="Featured workflows">
-        <a class="tool-card is-workflow-featured" data-category="Paid Workflow" href="/workflows/image-prep/">
-          <span class="tool-card-badge is-premium">Paid</span>
+        <a class="tool-card is-workflow-featured" data-category="Guided Workflow" href="/workflows/image-prep/">
+          <span class="tool-card-badge is-premium">Workflow</span>
           <div class="tool-thumb thumb-image thumb-image-resize" aria-hidden="true"><i class="fa-solid fa-wand-magic-sparkles tool-thumb-icon"></i></div>
           <h3>Image Prep</h3>
           <p>Crop, resize, compress, and export delivery-ready images with saved workflow defaults.</p>
           <span class="tool-card-cta">Open Image Prep</span>
         </a>
 
-        <a class="tool-card is-workflow-featured" data-category="Paid Workflow" href="/workflows/pdf-delivery/">
-          <span class="tool-card-badge is-premium">Paid</span>
+        <a class="tool-card is-workflow-featured" data-category="Guided Workflow" href="/workflows/pdf-delivery/">
+          <span class="tool-card-badge is-premium">Workflow</span>
           <div class="tool-thumb thumb-pdf thumb-pdf-merge" aria-hidden="true"><i class="fa-solid fa-file-export tool-thumb-icon"></i></div>
           <h3>PDF Delivery</h3>
           <p>Split, merge, organize, and export sendable PDF packs without rebuilding the handoff each time.</p>
           <span class="tool-card-cta">Open PDF Delivery</span>
         </a>
 
-        <a class="tool-card is-workflow-featured" data-category="Paid Workflow" href="/workflows/audio-delivery/">
-          <span class="tool-card-badge is-premium">Paid</span>
+        <a class="tool-card is-workflow-featured" data-category="Guided Workflow" href="/workflows/audio-delivery/">
+          <span class="tool-card-badge is-premium">Workflow</span>
           <div class="tool-thumb thumb-audio thumb-audio-wav" aria-hidden="true"><i class="fa-solid fa-wave-square tool-thumb-icon"></i></div>
           <h3>Audio Delivery</h3>
           <p>Trim, level, convert, and export shareable audio in one guided pass instead of bouncing between tools.</p>
@@ -126,7 +174,7 @@
       </article>
       <article class="home-band-card">
         <i class="fa-solid fa-arrow-trend-up" aria-hidden="true"></i>
-        <h2>Pay only for repeat setup</h2>
+        <h2>Use Workflows for repeat setup</h2>
         <p>Standalone tools stay free. Workflows adds guided order and reusable defaults.</p>
       </article>
     </section>

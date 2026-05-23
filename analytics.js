@@ -109,13 +109,13 @@
     const segments = route.split('/').filter(Boolean);
     const [category, slug] = segments;
 
-    if (category === 'workflows' && slug && slug !== 'pricing') {
+    if (category === 'workflows' && slug && !['pricing', 'success'].includes(slug)) {
       return {
         route,
         tool_id: `workflows_${safeString(slug).replace(/-/g, '_')}`,
         tool_name: document.querySelector('h1')?.textContent?.trim() || slug,
         tool_category: 'workflows',
-        tool_type: 'paid_workflow',
+        tool_type: 'guided_workflow',
       };
     }
 
@@ -263,7 +263,7 @@
   const trackToolOpened = () => {
     const context = getToolContext();
     if (!context) return;
-    window.kreativTrack(context.tool_type === 'paid_workflow' ? 'workflow_opened' : 'tool_opened', context);
+    window.kreativTrack(context.tool_type === 'guided_workflow' ? 'workflow_opened' : 'tool_opened', context);
   };
 
   const trackFileLoaded = (input) => {

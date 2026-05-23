@@ -31,8 +31,7 @@ test('all tools directory shows cards that link to tools', async ({ page }) => {
   const cards = page.locator('.tool-card');
   await expect(cards).toHaveCount(23);
 
-  await expect(page.locator('.tools-upsell a[href="/workflows/"]')).toBeVisible();
-  await expect(page.locator('.tools-upsell a[href="/workflows/pricing/"]')).toBeVisible();
+  await expect(page.locator('.tools-upsell').getByRole('link', { name: 'Open Workflows' })).toBeVisible();
   await expect(page.locator('.tool-card[href="/image/crop/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/image/compress/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/image/resize/"]')).toBeVisible();

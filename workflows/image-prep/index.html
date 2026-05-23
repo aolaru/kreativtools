@@ -61,8 +61,8 @@
         <span class="article-pill">Crop → Resize → Compress</span>
       </div>
       <div class="hero-actions">
-        <a class="primary header-link" href="/workflows/pricing/" data-workflows-checkout-link data-checkout-label="Unlock Kreativ Workflows">Unlock Kreativ Workflows</a>
-        <a class="ghost header-link" href="/workflows/pricing/">See pricing and access</a>
+        <a class="primary header-link" href="#studioWorkspace">Start Image Prep</a>
+        <a class="ghost header-link" href="/workflows/">Browse Workflows</a>
         <a class="ghost header-link" href="/tools/">Browse Free Tools</a>
       </div>
     </section>
@@ -98,25 +98,7 @@
       </div>
     </section>
 
-    <section class="home-panel premium-surface" data-workflows-locked-content hidden>
-      <p class="eyebrow">Paid Access</p>
-      <h2>Unlock Image Prep with Kreativ Workflows</h2>
-      <p>This workflow is included in the one-time Workflows unlock. Buy once, then use the full guided image flow and saved templates on this browser.</p>
-      <ul class="home-change-list">
-        <li>Files stay in the browser during the current workflow</li>
-        <li>Saved templates speed up repeat image jobs</li>
-        <li>Free image tools remain available separately</li>
-      </ul>
-      <div class="workflow-success-actions">
-        <a class="button-link" href="/workflows/pricing/" data-workflows-checkout-link data-checkout-label="Buy with PayPal">Buy with PayPal</a>
-        <button class="button-link" type="button" data-workflows-restore-access data-workflows-restore-scope="Image Prep" data-workflows-restore-status="imagePrepRestoreStatus">Already purchased? Restore access</button>
-        <a class="button-link" href="/image/crop/">Use the free crop tool</a>
-      </div>
-      <p id="imagePrepRestoreStatus" class="studio-stage-note">If you already purchased, restore support is handled per browser until the checkout return flow is connected. Include your PayPal receipt or transaction ID if access needs manual help.</p>
-      <p class="studio-stage-note" data-workflows-checkout-status>Paid access is currently handled manually. Use the contact page for early access or restore help.</p>
-    </section>
-
-    <section class="upload-card" data-workflows-paid-content>
+    <section class="upload-card">
       <input id="studioImageInput" type="file" accept="image/*" hidden />
       <div id="studioDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload image for the Image Prep workflow">
         <div class="drop-icon" aria-hidden="true"></div>
@@ -126,7 +108,7 @@
       </div>
     </section>
 
-    <section id="studioWorkspace" class="studio-shell is-hidden" data-workflows-paid-content>
+    <section id="studioWorkspace" class="studio-shell is-hidden">
       <aside class="studio-sidebar">
         <section class="studio-sidebar-card">
           <h2>Workflow Steps</h2>
@@ -252,7 +234,7 @@
               </label>
               <div class="premium-preview-card" style="margin-top:14px;">
                 <div class="premium-preview-head">
-                  <strong>Premium-ready destination presets</strong>
+                  <strong>Reusable destination presets</strong>
                   <span>These presets show the kind of repeat destinations saved templates are meant to cover.</span>
                 </div>
               </div>
@@ -320,7 +302,7 @@
               <div class="workflow-prefs-card" style="margin-top:14px;">
                 <div class="workflow-prefs-header">
                   <strong>Saved workflow templates</strong>
-                  <span>Free includes 1 named template on this browser. Kreativ Workflows unlocks up to 8 image-delivery templates.</span>
+                  <span>Save up to 8 named image-delivery templates in this browser.</span>
                 </div>
                 <div class="input-grid" style="margin-top:12px;">
                   <label>
@@ -333,10 +315,9 @@
                 </div>
                 <p id="studioTemplateStatus" class="studio-stage-note">Save multiple named templates for repeat image-prep jobs.</p>
                 <div id="studioTemplateList" class="workflow-template-list" aria-live="polite"></div>
-                <div id="studioTemplateUpgradeCard" class="workflow-upgrade-card" hidden>
-                  <strong>Unlock more templates</strong>
-                  <p>Save beyond one named template with Kreativ Workflows. The first paid release focuses on reusable templates across Image, PDF, and Audio workflows.</p>
-                  <a class="button-link" href="/workflows/pricing/" data-workflows-checkout-link data-checkout-label="Buy Kreativ Workflows">Unlock Kreativ Workflows</a>
+                <div id="studioTemplateLimitCard" class="workflow-limit-card" hidden>
+                  <strong>Template limit reached</strong>
+                  <p>This browser keeps up to 8 named image-delivery templates. Delete one template before saving another.</p>
                 </div>
               </div>
               <p class="studio-stage-note">PNG keeps lossless detail and may stay larger. JPG or WebP are better final choices when file weight matters.</p>
@@ -369,7 +350,7 @@
           <p id="studioSuccessNote" class="studio-success-note" hidden>Final image generated. Download it now or go back one step to adjust the format and quality.</p>
           <div class="workflow-success-actions" hidden id="studioSuccessActions">
             <a class="button-link" href="/workflows/pdf-delivery/">Try PDF Delivery</a>
-            <a class="button-link" href="/workflows/pricing/">See premium direction</a>
+            <a class="button-link" href="/workflows/">Browse Workflows</a>
             <a class="button-link" href="/learn/use-kreativ-workflows-image-prep-for-web-ready-images/">Read the workflow guide</a>
           </div>
           <div class="tool-intro" style="margin-top:20px;">
@@ -433,8 +414,7 @@
   </div>
 </footer>
 
-  <script src="../../payments-config.js"></script>
-  <script src="../../workflows-access.js"></script>
+  <script src="../../workflows-template-ui.js"></script>
   <script>
     const studioImageInput = document.getElementById('studioImageInput');
     const studioUploadButton = document.getElementById('studioUploadButton');
@@ -492,7 +472,7 @@
     const studioSaveTemplateButton = document.getElementById('studioSaveTemplateButton');
     const studioTemplateStatus = document.getElementById('studioTemplateStatus');
     const studioTemplateList = document.getElementById('studioTemplateList');
-    const studioTemplateUpgradeCard = document.getElementById('studioTemplateUpgradeCard');
+    const studioTemplateLimitCard = document.getElementById('studioTemplateLimitCard');
 
     const studioExportFormat = document.getElementById('studioExportFormat');
     const studioExportDimensions = document.getElementById('studioExportDimensions');
@@ -574,19 +554,8 @@
       studioTemplateStatus.textContent = message;
     };
 
-    const readTemplates = () => {
-      try {
-        const raw = window.localStorage.getItem(templatesKey);
-        const parsed = raw ? JSON.parse(raw) : [];
-        return Array.isArray(parsed) ? parsed : [];
-      } catch {
-        return [];
-      }
-    };
-
-    const writeTemplates = (templates) => {
-      window.localStorage.setItem(templatesKey, JSON.stringify(templates));
-    };
+    let templateStore;
+    const readTemplates = () => (templateStore ? templateStore.read() : []);
 
     const collectTemplateConfig = () => ({
       width: clamp(Number(studioResizeWidth.value) || workingCanvas.width || 1, 1, 16384),
@@ -614,59 +583,19 @@
       trackWorkflowEvent('workflows_image_prep_template_applied', { template_name: template.name });
     };
 
-    const renderTemplates = () => {
-      const templates = readTemplates();
-      studioTemplateList.replaceChildren();
-      if (!templates.length) {
-        const empty = document.createElement('p');
-        empty.className = 'studio-stage-note';
-        empty.textContent = 'No saved templates yet.';
-        studioTemplateList.append(empty);
-        return;
-      }
-
-      templates.forEach((template) => {
-        const card = document.createElement('article');
-        card.className = 'workflow-template-item';
-
-        const meta = document.createElement('div');
-        meta.className = 'workflow-template-copy';
-
-        const title = document.createElement('strong');
-        title.textContent = template.name;
-        meta.append(title);
-
-        const details = document.createElement('span');
-        details.textContent = `${template.width} x ${template.height} • ${extensionForMime(template.format || 'image/jpeg').toUpperCase()} • ${template.quality}%`;
-        meta.append(details);
-
-        const actions = document.createElement('div');
-        actions.className = 'workflow-template-actions';
-
-        const applyButton = document.createElement('button');
-        applyButton.type = 'button';
-        applyButton.className = 'ghost header-link';
-        applyButton.textContent = 'Apply';
-        applyButton.addEventListener('click', () => applyTemplateConfig(template));
-
-        const deleteButton = document.createElement('button');
-        deleteButton.type = 'button';
-        deleteButton.className = 'ghost header-link';
-        deleteButton.textContent = 'Delete';
-        deleteButton.addEventListener('click', () => {
-          const nextTemplates = readTemplates().filter((entry) => entry.name !== template.name);
-          writeTemplates(nextTemplates);
-          renderTemplates();
-          studioTemplateUpgradeCard.hidden = true;
-          updateTemplateStatus(`${template.name} removed.`);
-          trackWorkflowEvent('workflows_image_prep_template_deleted', { template_name: template.name });
-        });
-
-        actions.append(applyButton, deleteButton);
-        card.append(meta, actions);
-        studioTemplateList.append(card);
-      });
-    };
+    templateStore = window.kreativWorkflowTemplates.create({
+      storageKey: templatesKey,
+      list: studioTemplateList,
+      nameInput: studioTemplateName,
+      limitCard: studioTemplateLimitCard,
+      updateStatus: updateTemplateStatus,
+      describeTemplate: (template) => `${template.width} x ${template.height} • ${extensionForMime(template.format || 'image/jpeg').toUpperCase()} • ${template.quality}%`,
+      applyTemplate: applyTemplateConfig,
+      collectTemplate: collectTemplateConfig,
+      track: trackWorkflowEvent,
+      eventPrefix: 'workflows_image_prep_template',
+    });
+    const renderTemplates = () => templateStore.render();
 
     const applyPrefs = (prefs) => {
       if (!prefs) {
@@ -707,29 +636,7 @@
         updateTemplateStatus('Load an image before saving a template.');
         return;
       }
-      const name = studioTemplateName.value.trim();
-      if (!name) {
-        updateTemplateStatus('Add a template name first.');
-        return;
-      }
-      const nextTemplate = { name, ...collectTemplateConfig() };
-      const templates = readTemplates();
-      const existingIndex = templates.findIndex((entry) => entry.name.toLowerCase() === name.toLowerCase());
-      const access = window.kreativWorkflowsAccess;
-      if (access && !access.canSaveAnotherTemplate(templates.length, existingIndex >= 0)) {
-        updateTemplateStatus(access.upgradeMessage());
-        studioTemplateUpgradeCard.hidden = false;
-        trackWorkflowEvent('workflows_image_prep_template_upgrade_prompt_shown', { template_limit: access.templateLimit() });
-        return;
-      }
-      if (existingIndex >= 0) templates[existingIndex] = nextTemplate;
-      else templates.unshift(nextTemplate);
-      writeTemplates(templates.slice(0, 8));
-      studioTemplateName.value = '';
-      renderTemplates();
-      studioTemplateUpgradeCard.hidden = true;
-      updateTemplateStatus(`${name} saved as a workflow template.`);
-      trackWorkflowEvent('workflows_image_prep_template_saved', { template_name: name });
+      templateStore.save();
     };
 
     const hasWorkingImage = () => workingCanvas.width > 0 && workingCanvas.height > 0;

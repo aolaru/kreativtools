@@ -1,8 +1,13 @@
 const fs = require('fs');
 const path = require('path');
+const {
+  FOOTER_SECTIONS,
+  JOB_PATHS,
+  JOB_ROUTER_VARIANTS,
+  SITE_URL,
+} = require('./site-content');
 
 const ROOT = process.cwd();
-const SITE_URL = 'https://kreativtools.com';
 const OG_IMAGE = `${SITE_URL}/og-image.png`;
 const OG_IMAGE_ALT = 'Kreativ Tools social preview card with the K mark and core browser-based creative workflows';
 const FONT_AWESOME_HREF = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css';
@@ -46,6 +51,8 @@ const REDIRECTS = {
 const LEGACY_CANONICAL_REDIRECTS = new Set([
   'learn/use-kreativ-studio-image-prep-for-web-ready-images/index.html',
   'learn/prepare-a-sendable-pdf-in-kreativ-studio/index.html',
+  'workflows/pricing/index.html',
+  'workflows/success/index.html',
 ]);
 
 const LEGACY_DIRECTORY_REDIRECTS = {
@@ -59,26 +66,6 @@ const NAV_ITEMS = [
   { label: 'Learn', href: '/learn/', key: 'learn', icon: 'fa-book-open' },
   { label: 'Updates', href: '/changes/', key: 'changes', icon: 'fa-clock-rotate-left' },
 ];
-
-const FOOTER_SECTIONS = {
-  product: [
-    ['Workflows', '/workflows/'],
-    ['Free Tools', '/tools/'],
-    ['Learn', '/learn/'],
-    ['Updates', '/changes/'],
-  ],
-  popular: [
-    ['PDF Fill & Sign', '/pdf/fill-sign/'],
-    ['Image Compress', '/image/compress/'],
-    ['PDF Merge', '/pdf/merge/'],
-    ['Font to Webfont', '/fonts/webfont-convert/'],
-  ],
-  company: [
-    ['Privacy Policy', '/privacy/'],
-    ['Terms', '/terms/'],
-    ['Contact', '/contact/'],
-  ],
-};
 
 function escapeAttr(value) {
   return value.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
@@ -171,6 +158,7 @@ function ogTypeForRoute(route) {
 }
 
 function robotsForRoute(route) {
+  if (route === '/workflows/pricing/') return 'noindex, follow';
   if (route === '/workflows/success/') return 'noindex, nofollow';
   return 'index, follow';
 }
@@ -276,6 +264,44 @@ ${listMarkup(FOOTER_SECTIONS.company)}
 </footer>`;
 }
 
+function buildJobRouter(variantKey) {
+  const variant = JOB_ROUTER_VARIANTS[variantKey];
+  if (!variant) return null;
+
+  const cards = JOB_PATHS.slice(0, variant.limit || JOB_PATHS.length).map((job) => {
+    const featured = job.featured ? ' is-featured' : '';
+    const tags = job.tags.map((tag) => `<span>${escapeHtml(tag)}</span>`).join('');
+    return `        <a class="job-router-card${featured}" href="${job.href}">
+          <span class="job-router-label"><i class="fa-solid ${job.icon}" aria-hidden="true"></i>${escapeHtml(job.label)}</span>
+          <strong>${escapeHtml(job.title)}</strong>
+          <span>${escapeHtml(job.description)}</span>
+          <span class="job-router-tags">${tags}</span>
+        </a>`;
+  }).join('\n');
+
+  return `<!-- job-router:start ${variantKey} -->
+    <section class="home-section job-router-section" aria-labelledby="${variantKey}JobRouterTitle">
+      <div class="home-section-heading">
+        <p class="eyebrow">${escapeHtml(variant.eyebrow)}</p>
+        <h2 id="${variantKey}JobRouterTitle">${escapeHtml(variant.title)}</h2>
+        <p>${escapeHtml(variant.description)}</p>
+      </div>
+      <div class="job-router-grid">
+${cards}
+      </div>
+    </section>
+<!-- job-router:end -->`;
+}
+
+function replaceJobRouters(content, file) {
+  const markerPattern = /<!-- job-router:start ([a-z0-9-]+) -->[\s\S]*?<!-- job-router:end -->/g;
+  return content.replace(markerPattern, (match, variantKey) => {
+    const router = buildJobRouter(variantKey);
+    if (!router) throw new Error(`Unknown job router variant ${variantKey} in ${file}`);
+    return router;
+  });
+}
+
 function extractMeta(content, pattern, label, file) {
   const match = content.match(pattern);
   if (!match) throw new Error(`Missing ${label} in ${file}`);
@@ -309,6 +335,7 @@ function syncCanonicalPage(file) {
   content = replaceBlock(content, /<head>[\s\S]*?<\/head>/, head, 'head', rel);
   content = replaceBlock(content, /<header class="site-header">[\s\S]*?<\/header>/, buildHeader(route), 'header', rel);
   content = replaceBlock(content, /<footer class="site-footer">[\s\S]*?<\/footer>/, footer, 'footer', rel);
+  content = replaceJobRouters(content, rel);
   content = content.replace(/href="(\/[^"]*)"/g, (_match, href) => `href="${normalizeInternalHref(href)}"`);
 
   for (const script of scripts) {
@@ -323,6 +350,45 @@ function syncCanonicalPage(file) {
 
   fs.writeFileSync(file, content);
   return { route, title, description };
+}
+
+function readExistingSitemapLastmods() {
+  const sitemapPath = path.join(ROOT, 'sitemap.xml');
+  if (!fs.existsSync(sitemapPath)) return new Map();
+
+  const content = fs.readFileSync(sitemapPath, 'utf8');
+  const entries = new Map();
+  const pattern = /<url>\s*<loc>https:\/\/kreativtools\.com([^<]*)<\/loc>\s*<lastmod>([^<]+)<\/lastmod>\s*<\/url>/g;
+  let match;
+  while ((match = pattern.exec(content))) {
+    entries.set(match[1], match[2]);
+  }
+  return entries;
+}
+
+function buildSitemap(metaByRoute) {
+  const previousLastmods = readExistingSitemapLastmods();
+  const previousOrder = Array.from(previousLastmods.keys());
+  const routes = Array.from(metaByRoute.keys()).filter((route) => robotsForRoute(route) !== 'noindex, nofollow');
+  const routeSet = new Set(routes);
+  const orderedRoutes = [
+    ...previousOrder.filter((route) => routeSet.has(route)),
+    ...routes.filter((route) => !previousLastmods.has(route)).sort(),
+  ];
+
+  const entries = orderedRoutes.map((route) => {
+    const lastmod = previousLastmods.get(route) || '2026-05-23';
+    return `  <url>
+    <loc>${SITE_URL}${route}</loc>
+    <lastmod>${lastmod}</lastmod>
+  </url>`;
+  }).join('\n');
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${entries}
+</urlset>
+`;
 }
 
 function buildRedirectPage(route, title, description) {
@@ -411,6 +477,8 @@ function main() {
   for (const [legacyPath, route] of Object.entries(LEGACY_DIRECTORY_REDIRECTS)) {
     fs.writeFileSync(path.join(ROOT, legacyPath), buildDirectoryRedirectPage(route));
   }
+
+  fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), buildSitemap(metaByRoute));
 }
 
 main();

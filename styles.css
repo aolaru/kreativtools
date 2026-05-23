@@ -535,6 +535,18 @@ button:disabled {
   background: rgba(17, 30, 48, 0.76);
 }
 
+[data-theme='dark'] .job-router-card {
+  background:
+    linear-gradient(145deg, rgba(17, 30, 48, 0.86), rgba(13, 24, 39, 0.78)),
+    var(--panel);
+}
+
+[data-theme='dark'] .job-router-card.is-featured {
+  background:
+    linear-gradient(145deg, rgba(76, 49, 18, 0.5), rgba(17, 30, 48, 0.86)),
+    var(--panel);
+}
+
 .hero-home-copy {
   padding: 32px;
   position: relative;
@@ -746,6 +758,85 @@ button:disabled {
   max-width: 760px;
 }
 
+.job-router-section {
+  margin-top: 24px;
+}
+
+.job-router-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.job-router-card {
+  display: grid;
+  gap: 12px;
+  min-height: 100%;
+  padding: 18px;
+  border: 1px solid var(--outline);
+  border-radius: 22px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(246, 250, 255, 0.82)),
+    var(--panel);
+  color: var(--text);
+  text-decoration: none;
+  box-shadow: 0 14px 34px rgba(24, 45, 72, 0.08);
+  transition: transform 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+}
+
+.job-router-card:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in oklab, var(--accent) 34%, var(--outline));
+  box-shadow: 0 20px 44px rgba(24, 45, 72, 0.12);
+}
+
+.job-router-card.is-featured {
+  border-color: color-mix(in oklab, var(--premium) 42%, var(--outline));
+  background:
+    linear-gradient(145deg, rgba(255, 249, 235, 0.96), rgba(255, 255, 255, 0.88)),
+    var(--panel);
+}
+
+.job-router-label,
+.job-router-tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.job-router-label {
+  color: var(--accent-dark);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.job-router-label i {
+  font-size: 0.95rem;
+}
+
+.job-router-card strong {
+  font-size: 1.08rem;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.job-router-card > span:not(.job-router-label):not(.job-router-tags) {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.job-router-tags span {
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--accent) 8%, transparent);
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
 .category-block {
   margin-top: 20px;
 }
@@ -871,30 +962,6 @@ button:disabled {
   border-color: color-mix(in oklab, var(--accent) 34%, var(--border-strong));
   color: var(--accent-dark);
   background: rgba(37, 137, 216, 0.1);
-}
-
-.tool-directory-start {
-  margin-top: 18px;
-}
-
-.tool-directory-start .home-band-card {
-  display: grid;
-  gap: 10px;
-}
-
-.tool-directory-start h2 {
-  margin: 0;
-  font-size: 1.15rem;
-}
-
-.tool-directory-start p {
-  margin: 0;
-}
-
-.tool-directory-start a {
-  color: var(--accent-dark);
-  text-decoration: none;
-  font-weight: 800;
 }
 
 .category-jump a {
@@ -1074,25 +1141,6 @@ button:disabled {
   font-weight: 800;
 }
 
-.workflow-price {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  color: #8a5a00;
-}
-
-.workflow-price strong {
-  color: var(--text);
-  font-size: clamp(2.25rem, 4vw, 3.2rem);
-  line-height: 0.9;
-  letter-spacing: -0.04em;
-}
-
-.workflow-price span {
-  color: #8a6b33;
-  font-weight: 800;
-}
-
 .workflow-offer-list {
   margin: 0;
   padding-left: 20px;
@@ -1100,65 +1148,6 @@ button:disabled {
   gap: 8px;
   color: var(--muted);
   line-height: 1.5;
-}
-
-.pricing-hero-grid {
-  width: min(980px, 100%);
-  margin: 24px auto 0;
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.8fr);
-  gap: 18px;
-  align-items: stretch;
-}
-
-.pricing-offer-card {
-  justify-items: start;
-  align-content: start;
-  gap: 18px;
-  padding: 22px;
-  text-align: left;
-}
-
-.pricing-offer-card .workflow-success-actions,
-.pricing-offer-card .studio-stage-note {
-  margin-top: 0;
-}
-
-.pricing-summary-card {
-  display: grid;
-  gap: 16px;
-  align-content: start;
-  text-align: left;
-}
-
-.pricing-summary-card .eyebrow {
-  margin: 0;
-}
-
-.pricing-summary-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.pricing-summary-item {
-  display: grid;
-  gap: 4px;
-  padding: 16px;
-  border-radius: 18px;
-  border: 1px solid rgba(15, 28, 45, 0.08);
-  background: rgba(247, 250, 255, 0.82);
-}
-
-.pricing-summary-item strong {
-  font-size: 1rem;
-  line-height: 1.2;
-}
-
-.pricing-summary-item span {
-  color: var(--muted);
-  font-size: 0.88rem;
-  line-height: 1.45;
 }
 
 .workflow-proof-callout {
@@ -1366,19 +1355,9 @@ button:disabled {
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.22);
 }
 
-[data-theme='dark'] .workflow-price,
-[data-theme='dark'] .workflow-price span {
-  color: #ffd27a;
-}
-
 [data-theme='dark'] .workflow-proof-callout {
   background: rgba(17, 30, 48, 0.52);
   border-color: rgba(255, 210, 122, 0.24);
-}
-
-[data-theme='dark'] .pricing-summary-item {
-  background: rgba(11, 20, 33, 0.86);
-  border-color: rgba(148, 163, 184, 0.16);
 }
 
 [data-theme='dark'] .workflow-proof-card {
@@ -1421,18 +1400,6 @@ button:disabled {
 [data-theme='dark'] .workflow-proof-arrow,
 [data-theme='dark'] .workflow-proof-label {
   color: #9fd0ff;
-}
-
-.pricing-support-note {
-  margin: 16px 0 0;
-  color: var(--muted);
-  text-align: center;
-  font-size: 0.92rem;
-  line-height: 1.55;
-}
-
-.pricing-support-note a {
-  font-weight: 700;
 }
 
 .home-link-list,
@@ -3150,7 +3117,7 @@ input[type='range'] {
   gap: 8px;
 }
 
-.workflow-upgrade-card {
+.workflow-limit-card {
   margin-top: 14px;
   padding: 14px 16px;
   border-radius: 16px;
@@ -3160,12 +3127,12 @@ input[type='range'] {
   gap: 8px;
 }
 
-.workflow-upgrade-card strong {
+.workflow-limit-card strong {
   font-size: 0.95rem;
   color: #8a5a00;
 }
 
-.workflow-upgrade-card p {
+.workflow-limit-card p {
   margin: 0;
   color: #8a6b33;
   font-size: 0.9rem;
@@ -3238,16 +3205,16 @@ input[type='range'] {
   background: rgba(17, 27, 43, 0.72);
 }
 
-[data-theme='dark'] .workflow-upgrade-card {
+[data-theme='dark'] .workflow-limit-card {
   background: rgba(245, 179, 59, 0.1);
   border-color: rgba(255, 210, 122, 0.24);
 }
 
-[data-theme='dark'] .workflow-upgrade-card strong {
+[data-theme='dark'] .workflow-limit-card strong {
   color: #ffd27a;
 }
 
-[data-theme='dark'] .workflow-upgrade-card p {
+[data-theme='dark'] .workflow-limit-card p {
   color: #e6c98c;
 }
 
@@ -3293,9 +3260,9 @@ input[type='range'] {
 
   .hero-home,
   .workflow-offer,
-  .pricing-hero-grid,
   .workflow-proof-grid,
   .studio-hero-grid,
+  .job-router-grid,
   .home-split,
   .home-band,
   .studio-shell,
@@ -3328,10 +3295,6 @@ input[type='range'] {
 
   .workflow-bridge .home-section-actions {
     justify-content: flex-start;
-  }
-
-  .tool-directory-start {
-    margin-top: 16px;
   }
 
   .footer-inner {
@@ -3417,10 +3380,6 @@ input[type='range'] {
     display: grid;
   }
 
-  .pricing-summary-grid {
-    grid-template-columns: 1fr;
-  }
-
   .tool-filter-row {
     display: grid;
   }
@@ -3468,11 +3427,6 @@ input[type='range'] {
   .footer-bottom {
     flex-direction: column;
     font-size: 0.9rem;
-  }
-
-  .pricing-offer-card,
-  .pricing-summary-card {
-    padding: 18px;
   }
 
   .workflow-proof-preview {
