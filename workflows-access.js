@@ -63,8 +63,8 @@
 
     document.querySelectorAll('[data-workflows-checkout-status]').forEach((node) => {
       node.textContent = configured
-        ? `Checkout opens in ${plan.checkoutProvider}.`
-        : `Paid access is currently handled manually. Use the contact page for early access or restore help.`;
+        ? `Checkout opens in ${plan.checkoutProvider}. Browser activation is manual after purchase.`
+        : `Paid access is handled manually right now. Use the contact page for early access or restore help.`;
     });
   };
 
@@ -84,7 +84,7 @@
           return;
         }
 
-        const message = `Restore access is handled manually right now. If you already purchased ${plan.name}, contact support via ${plan.restoreContact} and include the PayPal receipt or transaction ID if available.`;
+        const message = `Restore access is manual right now. If you already purchased ${plan.name}, contact support via ${plan.restoreContact} and include the PayPal receipt or transaction ID if available.`;
 
         if (statusNode) {
           statusNode.textContent = message;

@@ -170,15 +170,21 @@ function ogTypeForRoute(route) {
   return 'website';
 }
 
+function robotsForRoute(route) {
+  if (route === '/workflows/success/') return 'noindex, nofollow';
+  return 'index, follow';
+}
+
 function buildHead({ title, description, route, prefix }) {
   const canonical = `${SITE_URL}${route}`;
   const ogType = ogTypeForRoute(route);
+  const robots = robotsForRoute(route);
   return `<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${escapeHtml(title)}</title>
   <meta name="description" content="${escapeAttr(description)}" />
-  <meta name="robots" content="index, follow" />
+  <meta name="robots" content="${robots}" />
   <link rel="canonical" href="${canonical}" />
   <meta property="og:title" content="${escapeAttr(title)}" />
   <meta property="og:description" content="${escapeAttr(description)}" />
@@ -237,7 +243,7 @@ function buildFooter() {
   <div class="footer-inner">
     <section class="footer-about">
       <h3>Kreativ<span>Tools</span></h3>
-      <p>Kreativ Tools is the free browser-based utility layer. Kreativ Workflows is the paid guided layer for repeat delivery work.</p>
+      <p>Private browser tools for creative, document, media, font, and data jobs.</p>
     </section>
 
     <section>
