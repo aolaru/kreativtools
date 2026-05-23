@@ -180,34 +180,42 @@
       </div>
     </section>
 
-    <section class="tool-intro" aria-label="How this tool works">
-      <div class="tool-intro-card">
-        <h2>Before you upload</h2>
-        <ul class="tool-intro-list">
-          <li>Upload one PDF file, then click any page preview to place text, a checkbox, or a signature image.</li>
-          <li>Signature uploads support PNG, JPG, and SVG. SVG signatures are rasterized locally in the browser.</li>
-          <li>This tool places overlay content on top of the PDF. It does not rewrite existing text already inside the document.</li>
-        </ul>
-      </div>
-      <div class="tool-intro-card">
-        <h2>What you get</h2>
-        <p>Review the PDF visually, drag placed items to adjust them, then export one filled-and-signed PDF without upload limits.</p>
-      </div>
-    </section>
-
-    <section class="tool-intro" aria-label="PDF fill and sign notes">
-      <div class="tool-intro-card">
-        <h2>Best fit</h2>
-        <ul class="tool-intro-list">
-          <li>Typing names, dates, and addresses onto a form PDF</li>
-          <li>Adding a scanned or exported signature image to contracts and approvals</li>
-          <li>Ticking simple checkboxes in forms that were not built as interactive PDF fields</li>
-          <li>Placing short notes or labels on top of a fixed PDF layout</li>
-        </ul>
-      </div>
-      <div class="tool-intro-card">
-        <h2>What to do next</h2>
-        <p>If the final file needs to be smaller, continue with <a href="/pdf/compress/">PDF Compress</a>. If you need to reorder or split the document first, use <a href="/pdf/merge/">PDF Merge</a> or <a href="/pdf/split/">PDF Split</a>.</p>
+    <section class="article-section tool-guide" aria-labelledby="pdfFillGuideTitle">
+      <h2 id="pdfFillGuideTitle">PDF fill and sign guide</h2>
+      <p>Use this tool for fixed PDF forms where you need to place visible text, checkboxes, notes, or a signature image without uploading the document to a server.</p>
+      <div class="tool-guide-grid">
+        <article class="tool-guide-card">
+          <h3>Best uses</h3>
+          <ul class="tool-guide-list">
+            <li>Type names, dates, addresses, and short notes onto existing PDF forms.</li>
+            <li>Add a scanned, drawn, or exported signature image to contracts and approvals.</li>
+            <li>Tick simple boxes when the PDF was not built with interactive fields.</li>
+          </ul>
+        </article>
+        <article class="tool-guide-card">
+          <h3>How it works</h3>
+          <p>Upload one PDF, choose text, checkbox, or signature mode, then click a page preview to place the item. Drag placed items before generating the final PDF.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Supported files</h3>
+          <p>The source must be a PDF. Signature images can be PNG, JPG, or SVG; SVG signatures are rasterized locally before being placed into the export.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Privacy and limits</h3>
+          <p>The PDF, typed text, checkbox positions, and signature image stay in the browser session. Password-protected or damaged PDFs may fail to load.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Common issues</h3>
+          <ul class="tool-guide-list">
+            <li>This places overlays; it does not rewrite existing PDF text or form internals.</li>
+            <li>It is not a cryptographic digital-signature or certificate workflow.</li>
+            <li>If the export becomes too large, compress the finished PDF afterward.</li>
+          </ul>
+        </article>
+        <article class="tool-guide-card tool-guide-note">
+          <h3>Next step</h3>
+          <p>If the final file needs to be smaller, use <a href="/pdf/compress/">PDF Compress</a>. If you need to reorder or split pages first, use <a href="/pdf/merge/">PDF Merge</a> or <a href="/pdf/split/">PDF Split</a>.</p>
+        </article>
       </div>
     </section>
 

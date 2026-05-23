@@ -55,7 +55,7 @@
     <section class="hero">
       <p class="eyebrow">Font Tools</p>
       <h1>Font to Webfont Converter</h1>
-      <p>Upload a TTF or OTF file and export to WOFF or WOFF2 for web use.</p>
+      <p>Upload a TTF or OTF font and export a browser-ready WOFF or WOFF2 file for website delivery.</p>
     </section>
 
     <section class="upload-card">
@@ -89,6 +89,45 @@
       <div class="preview-panel">
         <h2>Font Info</h2>
         <p id="fontMeta" class="dimensions empty-note">Upload a font to see details.</p>
+      </div>
+    </section>
+
+    <section class="article-section tool-guide" aria-labelledby="fontConvertGuideTitle">
+      <h2 id="fontConvertGuideTitle">Font to webfont guide</h2>
+      <p>Use this tool when you already have a licensed desktop font file and need a smaller webfont format for a website, landing page, or design system.</p>
+      <div class="tool-guide-grid">
+        <article class="tool-guide-card">
+          <h3>Best uses</h3>
+          <ul class="tool-guide-list">
+            <li>Convert TTF or OTF files into WOFF for broad web delivery.</li>
+            <li>Create WOFF2 files when you want the smallest modern browser format.</li>
+            <li>Prepare font assets before writing @font-face CSS.</li>
+          </ul>
+        </article>
+        <article class="tool-guide-card">
+          <h3>How it works</h3>
+          <p>The browser reads the source font, converts it with the client-side font engine, then downloads the converted webfont file.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Supported files</h3>
+          <p>Input supports TTF and OTF. Output supports WOFF and WOFF2. Variable fonts, unusual tables, or damaged files may not convert cleanly.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Privacy and limits</h3>
+          <p>The font is processed in this browser session. You are still responsible for checking that your font license allows web embedding.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Common issues</h3>
+          <ul class="tool-guide-list">
+            <li>WOFF2 is usually smaller, but WOFF can be useful for broader compatibility needs.</li>
+            <li>Conversion does not automatically create font subsets or remove unused glyphs.</li>
+            <li>If the converted font renders oddly, test the original font and try the other output format.</li>
+          </ul>
+        </article>
+        <article class="tool-guide-card tool-guide-note">
+          <h3>Next step</h3>
+          <p>Preview the result with <a href="/fonts/preview/">Font Preview</a>, then generate a ready-to-paste block with <a href="/fonts/css-generator/">Font CSS Generator</a>.</p>
+        </article>
       </div>
     </section>
   </main>

@@ -111,29 +111,42 @@
       </div>
     </section>
 
-    <section class="tool-intro" aria-label="MP3 conversion guidance">
-      <div class="tool-intro-card">
-        <h2>Best for</h2>
-        <p>Turning heavier WAV files into lighter MP3 downloads for sharing, previews, drafts, and smaller everyday delivery files.</p>
-      </div>
-      <div class="tool-intro-card">
-        <h2>Compression rule</h2>
-        <p>Lower bitrate means smaller MP3 files and more compression. Higher bitrate means better quality and larger downloads.</p>
-      </div>
-    </section>
-
-    <section class="tool-intro" aria-label="Audio to MP3 next steps">
-      <div class="tool-intro-card">
-        <h2>Common use cases</h2>
-        <ul class="tool-intro-list">
-          <li>Convert WAV drafts into smaller MP3 files for quick review</li>
-          <li>Prepare spoken-word files for email or download delivery</li>
-          <li>Choose lighter bitrates for previews while keeping a WAV master elsewhere</li>
-        </ul>
-      </div>
-      <div class="tool-intro-card">
-        <h2>What to do next</h2>
-        <p>If you need a lossless output instead, switch to <a href="/audio/to-wav/">Audio to WAV</a>. If you need a smaller excerpt first, trim the file before conversion with <a href="/audio/trim/">Audio Trim</a>.</p>
+    <section class="article-section tool-guide" aria-labelledby="mp3GuideTitle">
+      <h2 id="mp3GuideTitle">Audio to MP3 guide</h2>
+      <p>Use this tool when you need a smaller, shareable MP3 from a browser-readable audio file and do not need a full editing timeline.</p>
+      <div class="tool-guide-grid">
+        <article class="tool-guide-card">
+          <h3>Best uses</h3>
+          <ul class="tool-guide-list">
+            <li>Convert WAV drafts into smaller MP3 files for quick review.</li>
+            <li>Prepare spoken-word files for email, download delivery, or support tickets.</li>
+            <li>Create lighter preview files while keeping a higher-quality master elsewhere.</li>
+          </ul>
+        </article>
+        <article class="tool-guide-card">
+          <h3>How it works</h3>
+          <p>The browser decodes the audio, optionally converts sample rate or mono output, then encodes a new MP3 at the bitrate you choose.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Supported files</h3>
+          <p>Input works best with WAV, MP3, M4A/AAC, OGG, and FLAC files that your browser can decode. Output is always MP3.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Privacy and limits</h3>
+          <p>Conversion runs locally in the browser. Long files can take time and may be limited by browser memory, device speed, or decoding support.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Bitrate choices</h3>
+          <ul class="tool-guide-list">
+            <li>96 kbps is small and useful for rough voice previews.</li>
+            <li>128 kbps is a practical default for everyday sharing.</li>
+            <li>192 kbps or higher is safer for music or more critical listening.</li>
+          </ul>
+        </article>
+        <article class="tool-guide-card tool-guide-note">
+          <h3>Next step</h3>
+          <p>If you need a lossless output instead, use <a href="/audio/to-wav/">Audio to WAV</a>. If you only need a smaller excerpt, use <a href="/audio/trim/">Audio Trim</a> before conversion.</p>
+        </article>
       </div>
     </section>
 
@@ -149,14 +162,6 @@
       </div>
     </section>
 
-    <section class="article-section">
-      <h2>Quick FAQ</h2>
-      <ul>
-        <li><strong>What bitrate should I choose?</strong> `128 kbps` is a practical balance for everyday sharing, while `192 kbps` or higher is safer for music or more critical listening.</li>
-        <li><strong>When does mono help?</strong> Mono is useful for voice-heavy audio where stereo space does not matter and smaller files are more important.</li>
-        <li><strong>Will it work on GitHub Pages?</strong> Yes. The conversion runs in the browser and the MP3 encoder is stored locally with the site.</li>
-      </ul>
-    </section>
   </main>
 
   <footer class="site-footer">

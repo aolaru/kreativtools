@@ -2077,6 +2077,71 @@ button:disabled {
   line-height: 1.55;
 }
 
+.tool-guide {
+  display: grid;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.tool-guide > p {
+  max-width: 780px;
+}
+
+.tool-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.tool-guide-card {
+  border: 1px solid var(--outline);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.72);
+  padding: 18px;
+}
+
+[data-theme='dark'] .tool-guide-card {
+  background: rgba(17, 30, 48, 0.7);
+}
+
+.tool-guide-card.is-wide {
+  grid-column: span 2;
+}
+
+.tool-guide-card h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.tool-guide-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.tool-guide-list {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 7px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.tool-guide-note {
+  border-color: color-mix(in oklab, var(--accent) 28%, var(--outline));
+  background:
+    linear-gradient(135deg, rgba(37, 137, 216, 0.08), rgba(255, 255, 255, 0.72)),
+    rgba(255, 255, 255, 0.78);
+}
+
+[data-theme='dark'] .tool-guide-note {
+  background:
+    linear-gradient(135deg, rgba(74, 169, 245, 0.12), rgba(17, 30, 48, 0.72)),
+    rgba(17, 30, 48, 0.76);
+}
+
 .updates-archive {
   margin-top: 18px;
 }
@@ -3265,9 +3330,14 @@ input[type='range'] {
   .job-router-grid,
   .home-split,
   .home-band,
+  .tool-guide-grid,
   .studio-shell,
   .studio-stage-grid {
     grid-template-columns: 1fr;
+  }
+
+  .tool-guide-card.is-wide {
+    grid-column: auto;
   }
 
   .is-learn-featured {

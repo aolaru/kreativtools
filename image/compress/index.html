@@ -111,29 +111,42 @@
       </div>
     </section>
 
-    <section class="tool-intro" aria-label="Image compression guidance">
-      <div class="tool-intro-card">
-        <h2>Best for</h2>
-        <p>Website images, product photos, blog graphics, and assets that need to stay visually clean while loading faster.</p>
-      </div>
-      <div class="tool-intro-card">
-        <h2>What to expect</h2>
-        <p>JPG, WebP, and AVIF give the biggest size savings. PNG stays lossless, so it is useful for graphics but often will not shrink as much.</p>
-      </div>
-    </section>
-
-    <section class="tool-intro" aria-label="Image compress next steps">
-      <div class="tool-intro-card">
-        <h2>Common use cases</h2>
-        <ul class="tool-intro-list">
-          <li>Prepare product images for Shopify or WooCommerce listings</li>
-          <li>Reduce homepage hero images before uploading to a CMS</li>
-          <li>Make screenshots and social graphics lighter for email or chat delivery</li>
-        </ul>
-      </div>
-      <div class="tool-intro-card">
-        <h2>What to do next</h2>
-        <p>If the image dimensions are still too large, continue with <a href="/image/resize/">Image Resize &amp; Convert</a>. If the framing is wrong, use <a href="/image/crop/">Image Crop</a> before compressing again.</p>
+    <section class="article-section tool-guide" aria-labelledby="compressGuideTitle">
+      <h2 id="compressGuideTitle">Image compression guide</h2>
+      <p>Use this tool when the picture already has the right crop and dimensions, but the file is too heavy for a website, CMS, email, marketplace, or client handoff.</p>
+      <div class="tool-guide-grid">
+        <article class="tool-guide-card">
+          <h3>Best uses</h3>
+          <ul class="tool-guide-list">
+            <li>Reduce product images before uploading to Shopify, WooCommerce, or a CMS.</li>
+            <li>Make screenshots and blog graphics lighter for email, chat, and support tickets.</li>
+            <li>Export WebP or AVIF versions when the destination supports modern image formats.</li>
+          </ul>
+        </article>
+        <article class="tool-guide-card">
+          <h3>How it works</h3>
+          <p>The browser decodes the image, draws it to a canvas, then exports a new JPG, WebP, AVIF, or PNG using the quality and format you choose.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Supported formats</h3>
+          <p>Input depends on browser support and can include JPG, PNG, WebP, AVIF, GIF, BMP, and TIFF. Output options are JPG, WebP, AVIF, and PNG.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Privacy and limits</h3>
+          <p>Files are processed in this browser session. Very large images can still be limited by device memory, browser decoding support, or canvas export support.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Common issues</h3>
+          <ul class="tool-guide-list">
+            <li>PNG is lossless, so it may not shrink much compared with JPG, WebP, or AVIF.</li>
+            <li>Transparent images should usually stay PNG or WebP to avoid a solid background.</li>
+            <li>If the image is physically too large, resize first instead of only lowering quality.</li>
+          </ul>
+        </article>
+        <article class="tool-guide-card tool-guide-note">
+          <h3>Next step</h3>
+          <p>If the dimensions are still too large, use <a href="/image/resize/">Image Resize &amp; Convert</a>. If the framing is wrong, use <a href="/image/crop/">Image Crop</a> before compressing again.</p>
+        </article>
       </div>
     </section>
 
@@ -149,14 +162,6 @@
       </div>
     </section>
 
-    <section class="article-section">
-      <h2>Quick FAQ</h2>
-      <ul>
-        <li><strong>Will compression always make the file smaller?</strong> Usually yes for JPG, WebP, and AVIF, but PNG can stay relatively large because it keeps lossless detail.</li>
-        <li><strong>Should I resize or compress first?</strong> Resize first when the image is much larger than the actual layout needs.</li>
-        <li><strong>Does the file leave my device?</strong> This tool works in the browser, so it is designed for local processing in the current session.</li>
-      </ul>
-    </section>
   </main>
 
   <footer class="site-footer">
