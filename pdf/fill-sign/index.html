@@ -69,13 +69,16 @@
       </div>
     </section>
 
-    <section id="pdfFillWorkspace" class="workspace is-hidden">
-      <div class="controls">
-        <p id="pdfFillMeta" class="status status-empty">Upload a PDF file to begin placing text, checkboxes, and signatures.</p>
+    <section id="pdfFillWorkspace" class="workspace pdf-fill-workspace is-hidden">
+      <div class="controls pdf-fill-action-bar">
+        <div class="pdf-fill-file-copy">
+          <span class="pdf-fill-file-label">Loaded PDF</span>
+          <p id="pdfFillMeta" class="pdf-fill-file-status">No PDF loaded yet.</p>
+        </div>
         <div class="inline-actions">
           <button id="pdfFillExportButton" type="button" class="primary" disabled>Generate Filled PDF</button>
           <button id="pdfFillDownloadButton" type="button" class="secondary-button" disabled>Download Filled PDF</button>
-          <button id="pdfFillResetButton" type="button" class="ghost">Choose Another PDF</button>
+          <button id="pdfFillResetButton" type="button" class="ghost">Start Over</button>
         </div>
       </div>
 
@@ -91,7 +94,7 @@
             <p class="status">Click a page preview to place the active item. Drag any placed item to fine-tune its position.</p>
           </section>
 
-          <section class="tool-intro-card pdf-fill-card">
+          <section id="pdfFillCheckboxCard" class="tool-intro-card pdf-fill-card" data-pdf-fill-mode-card="checkbox" hidden>
             <h2>Checkbox</h2>
             <div class="pdf-fill-field-row">
               <label class="field-label" for="pdfFillCheckboxSize">Box size</label>
@@ -103,7 +106,7 @@
             </div>
           </section>
 
-          <section class="tool-intro-card pdf-fill-card">
+          <section id="pdfFillTextCard" class="tool-intro-card pdf-fill-card" data-pdf-fill-mode-card="text">
             <h2>Text Content</h2>
             <label class="field-label" for="pdfFillText">Text</label>
             <textarea id="pdfFillText" class="input-like pdf-fill-textarea" rows="4" placeholder="Type a name, address, date, or note"></textarea>
@@ -120,7 +123,7 @@
             </div>
           </section>
 
-          <section class="tool-intro-card pdf-fill-card">
+          <section id="pdfFillSignatureCard" class="tool-intro-card pdf-fill-card" data-pdf-fill-mode-card="signature" hidden>
             <h2>Signature Image</h2>
             <input id="pdfSignatureInput" type="file" accept="image/png,image/jpeg,image/svg+xml,.png,.jpg,.jpeg,.svg" />
             <div class="pdf-fill-field-row">
@@ -300,6 +303,7 @@
     const pdfFillToolText = document.getElementById('pdfFillToolText');
     const pdfFillToolCheckbox = document.getElementById('pdfFillToolCheckbox');
     const pdfFillToolSignature = document.getElementById('pdfFillToolSignature');
+    const pdfFillModeCards = Array.from(document.querySelectorAll('[data-pdf-fill-mode-card]'));
     const pdfFillText = document.getElementById('pdfFillText');
     const pdfFillInsertTodayButton = document.getElementById('pdfFillInsertTodayButton');
     const pdfFillFontSize = document.getElementById('pdfFillFontSize');
@@ -358,6 +362,9 @@
       pdfFillToolText.classList.toggle('is-active', mode === 'text');
       pdfFillToolCheckbox.classList.toggle('is-active', mode === 'checkbox');
       pdfFillToolSignature.classList.toggle('is-active', mode === 'signature');
+      pdfFillModeCards.forEach((card) => {
+        card.hidden = card.dataset.pdfFillModeCard !== mode;
+      });
     }
 
     function createPlacementId() {
@@ -889,6 +896,7 @@
       selectedPlacementId = '';
       outputBytes = null;
       outputName = '';
+      setActiveMode('text');
 
       await renderPdfPages();
 
@@ -896,13 +904,17 @@
       pdfFillSummary.textContent = `Loaded ${file.name}. Click a page to place text, checkboxes, or a signature.`;
       pdfFillPageCount.textContent = String(pdfPreviewDoc.numPages);
       pdfFillPlacementCount.textContent = '0';
-      pdfFillMeta.textContent = `${file.name} • ${pdfPreviewDoc.numPages} page${pdfPreviewDoc.numPages === 1 ? '' : 's'}`;
+      pdfFillMeta.textContent = `${file.name} • ${pdfPreviewDoc.numPages} page${pdfPreviewDoc.numPages === 1 ? '' : 's'} ready for editing`;
       pdfFillExportButton.disabled = true;
       pdfFillDownloadButton.disabled = true;
       pdfFillExportStatus.textContent = 'Waiting for changes';
       pdfFillSelectionStatus.textContent = 'No placement selected yet.';
       setStatus(`Loaded ${file.name}. Place text, checkboxes, or a signature on any page.`);
-        uploadUi?.setLoaded({ name: file.name, size: file.size });
+      uploadUi?.setLoaded({
+        name: file.name,
+        size: file.size,
+        meta: `${pdfPreviewDoc.numPages} page${pdfPreviewDoc.numPages === 1 ? '' : 's'} loaded`,
+      });
     }
 
     async function exportPdf() {
@@ -1077,7 +1089,10 @@
       selectedPlacementId = '';
       pdfFillWorkspace.classList.add('is-hidden');
       pdfFillPages.innerHTML = '';
+      pdfFillMeta.textContent = 'No PDF loaded yet.';
+      uploadUi?.clear();
       setSignatureAsset(null);
+      setActiveMode('text');
       setStatus('Ready for upload.');
     });
     pdfFillExportButton.addEventListener('click', () => {
