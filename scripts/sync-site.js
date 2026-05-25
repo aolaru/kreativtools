@@ -14,6 +14,7 @@ const FONT_AWESOME_HREF = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6
 const FONT_AWESOME_INTEGRITY = 'sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==';
 
 const REDIRECTS = {
+  'about.html': '/about/',
   'all-tools.html': '/tools/',
   'audio-trim.html': '/audio/trim/',
   'audio-volume.html': '/audio/volume/',

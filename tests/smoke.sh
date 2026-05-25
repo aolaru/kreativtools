@@ -78,6 +78,7 @@ main() {
     workflows/pdf-delivery/index.html
     workflows/audio-delivery/index.html
     tools/index.html
+    about/index.html
     privacy/index.html
     terms/index.html
     contact/index.html
@@ -88,6 +89,7 @@ main() {
   expect_file "image-format-support.js"
   expect_file "analytics.js"
   expect_file "workflows-template-ui.js"
+  expect_file "robots.txt"
   expect_file "workflows/pricing/index.html"
   expect_file "workflows/success/index.html"
 
@@ -103,6 +105,7 @@ main() {
   expect_pattern "analytics.js" "G-52WXEBLJY7"
   expect_pattern "analytics.js" "googletagmanager\\.com/gtag/js\\?id="
   expect_pattern "analytics.js" "window\\.gtag"
+  expect_pattern "robots.txt" "Sitemap: https://kreativtools\\.com/sitemap\\.xml"
 
   expect_pattern "image/resize/index.html" 'id="toolResize"'
   expect_pattern "image/resize/index.html" 'id="toolConvert"'
@@ -150,6 +153,9 @@ main() {
   expect_pattern "workflows/audio-delivery/index.html" 'workflows-template-ui\.js'
   expect_pattern "workflows/success/index.html" '<meta name="robots" content="noindex, nofollow"'
   expect_pattern "file/xml-to-csv/index.html" 'id="xmlInput"'
+  expect_pattern "about/index.html" '<h1>Independent browser tools for practical file work</h1>'
+  expect_pattern "privacy/index.html" 'Advertising and Google AdSense'
+  expect_pattern "terms/index.html" 'Advertising:'
 
   expect_pattern "changes/index.html" 'class="changelog-list"'
   expect_pattern "changes/index.html" 'NEW -'

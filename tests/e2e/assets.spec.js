@@ -26,6 +26,7 @@ const pages = [
   '/changes',
   '/workflows',
   '/tools',
+  '/about',
   '/privacy',
   '/terms',
   '/contact',
@@ -68,7 +69,7 @@ test('social preview assets and favicon assets resolve', async ({ page, baseURL 
 });
 
 test('key pages expose canonical and social metadata for their own routes', async ({ page }) => {
-  const routes = ['/', '/learn/', '/workflows/', '/workflows/image-prep/', '/workflows/pdf-delivery/', '/workflows/audio-delivery/', '/pdf/split/'];
+  const routes = ['/', '/about/', '/learn/', '/workflows/', '/workflows/image-prep/', '/workflows/pdf-delivery/', '/workflows/audio-delivery/', '/pdf/split/'];
 
   for (const route of routes) {
     await page.goto(route, { waitUntil: 'domcontentloaded' });
@@ -79,6 +80,14 @@ test('key pages expose canonical and social metadata for their own routes', asyn
     await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', 'https://kreativtools.com/og-image.png');
     await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute('content', 'https://kreativtools.com/og-image.png');
   }
+});
+
+test('robots file allows indexing and points to the sitemap', async ({ page, baseURL }) => {
+  const response = await page.goto(`${baseURL}/robots.txt`);
+  expect(response, 'Missing robots.txt response').not.toBeNull();
+  expect(response.status(), `robots.txt returned ${response.status()}`).toBeLessThan(400);
+  await expect(page.locator('body')).toContainText('User-agent: *');
+  await expect(page.locator('body')).toContainText('Sitemap: https://kreativtools.com/sitemap.xml');
 });
 
 test('analytics emits privacy-safe tool usage events', async ({ page }) => {

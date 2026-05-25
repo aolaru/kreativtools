@@ -21,6 +21,7 @@ const pages = [
   '/workflows/pdf-delivery',
   '/workflows/audio-delivery',
   '/tools',
+  '/about',
   '/privacy',
   '/terms',
   '/contact',
@@ -96,16 +97,25 @@ test('footer legal links exist across all pages', async ({ page }) => {
     await page.goto(route, { waitUntil: 'domcontentloaded' });
     await expect(page.locator('footer a[href="/privacy/"]')).toBeVisible();
     await expect(page.locator('footer a[href="/terms/"]')).toBeVisible();
+    await expect(page.locator('footer a[href="/about/"]')).toBeVisible();
     await expect(page.locator('script[src$="cookie-consent.js"]')).toHaveCount(1);
   }
 });
 
-test('privacy and terms pages include core legal headings', async ({ page }) => {
+test('trust and legal pages include AdSense readiness disclosures', async ({ page }) => {
+  await page.goto('/about');
+  await expect(page.getByRole('heading', { level: 1, name: 'Independent browser tools for practical file work' })).toBeVisible();
+  await expect(page.getByText('Advertising, if enabled, should never block the core tool')).toBeVisible();
+
   await page.goto('/privacy');
   await expect(page.getByRole('heading', { level: 1, name: 'Privacy Policy' })).toBeVisible();
   await expect(page.locator('text=Last updated:')).toBeVisible();
+  await expect(page.getByText('Advertising and Google AdSense')).toBeVisible();
+  await expect(page.getByText('Google-certified consent management platform')).toBeVisible();
+  await expect(page.locator('a[href="https://policies.google.com/technologies/partner-sites"]')).toBeVisible();
 
   await page.goto('/terms');
   await expect(page.getByRole('heading', { level: 1, name: 'Terms of Use' })).toBeVisible();
   await expect(page.locator('text=Last updated:')).toBeVisible();
+  await expect(page.getByText('Ads must not be interpreted as endorsements')).toBeVisible();
 });

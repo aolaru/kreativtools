@@ -14,6 +14,7 @@ const FOOTER_SECTIONS = {
     ['Font to Webfont', '/fonts/webfont-convert/'],
   ],
   company: [
+    ['About', '/about/'],
     ['Privacy Policy', '/privacy/'],
     ['Terms', '/terms/'],
     ['Contact', '/contact/'],

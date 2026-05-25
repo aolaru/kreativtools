@@ -73,7 +73,7 @@
     banner.setAttribute('role', 'dialog');
     banner.setAttribute('aria-live', 'polite');
     banner.innerHTML = `
-      <p>This site uses local storage for preferences and optional privacy-friendly analytics. For EU visitors, consent is required.</p>
+      <p>This site uses local storage for preferences and may use optional analytics or advertising cookies. For visitors in regions where consent is required, choose before non-essential services run.</p>
       <div class="cookie-actions">
         <button type="button" class="cookie-btn cookie-accept">Accept Cookies</button>
         <button type="button" class="cookie-btn cookie-reject">Reject Non-Essential</button>

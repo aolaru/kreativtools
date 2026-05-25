@@ -16,6 +16,7 @@ Kreativ Tools is a browser-based utility site for image, PDF, video, font, audio
 - Learn: compact start-here guide hub with focused follow-up articles in an archive
 - Updates: public product log for launches, UX updates, and design improvements
 - Workflows: short explainer route for the guided workflow format, with Image Prep, PDF Delivery, and Audio Delivery listed inside the Tools directory
+- About, Privacy, Terms, and Contact: trust and policy pages linked site-wide for transparency and monetization readiness
 
 ### Tool categories
 - Image: crop, compress, resize, convert to WebP
@@ -81,6 +82,13 @@ The Worker implementation lives in `worker/`:
 - `worker/wrangler.toml.example`: deployment template
 
 Use `worker/README.md` for setup commands. The dashboard is designed for metrics like most used tools, upload starts, export/download completion, output formats, size buckets, and daily/weekly trends.
+
+## Advertising readiness
+
+- Do not add AdSense tags until the real publisher ID is available.
+- Add the real `ads.txt` record only after the AdSense account provides the exact `pub-...` value.
+- For EEA, UK, and Switzerland visitors, configure Google AdSense Privacy & messaging or another Google-certified CMP before serving ads.
+- Keep ad slots clearly separated from tool buttons, download actions, cards, and form controls.
 
 ## Versioning
 

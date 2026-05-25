@@ -18,6 +18,7 @@ const pages = [
   '/workflows',
   '/workflows/audio-delivery',
   '/tools',
+  '/about',
   '/privacy',
   '/terms',
   '/contact',
