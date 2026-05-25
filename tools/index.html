@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Free Kreativ Tools | Browser Utilities for Image, PDF, Audio, Video, Fonts, and Data</title>
-  <meta name="description" content="Browse and filter the full free Kreativ Tools directory for image, PDF, audio, video, font, and data utilities." />
+  <title>Kreativ Tools Directory | Browser Tools and Guided Workflows</title>
+  <meta name="description" content="Search and filter the Kreativ Tools directory for quick browser utilities and guided workflows for image, PDF, audio, video, font, and data jobs." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://kreativtools.com/tools/" />
-  <meta property="og:title" content="Free Kreativ Tools | Browser Utilities for Image, PDF, Audio, Video, Fonts, and Data" />
-  <meta property="og:description" content="Browse and filter the full free Kreativ Tools directory for image, PDF, audio, video, font, and data utilities." />
+  <meta property="og:title" content="Kreativ Tools Directory | Browser Tools and Guided Workflows" />
+  <meta property="og:description" content="Search and filter the Kreativ Tools directory for quick browser utilities and guided workflows for image, PDF, audio, video, font, and data jobs." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://kreativtools.com/tools/" />
   <meta property="og:image" content="https://kreativtools.com/og-image.png" />
@@ -17,8 +17,8 @@
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Free Kreativ Tools | Browser Utilities for Image, PDF, Audio, Video, Fonts, and Data" />
-  <meta name="twitter:description" content="Browse and filter the full free Kreativ Tools directory for image, PDF, audio, video, font, and data utilities." />
+  <meta name="twitter:title" content="Kreativ Tools Directory | Browser Tools and Guided Workflows" />
+  <meta name="twitter:description" content="Search and filter the Kreativ Tools directory for quick browser utilities and guided workflows for image, PDF, audio, video, font, and data jobs." />
   <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
   <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
@@ -39,8 +39,7 @@
     </a>
 
     <nav class="top-nav" aria-label="Primary">
-      <a href="/workflows/"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span>Workflows</span></a>
-      <a href="/tools/" aria-current="page"><i class="fa-solid fa-toolbox" aria-hidden="true"></i><span>Free Tools</span></a>
+      <a href="/tools/" aria-current="page"><i class="fa-solid fa-toolbox" aria-hidden="true"></i><span>Tools</span></a>
       <a href="/learn/"><i class="fa-solid fa-book-open" aria-hidden="true"></i><span>Learn</span></a>
       <a href="/changes/"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i><span>Updates</span></a>
     </nav>
@@ -53,36 +52,59 @@
 
   <main class="container tools-directory">
     <section class="hero">
-      <p class="eyebrow">Free Tool Directory</p>
-      <h1>Free Kreativ Tools</h1>
-      <p>Search once, filter by file type, then open the browser tool you need.</p>
+      <p class="eyebrow">Tool Directory</p>
+      <h1>Tools and Guided Workflows</h1>
+      <p>Search once, filter by job type, then open the quick tool or guided workflow you need.</p>
     </section>
 
     <section class="tools-action-section" aria-labelledby="toolsSearchTitle">
-      <div class="home-panel tool-directory-controls" role="search" aria-label="Find a free tool">
+      <div class="home-panel tool-directory-controls" role="search" aria-label="Find a tool or guided workflow">
         <div class="tool-directory-control-head">
-          <h2 id="toolsSearchTitle">Find the right free tool</h2>
-          <p>One quick task means one focused tool. Search by job, format, or outcome.</p>
+          <h2 id="toolsSearchTitle">Find the right tool or guided workflow</h2>
+          <p>Search first, then narrow only if needed. Most visitors should use All, Quick Tools, or Guided.</p>
         </div>
         <div class="tool-directory-search-row">
-          <input id="toolDirectorySearch" class="tool-directory-search" type="search" placeholder="Search PDF, image, MP3, WebP, font, CSV..." aria-label="Search free tools" />
-          <p id="toolDirectorySummary" class="tool-directory-summary">Showing all 23 free tools.</p>
+          <input id="toolDirectorySearch" class="tool-directory-search" type="search" placeholder="Search PDF, image, workflow, MP3, WebP, font, CSV..." aria-label="Search tools and guided workflows" />
+          <p id="toolDirectorySummary" class="tool-directory-summary">Showing all 26 entries.</p>
         </div>
-        <div class="tool-filter-row" role="group" aria-label="Filter free tools by type">
+        <div class="tool-filter-row" role="group" aria-label="Filter tools and guided workflows by type">
           <button class="tool-filter-button is-active" type="button" data-tool-filter="all" aria-pressed="true">All</button>
+          <button class="tool-filter-button" type="button" data-tool-filter="quick" aria-pressed="false">Quick Tools</button>
+          <button class="tool-filter-button" type="button" data-tool-filter="guided" aria-pressed="false">Guided</button>
           <button class="tool-filter-button" type="button" data-tool-filter="image" aria-pressed="false">Image</button>
           <button class="tool-filter-button" type="button" data-tool-filter="pdf" aria-pressed="false">PDF</button>
           <button class="tool-filter-button" type="button" data-tool-filter="audio" aria-pressed="false">Audio</button>
-          <button class="tool-filter-button" type="button" data-tool-filter="video" aria-pressed="false">Video</button>
-          <button class="tool-filter-button" type="button" data-tool-filter="font" aria-pressed="false">Font</button>
-          <button class="tool-filter-button" type="button" data-tool-filter="data" aria-pressed="false">Data</button>
         </div>
-        <p id="toolsEmptyState" class="tools-empty-state" hidden>No free tools matched that filter. Try another keyword or reset back to all tools.</p>
-        <nav class="category-jump" aria-label="Free tool categories">
-          <a href="#imagePdfTools">Image &amp; PDF</a>
-          <a href="#mediaFontTools">Media &amp; Fonts</a>
-          <a href="#dataTools">Data</a>
-        </nav>
+        <p id="toolsEmptyState" class="tools-empty-state" hidden>No tools or workflows matched that filter. Try another keyword or reset back to all.</p>
+      </div>
+    </section>
+
+    <section id="guidedWorkflows" class="home-section category-block">
+      <div class="category-heading">
+        <p class="eyebrow">Guided Workflows</p>
+        <h2>Use these when one job has several ordered steps</h2>
+      </div>
+      <div class="tools-grid category-grid" aria-label="Guided workflows">
+        <a class="tool-card is-workflow-featured" data-category="Guided Workflows" href="/workflows/image-prep/">
+        <span class="tool-card-badge is-premium">Guided</span>
+        <div class="tool-thumb thumb-image thumb-image-resize" aria-hidden="true"><i class="fa-solid fa-wand-magic-sparkles tool-thumb-icon"></i></div>
+        <h3>Image Prep</h3>
+        <p>Crop, resize, compress, and export one delivery-ready image in a guided flow.</p>
+        </a>
+
+        <a class="tool-card is-workflow-featured" data-category="Guided Workflows" href="/workflows/pdf-delivery/">
+        <span class="tool-card-badge is-premium">Guided</span>
+        <div class="tool-thumb thumb-pdf thumb-pdf-merge" aria-hidden="true"><i class="fa-solid fa-file-circle-check tool-thumb-icon"></i></div>
+        <h3>PDF Delivery</h3>
+        <p>Arrange, split, merge, optimize, and export one sendable PDF pack.</p>
+        </a>
+
+        <a class="tool-card is-workflow-featured" data-category="Guided Workflows" href="/workflows/audio-delivery/">
+        <span class="tool-card-badge is-premium">Guided</span>
+        <div class="tool-thumb thumb-audio thumb-audio-mp3" aria-hidden="true"><i class="fa-solid fa-sliders tool-thumb-icon"></i></div>
+        <h3>Audio Delivery</h3>
+        <p>Trim, level, convert, and export one shareable audio file in order.</p>
+        </a>
       </div>
     </section>
 
@@ -245,14 +267,14 @@
       </div>
     </section>
 
-    <section class="home-panel compact-panel slim-panel tools-upsell" aria-labelledby="toolsUpsellTitle">
+    <section class="home-panel compact-panel slim-panel tools-upsell" aria-labelledby="toolsHelpTitle">
       <div>
-        <p class="eyebrow">Need more than one step?</p>
-        <h2 id="toolsUpsellTitle">Use Workflows for repeat delivery jobs.</h2>
-        <p>Use free tools for one quick task. Use Workflows when image, PDF, or audio jobs need the same guided sequence again.</p>
+        <p class="eyebrow">Still Deciding?</p>
+        <h2 id="toolsHelpTitle">Use the quick rule: one operation is a tool, several ordered steps is guided.</h2>
+        <p>The guide explains when to open a focused tool and when to use Image Prep, PDF Delivery, or Audio Delivery.</p>
       </div>
       <div class="home-section-actions">
-        <a class="primary header-link" href="/workflows/">Open Workflows</a>
+        <a class="primary header-link" href="/learn/choose-kreativ-workflows-or-single-tools/">Read the chooser guide</a>
       </div>
     </section>
   </main>
@@ -268,10 +290,10 @@
     <section>
       <h4>Product</h4>
       <ul>
-        <li><a href="/workflows/">Workflows</a></li>
-        <li><a href="/tools/">Free Tools</a></li>
+        <li><a href="/tools/">Tools</a></li>
         <li><a href="/learn/">Learn</a></li>
         <li><a href="/changes/">Updates</a></li>
+        <li><a href="/workflows/">Workflows</a></li>
       </ul>
     </section>
 
@@ -314,7 +336,6 @@
       const filterButtons = Array.from(document.querySelectorAll('[data-tool-filter]'));
       const cards = Array.from(document.querySelectorAll('.category-grid .tool-card'));
       const blocks = Array.from(document.querySelectorAll('.category-block'));
-      const jumpLinks = Array.from(document.querySelectorAll('.category-jump a'));
       if (!searchInput || !summary || !emptyState || cards.length === 0) return;
 
       const totalTools = cards.length;
@@ -328,6 +349,7 @@
         if (href.startsWith('/video/')) return 'video';
         if (href.startsWith('/fonts/')) return 'font';
         if (href.startsWith('/file/')) return 'data';
+        if (href.startsWith('/workflows/')) return 'guided';
         return 'other';
       };
 
@@ -340,7 +362,9 @@
             .join(' ')
             .toLowerCase();
           const group = inferGroup(card);
-          const matchesFilter = activeFilter === 'all' || group === activeFilter;
+          const matchesFilter = activeFilter === 'all'
+            || group === activeFilter
+            || (activeFilter === 'quick' && group !== 'guided');
           const matchesQuery = query === '' || text.includes(query);
           const visible = matchesFilter && matchesQuery;
           card.hidden = !visible;
@@ -351,15 +375,10 @@
           block.hidden = !block.querySelector('.tool-card:not([hidden])');
         });
 
-        jumpLinks.forEach((link) => {
-          const target = document.querySelector(link.getAttribute('href'));
-          link.classList.toggle('is-disabled', !target || target.hidden);
-        });
-
         if (visibleCount === totalTools) {
-          summary.textContent = `Showing all ${totalTools} free tools.`;
+          summary.textContent = `Showing all ${totalTools} entries.`;
         } else {
-          summary.textContent = `Showing ${visibleCount} of ${totalTools} free tools.`;
+          summary.textContent = `Showing ${visibleCount} of ${totalTools} entries.`;
         }
 
         emptyState.hidden = visibleCount > 0;

@@ -616,7 +616,7 @@ button:disabled {
   padding: 32px;
   position: relative;
   overflow: hidden;
-  min-height: 390px;
+  min-height: 300px;
 }
 
 .hero-home-copy::after {
@@ -1105,6 +1105,43 @@ button:disabled {
 
 .archive-panel {
   margin-top: 16px;
+}
+
+.learn-archive-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.learn-archive-list a {
+  display: block;
+  padding: 11px 13px;
+  border: 1px solid var(--outline);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.68);
+  color: var(--text);
+  font-weight: 750;
+  line-height: 1.35;
+  text-decoration: none;
+  transition: border-color 140ms ease, color 140ms ease, background 140ms ease;
+}
+
+.learn-archive-list a:hover {
+  border-color: color-mix(in oklab, var(--accent) 34%, var(--outline));
+  background: color-mix(in oklab, var(--accent) 7%, rgba(255, 255, 255, 0.86));
+  color: var(--accent-dark);
+}
+
+[data-theme='dark'] .learn-archive-list a {
+  background: rgba(17, 30, 48, 0.72);
+  border-color: #22344b;
+}
+
+[data-theme='dark'] .learn-archive-list a:hover {
+  background: rgba(74, 169, 245, 0.12);
+  border-color: rgba(74, 169, 245, 0.34);
+  color: #9fd0ff;
 }
 
 .home-section-actions {
@@ -3438,6 +3475,10 @@ input[type='range'] {
 }
 
 @media (max-width: 620px) {
+  .learn-archive-list {
+    grid-template-columns: 1fr;
+  }
+
   .site-header {
     grid-template-columns: 1fr auto;
     grid-template-areas:

@@ -23,31 +23,32 @@ const pages = [
   '/contact',
 ];
 
-test('main pages load and keep Workflows, Learn, and Updates in the expected order', async ({ page }) => {
+test('main pages load and keep Tools, Learn, and Updates in the expected order', async ({ page }) => {
   for (const route of pages) {
     await page.goto(route);
     await expect(page.locator('nav.top-nav')).toBeVisible();
     const labels = await page.locator('nav.top-nav a').allTextContents();
     const normalized = labels.map((label) => label.trim());
-    expect(normalized).toEqual(['Workflows', 'Free Tools', 'Learn', 'Updates']);
+    expect(normalized).toEqual(['Tools', 'Learn', 'Updates']);
     expect(normalized[normalized.length - 1]).toBe('Updates');
-    expect(normalized).toContain('Workflows');
-    expect(normalized).toContain('Free Tools');
+    expect(normalized).toContain('Tools');
     expect(normalized).toContain('Learn');
-    expect(normalized.indexOf('Workflows')).toBe(normalized.indexOf('Free Tools') - 1);
-    expect(normalized.indexOf('Free Tools')).toBe(normalized.indexOf('Learn') - 1);
+    expect(normalized.indexOf('Tools')).toBe(normalized.indexOf('Learn') - 1);
     expect(normalized.indexOf('Learn')).toBe(normalized.indexOf('Updates') - 1);
   }
 });
 
-test('workflows nav item points to the canonical workflows route', async ({ page }) => {
+test('tools nav item points to the directory and stays active on workflow routes', async ({ page }) => {
   await page.goto('/');
-  const workflowsLink = page.locator('nav.top-nav a[href="/workflows/"]').first();
-  await expect(workflowsLink).toBeVisible();
-  await expect(workflowsLink).toHaveText('Workflows');
-  await workflowsLink.click();
-  await expect.poll(() => new URL(page.url()).pathname).toBe('/workflows/');
-  await expect(page.getByRole('heading', { level: 1, name: 'Workflows' })).toBeVisible();
+  const toolsLink = page.locator('nav.top-nav a[href="/tools/"]').first();
+  await expect(toolsLink).toBeVisible();
+  await expect(toolsLink).toHaveText('Tools');
+  await toolsLink.click();
+  await expect.poll(() => new URL(page.url()).pathname).toBe('/tools/');
+  await expect(page.getByRole('heading', { level: 1, name: 'Tools and Guided Workflows' })).toBeVisible();
+
+  await page.goto('/workflows/image-prep');
+  await expect(page.locator('nav.top-nav a[href="/tools/"]')).toHaveAttribute('aria-current', 'page');
 });
 
 test('theme toggle switches data-theme attribute', async ({ page }) => {
@@ -73,7 +74,7 @@ test('clean routes resolve without breaking tool pages', async ({ page }) => {
 
   await page.goto('/tools');
   await expect.poll(() => new URL(page.url()).pathname).toMatch(/^\/tools\/?$/);
-  await expect(page.getByRole('heading', { level: 1, name: 'Free Kreativ Tools' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: 'Tools and Guided Workflows' })).toBeVisible();
 });
 
 test('legacy alias routes redirect to canonical clean routes', async ({ page }) => {
@@ -87,7 +88,7 @@ test('legacy alias routes redirect to canonical clean routes', async ({ page }) 
 
   await page.goto('/learn.html');
   await expect.poll(() => new URL(page.url()).pathname).toBe('/learn/');
-  await expect(page.getByRole('heading', { level: 1, name: 'Practical guides for tools and workflows' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: 'Practical guides for choosing and using Kreativ Tools' })).toBeVisible();
 
   await page.goto('/audio-to-mp3.html');
   await expect.poll(() => new URL(page.url()).pathname).toBe('/audio/to-mp3/');

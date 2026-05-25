@@ -61,8 +61,7 @@ const LEGACY_DIRECTORY_REDIRECTS = {
 };
 
 const NAV_ITEMS = [
-  { label: 'Workflows', href: '/workflows/', key: 'workflows', icon: 'fa-layer-group' },
-  { label: 'Free Tools', href: '/tools/', key: 'tools', icon: 'fa-toolbox' },
+  { label: 'Tools', href: '/tools/', key: 'tools', icon: 'fa-toolbox' },
   { label: 'Learn', href: '/learn/', key: 'learn', icon: 'fa-book-open' },
   { label: 'Updates', href: '/changes/', key: 'changes', icon: 'fa-clock-rotate-left' },
 ];
@@ -138,7 +137,7 @@ function normalizeInternalHref(href) {
 
 function navKeyForRoute(route) {
   if (route === '/changes/') return 'changes';
-  if (route.startsWith('/workflows')) return 'workflows';
+  if (route.startsWith('/workflows')) return 'tools';
   if (route.startsWith('/tools')) return 'tools';
   if (route.startsWith('/learn')) return 'learn';
   if (

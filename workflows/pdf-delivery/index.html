@@ -39,8 +39,7 @@
     </a>
 
     <nav class="top-nav" aria-label="Primary">
-      <a href="/workflows/" aria-current="page"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span>Workflows</span></a>
-      <a href="/tools/"><i class="fa-solid fa-toolbox" aria-hidden="true"></i><span>Free Tools</span></a>
+      <a href="/tools/" aria-current="page"><i class="fa-solid fa-toolbox" aria-hidden="true"></i><span>Tools</span></a>
       <a href="/learn/"><i class="fa-solid fa-book-open" aria-hidden="true"></i><span>Learn</span></a>
       <a href="/changes/"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i><span>Updates</span></a>
     </nav>
@@ -61,7 +60,7 @@
         <span class="article-pill">Includes saved templates</span>
       </div>
       <div class="hero-actions">
-        <a class="ghost header-link" href="/workflows/">About Kreativ Workflows</a>
+        <a class="ghost header-link" href="/tools/#guidedWorkflows">Guided in Tools</a>
         <a class="ghost header-link" href="/pdf/merge/">Open the standalone merge tool</a>
       </div>
     </section>
@@ -324,7 +323,7 @@
           <p id="studioPdfExportMeta" class="studio-success-note" hidden>Final PDF generated. Review the final size and download when ready.</p>
           <div class="workflow-success-actions" hidden id="studioPdfSuccessActions">
             <a class="button-link" href="/workflows/audio-delivery/">Try Audio Delivery</a>
-            <a class="button-link" href="/workflows/">Browse Workflows</a>
+            <a class="button-link" href="/tools/#guidedWorkflows">Guided in Tools</a>
             <a class="button-link" href="/learn/prepare-a-sendable-pdf-in-kreativ-workflows/">Read the workflow guide</a>
           </div>
         </section>
@@ -344,10 +343,10 @@
     <section>
       <h4>Product</h4>
       <ul>
-        <li><a href="/workflows/">Workflows</a></li>
-        <li><a href="/tools/">Free Tools</a></li>
+        <li><a href="/tools/">Tools</a></li>
         <li><a href="/learn/">Learn</a></li>
         <li><a href="/changes/">Updates</a></li>
+        <li><a href="/workflows/">Workflows</a></li>
       </ul>
     </section>
 
@@ -379,6 +378,7 @@
 </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
+  <script src="../../tool-upload-ui.js"></script>
   <script src="../../workflows-template-ui.js"></script>
   <script>
     const studioPdfInput = document.getElementById('studioPdfInput');
@@ -386,6 +386,11 @@
     const studioPdfDropzone = document.getElementById('studioPdfDropzone');
     const studioPdfStatus = document.getElementById('studioPdfStatus');
     const studioPdfWorkspace = document.getElementById('studioPdfWorkspace');
+    const uploadUi = window.kreativUploadUi?.init({
+      input: studioPdfInput,
+      dropzone: studioPdfDropzone,
+      workspace: studioPdfWorkspace,
+    });
     const studioPdfAddMoreButton = document.getElementById('studioPdfAddMoreButton');
     const studioPdfContinueArrangeButton = document.getElementById('studioPdfContinueArrangeButton');
     const studioPdfQueueList = document.getElementById('studioPdfQueueList');
@@ -794,6 +799,10 @@
       studioPdfWorkspace.classList.remove('is-hidden');
       resetMergeState();
       renderQueue();
+      uploadUi?.setLoaded({
+        countLabel: `${queueFiles.length} PDF${queueFiles.length === 1 ? '' : 's'} loaded`,
+        meta: 'Ready for guided PDF delivery',
+      });
       setStatus(`${nextItems.length} PDF file${nextItems.length === 1 ? '' : 's'} added to the queue.`);
       trackWorkflowEvent('workflows_pdf_delivery_upload_started', { file_count: nextItems.length });
     };
@@ -920,6 +929,7 @@
 
     const restartWorkflow = () => {
       queueFiles = [];
+      uploadUi?.clear();
       resetMergeState();
       renderQueue();
       studioPdfWorkspace.classList.add('is-hidden');

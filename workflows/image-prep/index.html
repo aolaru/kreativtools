@@ -39,8 +39,7 @@
     </a>
 
     <nav class="top-nav" aria-label="Primary">
-      <a href="/workflows/" aria-current="page"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><span>Workflows</span></a>
-      <a href="/tools/"><i class="fa-solid fa-toolbox" aria-hidden="true"></i><span>Free Tools</span></a>
+      <a href="/tools/" aria-current="page"><i class="fa-solid fa-toolbox" aria-hidden="true"></i><span>Tools</span></a>
       <a href="/learn/"><i class="fa-solid fa-book-open" aria-hidden="true"></i><span>Learn</span></a>
       <a href="/changes/"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i><span>Updates</span></a>
     </nav>
@@ -62,8 +61,8 @@
       </div>
       <div class="hero-actions">
         <a class="primary header-link" href="#studioWorkspace">Start Image Prep</a>
-        <a class="ghost header-link" href="/workflows/">Browse Workflows</a>
-        <a class="ghost header-link" href="/tools/">Browse Free Tools</a>
+        <a class="ghost header-link" href="/tools/#guidedWorkflows">Guided in Tools</a>
+        <a class="ghost header-link" href="/tools/">Tools Directory</a>
       </div>
     </section>
 
@@ -350,7 +349,7 @@
           <p id="studioSuccessNote" class="studio-success-note" hidden>Final image generated. Download it now or go back one step to adjust the format and quality.</p>
           <div class="workflow-success-actions" hidden id="studioSuccessActions">
             <a class="button-link" href="/workflows/pdf-delivery/">Try PDF Delivery</a>
-            <a class="button-link" href="/workflows/">Browse Workflows</a>
+            <a class="button-link" href="/tools/#guidedWorkflows">Guided in Tools</a>
             <a class="button-link" href="/learn/use-kreativ-workflows-image-prep-for-web-ready-images/">Read the workflow guide</a>
           </div>
           <div class="tool-intro" style="margin-top:20px;">
@@ -380,10 +379,10 @@
     <section>
       <h4>Product</h4>
       <ul>
-        <li><a href="/workflows/">Workflows</a></li>
-        <li><a href="/tools/">Free Tools</a></li>
+        <li><a href="/tools/">Tools</a></li>
         <li><a href="/learn/">Learn</a></li>
         <li><a href="/changes/">Updates</a></li>
+        <li><a href="/workflows/">Workflows</a></li>
       </ul>
     </section>
 
@@ -414,6 +413,7 @@
   </div>
 </footer>
 
+  <script src="../../tool-upload-ui.js"></script>
   <script src="../../workflows-template-ui.js"></script>
   <script>
     const studioImageInput = document.getElementById('studioImageInput');
@@ -421,6 +421,11 @@
     const studioDropzone = document.getElementById('studioDropzone');
     const studioStatus = document.getElementById('studioStatus');
     const studioWorkspace = document.getElementById('studioWorkspace');
+    const uploadUi = window.kreativUploadUi?.init({
+      input: studioImageInput,
+      dropzone: studioDropzone,
+      workspace: studioWorkspace,
+    });
     const studioChooseAnotherButton = document.getElementById('studioChooseAnotherButton');
     const studioContinueButton = document.getElementById('studioContinueButton');
 
@@ -859,16 +864,21 @@
 
         workingName = file.name.replace(/\.[^.]+$/, '');
         originalSize = file.size;
-      finalBlob = null;
-      finalMime = studioFormat.value;
-      clearSuccessNote();
+        finalBlob = null;
+        finalMime = studioFormat.value;
+        clearSuccessNote();
 
-      resetCropSelection();
+        resetCropSelection();
         updateResizeInputs();
         updateSummary();
         drawPreview();
 
         studioWorkspace.classList.remove('is-hidden');
+        uploadUi?.setLoaded({
+          name: file.name,
+          size: file.size,
+          meta: 'Ready for guided image prep',
+        });
         setStage('crop');
         setStatus(`Loaded image: ${file.name}`);
         trackWorkflowEvent('workflows_image_prep_upload_started', {
@@ -990,6 +1000,7 @@
 
     const restartWorkflow = () => {
       studioImageInput.value = '';
+      uploadUi?.clear();
       workingCanvas.width = 0;
       workingCanvas.height = 0;
       finalBlob = null;

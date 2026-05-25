@@ -2,10 +2,10 @@ const SITE_URL = 'https://kreativtools.com';
 
 const FOOTER_SECTIONS = {
   product: [
-    ['Workflows', '/workflows/'],
-    ['Free Tools', '/tools/'],
+    ['Tools', '/tools/'],
     ['Learn', '/learn/'],
     ['Updates', '/changes/'],
+    ['Workflows', '/workflows/'],
   ],
   popular: [
     ['PDF Fill & Sign', '/pdf/fill-sign/'],
@@ -46,12 +46,12 @@ const JOB_PATHS = [
     tags: ['merge', 'handoff'],
   },
   {
-    title: 'Prepare repeat delivery',
-    label: 'Workflow',
-    description: 'Use Image Prep, PDF Delivery, or Audio Delivery when the same sequence repeats.',
-    href: '/workflows/',
+    title: 'Use a guided workflow',
+    label: 'Guided',
+    description: 'Open Image Prep, PDF Delivery, or Audio Delivery when several steps belong together.',
+    href: '/tools/#guidedWorkflows',
     icon: 'fa-route',
-    tags: ['guided', 'templates'],
+    tags: ['multi-step', 'templates'],
     featured: true,
   },
   {
@@ -74,14 +74,14 @@ const JOB_PATHS = [
 
 const JOB_ROUTER_VARIANTS = {
   home: {
-    eyebrow: 'Start With the Job',
-    title: 'Tell the site what you need done.',
-    description: 'Choose by outcome first. This avoids category browsing when you already know the job.',
+    eyebrow: 'Choose by Outcome',
+    title: 'Pick the job you need done.',
+    description: 'Each card sends you to the fastest quick tool or guided workflow path.',
     limit: 6,
   },
   tools: {
     eyebrow: 'Job Shortcuts',
-    title: 'Open the right tool by outcome.',
+    title: 'Open the right tool or guided workflow by outcome.',
     description: 'If search feels too broad, start with one of the common jobs below.',
     limit: 6,
   },
