@@ -52,6 +52,45 @@
     <section class="hero"><p class="eyebrow">Audio Tools</p><h1>Audio Trim</h1><p>Select start/end time and export only the needed audio segment as WAV.</p></section>
     <section class="upload-card"><input id="trimAudioInput" type="file" accept="audio/*" hidden /><div id="trimAudioDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload audio"><div class="drop-icon" aria-hidden="true"></div><button id="trimAudioUploadButton" type="button" class="primary upload-trigger">Upload Audio</button><p>or drag and drop an audio file here</p><p id="trimAudioStatus" class="status status-empty">No audio selected yet.</p></div></section>
     <section id="trimAudioWorkspace" class="workspace is-hidden"><div class="controls"><label>Start (seconds)<input id="trimAudioStart" type="number" min="0" step="0.01" value="0" /></label><label>End (seconds)<input id="trimAudioEnd" type="number" min="0.01" step="0.01" value="1" /></label><button id="trimAudioAction" type="button" class="primary" disabled>Trim and Download WAV</button></div><div class="preview-panel"><h2>Preview</h2><audio id="trimAudioPreview" class="audio-preview" controls></audio><p id="trimAudioMeta" class="dimensions"></p></div></section>
+
+    <section class="article-section tool-guide" aria-labelledby="trimAudioGuideTitle">
+      <h2 id="trimAudioGuideTitle">Audio trim guide</h2>
+      <p>Use this tool when the source audio is useful but only one section should be delivered, shared, or processed further.</p>
+      <div class="tool-guide-grid">
+        <article class="tool-guide-card">
+          <h3>Best uses</h3>
+          <ul class="tool-guide-list">
+            <li>Remove silence, setup chatter, or extra recording time from the start and end of a clip.</li>
+            <li>Export a short quote, voice note, interview answer, sound effect, or music sample.</li>
+            <li>Create a cleaner segment before converting the file to a smaller MP3 handoff.</li>
+          </ul>
+        </article>
+        <article class="tool-guide-card">
+          <h3>How it works</h3>
+          <p>The browser decodes the uploaded audio, renders only the selected start and end range, then exports the trimmed segment as a WAV file.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Supported files</h3>
+          <p>Upload common browser-readable audio files such as WAV, MP3, M4A, OGG, or FLAC. Actual format support depends on your browser.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Privacy and limits</h3>
+          <p>The audio stays in your browser. Very long recordings can use a lot of memory, and WAV exports may be larger than the original compressed file.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Common issues</h3>
+          <ul class="tool-guide-list">
+            <li>The end time must be after the start time before an export can be generated.</li>
+            <li>Compressed inputs are exported as WAV, so use Audio to MP3 afterward if file size matters.</li>
+            <li>If the browser cannot decode the source file, convert it to WAV or MP3 first.</li>
+          </ul>
+        </article>
+        <article class="tool-guide-card tool-guide-note">
+          <h3>Next step</h3>
+          <p>Need a smaller delivery file? Use <a href="/audio/to-mp3/">Audio to MP3</a>. For repeat handoffs, use the <a href="/workflows/audio-delivery/">Audio Delivery workflow</a>.</p>
+        </article>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer">

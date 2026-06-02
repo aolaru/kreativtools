@@ -52,6 +52,45 @@
     <section class="hero"><p class="eyebrow">File Tools</p><h1>CSV to JSON</h1><p>Upload CSV and export row-based JSON objects.</p></section>
     <section class="upload-card"><input id="csvInput" type="file" accept=".csv,text/csv" hidden /><div id="csvDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload CSV"><div class="drop-icon" aria-hidden="true"></div><button id="csvUploadButton" type="button" class="primary upload-trigger">Upload CSV</button><p>or drag and drop a CSV file here</p><p id="csvStatus" class="status status-empty">No CSV file selected yet.</p></div></section>
     <section id="csvWorkspace" class="workspace is-hidden"><div class="controls"><button id="csvConvertButton" type="button" class="primary" disabled>Convert to JSON</button><button id="csvDownloadButton" type="button" class="primary" disabled>Download JSON</button></div><div class="preview-panel"><h2>JSON Preview</h2><pre id="csvPreview" class="code-preview empty-note">Upload CSV to preview JSON.</pre><p id="csvMeta" class="dimensions"></p></div></section>
+
+    <section class="article-section tool-guide" aria-labelledby="csvJsonGuideTitle">
+      <h2 id="csvJsonGuideTitle">CSV to JSON guide</h2>
+      <p>Use this converter when a spreadsheet export needs to become structured JSON rows for upload, inspection, or handoff.</p>
+      <div class="tool-guide-grid">
+        <article class="tool-guide-card">
+          <h3>Best uses</h3>
+          <ul class="tool-guide-list">
+            <li>Convert a CSV export into JSON objects for a developer or automation tool.</li>
+            <li>Inspect spreadsheet rows as structured data before importing them elsewhere.</li>
+            <li>Prepare simple customer, product, content, or inventory lists for a JSON workflow.</li>
+          </ul>
+        </article>
+        <article class="tool-guide-card">
+          <h3>How it works</h3>
+          <p>The first CSV row becomes the JSON field names. Each remaining row becomes one object with values mapped to those headers.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Supported files</h3>
+          <p>Use comma-separated CSV files with a header row. Quoted values and commas inside quoted cells are supported by the browser parser.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Privacy and limits</h3>
+          <p>The CSV stays in your browser. Very large files can use more memory, and all values are exported as text instead of inferred numbers or dates.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Common issues</h3>
+          <ul class="tool-guide-list">
+            <li>A header row is required so the tool can name each JSON field.</li>
+            <li>Duplicate header names can overwrite values, so keep column names unique.</li>
+            <li>Blank rows are ignored to keep the JSON output clean.</li>
+          </ul>
+        </article>
+        <article class="tool-guide-card tool-guide-note">
+          <h3>Next step</h3>
+          <p>Need to go back to a spreadsheet file? Use <a href="/file/json-to-csv/">JSON to CSV</a>. For XML exports, use <a href="/file/xml-to-csv/">XML to CSV</a>.</p>
+        </article>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer">

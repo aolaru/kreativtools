@@ -52,6 +52,45 @@
     <section class="hero"><p class="eyebrow">Audio Tools</p><h1>Audio Volume Booster</h1><p>Adjust volume gain and export your processed audio as WAV.</p></section>
     <section class="upload-card"><input id="volumeAudioInput" type="file" accept="audio/*" hidden /><div id="volumeAudioDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload audio"><div class="drop-icon" aria-hidden="true"></div><button id="volumeAudioUploadButton" type="button" class="primary upload-trigger">Upload Audio</button><p>or drag and drop an audio file here</p><p id="volumeAudioStatus" class="status status-empty">No audio selected yet.</p></div></section>
     <section id="volumeAudioWorkspace" class="workspace is-hidden"><div class="controls"><label><span class="quality-head">Gain <strong><span id="volumeGainValue">120</span>%</strong></span><input id="volumeGainInput" type="range" min="20" max="300" value="120" /></label><button id="volumeAudioAction" type="button" class="primary" disabled>Apply Gain and Download WAV</button></div><div class="preview-panel"><h2>Preview</h2><audio id="volumeAudioPreview" class="audio-preview" controls></audio><p id="volumeAudioMeta" class="dimensions"></p></div></section>
+
+    <section class="article-section tool-guide" aria-labelledby="volumeAudioGuideTitle">
+      <h2 id="volumeAudioGuideTitle">Audio volume guide</h2>
+      <p>Use this tool when an audio file is too quiet, too loud, or needs a quick browser-only loudness adjustment before delivery.</p>
+      <div class="tool-guide-grid">
+        <article class="tool-guide-card">
+          <h3>Best uses</h3>
+          <ul class="tool-guide-list">
+            <li>Lift a quiet voice note, meeting clip, tutorial narration, or sample recording.</li>
+            <li>Reduce loud previews before sending them to a client or collaborator.</li>
+            <li>Make quick volume changes without opening a full audio editor.</li>
+          </ul>
+        </article>
+        <article class="tool-guide-card">
+          <h3>How it works</h3>
+          <p>The browser decodes the uploaded audio, applies the selected gain level, clamps unsafe peaks, then exports the adjusted result as WAV.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Supported files</h3>
+          <p>Upload common browser-readable audio files such as WAV, MP3, M4A, OGG, or FLAC. Browser support can vary by operating system.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Privacy and limits</h3>
+          <p>The file stays in your browser. Large recordings can be slower to process, and increasing gain too much can make the audio distort.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Common issues</h3>
+          <ul class="tool-guide-list">
+            <li>Very high gain settings can create clipping or harsh peaks.</li>
+            <li>Very low gain settings can make speech difficult to hear after export.</li>
+            <li>If only one section needs adjustment, trim the audio first and then change volume.</li>
+          </ul>
+        </article>
+        <article class="tool-guide-card tool-guide-note">
+          <h3>Next step</h3>
+          <p>Need a smaller final file? Use <a href="/audio/to-mp3/">Audio to MP3</a>. Need only part of a recording? Use <a href="/audio/trim/">Audio Trim</a>.</p>
+        </article>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer">

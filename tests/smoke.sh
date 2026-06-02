@@ -67,10 +67,17 @@ main() {
     pdf/split/index.html
     pdf/merge/index.html
     video/convert-webm/index.html
+    video/thumbnail/index.html
+    video/trim/index.html
     fonts/webfont-convert/index.html
+    fonts/preview/index.html
     audio/to-wav/index.html
     audio/to-mp3/index.html
+    audio/trim/index.html
+    audio/volume/index.html
     file/xml-to-csv/index.html
+    file/json-to-csv/index.html
+    file/csv-to-json/index.html
     changes/index.html
     learn/index.html
     workflows/index.html
@@ -122,6 +129,7 @@ main() {
   expect_pattern "image/to-webp/index.html" 'image-format-support\.js'
 
   expect_pattern "pdf/image-to-pdf/index.html" 'id="pdfImageInput"'
+  expect_pattern "pdf/image-to-pdf/index.html" 'Image to PDF guide'
   expect_pattern "pdf/fill-sign/index.html" 'id="pdfFillInput"'
   expect_pattern "pdf/fill-sign/index.html" 'id="pdfFillPages"'
   expect_pattern "pdf/fill-sign/index.html" 'id="pdfFillExportButton"'
@@ -137,9 +145,15 @@ main() {
   expect_pattern "pdf/split/index.html" 'id="splitPdfActionButton"'
   expect_pattern "pdf/split/index.html" 'id="splitPdfDownloadAllButton"'
   expect_pattern "video/convert-webm/index.html" 'id="videoInput"'
+  expect_pattern "video/convert-webm/index.html" 'WEBM conversion guide'
+  expect_pattern "video/thumbnail/index.html" 'Video thumbnail guide'
+  expect_pattern "video/trim/index.html" 'Video trim guide'
   expect_pattern "fonts/webfont-convert/index.html" 'id="fontInput"'
+  expect_pattern "fonts/preview/index.html" 'Font preview guide'
   expect_pattern "audio/to-wav/index.html" 'id="audioInput"'
   expect_pattern "audio/to-mp3/index.html" 'id="mp3AudioInput"'
+  expect_pattern "audio/trim/index.html" 'Audio trim guide'
+  expect_pattern "audio/volume/index.html" 'Audio volume guide'
   expect_pattern "workflows/audio-delivery/index.html" 'id="workflowAudioInput"'
   expect_pattern "workflows/audio-delivery/index.html" 'id="workflowAudioGenerateButton"'
   expect_pattern "index.html" 'href="/workflows/"'
@@ -153,6 +167,8 @@ main() {
   expect_pattern "workflows/audio-delivery/index.html" 'workflows-template-ui\.js'
   expect_pattern "workflows/success/index.html" '<meta name="robots" content="noindex, nofollow"'
   expect_pattern "file/xml-to-csv/index.html" 'id="xmlInput"'
+  expect_pattern "file/json-to-csv/index.html" 'JSON to CSV guide'
+  expect_pattern "file/csv-to-json/index.html" 'CSV to JSON guide'
   expect_pattern "about/index.html" '<h1>Independent browser tools for practical file work</h1>'
   expect_pattern "privacy/index.html" 'Advertising and Google AdSense'
   expect_pattern "terms/index.html" 'Advertising:'

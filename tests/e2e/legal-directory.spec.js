@@ -11,10 +11,17 @@ const pages = [
   '/pdf/split',
   '/pdf/merge',
   '/video/convert-webm',
+  '/video/thumbnail',
+  '/video/trim',
   '/fonts/webfont-convert',
+  '/fonts/preview',
   '/audio/to-wav',
   '/audio/to-mp3',
+  '/audio/trim',
+  '/audio/volume',
   '/file/xml-to-csv',
+  '/file/json-to-csv',
+  '/file/csv-to-json',
   '/changes',
   '/workflows',
   '/workflows/image-prep',
@@ -90,6 +97,28 @@ test('all tools directory supports search and media filters', async ({ page }) =
   await page.getByRole('button', { name: 'All' }).click();
   await page.fill('#toolDirectorySearch', 'zzz-no-match');
   await expect(page.locator('#toolsEmptyState')).toBeVisible();
+});
+
+test('thin utility pages include practical guide sections', async ({ page }) => {
+  const guidePages = [
+    ['/audio/trim', 'Audio trim guide'],
+    ['/audio/volume', 'Audio volume guide'],
+    ['/video/trim', 'Video trim guide'],
+    ['/video/convert-webm', 'WEBM conversion guide'],
+    ['/video/thumbnail', 'Video thumbnail guide'],
+    ['/file/json-to-csv', 'JSON to CSV guide'],
+    ['/file/csv-to-json', 'CSV to JSON guide'],
+    ['/fonts/preview', 'Font preview guide'],
+    ['/pdf/image-to-pdf', 'Image to PDF guide'],
+  ];
+
+  for (const [route, heading] of guidePages) {
+    await page.goto(route);
+    await expect(page.getByRole('heading', { level: 2, name: heading })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 3, name: 'Best uses' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 3, name: 'Privacy and limits' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 3, name: 'Next step' })).toBeVisible();
+  }
 });
 
 test('footer legal links exist across all pages', async ({ page }) => {

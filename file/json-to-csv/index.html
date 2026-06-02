@@ -52,6 +52,45 @@
     <section class="hero"><p class="eyebrow">File Tools</p><h1>JSON to CSV</h1><p>Upload a JSON file containing an array of objects and export CSV.</p></section>
     <section class="upload-card"><input id="jsonInput" type="file" accept=".json,application/json,text/json" hidden /><div id="jsonDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload JSON"><div class="drop-icon" aria-hidden="true"></div><button id="jsonUploadButton" type="button" class="primary upload-trigger">Upload JSON</button><p>or drag and drop a JSON file here</p><p id="jsonStatus" class="status status-empty">No JSON file selected yet.</p></div></section>
     <section id="jsonWorkspace" class="workspace is-hidden"><div class="controls"><button id="jsonConvertButton" type="button" class="primary" disabled>Convert to CSV</button><button id="jsonDownloadButton" type="button" class="primary" disabled>Download CSV</button></div><div class="preview-panel"><h2>CSV Preview</h2><pre id="jsonPreview" class="code-preview empty-note">Upload JSON to preview CSV.</pre><p id="jsonMeta" class="dimensions"></p></div></section>
+
+    <section class="article-section tool-guide" aria-labelledby="jsonCsvGuideTitle">
+      <h2 id="jsonCsvGuideTitle">JSON to CSV guide</h2>
+      <p>Use this converter when a JSON response or export needs to become a spreadsheet-friendly CSV file.</p>
+      <div class="tool-guide-grid">
+        <article class="tool-guide-card">
+          <h3>Best uses</h3>
+          <ul class="tool-guide-list">
+            <li>Turn an array of objects into rows that can open in spreadsheet software.</li>
+            <li>Clean up an API response before sharing it with non-technical teammates.</li>
+            <li>Prepare structured export data for import into another business tool.</li>
+          </ul>
+        </article>
+        <article class="tool-guide-card">
+          <h3>How it works</h3>
+          <p>The tool parses the JSON, finds an object array or the first array inside a parent object, collects the available keys, then writes them as CSV columns.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Supported files</h3>
+          <p>Use JSON arrays of objects or a JSON object that contains an array property. Simple row-like objects convert best.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Privacy and limits</h3>
+          <p>The JSON stays in your browser. Very large files can be slower to preview, and deeply nested data should be flattened before conversion.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Common issues</h3>
+          <ul class="tool-guide-list">
+            <li>If no object array is found, the tool cannot infer CSV rows.</li>
+            <li>Nested objects or arrays do not become separate columns automatically.</li>
+            <li>Rows with different keys create blank cells where a value is missing.</li>
+          </ul>
+        </article>
+        <article class="tool-guide-card tool-guide-note">
+          <h3>Next step</h3>
+          <p>Need the opposite direction? Use <a href="/file/csv-to-json/">CSV to JSON</a>. For XML exports, start with <a href="/file/xml-to-csv/">XML to CSV</a>.</p>
+        </article>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer">

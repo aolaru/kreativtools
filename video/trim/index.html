@@ -91,6 +91,45 @@
         <p id="trimDimensions" class="dimensions"></p>
       </div>
     </section>
+
+    <section class="article-section tool-guide" aria-labelledby="videoTrimGuideTitle">
+      <h2 id="videoTrimGuideTitle">Video trim guide</h2>
+      <p>Use this tool when you need a shorter silent video clip from a longer browser-playable source file.</p>
+      <div class="tool-guide-grid">
+        <article class="tool-guide-card">
+          <h3>Best uses</h3>
+          <ul class="tool-guide-list">
+            <li>Cut a quick preview segment from a longer recording.</li>
+            <li>Remove dead time from the start or end of a visual clip.</li>
+            <li>Create a smaller video-only WEBM before using it in a web page or prototype.</li>
+          </ul>
+        </article>
+        <article class="tool-guide-card">
+          <h3>How it works</h3>
+          <p>The browser seeks to the selected start time, draws video frames to a canvas, and records the selected range as a WEBM file.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Supported files</h3>
+          <p>Upload videos your browser can play. The exported file is WEBM, and the selected output frame rate controls smoothness and size.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Privacy and limits</h3>
+          <p>The video stays in your browser. This tool exports video only, without an audio track, and long high-resolution clips can be slow to process.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Common issues</h3>
+          <ul class="tool-guide-list">
+            <li>If you need sound preserved, use a full video editor instead of this browser trim flow.</li>
+            <li>If a codec will not load in the preview, the browser cannot decode that source file.</li>
+            <li>Lower the frame rate when you want a smaller output or faster export.</li>
+          </ul>
+        </article>
+        <article class="tool-guide-card tool-guide-note">
+          <h3>Next step</h3>
+          <p>Need format conversion first? Use <a href="/video/convert-webm/">Video to WEBM</a>. Need a cover image? Use <a href="/video/thumbnail/">Video Thumbnail</a>.</p>
+        </article>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer">
