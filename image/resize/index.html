@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Image Resize and Convert | Kreativ Tools</title>
-  <meta name="description" content="Resize images by dimensions, convert formats, and export JPG, PNG, WebP, or AVIF directly in the browser." />
+  <meta name="description" content="Resize images by dimensions, convert formats, adjust quality, or export an image to PDF directly in the browser." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://kreativtools.com/image/resize/" />
   <meta property="og:title" content="Image Resize and Convert | Kreativ Tools" />
-  <meta property="og:description" content="Resize images by dimensions, convert formats, and export JPG, PNG, WebP, or AVIF directly in the browser." />
+  <meta property="og:description" content="Resize images by dimensions, convert formats, adjust quality, or export an image to PDF directly in the browser." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://kreativtools.com/image/resize/" />
   <meta property="og:image" content="https://kreativtools.com/og-image.png" />
@@ -18,7 +18,7 @@
   <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Image Resize and Convert | Kreativ Tools" />
-  <meta name="twitter:description" content="Resize images by dimensions, convert formats, and export JPG, PNG, WebP, or AVIF directly in the browser." />
+  <meta name="twitter:description" content="Resize images by dimensions, convert formats, adjust quality, or export an image to PDF directly in the browser." />
   <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
   <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
@@ -143,18 +143,42 @@
       </div>
     </section>
 
-    <section class="tool-intro" aria-label="Image resize guidance">
-      <div class="tool-intro-card">
-        <h2>Common use cases</h2>
-        <ul class="tool-intro-list">
-          <li>Resize a homepage image to the exact layout dimensions</li>
-          <li>Convert one uploaded asset into JPG, PNG, WebP, or AVIF</li>
-          <li>Export a one-off image as PDF without leaving the browser</li>
-        </ul>
-      </div>
-      <div class="tool-intro-card">
-        <h2>What to do next</h2>
-        <p>If the file is still too heavy after resizing, continue with <a href="/image/compress/">Image Compress</a>. If the framing needs work first, use <a href="/image/crop/">Image Crop</a>.</p>
+    <section class="article-section tool-guide" aria-labelledby="resizeGuideTitle">
+      <h2 id="resizeGuideTitle">Image resize and convert guide</h2>
+      <p>Use this tool when the image is the right file but needs exact dimensions, a different output format, or a quick one-page PDF export.</p>
+      <div class="tool-guide-grid">
+        <article class="tool-guide-card">
+          <h3>Best uses</h3>
+          <ul class="tool-guide-list">
+            <li>Resize a homepage, ecommerce, portfolio, or social image to exact pixel dimensions.</li>
+            <li>Convert one uploaded asset into JPG, PNG, WebP, or AVIF without opening design software.</li>
+            <li>Export a single image as a simple PDF when a form or handoff requires PDF instead of image.</li>
+          </ul>
+        </article>
+        <article class="tool-guide-card">
+          <h3>How it works</h3>
+          <p>The browser loads the image, keeps the aspect ratio when selected, draws the target size to canvas, then exports the format or PDF you choose.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Supported files</h3>
+          <p>Input can include JPG, PNG, WebP, AVIF, GIF, BMP, and TIFF when the browser can decode them. Output options are JPG, PNG, WebP, AVIF, or PDF.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Privacy and limits</h3>
+          <p>The image is processed locally in your browser. Extremely large files can exceed canvas or memory limits, so resize in smaller steps if needed.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Common issues</h3>
+          <ul class="tool-guide-list">
+            <li>If the image stretches, keep aspect ratio enabled or enter only one dimension first.</li>
+            <li>If the file is still heavy after resizing, export WebP or continue with compression.</li>
+            <li>If the crop is wrong, crop first so the resize does not preserve unwanted edges.</li>
+          </ul>
+        </article>
+        <article class="tool-guide-card tool-guide-note">
+          <h3>Next step</h3>
+          <p>If the file is still too heavy, continue with <a href="/image/compress/">Image Compress</a>. If the framing needs work first, use <a href="/image/crop/">Image Crop</a>.</p>
+        </article>
       </div>
     </section>
 

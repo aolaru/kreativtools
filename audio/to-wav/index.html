@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kreativ Tools | Audio Converter</title>
-  <meta name="description" content="Convert audio files to WAV in your browser." />
+  <title>Kreativ Tools | Audio to WAV Converter</title>
+  <meta name="description" content="Convert audio files to WAV in your browser, with sample-rate and mono options for editing, archiving, and compatibility." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://kreativtools.com/audio/to-wav/" />
-  <meta property="og:title" content="Kreativ Tools | Audio Converter" />
-  <meta property="og:description" content="Convert audio files to WAV in your browser." />
+  <meta property="og:title" content="Kreativ Tools | Audio to WAV Converter" />
+  <meta property="og:description" content="Convert audio files to WAV in your browser, with sample-rate and mono options for editing, archiving, and compatibility." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://kreativtools.com/audio/to-wav/" />
   <meta property="og:image" content="https://kreativtools.com/og-image.png" />
@@ -17,8 +17,8 @@
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Kreativ Tools | Audio Converter" />
-  <meta name="twitter:description" content="Convert audio files to WAV in your browser." />
+  <meta name="twitter:title" content="Kreativ Tools | Audio to WAV Converter" />
+  <meta name="twitter:description" content="Convert audio files to WAV in your browser, with sample-rate and mono options for editing, archiving, and compatibility." />
   <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
   <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
@@ -96,6 +96,45 @@
         <h2>Preview</h2>
         <audio id="audioPreview" class="audio-preview" controls></audio>
         <p id="audioMeta" class="dimensions"></p>
+      </div>
+    </section>
+
+    <section class="article-section tool-guide" aria-labelledby="audioWavGuideTitle">
+      <h2 id="audioWavGuideTitle">Audio to WAV guide</h2>
+      <p>Use this tool when an audio file needs a broadly compatible WAV export for editing, archiving, transcription, or another app that does not accept the original format.</p>
+      <div class="tool-guide-grid">
+        <article class="tool-guide-card">
+          <h3>Best uses</h3>
+          <ul class="tool-guide-list">
+            <li>Convert compressed audio into WAV before editing in another tool.</li>
+            <li>Create a standard 44.1 kHz or 48 kHz file for video, podcast, or voice workflows.</li>
+            <li>Export mono when speech, dictation, or simple review audio does not need stereo channels.</li>
+          </ul>
+        </article>
+        <article class="tool-guide-card">
+          <h3>How it works</h3>
+          <p>The browser decodes the uploaded audio, optionally resamples it or mixes it to mono, then writes a WAV file directly from the decoded audio buffer.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Supported files</h3>
+          <p>Input support depends on your browser and can include MP3, WAV, M4A/AAC, OGG, and FLAC. The output is always WAV.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Privacy and limits</h3>
+          <p>The file is processed in this browser session. Long audio can use a lot of memory because WAV is uncompressed and usually larger than MP3 or M4A.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Common issues</h3>
+          <ul class="tool-guide-list">
+            <li>If the browser cannot decode the upload, convert the source to MP3 or WAV first.</li>
+            <li>Choose 48 kHz for video-oriented projects and 44.1 kHz for many music or general audio jobs.</li>
+            <li>If the result is too large to share, convert to MP3 after creating the WAV.</li>
+          </ul>
+        </article>
+        <article class="tool-guide-card tool-guide-note">
+          <h3>Next step</h3>
+          <p>Need a smaller sharing file? Use <a href="/audio/to-mp3/">Audio to MP3</a>. Need to cut the clip first? Use <a href="/audio/trim/">Audio Trim</a> before exporting again.</p>
+        </article>
       </div>
     </section>
   </main>

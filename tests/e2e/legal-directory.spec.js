@@ -121,6 +121,24 @@ test('thin utility pages include practical guide sections', async ({ page }) => 
   }
 });
 
+test('category pages explain which tool to use first', async ({ page }) => {
+  const categoryPages = [
+    ['/image', 'Which image tool should I use?'],
+    ['/pdf', 'Which PDF tool should I use?'],
+    ['/video', 'Which video tool should I use?'],
+    ['/fonts', 'Which font tool should I use?'],
+    ['/audio', 'Which audio tool should I use?'],
+    ['/file', 'Which data converter should I use?'],
+  ];
+
+  for (const [route, heading] of categoryPages) {
+    await page.goto(route);
+    await expect(page.getByRole('heading', { level: 2, name: heading })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 3, name: 'Privacy and limits' })).toBeVisible();
+    await expect(page.locator('.tool-guide-card')).toHaveCount(6);
+  }
+});
+
 test('footer legal links exist across all pages', async ({ page }) => {
   for (const route of pages) {
     await page.goto(route, { waitUntil: 'domcontentloaded' });

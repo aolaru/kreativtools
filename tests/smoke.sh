@@ -114,11 +114,19 @@ main() {
   expect_pattern "analytics.js" "window\\.gtag"
   expect_pattern "robots.txt" "Sitemap: https://kreativtools\\.com/sitemap\\.xml"
 
+  expect_pattern "image/index.html" 'Which image tool should I use\\?'
+  expect_pattern "pdf/index.html" 'Which PDF tool should I use\\?'
+  expect_pattern "video/index.html" 'Which video tool should I use\\?'
+  expect_pattern "fonts/index.html" 'Which font tool should I use\\?'
+  expect_pattern "audio/index.html" 'Which audio tool should I use\\?'
+  expect_pattern "file/index.html" 'Which data converter should I use\\?'
+
   expect_pattern "image/resize/index.html" 'id="toolResize"'
   expect_pattern "image/resize/index.html" 'id="toolConvert"'
   expect_pattern "image/resize/index.html" 'id="toolPdf"'
   expect_pattern "image/resize/index.html" 'image-format-support\.js'
   expect_pattern "image/resize/index.html" 'image/avif'
+  expect_pattern "image/resize/index.html" 'Image resize and convert guide'
   expect_pattern "image/crop/index.html" 'id="cropImageInput"'
   expect_pattern "image/crop/index.html" 'id="cropApplyButton"'
   expect_pattern "image/crop/index.html" 'id="cropDownloadButton"'
@@ -127,6 +135,7 @@ main() {
   expect_pattern "image/compress/index.html" 'image-format-support\.js'
   expect_pattern "image/compress/index.html" 'image/avif'
   expect_pattern "image/to-webp/index.html" 'image-format-support\.js'
+  expect_pattern "image/to-webp/index.html" 'Image to WebP guide'
 
   expect_pattern "pdf/image-to-pdf/index.html" 'id="pdfImageInput"'
   expect_pattern "pdf/image-to-pdf/index.html" 'Image to PDF guide'
@@ -150,7 +159,9 @@ main() {
   expect_pattern "video/trim/index.html" 'Video trim guide'
   expect_pattern "fonts/webfont-convert/index.html" 'id="fontInput"'
   expect_pattern "fonts/preview/index.html" 'Font preview guide'
+  expect_pattern "fonts/css-generator/index.html" '@font-face CSS guide'
   expect_pattern "audio/to-wav/index.html" 'id="audioInput"'
+  expect_pattern "audio/to-wav/index.html" 'Audio to WAV guide'
   expect_pattern "audio/to-mp3/index.html" 'id="mp3AudioInput"'
   expect_pattern "audio/trim/index.html" 'Audio trim guide'
   expect_pattern "audio/volume/index.html" 'Audio volume guide'
@@ -167,6 +178,7 @@ main() {
   expect_pattern "workflows/audio-delivery/index.html" 'workflows-template-ui\.js'
   expect_pattern "workflows/success/index.html" '<meta name="robots" content="noindex, nofollow"'
   expect_pattern "file/xml-to-csv/index.html" 'id="xmlInput"'
+  expect_pattern "file/xml-to-csv/index.html" 'XML to CSV guide'
   expect_pattern "file/json-to-csv/index.html" 'JSON to CSV guide'
   expect_pattern "file/csv-to-json/index.html" 'CSV to JSON guide'
   expect_pattern "about/index.html" '<h1>Independent browser tools for practical file work</h1>'

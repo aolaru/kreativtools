@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kreativ Tools | @font-face CSS Generator</title>
-  <meta name="description" content="Generate @font-face CSS from uploaded font files." />
+  <meta name="description" content="Generate @font-face CSS from uploaded font files, with guidance for font family names, weight, style, display, and browser delivery." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://kreativtools.com/fonts/css-generator/" />
   <meta property="og:title" content="Kreativ Tools | @font-face CSS Generator" />
-  <meta property="og:description" content="Generate @font-face CSS from uploaded font files." />
+  <meta property="og:description" content="Generate @font-face CSS from uploaded font files, with guidance for font family names, weight, style, display, and browser delivery." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://kreativtools.com/fonts/css-generator/" />
   <meta property="og:image" content="https://kreativtools.com/og-image.png" />
@@ -18,7 +18,7 @@
   <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Kreativ Tools | @font-face CSS Generator" />
-  <meta name="twitter:description" content="Generate @font-face CSS from uploaded font files." />
+  <meta name="twitter:description" content="Generate @font-face CSS from uploaded font files, with guidance for font family names, weight, style, display, and browser delivery." />
   <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
   <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
@@ -49,7 +49,7 @@
   </header>
 
   <main class="container">
-    <section class="hero"><p class="eyebrow">Font Tools</p><h1>@font-face CSS Generator</h1><p>Upload a font file and generate ready-to-paste CSS.</p></section>
+    <section class="hero"><p class="eyebrow">Font Tools</p><h1>@font-face CSS Generator</h1><p>Upload a font file and generate ready-to-paste CSS for a local webfont setup.</p></section>
     <section class="upload-card"><input id="cssFontInput" type="file" accept=".ttf,.otf,.woff,.woff2,font/ttf,font/otf,font/woff,font/woff2" hidden /><div id="cssFontDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload font file"><div class="drop-icon" aria-hidden="true"></div><button id="cssFontUploadButton" type="button" class="primary upload-trigger">Upload Font</button><p>or drag and drop a font file here</p><p id="cssFontStatus" class="status status-empty">No font selected yet.</p></div></section>
     <section id="cssWorkspace" class="workspace is-hidden">
       <div class="controls">
@@ -61,6 +61,45 @@
         <button id="cssDownloadButton" type="button" class="primary" disabled>Download CSS</button>
       </div>
       <div class="preview-panel"><h2>Generated CSS</h2><pre id="cssOutput" class="code-preview empty-note">Upload a font and click Generate CSS.</pre></div>
+    </section>
+
+    <section class="article-section tool-guide" aria-labelledby="fontCssGuideTitle">
+      <h2 id="fontCssGuideTitle">@font-face CSS guide</h2>
+      <p>Use this tool after you already have a web-ready font file and need the CSS block that tells a browser how to load it.</p>
+      <div class="tool-guide-grid">
+        <article class="tool-guide-card">
+          <h3>Best uses</h3>
+          <ul class="tool-guide-list">
+            <li>Create a clean @font-face block for one uploaded font file.</li>
+            <li>Set the family name, weight, style, and font-display value before copying CSS.</li>
+            <li>Prepare a small CSS file for static sites, prototypes, landing pages, and handoff notes.</li>
+          </ul>
+        </article>
+        <article class="tool-guide-card">
+          <h3>How it works</h3>
+          <p>The tool reads the uploaded font as a browser data URL, combines it with your CSS settings, then outputs a ready @font-face rule you can copy or download.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Supported files</h3>
+          <p>Upload TTF, OTF, WOFF, or WOFF2 files. For production websites, WOFF2 is usually the best delivery format when the browser support target allows it.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Privacy and limits</h3>
+          <p>The font is handled in the browser. The generated CSS can include embedded font data, so keep license terms in mind before shipping commercial fonts.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Common issues</h3>
+          <ul class="tool-guide-list">
+            <li>Use the same font-family name in your CSS rule and in the elements that should use the font.</li>
+            <li>Use the correct weight, such as 400 for regular and 700 for bold, so browsers choose the right face.</li>
+            <li>Large embedded fonts can make CSS heavy; link external WOFF2 files for production when possible.</li>
+          </ul>
+        </article>
+        <article class="tool-guide-card tool-guide-note">
+          <h3>Next step</h3>
+          <p>If the source is still OTF or TTF, use <a href="/fonts/webfont-convert/">Font to Webfont</a> first. If you need to inspect the result visually, open <a href="/fonts/preview/">Font Preview</a>.</p>
+        </article>
+      </div>
     </section>
   </main>
 

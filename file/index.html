@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kreativ Tools | File Tools</title>
-  <meta name="description" content="File tools for XML, JSON, and CSV conversion workflows." />
+  <meta name="description" content="Choose the right browser data converter for XML to CSV, JSON to CSV, or CSV to JSON workflows." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://kreativtools.com/file/" />
   <meta property="og:title" content="Kreativ Tools | File Tools" />
-  <meta property="og:description" content="File tools for XML, JSON, and CSV conversion workflows." />
+  <meta property="og:description" content="Choose the right browser data converter for XML to CSV, JSON to CSV, or CSV to JSON workflows." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://kreativtools.com/file/" />
   <meta property="og:image" content="https://kreativtools.com/og-image.png" />
@@ -18,7 +18,7 @@
   <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Kreativ Tools | File Tools" />
-  <meta name="twitter:description" content="File tools for XML, JSON, and CSV conversion workflows." />
+  <meta name="twitter:description" content="Choose the right browser data converter for XML to CSV, JSON to CSV, or CSV to JSON workflows." />
   <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
   <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
@@ -54,7 +54,41 @@
     <section class="hero">
       <p class="eyebrow">File Category</p>
       <h1>All File Tools</h1>
-      <p>Choose a data conversion workflow. Each tool has its own dedicated page.</p>
+      <p>Choose the data conversion workflow by source and destination: XML records, JSON objects, or CSV rows.</p>
+    </section>
+
+    <section class="article-section tool-guide" aria-labelledby="fileChooserTitle">
+      <h2 id="fileChooserTitle">Which data converter should I use?</h2>
+      <p>Pick the converter based on the file you have and the file you need next. Spreadsheet handoffs usually end in CSV, while app or automation handoffs often need JSON.</p>
+      <div class="tool-guide-grid">
+        <article class="tool-guide-card">
+          <h3>XML export to spreadsheet</h3>
+          <p>Use <a href="/file/xml-to-csv/">XML to CSV</a> when an XML file has repeated records that should become spreadsheet rows.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>JSON response to CSV</h3>
+          <p>Use <a href="/file/json-to-csv/">JSON to CSV</a> when an object array or API export needs to open cleanly in spreadsheet software.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>CSV rows to JSON</h3>
+          <p>Use <a href="/file/csv-to-json/">CSV to JSON</a> when a spreadsheet export needs to become structured objects for upload, inspection, or automation.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Clean inputs first</h3>
+          <p>Converters work best with consistent headers, repeated record shapes, and simple values. Flatten deeply nested data before expecting clean columns.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Preview before download</h3>
+          <p>Each converter shows a browser preview so you can catch missing headers, empty rows, or unexpected object keys before saving the output.</p>
+        </article>
+        <article class="tool-guide-card tool-guide-note">
+          <h3>Privacy and limits</h3>
+          <p>Data conversion runs in your browser. Very large files can be slower, and these tools do not validate business rules or database schemas.</p>
+        </article>
+      </div>
+      <p>A safe data path is to preview the converted output, confirm the row count and headers, then download only after the structure matches the spreadsheet, upload, or automation step that comes next.</p>
+      <p>If you are not sure where to begin, identify the source format first. These converters are for lightweight browser handoffs, not database validation, schema migration, duplicate cleanup, type inference, or repairing broken source exports.</p>
+      <p>For repeat business data work, keep a copy of the original file so converted results can be checked against the source.</p>
     </section>
 
     <section class="tools-grid" aria-label="File tools list">

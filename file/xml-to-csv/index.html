@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kreativ Tools | XML to CSV</title>
-  <meta name="description" content="Convert XML files to CSV in your browser." />
+  <meta name="description" content="Convert XML files to CSV in your browser, choose repeated record elements, preview rows, and export spreadsheet-ready data." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://kreativtools.com/file/xml-to-csv/" />
   <meta property="og:title" content="Kreativ Tools | XML to CSV" />
-  <meta property="og:description" content="Convert XML files to CSV in your browser." />
+  <meta property="og:description" content="Convert XML files to CSV in your browser, choose repeated record elements, preview rows, and export spreadsheet-ready data." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://kreativtools.com/file/xml-to-csv/" />
   <meta property="og:image" content="https://kreativtools.com/og-image.png" />
@@ -18,7 +18,7 @@
   <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Kreativ Tools | XML to CSV" />
-  <meta name="twitter:description" content="Convert XML files to CSV in your browser." />
+  <meta name="twitter:description" content="Convert XML files to CSV in your browser, choose repeated record elements, preview rows, and export spreadsheet-ready data." />
   <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
   <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
@@ -83,6 +83,45 @@
         <h2>CSV Preview</h2>
         <pre id="csvPreview" class="code-preview empty-note">Upload XML to see CSV preview.</pre>
         <p id="xmlMeta" class="dimensions"></p>
+      </div>
+    </section>
+
+    <section class="article-section tool-guide" aria-labelledby="xmlCsvGuideTitle">
+      <h2 id="xmlCsvGuideTitle">XML to CSV guide</h2>
+      <p>Use this tool when an XML file contains repeated records and you need a flatter CSV table for spreadsheets, reporting, imports, or quick review.</p>
+      <div class="tool-guide-grid">
+        <article class="tool-guide-card">
+          <h3>Best uses</h3>
+          <ul class="tool-guide-list">
+            <li>Extract product, item, row, order, or entry records from structured XML.</li>
+            <li>Preview CSV columns before importing data into a spreadsheet or database tool.</li>
+            <li>Turn simple feed-style XML into a handoff file for non-technical review.</li>
+          </ul>
+        </article>
+        <article class="tool-guide-card">
+          <h3>How it works</h3>
+          <p>The browser parses the XML, finds repeated element names, lets you choose the record element, then flattens child values into CSV columns.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Supported files</h3>
+          <p>Upload XML files that use repeated elements for records. Simple one-level or lightly nested records convert best; deeply nested documents may need cleanup after export.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Privacy and limits</h3>
+          <p>The XML is parsed in your browser. Very large files can slow down the page because parsing, preview, and CSV generation all happen locally.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Common issues</h3>
+          <ul class="tool-guide-list">
+            <li>If the wrong rows appear, choose a more specific repeated record element.</li>
+            <li>If columns are missing, the source XML may store values as attributes or deeper nested fields.</li>
+            <li>If the XML has mixed schemas, export the closest match and clean the CSV in a spreadsheet.</li>
+          </ul>
+        </article>
+        <article class="tool-guide-card tool-guide-note">
+          <h3>Next step</h3>
+          <p>If your source is already JSON, use <a href="/file/json-to-csv/">JSON to CSV</a>. If you need structured JSON from a spreadsheet-style file, use <a href="/file/csv-to-json/">CSV to JSON</a>.</p>
+        </article>
       </div>
     </section>
   </main>

@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kreativ Tools | Font Tools</title>
-  <meta name="description" content="Font tools for conversion, preview, and CSS generation workflows." />
+  <meta name="description" content="Choose the right browser font tool for previewing fonts, converting TTF or OTF to webfont formats, or generating @font-face CSS." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://kreativtools.com/fonts/" />
   <meta property="og:title" content="Kreativ Tools | Font Tools" />
-  <meta property="og:description" content="Font tools for conversion, preview, and CSS generation workflows." />
+  <meta property="og:description" content="Choose the right browser font tool for previewing fonts, converting TTF or OTF to webfont formats, or generating @font-face CSS." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://kreativtools.com/fonts/" />
   <meta property="og:image" content="https://kreativtools.com/og-image.png" />
@@ -18,7 +18,7 @@
   <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Kreativ Tools | Font Tools" />
-  <meta name="twitter:description" content="Font tools for conversion, preview, and CSS generation workflows." />
+  <meta name="twitter:description" content="Choose the right browser font tool for previewing fonts, converting TTF or OTF to webfont formats, or generating @font-face CSS." />
   <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
   <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
@@ -54,7 +54,41 @@
     <section class="hero">
       <p class="eyebrow">Fonts Category</p>
       <h1>All Font Tools</h1>
-      <p>Choose a font workflow. Each tool has its own dedicated page.</p>
+      <p>Choose the font workflow by outcome: preview a typeface, convert a font file for the web, or generate CSS for delivery.</p>
+    </section>
+
+    <section class="article-section tool-guide" aria-labelledby="fontChooserTitle">
+      <h2 id="fontChooserTitle">Which font tool should I use?</h2>
+      <p>Font work is easiest when you check the typeface first, convert only the file formats you need, then generate CSS once the browser-ready files are final.</p>
+      <div class="tool-guide-grid">
+        <article class="tool-guide-card">
+          <h3>Preview before converting</h3>
+          <p>Use <a href="/fonts/preview/">Font Preview</a> to test headings, numbers, punctuation, and brand words with an uploaded font.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Convert for the browser</h3>
+          <p>Use <a href="/fonts/webfont-convert/">Font to Webfont</a> to convert TTF or OTF files into WOFF or WOFF2 for frontend delivery.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Generate CSS last</h3>
+          <p>Use <a href="/fonts/css-generator/">Font CSS Generator</a> after you know the final webfont filenames and want a clean @font-face block.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Typical website path</h3>
+          <p>Preview the font, convert to WOFF2, then generate CSS. That keeps design review separate from technical delivery.</p>
+        </article>
+        <article class="tool-guide-card">
+          <h3>Check licensing</h3>
+          <p>These tools do not verify font licenses. Confirm that your font license allows web embedding before publishing the converted files.</p>
+        </article>
+        <article class="tool-guide-card tool-guide-note">
+          <h3>Privacy and limits</h3>
+          <p>Font files stay in your browser. Corrupted fonts, unusual tables, or limited character sets may not preview or convert cleanly.</p>
+        </article>
+      </div>
+      <p>A safe font delivery path is preview first, confirm licensing, convert to the smallest browser-ready format, then generate CSS after filenames and font-family names are final.</p>
+      <p>If you are not sure where to begin, start with <a href="/fonts/preview/">Font Preview</a>. These tools prepare fonts for websites, but they do not edit glyphs, subset large families, audit performance across every browser, or replace a proper font licensing check.</p>
+      <p>For production sites, keep the original font file, the converted webfont, and the generated CSS together so handoff stays traceable.</p>
     </section>
 
     <section class="tools-grid" aria-label="Font tools list">
