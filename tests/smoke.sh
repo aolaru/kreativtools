@@ -170,6 +170,8 @@ main() {
   expect_pattern "index.html" 'href="/workflows/"'
   expect_pattern "workflows/index.html" '<link rel="canonical" href="https://kreativtools\.com/workflows/"'
   expect_pattern "workflows/index.html" '<h1>Kreativ Workflows</h1>'
+  expect_pattern "workflows/index.html" 'Which workflow should I use\\?'
+  expect_pattern "workflows/index.html" 'Use a quick tool instead'
   expect_pattern "workflows/pricing/index.html" '<meta name="robots" content="noindex, follow"'
   expect_pattern "workflows/pricing/index.html" '<link rel="canonical" href="https://kreativtools\.com/workflows/"'
   expect_pattern "workflows/pricing/index.html" "window.location.replace\\('/workflows/'\\)"

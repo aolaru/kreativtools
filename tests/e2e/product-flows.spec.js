@@ -29,6 +29,8 @@ test('workflows landing page introduces workflow lineup and image prep entry poi
   await expect(page.locator('.tool-card[href="/workflows/pdf-delivery/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/workflows/audio-delivery/"]')).toBeVisible();
   await expect(page.locator('.tool-card')).toHaveCount(3);
+  await expect(page.getByRole('heading', { level: 2, name: 'Which workflow should I use?' })).toBeVisible();
+  await expect(page.getByText('Use a quick tool instead when you only need')).toHaveCount(3);
   await expect(page.getByText('These are not a separate product catalog anymore')).toBeVisible();
 });
 
