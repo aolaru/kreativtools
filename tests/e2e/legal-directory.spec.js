@@ -149,10 +149,10 @@ test('footer legal links exist across all pages', async ({ page }) => {
   }
 });
 
-test('trust and legal pages include AdSense readiness disclosures', async ({ page }) => {
+test('trust and legal pages include visitor trust disclosures', async ({ page }) => {
   await page.goto('/about');
   await expect(page.getByRole('heading', { level: 1, name: 'Independent browser tools for practical file work' })).toBeVisible();
-  await expect(page.getByText('Advertising, if enabled, should never block the core tool')).toBeVisible();
+  await expect(page.getByText('Any future advertising will stay separate from tool buttons')).toBeVisible();
 
   await page.goto('/privacy');
   await expect(page.getByRole('heading', { level: 1, name: 'Privacy Policy' })).toBeVisible();
