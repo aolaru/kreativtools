@@ -77,7 +77,7 @@ const JOB_ROUTER_VARIANTS = {
   home: {
     eyebrow: 'Choose by Outcome',
     title: 'Pick the job you need done.',
-    description: 'Each card sends you to the fastest quick tool or guided workflow path.',
+    description: 'Choose a common job to open the right quick tool or guided workflow.',
     limit: 6,
   },
   tools: {

@@ -184,7 +184,7 @@ main() {
   expect_pattern "file/json-to-csv/index.html" 'JSON to CSV guide'
   expect_pattern "file/csv-to-json/index.html" 'CSV to JSON guide'
   expect_pattern "about/index.html" '<h1>Independent browser tools for practical file work</h1>'
-  expect_pattern "privacy/index.html" 'Advertising and Google AdSense'
+  expect_pattern "privacy/index.html" 'Advertising partners'
   expect_pattern "terms/index.html" 'Advertising:'
 
   expect_pattern "changes/index.html" 'class="changelog-list"'
