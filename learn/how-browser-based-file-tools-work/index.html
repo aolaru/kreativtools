@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How Browser-Based File Tools Work | Kreativ Tools Learn</title>
+  <meta name="description" content="Learn what happens when a browser-based file tool opens, previews, converts, and exports files locally." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://kreativtools.com/learn/how-browser-based-file-tools-work/" />
+  <meta property="og:title" content="How Browser-Based File Tools Work | Kreativ Tools Learn" />
+  <meta property="og:description" content="Learn what happens when a browser-based file tool opens, previews, converts, and exports files locally." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://kreativtools.com/learn/how-browser-based-file-tools-work/" />
+  <meta property="og:image" content="https://kreativtools.com/og-image.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="How Browser-Based File Tools Work | Kreativ Tools Learn" />
+  <meta name="twitter:description" content="Learn what happens when a browser-based file tool opens, previews, converts, and exports files locally." />
+  <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
+  <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="../../favicon-32x32.png" sizes="32x32" type="image/png" />
+  <link rel="icon" href="../../favicon-16x16.png" sizes="16x16" type="image/png" />
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"Article","headline":"How Browser-Based File Tools Work","description":"Learn what happens when a browser-based file tool opens, previews, converts, and exports files locally.","url":"https://kreativtools.com/learn/how-browser-based-file-tools-work/","author":{"@type":"Person","name":"Andrei Olaru"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Learn","item":"https://kreativtools.com/learn/"},{"@type":"ListItem","position":3,"name":"How Browser-Based File Tools Work","item":"https://kreativtools.com/learn/how-browser-based-file-tools-work/"}]}]</script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Kreativ Tools Home">
+      <div class="brand-mark">K</div>
+      <div class="brand-copy"><strong>Kreativ Tools</strong></div>
+    </a>
+
+    <nav class="top-nav" aria-label="Primary">
+      <a href="/tools/"><i class="fa-solid fa-toolbox" aria-hidden="true"></i><span>Tools</span></a>
+      <a href="/learn/" aria-current="page"><i class="fa-solid fa-book-open" aria-hidden="true"></i><span>Learn</span></a>
+      <a href="/changes/"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i><span>Updates</span></a>
+    </nav>
+
+    <div class="header-actions">
+      <button id="shareButton" type="button" class="icon-toggle" aria-label="Share this page" title="Share this page"><i class="fa-solid fa-share-nodes" aria-hidden="true"></i></button>
+      <button id="themeToggle" type="button" class="icon-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><i class="fa-solid fa-moon" aria-hidden="true"></i></button>
+    </div>
+  </header>
+  <main class="container article-shell">
+    <section class="hero">
+      <p class="eyebrow">Learn · Privacy</p>
+      <h1>How Browser-Based File Tools Work</h1>
+      <p>Browser tools use the capabilities already available in your device and browser. The page loads code, you select a file, and the browser reads that file so the tool can preview, convert, or export a result.</p>
+      <div class="article-meta">
+        <span class="article-pill">4 minute read</span>
+        <span class="article-pill">File handling basics</span>
+      </div>
+    </section>
+    <section class="article-section">
+      <h2>What happens after you choose a file</h2>
+      <p>The selected file becomes available to the page because you allowed it through the file picker or drag-and-drop area. For most Kreativ Tools pages, the file is read by browser APIs and processed on the device. Image tools use canvas and image encoding. PDF tools use browser PDF libraries. Audio and video tools use media APIs where the current browser supports the format.</p>
+      <p>This is different from a traditional upload form. A normal upload sends the file to a server before anything can happen. A browser-first tool can often inspect and export the file without sending the source document away.</p>
+    </section>
+    <section class="article-section">
+      <h2>Why results can differ by browser</h2>
+      <p>Browsers do not all support the same codecs, font tables, PDF features, or image encoders. One browser may export AVIF, while another only shows JPG, PNG, and WebP. A video that previews in one browser may fail in another because the codec is not available locally.</p>
+      <p>If a file fails, try a smaller file, a simpler format, or a different browser before assuming the source is broken.</p>
+    </section>
+    <section class="article-section">
+      <h2>When browser tools are the right fit</h2>
+      <ul>
+        <li>Quick image compression, resizing, cropping, and format conversion.</li>
+        <li>Simple PDF merge, split, compression, fill, sign, or text extraction jobs.</li>
+        <li>Audio and video prep where the browser can decode the source file.</li>
+        <li>Small data conversions where you can preview the structure before downloading.</li>
+      </ul>
+    </section>
+    <section class="article-section">
+      <h2>When to use another app</h2>
+      <p>Use desktop or specialist software when you need OCR, damaged-file repair, legal-grade redaction, encrypted document handling, very large batch conversion, exact color management, or professional audio/video editing. Browser tools are useful for focused handoffs, not every production problem.</p>
+    </section>
+    <section class="tool-intro" aria-label="Next steps">
+      <div class="tool-intro-card">
+        <h2>Privacy limits</h2>
+        <p>Read <a href="/learn/file-privacy-limits/">File Privacy Limits in Browser Tools</a> before working with sensitive documents.</p>
+      </div>
+      <div class="tool-intro-card">
+        <h2>Choose a tool</h2>
+        <p>Use <a href="/learn/choosing-the-right-kreativ-tool/">Choosing the Right Kreativ Tool</a> when you are not sure where to start.</p>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+  <div class="footer-topline"></div>
+  <div class="footer-inner">
+    <section class="footer-about">
+      <h3>Kreativ<span>Tools</span></h3>
+      <p>Private browser tools for creative, document, media, font, and data jobs.</p>
+    </section>
+
+    <section>
+      <h4>Product</h4>
+      <ul>
+        <li><a href="/tools/">Tools</a></li>
+        <li><a href="/learn/">Learn</a></li>
+        <li><a href="/changes/">Updates</a></li>
+        <li><a href="/workflows/">Workflows</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h4>Popular</h4>
+      <ul>
+        <li><a href="/pdf/fill-sign/">PDF Fill & Sign</a></li>
+        <li><a href="/image/compress/">Image Compress</a></li>
+        <li><a href="/pdf/merge/">PDF Merge</a></li>
+        <li><a href="/fonts/webfont-convert/">Font to Webfont</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h4>Company</h4>
+      <ul>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/privacy/">Privacy Policy</a></li>
+        <li><a href="/terms/">Terms</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="footer-bottom">
+    <p class="footer-brand-links"><a href="https://kreativfont.com/" target="_blank" rel="noopener noreferrer">Kreativ Font</a><span aria-hidden="true">·</span><a href="https://kreativsound.com/" target="_blank" rel="noopener noreferrer">Kreativ Sound</a><span aria-hidden="true">·</span><a href="https://kreativwp.com/" target="_blank" rel="noopener noreferrer">Kreativ WP</a><span aria-hidden="true">·</span><a href="/">Kreativ Tools</a></p>
+    <p>© 2026 <a href="https://madebykreativ.com/" target="_blank" rel="noopener noreferrer">Made by KREATIV</a> · Independent creative tools and assets by Andrei Olaru</p>
+    <p class="footer-meta-actions"></p>
+  </div>
+</footer>
+  <script src="../../cookie-consent.js"></script>
+  <script src="../../github-pages-prefix.js"></script>
+  <script src="../../analytics.js"></script>
+  <script src="../../theme.js"></script>
+</body>
+</html>

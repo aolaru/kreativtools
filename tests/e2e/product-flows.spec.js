@@ -360,9 +360,13 @@ test('learn landing page includes the core hero guides and expanded follow-up gu
   await expect(page.locator('.tool-card[href="/learn/fill-and-sign-pdf-forms-without-upload-limits/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/learn/compress-images-for-faster-websites/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/learn/prepare-webfonts-for-fast-frontend-delivery/"]')).toBeVisible();
-  await expect(page.locator('.learn-archive-list a')).toHaveCount(14);
+  await expect(page.locator('.learn-archive-list a')).toHaveCount(26);
   await expect(page.locator('.learn-archive-list a[href="/learn/compress-pdf-for-email/"]')).toBeVisible();
   await expect(page.locator('.learn-archive-list a[href="/learn/save-time-with-kreativ-workflows-defaults/"]')).toBeVisible();
+  await expect(page.locator('.learn-archive-list a[href="/learn/how-browser-based-file-tools-work/"]')).toBeVisible();
+  await expect(page.locator('.learn-archive-list a[href="/learn/webm-vs-mp4-for-browser-video/"]')).toBeVisible();
+  await expect(page.locator('.learn-archive-list a[href="/learn/json-to-csv-common-mistakes/"]')).toBeVisible();
+  await expect(page.locator('.learn-archive-list a[href="/learn/font-licensing-checklist/"]')).toBeVisible();
 });
 
 test('pdf merge accepts fixtures and enables merged download flow', async ({ page }) => {

@@ -163,10 +163,193 @@ function robotsForRoute(route) {
   return 'index, follow';
 }
 
+function plainTitle(title) {
+  return title
+    .replace(/\s*\|\s*Kreativ Tools(?: Learn)?$/i, '')
+    .replace(/^Kreativ Tools Learn\s*\|\s*/i, '')
+    .replace(/^Kreativ Tools\s*\|\s*/i, '')
+    .trim();
+}
+
+function sectionLabelForRoute(route) {
+  if (route === '/') return 'Home';
+  if (route.startsWith('/learn/')) return 'Learn';
+  if (route.startsWith('/workflows/')) return 'Workflows';
+  if (route.startsWith('/image/')) return 'Image Tools';
+  if (route.startsWith('/pdf/')) return 'PDF Tools';
+  if (route.startsWith('/video/')) return 'Video Tools';
+  if (route.startsWith('/fonts/')) return 'Font Tools';
+  if (route.startsWith('/audio/')) return 'Audio Tools';
+  if (route.startsWith('/file/')) return 'File Tools';
+  if (route.startsWith('/tools/')) return 'Tools';
+  if (route.startsWith('/changes/')) return 'Updates';
+  return plainTitle(route.split('/').filter(Boolean).pop() || 'Kreativ Tools');
+}
+
+function sectionRouteForRoute(route) {
+  if (route.startsWith('/learn/')) return '/learn/';
+  if (route.startsWith('/workflows/')) return '/workflows/';
+  if (route.startsWith('/image/')) return '/image/';
+  if (route.startsWith('/pdf/')) return '/pdf/';
+  if (route.startsWith('/video/')) return '/video/';
+  if (route.startsWith('/fonts/')) return '/fonts/';
+  if (route.startsWith('/audio/')) return '/audio/';
+  if (route.startsWith('/file/')) return '/file/';
+  if (route.startsWith('/tools/')) return '/tools/';
+  if (route.startsWith('/changes/')) return '/changes/';
+  return route;
+}
+
+function isCategoryRoute(route) {
+  return ['/image/', '/pdf/', '/video/', '/fonts/', '/audio/', '/file/', '/tools/', '/learn/', '/workflows/'].includes(route);
+}
+
+function isToolRoute(route) {
+  return (
+    route !== '/image/' &&
+    route !== '/pdf/' &&
+    route !== '/video/' &&
+    route !== '/fonts/' &&
+    route !== '/audio/' &&
+    route !== '/file/' &&
+    (
+      route.startsWith('/image/') ||
+      route.startsWith('/pdf/') ||
+      route.startsWith('/video/') ||
+      route.startsWith('/fonts/') ||
+      route.startsWith('/audio/') ||
+      route.startsWith('/file/') ||
+      route.startsWith('/workflows/')
+    )
+  );
+}
+
+function breadcrumbData(route, title) {
+  const items = [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Kreativ Tools',
+      item: SITE_URL,
+    },
+  ];
+
+  const sectionRoute = sectionRouteForRoute(route);
+  if (route !== '/' && sectionRoute !== route) {
+    items.push({
+      '@type': 'ListItem',
+      position: items.length + 1,
+      name: sectionLabelForRoute(route),
+      item: `${SITE_URL}${sectionRoute}`,
+    });
+  }
+
+  if (route !== '/') {
+    items.push({
+      '@type': 'ListItem',
+      position: items.length + 1,
+      name: plainTitle(title),
+      item: `${SITE_URL}${route}`,
+    });
+  }
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items,
+  };
+}
+
+function primaryStructuredData({ title, description, route }) {
+  const url = `${SITE_URL}${route}`;
+  if (route === '/') {
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: 'Kreativ Tools',
+      url,
+      description,
+      publisher: {
+        '@type': 'Organization',
+        name: 'KREATIV',
+        url: 'https://madebykreativ.com/',
+      },
+    };
+  }
+
+  if (route.startsWith('/learn/') && route !== '/learn/') {
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: plainTitle(title),
+      description,
+      url,
+      author: {
+        '@type': 'Person',
+        name: 'Andrei Olaru',
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: 'KREATIV',
+        url: 'https://madebykreativ.com/',
+      },
+    };
+  }
+
+  if (isToolRoute(route)) {
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'SoftwareApplication',
+      name: plainTitle(title),
+      applicationCategory: 'BrowserApplication',
+      operatingSystem: 'Any modern browser',
+      url,
+      description,
+      offers: {
+        '@type': 'Offer',
+        price: '0',
+        priceCurrency: 'USD',
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: 'KREATIV',
+        url: 'https://madebykreativ.com/',
+      },
+    };
+  }
+
+  if (isCategoryRoute(route)) {
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: plainTitle(title),
+      url,
+      description,
+    };
+  }
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: plainTitle(title),
+    url,
+    description,
+  };
+}
+
+function buildStructuredData(meta) {
+  const graph = [
+    primaryStructuredData(meta),
+    breadcrumbData(meta.route, meta.title),
+  ];
+  return `<script type="application/ld+json">${JSON.stringify(graph)}</script>`;
+}
+
 function buildHead({ title, description, route, prefix }) {
   const canonical = `${SITE_URL}${route}`;
   const ogType = ogTypeForRoute(route);
   const robots = robotsForRoute(route);
+  const structuredData = buildStructuredData({ title, description, route });
   return `<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -194,6 +377,7 @@ function buildHead({ title, description, route, prefix }) {
   <link rel="apple-touch-icon" href="${prefix}apple-touch-icon.png" />
   <link rel="stylesheet" href="${FONT_AWESOME_HREF}" integrity="${FONT_AWESOME_INTEGRITY}" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="${prefix}styles.css" />
+  ${structuredData}
 </head>`;
 }
 

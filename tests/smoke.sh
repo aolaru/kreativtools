@@ -80,6 +80,18 @@ main() {
     file/csv-to-json/index.html
     changes/index.html
     learn/index.html
+    learn/how-browser-based-file-tools-work/index.html
+    learn/file-privacy-limits/index.html
+    learn/choosing-the-right-kreativ-tool/index.html
+    learn/webm-vs-mp4-for-browser-video/index.html
+    learn/trim-video-clips-for-email-and-social/index.html
+    learn/video-thumbnail-best-practices/index.html
+    learn/json-to-csv-common-mistakes/index.html
+    learn/clean-csv-before-import/index.html
+    learn/xml-export-troubleshooting/index.html
+    learn/font-licensing-checklist/index.html
+    learn/woff2-vs-woff-font-formats/index.html
+    learn/font-display-css-choices/index.html
     workflows/index.html
     workflows/image-prep/index.html
     workflows/pdf-delivery/index.html
@@ -105,6 +117,8 @@ main() {
     expect_pattern "$p" '<script src="[^"]*theme\.js"></script>'
     expect_pattern "$p" 'id="themeToggle"'
     expect_pattern "$p" 'id="shareButton"'
+    expect_pattern "$p" 'application/ld\+json'
+    expect_pattern "$p" 'BreadcrumbList'
     expect_pattern "$p" 'href="https://madebykreativ\.com/"'
     expect_nav_order "$p"
   done
@@ -190,6 +204,12 @@ main() {
   expect_pattern "changes/index.html" 'class="changelog-list"'
   expect_pattern "changes/index.html" 'NEW -'
   expect_pattern "changes/index.html" 'FIX -|UPDATE -'
+  expect_pattern "learn/how-browser-based-file-tools-work/index.html" 'How Browser-Based File Tools Work'
+  expect_pattern "learn/file-privacy-limits/index.html" 'File Privacy Limits in Browser Tools'
+  expect_pattern "learn/choosing-the-right-kreativ-tool/index.html" 'Choosing the Right Kreativ Tool'
+  expect_pattern "learn/webm-vs-mp4-for-browser-video/index.html" 'WEBM vs MP4 for Browser Video'
+  expect_pattern "learn/json-to-csv-common-mistakes/index.html" 'Common JSON to CSV Mistakes'
+  expect_pattern "learn/font-licensing-checklist/index.html" 'Font Licensing Checklist Before Web Use'
 
   echo "PASS: smoke checks completed"
 }
