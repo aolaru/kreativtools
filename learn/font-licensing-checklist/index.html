@@ -27,7 +27,7 @@
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../../styles.css" />
-  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"Article","headline":"Font Licensing Checklist Before Web Use","description":"Check font licensing basics before converting fonts to WOFF2, generating CSS, or publishing webfont files.","url":"https://kreativtools.com/learn/font-licensing-checklist/","author":{"@type":"Person","name":"Andrei Olaru"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Learn","item":"https://kreativtools.com/learn/"},{"@type":"ListItem","position":3,"name":"Font Licensing Checklist Before Web Use","item":"https://kreativtools.com/learn/font-licensing-checklist/"}]}]</script>
+  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"Article","headline":"Font Licensing Checklist Before Web Use","description":"Check font licensing basics before converting fonts to WOFF2, generating CSS, or publishing webfont files.","url":"https://kreativtools.com/learn/font-licensing-checklist/","image":"https://kreativtools.com/og-image.png","datePublished":"2026-07-15","dateModified":"2026-07-15","author":{"@type":"Person","name":"Andrei Olaru"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Learn","item":"https://kreativtools.com/learn/"},{"@type":"ListItem","position":3,"name":"Font Licensing Checklist Before Web Use","item":"https://kreativtools.com/learn/font-licensing-checklist/"}]}]</script>
 </head>
 <body>
   <header class="site-header">
@@ -47,6 +47,11 @@
       <button id="themeToggle" type="button" class="icon-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><i class="fa-solid fa-moon" aria-hidden="true"></i></button>
     </div>
   </header>
+
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Kreativ Tools</a><span aria-hidden="true">/</span><a href="/learn/">Learn</a><span aria-hidden="true">/</span><span aria-current="page">Font Licensing Checklist Before Web Use</span>
+  </nav>
+
   <main class="container article-shell">
     <section class="hero">
       <p class="eyebrow">Learn · Fonts</p>
@@ -73,6 +78,18 @@
     <section class="tool-intro" aria-label="Next steps">
       <div class="tool-intro-card"><h2>Preview first</h2><p>Use <a href="/fonts/preview/">Font Preview</a> before converting a font for delivery.</p></div>
       <div class="tool-intro-card"><h2>Convert after approval</h2><p>Use <a href="/fonts/webfont-convert/">Font to Webfont</a> once the license is clear.</p></div>
+    </section>
+    <section class="article-section page-quality-note" aria-labelledby="qualityNoteTitle">
+      <h2 id="qualityNoteTitle">Before you ship webfonts</h2>
+      <p>A font file can convert successfully and still be wrong for a website if the license, character coverage, weight selection, or CSS loading strategy is not ready. Test headings, body copy, numbers, and accented characters before publishing.</p>
+      <p>Treat conversion as one part of the webfont job. The final setup also needs correct file paths, fallback fonts, caching, and a font-display choice that matches the site. If the font is only used for headings, avoid shipping unnecessary weights that slow down every page.</p>
+      <ul class="tool-guide-list">
+        <li>Confirm the license allows web use.</li>
+        <li>Ship only the weights and styles the site needs.</li>
+        <li>Use CSS with sensible fallback fonts and a clear font-display choice.</li>
+      </ul>
+      <p>After downloading the result, open it once before using it in a client send, upload form, website, or archive. This final check catches format support issues, unexpected file size changes, missing characters, clipped media, or page-order mistakes while the original file is still available.</p>
+      <p>If the output will be reused, note the settings that produced it. That makes the next export easier to repeat and reduces guesswork when another file needs the same treatment.</p>
     </section>
   </main>
   <footer class="site-footer">

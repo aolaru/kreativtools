@@ -51,6 +51,10 @@
     </div>
   </header>
 
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Kreativ Tools</a><span aria-hidden="true">/</span><a href="/image/">Image Tools</a><span aria-hidden="true">/</span><span aria-current="page">Image Compress</span>
+  </nav>
+
   <main class="container">
     <section class="hero">
       <p class="eyebrow">Image Tools</p>
@@ -59,7 +63,7 @@
     </section>
 
     <section class="upload-card">
-      <input id="compressImageInput" type="file" accept="image/*,.avif,.gif,.bmp,.tif,.tiff" hidden />
+      <input id="compressImageInput" type="file" accept="image/*,.avif,.gif,.bmp,.tif,.tiff" aria-label="Upload file" hidden />
       <div id="compressDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload image for compression">
         <div class="drop-icon" aria-hidden="true"></div>
         <button id="compressUploadButton" type="button" class="primary upload-trigger">Upload Image</button>
@@ -167,6 +171,18 @@
       <p><strong>Store product photo:</strong> resize the image to the storefront display size first, then compress to WebP or JPG so the product page loads faster without wasting pixels.</p>
       <p><strong>Support screenshot:</strong> keep the screenshot readable, lower quality only enough to fit chat or email limits, and avoid PNG if the file is mostly photographic.</p>
       <p><strong>Blog graphic:</strong> compress after the final crop and dimensions are set. If the image still feels too heavy, reduce physical dimensions before lowering quality again.</p>
+    </section>
+    <section class="article-section page-quality-note" aria-labelledby="qualityNoteTitle">
+      <h2 id="qualityNoteTitle">Before you export an image</h2>
+      <p>Check framing first, then dimensions, then file weight. A smaller image is not automatically better if it loses the detail the destination needs. For product images, thumbnails, and social posts, compare the exported file at the size where it will actually appear.</p>
+      <p>If an upload limit is the main problem, reduce dimensions before lowering quality. If visual clarity is the main problem, keep the quality higher and change the format only after reviewing the preview. For ecommerce and portfolio images, consistent dimensions usually matter as much as raw file size.</p>
+      <ul class="tool-guide-list">
+        <li>Crop before resizing when the frame is wrong.</li>
+        <li>Resize before compressing when the source is much larger than needed.</li>
+        <li>Keep an original copy so you can re-export with a different format or quality setting.</li>
+      </ul>
+      <p>After downloading the result, open it once before using it in a client send, upload form, website, or archive. This final check catches format support issues, unexpected file size changes, missing characters, clipped media, or page-order mistakes while the original file is still available.</p>
+      <p>If the output will be reused, note the settings that produced it. That makes the next export easier to repeat and reduces guesswork when another file needs the same treatment.</p>
     </section>
   </main>
 

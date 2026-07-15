@@ -12,6 +12,8 @@ const OG_IMAGE = `${SITE_URL}/og-image.png`;
 const OG_IMAGE_ALT = 'Kreativ Tools social preview card with the K mark and core browser-based creative workflows';
 const FONT_AWESOME_HREF = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css';
 const FONT_AWESOME_INTEGRITY = 'sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==';
+const CURRENT_LASTMOD = '2026-07-15';
+const ADSENSE_PUBLISHER_ID = (process.env.KREATIVTOOLS_ADSENSE_PUBLISHER_ID || '').trim();
 
 const REDIRECTS = {
   'about.html': '/about/',
@@ -224,6 +226,96 @@ function isToolRoute(route) {
   );
 }
 
+function contentFamilyForRoute(route) {
+  if (route === '/trust/') return 'trust';
+  if (route.startsWith('/learn/')) {
+    if (/privacy|limits/.test(route)) return 'trust';
+    if (/image|png|webp|shopify|woocommerce|thumbnail|crop|resize|compress-images/.test(route)) return 'image';
+    if (/pdf|sign|merge|split|handoff|compression/.test(route)) return 'pdf';
+    if (/video|webm|mp4|thumbnail/.test(route)) return 'video';
+    if (/font|woff|webfont|css/.test(route)) return 'font';
+    if (/audio|wav|mp3|bitrate/.test(route)) return 'audio';
+    if (/csv|json|xml|data/.test(route)) return 'data';
+    if (/workflow|workflows|tool|update-labels/.test(route)) return 'workflow';
+  }
+  if (route.startsWith('/image/')) return 'image';
+  if (route.startsWith('/pdf/')) return 'pdf';
+  if (route.startsWith('/video/')) return 'video';
+  if (route.startsWith('/fonts/')) return 'font';
+  if (route.startsWith('/audio/')) return 'audio';
+  if (route.startsWith('/file/')) return 'data';
+  if (route.startsWith('/workflows/')) return 'workflow';
+  return '';
+}
+
+const FAMILY_NOTES = {
+  image: {
+    title: 'Before you export an image',
+    copy: 'Check framing first, then dimensions, then file weight. A smaller image is not automatically better if it loses the detail the destination needs. For product images, thumbnails, and social posts, compare the exported file at the size where it will actually appear.',
+    detail: 'If an upload limit is the main problem, reduce dimensions before lowering quality. If visual clarity is the main problem, keep the quality higher and change the format only after reviewing the preview. For ecommerce and portfolio images, consistent dimensions usually matter as much as raw file size.',
+    list: ['Crop before resizing when the frame is wrong.', 'Resize before compressing when the source is much larger than needed.', 'Keep an original copy so you can re-export with a different format or quality setting.'],
+  },
+  pdf: {
+    title: 'Before you send a PDF',
+    copy: 'Decide whether the job changes visible content, page order, or file size. Fill and sign before final compression, split before merging if only some pages are needed, and review the exported PDF before sending it to a client, portal, or archive.',
+    detail: 'PDF work often fails when the final destination is ignored. A portal may care about file size, an approval flow may care about signatures, and a handoff may care about page order. Work backward from that requirement and keep the final downloaded file separate from the original.',
+    list: ['Keep the source PDF until the export has been checked.', 'Protected or damaged PDFs can fail even when the page loads normally.', 'Compression should be the last step after pages and overlays are final.'],
+  },
+  video: {
+    title: 'Before you export video',
+    copy: 'Browser video support depends on the file format, codec, and device. Short clips are usually easier to process than long recordings. For email or social delivery, trim first, capture the needed thumbnail, then convert only when the destination requires a different format.',
+    detail: 'When a clip is for review, speed and compatibility usually matter more than maximum quality. When a clip is for publishing, check the playback target and keep the original source available. Browser exports are convenient for quick jobs, but long or high-resolution videos can be memory-heavy.',
+    list: ['Use short source files when possible.', 'Check the start and end frame before downloading.', 'Keep the original video if the browser export needs to be adjusted.'],
+  },
+  font: {
+    title: 'Before you ship webfonts',
+    copy: 'A font file can convert successfully and still be wrong for a website if the license, character coverage, weight selection, or CSS loading strategy is not ready. Test headings, body copy, numbers, and accented characters before publishing.',
+    detail: 'Treat conversion as one part of the webfont job. The final setup also needs correct file paths, fallback fonts, caching, and a font-display choice that matches the site. If the font is only used for headings, avoid shipping unnecessary weights that slow down every page.',
+    list: ['Confirm the license allows web use.', 'Ship only the weights and styles the site needs.', 'Use CSS with sensible fallback fonts and a clear font-display choice.'],
+  },
+  audio: {
+    title: 'Before you export audio',
+    copy: 'Audio jobs are easier when trimming, volume changes, and format conversion happen in a clear order. Trim unwanted sections before converting, check loudness before sharing, and choose MP3 only when a smaller delivery file matters more than keeping WAV quality.',
+    detail: 'For spoken audio, clarity and steady volume matter more than aggressive compression. For samples or music ideas, keep a higher-quality source and export a lighter copy for sharing. If the result sounds harsh, reduce gain or bitrate changes and export again from the original file.',
+    list: ['Preview the selected section before downloading.', 'Avoid very high gain settings that can clip speech or music.', 'Keep WAV for editing and MP3 for lightweight sharing.'],
+  },
+  data: {
+    title: 'Before you convert data files',
+    copy: 'Data converters are most reliable when the source file is clean before conversion. Check headers, repeated records, delimiters, blank rows, and unexpected nested fields. A converter can preserve structure, but it cannot know the meaning of unclear source data.',
+    detail: 'Before using the export in another system, compare a few rows against the source file. Look for shifted columns, empty fields, escaped quotes, and values that should stay as text, such as IDs or postal codes. Small cleanup before conversion prevents larger import mistakes later.',
+    list: ['Keep headers unique and stable.', 'Preview row counts before using the export elsewhere.', 'Save the original file before cleaning or converting it.'],
+  },
+  workflow: {
+    title: 'Before you run a guided workflow',
+    copy: 'Use a guided workflow when the same job has several ordered steps. The workflow keeps the sequence visible, but the best result still depends on checking each stage before export. If you only need one quick action, use the matching single-purpose tool instead.',
+    detail: 'Workflows are meant for repeatable delivery patterns, not for hiding complexity. If the same image, PDF, or audio preparation job happens often, save the settings and reuse the sequence. If the job changes every time, use the individual tools so each decision stays visible.',
+    list: ['Load the source file once, then move through the steps in order.', 'Save defaults only after the settings match a repeat job.', 'Review the final export before reusing the workflow for a batch of similar files.'],
+  },
+  trust: {
+    title: 'How to read this site information',
+    copy: 'The trust pages explain ownership, contact paths, privacy limits, terms, and advertising separation. They are written to support real use of the tools, not to replace legal advice or platform-specific policy review.',
+    detail: 'If a file is sensitive, review the relevant tool page before using it and keep your own copy of the source file. If an ad, browser extension, or third-party page appears near the site in the future, treat it as separate from the tool controls unless it is clearly part of the Kreativ Tools interface.',
+    list: ['Use Contact for bug reports, privacy questions, and unclear tool behavior.', 'Use Privacy to understand analytics, consent, and file-handling limits.', 'Use Terms to understand responsibility for files and exported results.'],
+  },
+};
+
+function buildQualityNote(route) {
+  const family = contentFamilyForRoute(route);
+  const note = FAMILY_NOTES[family];
+  if (!note) return '';
+  const listItems = note.list.map((item) => `<li>${escapeHtml(item)}</li>`).join('\n        ');
+  return `<section class="article-section page-quality-note" aria-labelledby="qualityNoteTitle">
+      <h2 id="qualityNoteTitle">${escapeHtml(note.title)}</h2>
+      <p>${escapeHtml(note.copy)}</p>
+      <p>${escapeHtml(note.detail)}</p>
+      <ul class="tool-guide-list">
+        ${listItems}
+      </ul>
+      <p>After downloading the result, open it once before using it in a client send, upload form, website, or archive. This final check catches format support issues, unexpected file size changes, missing characters, clipped media, or page-order mistakes while the original file is still available.</p>
+      <p>If the output will be reused, note the settings that produced it. That makes the next export easier to repeat and reduces guesswork when another file needs the same treatment.</p>
+    </section>`;
+}
+
 function breadcrumbData(route, title) {
   const items = [
     {
@@ -260,6 +352,10 @@ function breadcrumbData(route, title) {
   };
 }
 
+function previousLastmodForRoute(route) {
+  return readExistingSitemapLastmods().get(route) || CURRENT_LASTMOD;
+}
+
 function primaryStructuredData({ title, description, route }) {
   const url = `${SITE_URL}${route}`;
   if (route === '/') {
@@ -278,12 +374,16 @@ function primaryStructuredData({ title, description, route }) {
   }
 
   if (route.startsWith('/learn/') && route !== '/learn/') {
+    const published = previousLastmodForRoute(route);
     return {
       '@context': 'https://schema.org',
       '@type': 'Article',
       headline: plainTitle(title),
       description,
       url,
+      image: OG_IMAGE,
+      datePublished: published,
+      dateModified: CURRENT_LASTMOD,
       author: {
         '@type': 'Person',
         name: 'Andrei Olaru',
@@ -345,11 +445,19 @@ function buildStructuredData(meta) {
   return `<script type="application/ld+json">${JSON.stringify(graph)}</script>`;
 }
 
+function buildAdsenseHeadTags() {
+  if (!/^ca-pub-\d+$/.test(ADSENSE_PUBLISHER_ID)) return '';
+  return `  <meta name="google-adsense-account" content="${ADSENSE_PUBLISHER_ID}" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_PUBLISHER_ID}" crossorigin="anonymous"></script>
+`;
+}
+
 function buildHead({ title, description, route, prefix }) {
   const canonical = `${SITE_URL}${route}`;
   const ogType = ogTypeForRoute(route);
   const robots = robotsForRoute(route);
   const structuredData = buildStructuredData({ title, description, route });
+  const adsenseHeadTags = buildAdsenseHeadTags();
   return `<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -377,7 +485,7 @@ function buildHead({ title, description, route, prefix }) {
   <link rel="apple-touch-icon" href="${prefix}apple-touch-icon.png" />
   <link rel="stylesheet" href="${FONT_AWESOME_HREF}" integrity="${FONT_AWESOME_INTEGRITY}" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="${prefix}styles.css" />
-  ${structuredData}
+${adsenseHeadTags}  ${structuredData}
 </head>`;
 }
 
@@ -403,6 +511,20 @@ ${navLinks}
       <button id="themeToggle" type="button" class="icon-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><i class="fa-solid fa-moon" aria-hidden="true"></i></button>
     </div>
   </header>`;
+}
+
+function buildBreadcrumbNav(route, title) {
+  const data = breadcrumbData(route, title).itemListElement;
+  if (data.length < 2) return '';
+  const links = data.map((item, index) => {
+    const label = escapeHtml(item.name);
+    if (index === data.length - 1) return `<span aria-current="page">${label}</span>`;
+    return `<a href="${new URL(item.item).pathname}">${label}</a>`;
+  }).join('<span aria-hidden="true">/</span>');
+
+  return `<nav class="breadcrumbs" aria-label="Breadcrumb">
+    ${links}
+  </nav>`;
 }
 
 function listMarkup(items, indent = '        ') {
@@ -517,9 +639,22 @@ function syncCanonicalPage(file) {
   ];
 
   content = replaceBlock(content, /<head>[\s\S]*?<\/head>/, head, 'head', rel);
-  content = replaceBlock(content, /<header class="site-header">[\s\S]*?<\/header>/, buildHeader(route), 'header', rel);
+  content = content.replace(/<nav class="breadcrumbs" aria-label="Breadcrumb">[\s\S]*?<\/nav>\s*/g, '');
+  const breadcrumbNav = buildBreadcrumbNav(route, title);
+  const headerReplacement = breadcrumbNav ? `${buildHeader(route)}\n\n  ${breadcrumbNav}` : buildHeader(route);
+  content = replaceBlock(content, /<header class="site-header">[\s\S]*?<\/header>/, headerReplacement, 'header', rel);
   content = replaceBlock(content, /<footer class="site-footer">[\s\S]*?<\/footer>/, footer, 'footer', rel);
   content = replaceJobRouters(content, rel);
+  content = content.replace(/<input([^>]*type="file"(?:(?!aria-label)[^>])*?) hidden/g, '<input$1 aria-label="Upload file" hidden');
+  content = content.replace(/\s*<section class="article-section page-quality-note"[\s\S]*?<\/section>/g, '');
+  content = content.replace(/\n[ \t]+\n[ \t]+\n(\s*<\/main>)/g, '\n$1');
+  if (['/about/', '/privacy/', '/terms/', '/contact/'].includes(route)) {
+    const note = buildQualityNote('/trust/');
+    if (note) content = content.replace(/(\s*)<\/main>/, `\n    ${note}$1</main>`);
+  } else if (isToolRoute(route) || route.startsWith('/learn/') || ['/image/', '/pdf/', '/video/', '/fonts/', '/audio/', '/file/'].includes(route)) {
+    const note = buildQualityNote(route);
+    if (note) content = content.replace(/(\s*)<\/main>/, `\n    ${note}$1</main>`);
+  }
   content = content.replace(/href="(\/[^"]*)"/g, (_match, href) => `href="${normalizeInternalHref(href)}"`);
 
   for (const script of scripts) {
@@ -531,6 +666,8 @@ function syncCanonicalPage(file) {
       );
     }
   }
+
+  content = content.replace(/\n[ \t]+\n/g, '\n\n');
 
   fs.writeFileSync(file, content);
   return { route, title, description };
@@ -561,10 +698,9 @@ function buildSitemap(metaByRoute) {
   ];
 
   const entries = orderedRoutes.map((route) => {
-    const lastmod = previousLastmods.get(route) || '2026-05-23';
     return `  <url>
     <loc>${SITE_URL}${route}</loc>
-    <lastmod>${lastmod}</lastmod>
+    <lastmod>${CURRENT_LASTMOD}</lastmod>
   </url>`;
   }).join('\n');
 

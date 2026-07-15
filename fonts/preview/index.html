@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kreativ Tools | Font Preview</title>
-  <meta name="description" content="Preview your uploaded font files directly in the browser." />
+  <meta name="description" content="Preview uploaded font files with custom text, size controls, and sample strings before deciding whether a font is ready for web use." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://kreativtools.com/fonts/preview/" />
   <meta property="og:title" content="Kreativ Tools | Font Preview" />
-  <meta property="og:description" content="Preview your uploaded font files directly in the browser." />
+  <meta property="og:description" content="Preview uploaded font files with custom text, size controls, and sample strings before deciding whether a font is ready for web use." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://kreativtools.com/fonts/preview/" />
   <meta property="og:image" content="https://kreativtools.com/og-image.png" />
@@ -18,7 +18,7 @@
   <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Kreativ Tools | Font Preview" />
-  <meta name="twitter:description" content="Preview your uploaded font files directly in the browser." />
+  <meta name="twitter:description" content="Preview uploaded font files with custom text, size controls, and sample strings before deciding whether a font is ready for web use." />
   <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
   <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
@@ -27,7 +27,7 @@
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../../styles.css" />
-  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Font Preview","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/fonts/preview/","description":"Preview your uploaded font files directly in the browser.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Font Tools","item":"https://kreativtools.com/fonts/"},{"@type":"ListItem","position":3,"name":"Font Preview","item":"https://kreativtools.com/fonts/preview/"}]}]</script>
+  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Font Preview","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/fonts/preview/","description":"Preview uploaded font files with custom text, size controls, and sample strings before deciding whether a font is ready for web use.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Font Tools","item":"https://kreativtools.com/fonts/"},{"@type":"ListItem","position":3,"name":"Font Preview","item":"https://kreativtools.com/fonts/preview/"}]}]</script>
 </head>
 <body>
   <div class="bg-glow bg-glow-1"></div>
@@ -50,9 +50,13 @@
     </div>
   </header>
 
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Kreativ Tools</a><span aria-hidden="true">/</span><a href="/fonts/">Font Tools</a><span aria-hidden="true">/</span><span aria-current="page">Font Preview</span>
+  </nav>
+
   <main class="container">
     <section class="hero"><p class="eyebrow">Font Tools</p><h1>Font Preview</h1><p>Upload a TTF/OTF/WOFF/WOFF2 font and preview custom text instantly.</p></section>
-    <section class="upload-card"><input id="fontPreviewInput" type="file" accept=".ttf,.otf,.woff,.woff2,font/ttf,font/otf,font/woff,font/woff2" hidden /><div id="fontPreviewDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload font file"><div class="drop-icon" aria-hidden="true"></div><button id="fontPreviewUploadButton" type="button" class="primary upload-trigger">Upload Font</button><p>or drag and drop a font file here</p><p id="fontPreviewStatus" class="status status-empty">No font selected yet.</p></div></section>
+    <section class="upload-card"><input id="fontPreviewInput" type="file" accept=".ttf,.otf,.woff,.woff2,font/ttf,font/otf,font/woff,font/woff2" aria-label="Upload file" hidden /><div id="fontPreviewDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload font file"><div class="drop-icon" aria-hidden="true"></div><button id="fontPreviewUploadButton" type="button" class="primary upload-trigger">Upload Font</button><p>or drag and drop a font file here</p><p id="fontPreviewStatus" class="status status-empty">No font selected yet.</p></div></section>
     <section id="fontPreviewWorkspace" class="workspace is-hidden">
       <div class="controls">
         <label>Preview text<input id="fontPreviewText" type="text" value="Sphinx of black quartz, judge my vow 0123456789" /></label>
@@ -99,6 +103,18 @@
           <p>Ready to use the font on a website? Convert it with <a href="/fonts/webfont-convert/">Font to Webfont</a>, then generate CSS with <a href="/fonts/css-generator/">Font CSS Generator</a>.</p>
         </article>
       </div>
+    </section>
+    <section class="article-section page-quality-note" aria-labelledby="qualityNoteTitle">
+      <h2 id="qualityNoteTitle">Before you ship webfonts</h2>
+      <p>A font file can convert successfully and still be wrong for a website if the license, character coverage, weight selection, or CSS loading strategy is not ready. Test headings, body copy, numbers, and accented characters before publishing.</p>
+      <p>Treat conversion as one part of the webfont job. The final setup also needs correct file paths, fallback fonts, caching, and a font-display choice that matches the site. If the font is only used for headings, avoid shipping unnecessary weights that slow down every page.</p>
+      <ul class="tool-guide-list">
+        <li>Confirm the license allows web use.</li>
+        <li>Ship only the weights and styles the site needs.</li>
+        <li>Use CSS with sensible fallback fonts and a clear font-display choice.</li>
+      </ul>
+      <p>After downloading the result, open it once before using it in a client send, upload form, website, or archive. This final check catches format support issues, unexpected file size changes, missing characters, clipped media, or page-order mistakes while the original file is still available.</p>
+      <p>If the output will be reused, note the settings that produced it. That makes the next export easier to repeat and reduces guesswork when another file needs the same treatment.</p>
     </section>
   </main>
 

@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kreativ Tools Updates | Product Direction, Releases, and Changelog</title>
+  <title>Kreativ Tools Updates | Releases and Changelog</title>
   <meta name="description" content="Track product direction, release highlights, and the archived changelog for Kreativ Tools and Kreativ Workflows." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://kreativtools.com/changes/" />
-  <meta property="og:title" content="Kreativ Tools Updates | Product Direction, Releases, and Changelog" />
+  <meta property="og:title" content="Kreativ Tools Updates | Releases and Changelog" />
   <meta property="og:description" content="Track product direction, release highlights, and the archived changelog for Kreativ Tools and Kreativ Workflows." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://kreativtools.com/changes/" />
@@ -17,7 +17,7 @@
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Kreativ Tools Updates | Product Direction, Releases, and Changelog" />
+  <meta name="twitter:title" content="Kreativ Tools Updates | Releases and Changelog" />
   <meta name="twitter:description" content="Track product direction, release highlights, and the archived changelog for Kreativ Tools and Kreativ Workflows." />
   <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
   <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
@@ -27,7 +27,7 @@
   <link rel="apple-touch-icon" href="../apple-touch-icon.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../styles.css" />
-  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebPage","name":"Kreativ Tools Updates | Product Direction, Releases, and Changelog","url":"https://kreativtools.com/changes/","description":"Track product direction, release highlights, and the archived changelog for Kreativ Tools and Kreativ Workflows."},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Kreativ Tools Updates | Product Direction, Releases, and Changelog","item":"https://kreativtools.com/changes/"}]}]</script>
+  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebPage","name":"Kreativ Tools Updates | Releases and Changelog","url":"https://kreativtools.com/changes/","description":"Track product direction, release highlights, and the archived changelog for Kreativ Tools and Kreativ Workflows."},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Kreativ Tools Updates | Releases and Changelog","item":"https://kreativtools.com/changes/"}]}]</script>
 </head>
 <body>
   <div class="bg-glow bg-glow-1"></div>
@@ -50,6 +50,10 @@
       <button id="themeToggle" type="button" class="icon-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><i class="fa-solid fa-moon" aria-hidden="true"></i></button>
     </div>
   </header>
+
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Kreativ Tools</a><span aria-hidden="true">/</span><span aria-current="page">Kreativ Tools Updates | Releases and Changelog</span>
+  </nav>
 
   <main class="container">
     <section class="hero">
@@ -91,6 +95,8 @@
         <p>Older launch details are still kept below, but the top of this page now stays focused on the recent direction.</p>
       </div>
       <div class="changelog-list">
+        <p>2026-07-15 UPDATE - Improved consent handling so optional analytics waits for acceptance, disabled static product-event posts that caused 405 errors, added visible breadcrumbs, refreshed sitemap dates, and expanded thinner guidance pages.</p>
+        <p>2026-07-15 UPDATE - Prepared the site structure for AdSense review with a live ads.txt placeholder, clearer advertising separation notes, and generator support for a real AdSense publisher ID when available.</p>
         <p>2026-05-25 UPDATE - Added an <a href="/about/">About page</a>, expanded Privacy Policy and Terms disclosures, and added a robots.txt sitemap pointer so visitors and crawlers can find the core site information more easily.</p>
         <p>2026-05-24 UPDATE - <a href="/workflows/">Kreativ Workflows</a> are now free guided browser flows, with pricing and access-gate references removed from workflow pages, homepage CTAs, Learn copy, and contact copy.</p>
         <p>2026-05-24 UPDATE - The <a href="/tools/">Tools directory</a> was simplified so visitors land on one clear search-and-filter panel before the full tool grid, with the guided workflows prompt moved below the directory.</p>
@@ -284,7 +290,7 @@
       let html = escapeHtml(body);
 
       html = html.replace(/(^|[\s(])(\/[a-z0-9-]+(?:\/[a-z0-9-]+)*\/?)(?=([\s).,]|$))/gi, (match, prefix, route) => {
-        return `${prefix}<a href="${route}">${route}</a>`;
+        return prefix + '<a href="' + route + '">' + route + '</a>';
       });
 
       for (const [label, href] of updateLinkMap) {
@@ -292,7 +298,7 @@
         const labelRegex = new RegExp(`(^|[^">])(${escapedLabel})(?=([^<]*$))`, 'g');
         html = html.replace(labelRegex, (match, prefix, text) => {
           if (prefix.includes('href=')) return match;
-          return `${prefix}<a href="${href}">${text}</a>`;
+          return prefix + '<a href="' + href + '">' + text + '</a>';
         });
       }
 
@@ -312,7 +318,7 @@
         RELEASE: 'is-release',
       }[label] || '';
 
-      entry.innerHTML = `<span class="update-entry-date">${date}</span><span class="update-entry-badge ${badgeClass}">${label}</span>${linkInternalReferences(body)}`;
+      entry.innerHTML = '<span class="update-entry-date">' + date + '</span><span class="update-entry-badge ' + badgeClass + '">' + label + '</span>' + linkInternalReferences(body);
     });
   </script>
   <script src="../theme.js"></script>

@@ -51,6 +51,10 @@
     </div>
   </header>
 
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Kreativ Tools</a><span aria-hidden="true">/</span><a href="/file/">File Tools</a><span aria-hidden="true">/</span><span aria-current="page">XML to CSV</span>
+  </nav>
+
   <main class="container">
     <section class="hero">
       <p class="eyebrow">File Tools</p>
@@ -59,7 +63,7 @@
     </section>
 
     <section class="upload-card">
-      <input id="xmlInput" type="file" accept=".xml,text/xml,application/xml" hidden />
+      <input id="xmlInput" type="file" accept=".xml,text/xml,application/xml" aria-label="Upload file" hidden />
       <div id="xmlDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload XML file">
         <div class="drop-icon" aria-hidden="true"></div>
         <button id="xmlUploadButton" type="button" class="primary upload-trigger">Upload XML</button>
@@ -124,6 +128,18 @@
           <p>If your source is already JSON, use <a href="/file/json-to-csv/">JSON to CSV</a>. If you need structured JSON from a spreadsheet-style file, use <a href="/file/csv-to-json/">CSV to JSON</a>.</p>
         </article>
       </div>
+    </section>
+    <section class="article-section page-quality-note" aria-labelledby="qualityNoteTitle">
+      <h2 id="qualityNoteTitle">Before you convert data files</h2>
+      <p>Data converters are most reliable when the source file is clean before conversion. Check headers, repeated records, delimiters, blank rows, and unexpected nested fields. A converter can preserve structure, but it cannot know the meaning of unclear source data.</p>
+      <p>Before using the export in another system, compare a few rows against the source file. Look for shifted columns, empty fields, escaped quotes, and values that should stay as text, such as IDs or postal codes. Small cleanup before conversion prevents larger import mistakes later.</p>
+      <ul class="tool-guide-list">
+        <li>Keep headers unique and stable.</li>
+        <li>Preview row counts before using the export elsewhere.</li>
+        <li>Save the original file before cleaning or converting it.</li>
+      </ul>
+      <p>After downloading the result, open it once before using it in a client send, upload form, website, or archive. This final check catches format support issues, unexpected file size changes, missing characters, clipped media, or page-order mistakes while the original file is still available.</p>
+      <p>If the output will be reused, note the settings that produced it. That makes the next export easier to repeat and reduces guesswork when another file needs the same treatment.</p>
     </section>
   </main>
 

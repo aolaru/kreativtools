@@ -49,9 +49,13 @@
     </div>
   </header>
 
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Kreativ Tools</a><span aria-hidden="true">/</span><a href="/fonts/">Font Tools</a><span aria-hidden="true">/</span><span aria-current="page">@font-face CSS Generator</span>
+  </nav>
+
   <main class="container">
     <section class="hero"><p class="eyebrow">Font Tools</p><h1>@font-face CSS Generator</h1><p>Upload a font file and generate ready-to-paste CSS for a local webfont setup.</p></section>
-    <section class="upload-card"><input id="cssFontInput" type="file" accept=".ttf,.otf,.woff,.woff2,font/ttf,font/otf,font/woff,font/woff2" hidden /><div id="cssFontDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload font file"><div class="drop-icon" aria-hidden="true"></div><button id="cssFontUploadButton" type="button" class="primary upload-trigger">Upload Font</button><p>or drag and drop a font file here</p><p id="cssFontStatus" class="status status-empty">No font selected yet.</p></div></section>
+    <section class="upload-card"><input id="cssFontInput" type="file" accept=".ttf,.otf,.woff,.woff2,font/ttf,font/otf,font/woff,font/woff2" aria-label="Upload file" hidden /><div id="cssFontDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload font file"><div class="drop-icon" aria-hidden="true"></div><button id="cssFontUploadButton" type="button" class="primary upload-trigger">Upload Font</button><p>or drag and drop a font file here</p><p id="cssFontStatus" class="status status-empty">No font selected yet.</p></div></section>
     <section id="cssWorkspace" class="workspace is-hidden">
       <div class="controls">
         <label>Font family<input id="cssFamilyInput" type="text" value="MyFont" /></label>
@@ -101,6 +105,18 @@
           <p>If the source is still OTF or TTF, use <a href="/fonts/webfont-convert/">Font to Webfont</a> first. If you need to inspect the result visually, open <a href="/fonts/preview/">Font Preview</a>.</p>
         </article>
       </div>
+    </section>
+    <section class="article-section page-quality-note" aria-labelledby="qualityNoteTitle">
+      <h2 id="qualityNoteTitle">Before you ship webfonts</h2>
+      <p>A font file can convert successfully and still be wrong for a website if the license, character coverage, weight selection, or CSS loading strategy is not ready. Test headings, body copy, numbers, and accented characters before publishing.</p>
+      <p>Treat conversion as one part of the webfont job. The final setup also needs correct file paths, fallback fonts, caching, and a font-display choice that matches the site. If the font is only used for headings, avoid shipping unnecessary weights that slow down every page.</p>
+      <ul class="tool-guide-list">
+        <li>Confirm the license allows web use.</li>
+        <li>Ship only the weights and styles the site needs.</li>
+        <li>Use CSS with sensible fallback fonts and a clear font-display choice.</li>
+      </ul>
+      <p>After downloading the result, open it once before using it in a client send, upload form, website, or archive. This final check catches format support issues, unexpected file size changes, missing characters, clipped media, or page-order mistakes while the original file is still available.</p>
+      <p>If the output will be reused, note the settings that produced it. That makes the next export easier to repeat and reduces guesswork when another file needs the same treatment.</p>
     </section>
   </main>
 

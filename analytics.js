@@ -4,7 +4,7 @@
     enabled: true,
     provider: 'google',
     googleAnalyticsId: 'G-52WXEBLJY7',
-    productAnalyticsEndpoint: '/api/analytics/events',
+    productAnalyticsEndpoint: '',
   };
   const TOOL_CATEGORIES = new Set(['image', 'pdf', 'video', 'fonts', 'audio', 'file']);
   const PRODUCT_ANALYTICS_EVENTS = new Set([
@@ -32,6 +32,14 @@
     'workflow_step',
   ]);
 
+  const getStoredConsent = () => {
+    try {
+      return localStorage.getItem(CONSENT_KEY);
+    } catch {
+      return null;
+    }
+  };
+
   const canTrack = () => {
     if (!CONFIG.enabled) return false;
 
@@ -39,13 +47,7 @@
     if (host === 'localhost' || host === '127.0.0.1') return false;
     if (navigator.doNotTrack === '1' || window.doNotTrack === '1') return false;
 
-    try {
-      if (localStorage.getItem(CONSENT_KEY) === 'rejected') return false;
-    } catch {
-      // Ignore storage errors and fail open.
-    }
-
-    return true;
+    return getStoredConsent() === 'accepted';
   };
 
   const ensureGoogleAnalytics = () => {
@@ -317,6 +319,11 @@
     trackToolOpened();
   }
 
-  if (!canTrack()) return;
-  ensureGoogleAnalytics();
+  const startAnalyticsIfAllowed = () => {
+    if (!canTrack()) return;
+    ensureGoogleAnalytics();
+  };
+
+  window.addEventListener('kreativ:consent-changed', startAnalyticsIfAllowed);
+  startAnalyticsIfAllowed();
 })();

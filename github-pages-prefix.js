@@ -1,21 +1,5 @@
 (function () {
   var isGithubPages = window.location.hostname.endsWith('github.io');
-
-  function analyticsSrc() {
-    if (!isGithubPages) return '/analytics.js';
-    var parts = window.location.pathname.split('/').filter(Boolean);
-    if (parts.length === 0) return '/analytics.js';
-    return '/' + parts[0] + '/analytics.js';
-  }
-
-  if (!document.querySelector('script[data-kreativ-loader="analytics"]')) {
-    var analyticsScript = document.createElement('script');
-    analyticsScript.defer = true;
-    analyticsScript.src = analyticsSrc();
-    analyticsScript.dataset.kreativLoader = 'analytics';
-    document.head.appendChild(analyticsScript);
-  }
-
   if (!isGithubPages) return;
 
   var parts = window.location.pathname.split('/').filter(Boolean);

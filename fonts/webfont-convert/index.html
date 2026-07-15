@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kreativ Tools | Font to Webfont</title>
-  <meta name="description" content="Convert TTF and OTF fonts to webfont formats in your browser." />
+  <meta name="description" content="Convert licensed TTF or OTF files into WOFF and WOFF2 webfont files, then pair the export with CSS and fallback planning." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://kreativtools.com/fonts/webfont-convert/" />
   <meta property="og:title" content="Kreativ Tools | Font to Webfont" />
-  <meta property="og:description" content="Convert TTF and OTF fonts to webfont formats in your browser." />
+  <meta property="og:description" content="Convert licensed TTF or OTF files into WOFF and WOFF2 webfont files, then pair the export with CSS and fallback planning." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://kreativtools.com/fonts/webfont-convert/" />
   <meta property="og:image" content="https://kreativtools.com/og-image.png" />
@@ -18,7 +18,7 @@
   <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Kreativ Tools | Font to Webfont" />
-  <meta name="twitter:description" content="Convert TTF and OTF fonts to webfont formats in your browser." />
+  <meta name="twitter:description" content="Convert licensed TTF or OTF files into WOFF and WOFF2 webfont files, then pair the export with CSS and fallback planning." />
   <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
   <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
@@ -27,7 +27,7 @@
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../../styles.css" />
-  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Font to Webfont","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/fonts/webfont-convert/","description":"Convert TTF and OTF fonts to webfont formats in your browser.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Font Tools","item":"https://kreativtools.com/fonts/"},{"@type":"ListItem","position":3,"name":"Font to Webfont","item":"https://kreativtools.com/fonts/webfont-convert/"}]}]</script>
+  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Font to Webfont","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/fonts/webfont-convert/","description":"Convert licensed TTF or OTF files into WOFF and WOFF2 webfont files, then pair the export with CSS and fallback planning.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Font Tools","item":"https://kreativtools.com/fonts/"},{"@type":"ListItem","position":3,"name":"Font to Webfont","item":"https://kreativtools.com/fonts/webfont-convert/"}]}]</script>
 </head>
 <body>
   <div class="bg-glow bg-glow-1"></div>
@@ -51,6 +51,10 @@
     </div>
   </header>
 
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Kreativ Tools</a><span aria-hidden="true">/</span><a href="/fonts/">Font Tools</a><span aria-hidden="true">/</span><span aria-current="page">Font to Webfont</span>
+  </nav>
+
   <main class="container">
     <section class="hero">
       <p class="eyebrow">Font Tools</p>
@@ -59,7 +63,7 @@
     </section>
 
     <section class="upload-card">
-      <input id="fontInput" type="file" accept=".ttf,.otf,font/ttf,font/otf" hidden />
+      <input id="fontInput" type="file" accept=".ttf,.otf,font/ttf,font/otf" aria-label="Upload file" hidden />
       <div id="fontDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload font file">
         <div class="drop-icon" aria-hidden="true"></div>
         <button id="fontUploadButton" type="button" class="primary upload-trigger">Upload Font</button>
@@ -135,6 +139,18 @@
       <p><strong>Marketing page font:</strong> confirm the license allows web use, convert the needed weight to WOFF2, then generate CSS after the filename is final.</p>
       <p><strong>Legacy browser fallback:</strong> export WOFF2 first and WOFF only when the project support list requires it.</p>
       <p><strong>Design review:</strong> preview headings, numbers, and brand words before publishing the converted font to a live site.</p>
+    </section>
+    <section class="article-section page-quality-note" aria-labelledby="qualityNoteTitle">
+      <h2 id="qualityNoteTitle">Before you ship webfonts</h2>
+      <p>A font file can convert successfully and still be wrong for a website if the license, character coverage, weight selection, or CSS loading strategy is not ready. Test headings, body copy, numbers, and accented characters before publishing.</p>
+      <p>Treat conversion as one part of the webfont job. The final setup also needs correct file paths, fallback fonts, caching, and a font-display choice that matches the site. If the font is only used for headings, avoid shipping unnecessary weights that slow down every page.</p>
+      <ul class="tool-guide-list">
+        <li>Confirm the license allows web use.</li>
+        <li>Ship only the weights and styles the site needs.</li>
+        <li>Use CSS with sensible fallback fonts and a clear font-display choice.</li>
+      </ul>
+      <p>After downloading the result, open it once before using it in a client send, upload form, website, or archive. This final check catches format support issues, unexpected file size changes, missing characters, clipped media, or page-order mistakes while the original file is still available.</p>
+      <p>If the output will be reused, note the settings that produced it. That makes the next export easier to repeat and reduces guesswork when another file needs the same treatment.</p>
     </section>
   </main>
 

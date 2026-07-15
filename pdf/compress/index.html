@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kreativ Tools | PDF Compress</title>
-  <meta name="description" content="Compress and optimize PDF files in your browser." />
+  <meta name="description" content="Reduce PDF file size after editing or merging, compare the result, and download a lighter PDF for email, portals, or handoff." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://kreativtools.com/pdf/compress/" />
   <meta property="og:title" content="Kreativ Tools | PDF Compress" />
-  <meta property="og:description" content="Compress and optimize PDF files in your browser." />
+  <meta property="og:description" content="Reduce PDF file size after editing or merging, compare the result, and download a lighter PDF for email, portals, or handoff." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://kreativtools.com/pdf/compress/" />
   <meta property="og:image" content="https://kreativtools.com/og-image.png" />
@@ -18,7 +18,7 @@
   <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Kreativ Tools | PDF Compress" />
-  <meta name="twitter:description" content="Compress and optimize PDF files in your browser." />
+  <meta name="twitter:description" content="Reduce PDF file size after editing or merging, compare the result, and download a lighter PDF for email, portals, or handoff." />
   <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
   <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
@@ -27,7 +27,7 @@
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../../styles.css" />
-  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"PDF Compress","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/pdf/compress/","description":"Compress and optimize PDF files in your browser.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"PDF Tools","item":"https://kreativtools.com/pdf/"},{"@type":"ListItem","position":3,"name":"PDF Compress","item":"https://kreativtools.com/pdf/compress/"}]}]</script>
+  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"PDF Compress","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/pdf/compress/","description":"Reduce PDF file size after editing or merging, compare the result, and download a lighter PDF for email, portals, or handoff.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"PDF Tools","item":"https://kreativtools.com/pdf/"},{"@type":"ListItem","position":3,"name":"PDF Compress","item":"https://kreativtools.com/pdf/compress/"}]}]</script>
 </head>
 <body>
   <div class="bg-glow bg-glow-1"></div>
@@ -51,6 +51,10 @@
     </div>
   </header>
 
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Kreativ Tools</a><span aria-hidden="true">/</span><a href="/pdf/">PDF Tools</a><span aria-hidden="true">/</span><span aria-current="page">PDF Compress</span>
+  </nav>
+
   <main class="container">
     <section class="hero">
       <p class="eyebrow">PDF Tools</p>
@@ -59,7 +63,7 @@
     </section>
 
     <section class="upload-card">
-      <input id="compressPdfInput" type="file" accept="application/pdf,.pdf" hidden />
+      <input id="compressPdfInput" type="file" accept="application/pdf,.pdf" aria-label="Upload file" hidden />
       <div id="compressPdfDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload a PDF file">
         <div class="drop-icon" aria-hidden="true"></div>
         <button id="compressPdfUploadButton" type="button" class="primary upload-trigger">Upload PDF</button>
@@ -142,6 +146,18 @@
         <li><strong>Why show the result before download?</strong> Because some files are not worth replacing if the savings are too small.</li>
         <li><strong>Is this a full PDF optimizer?</strong> No. It is a practical browser tool for lighter exports, not a complete document editing suite.</li>
       </ul>
+    </section>
+    <section class="article-section page-quality-note" aria-labelledby="qualityNoteTitle">
+      <h2 id="qualityNoteTitle">Before you send a PDF</h2>
+      <p>Decide whether the job changes visible content, page order, or file size. Fill and sign before final compression, split before merging if only some pages are needed, and review the exported PDF before sending it to a client, portal, or archive.</p>
+      <p>PDF work often fails when the final destination is ignored. A portal may care about file size, an approval flow may care about signatures, and a handoff may care about page order. Work backward from that requirement and keep the final downloaded file separate from the original.</p>
+      <ul class="tool-guide-list">
+        <li>Keep the source PDF until the export has been checked.</li>
+        <li>Protected or damaged PDFs can fail even when the page loads normally.</li>
+        <li>Compression should be the last step after pages and overlays are final.</li>
+      </ul>
+      <p>After downloading the result, open it once before using it in a client send, upload form, website, or archive. This final check catches format support issues, unexpected file size changes, missing characters, clipped media, or page-order mistakes while the original file is still available.</p>
+      <p>If the output will be reused, note the settings that produced it. That makes the next export easier to repeat and reduces guesswork when another file needs the same treatment.</p>
     </section>
   </main>
 

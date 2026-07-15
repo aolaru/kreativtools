@@ -51,6 +51,10 @@
     </div>
   </header>
 
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Kreativ Tools</a><span aria-hidden="true">/</span><a href="/pdf/">PDF Tools</a><span aria-hidden="true">/</span><span aria-current="page">PDF Text to DOCX</span>
+  </nav>
+
   <main class="container">
     <section class="hero">
       <p class="eyebrow">PDF Tools</p>
@@ -59,7 +63,7 @@
     </section>
 
     <section class="upload-card">
-      <input id="pdfDocxInput" type="file" accept="application/pdf,.pdf" hidden />
+      <input id="pdfDocxInput" type="file" accept="application/pdf,.pdf" aria-label="Upload file" hidden />
       <div id="pdfDocxDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload a PDF file to convert to DOCX">
         <div class="drop-icon" aria-hidden="true"></div>
         <button id="pdfDocxUploadButton" type="button" class="primary upload-trigger">Upload PDF</button>
@@ -143,6 +147,18 @@
         <h2>Need exact form filling instead?</h2>
         <p>Use <a href="/pdf/fill-sign/">PDF Fill &amp; Sign</a> when the goal is to place text and signatures on top of a fixed PDF layout instead of converting it into an editable document.</p>
       </div>
+    </section>
+    <section class="article-section page-quality-note" aria-labelledby="qualityNoteTitle">
+      <h2 id="qualityNoteTitle">Before you send a PDF</h2>
+      <p>Decide whether the job changes visible content, page order, or file size. Fill and sign before final compression, split before merging if only some pages are needed, and review the exported PDF before sending it to a client, portal, or archive.</p>
+      <p>PDF work often fails when the final destination is ignored. A portal may care about file size, an approval flow may care about signatures, and a handoff may care about page order. Work backward from that requirement and keep the final downloaded file separate from the original.</p>
+      <ul class="tool-guide-list">
+        <li>Keep the source PDF until the export has been checked.</li>
+        <li>Protected or damaged PDFs can fail even when the page loads normally.</li>
+        <li>Compression should be the last step after pages and overlays are final.</li>
+      </ul>
+      <p>After downloading the result, open it once before using it in a client send, upload form, website, or archive. This final check catches format support issues, unexpected file size changes, missing characters, clipped media, or page-order mistakes while the original file is still available.</p>
+      <p>If the output will be reused, note the settings that produced it. That makes the next export easier to repeat and reduces guesswork when another file needs the same treatment.</p>
     </section>
   </main>
 

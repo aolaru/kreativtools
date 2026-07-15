@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kreativ Tools | Audio Trim</title>
-  <meta name="description" content="Trim audio segments and export WAV in your browser." />
+  <meta name="description" content="Choose a start and end time, preview the selected audio range, and export a trimmed WAV for notes, clips, samples, or handoff." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://kreativtools.com/audio/trim/" />
   <meta property="og:title" content="Kreativ Tools | Audio Trim" />
-  <meta property="og:description" content="Trim audio segments and export WAV in your browser." />
+  <meta property="og:description" content="Choose a start and end time, preview the selected audio range, and export a trimmed WAV for notes, clips, samples, or handoff." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://kreativtools.com/audio/trim/" />
   <meta property="og:image" content="https://kreativtools.com/og-image.png" />
@@ -18,7 +18,7 @@
   <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Kreativ Tools | Audio Trim" />
-  <meta name="twitter:description" content="Trim audio segments and export WAV in your browser." />
+  <meta name="twitter:description" content="Choose a start and end time, preview the selected audio range, and export a trimmed WAV for notes, clips, samples, or handoff." />
   <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
   <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and core browser-based creative workflows" />
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
@@ -27,7 +27,7 @@
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../../styles.css" />
-  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Audio Trim","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/audio/trim/","description":"Trim audio segments and export WAV in your browser.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Audio Tools","item":"https://kreativtools.com/audio/"},{"@type":"ListItem","position":3,"name":"Audio Trim","item":"https://kreativtools.com/audio/trim/"}]}]</script>
+  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Audio Trim","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/audio/trim/","description":"Choose a start and end time, preview the selected audio range, and export a trimmed WAV for notes, clips, samples, or handoff.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Audio Tools","item":"https://kreativtools.com/audio/"},{"@type":"ListItem","position":3,"name":"Audio Trim","item":"https://kreativtools.com/audio/trim/"}]}]</script>
 </head>
 <body>
   <div class="bg-glow bg-glow-1"></div><div class="bg-glow bg-glow-2"></div>
@@ -49,9 +49,13 @@
     </div>
   </header>
 
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Kreativ Tools</a><span aria-hidden="true">/</span><a href="/audio/">Audio Tools</a><span aria-hidden="true">/</span><span aria-current="page">Audio Trim</span>
+  </nav>
+
   <main class="container">
     <section class="hero"><p class="eyebrow">Audio Tools</p><h1>Audio Trim</h1><p>Select start/end time and export only the needed audio segment as WAV.</p></section>
-    <section class="upload-card"><input id="trimAudioInput" type="file" accept="audio/*" hidden /><div id="trimAudioDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload audio"><div class="drop-icon" aria-hidden="true"></div><button id="trimAudioUploadButton" type="button" class="primary upload-trigger">Upload Audio</button><p>or drag and drop an audio file here</p><p id="trimAudioStatus" class="status status-empty">No audio selected yet.</p></div></section>
+    <section class="upload-card"><input id="trimAudioInput" type="file" accept="audio/*" aria-label="Upload file" hidden /><div id="trimAudioDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload audio"><div class="drop-icon" aria-hidden="true"></div><button id="trimAudioUploadButton" type="button" class="primary upload-trigger">Upload Audio</button><p>or drag and drop an audio file here</p><p id="trimAudioStatus" class="status status-empty">No audio selected yet.</p></div></section>
     <section id="trimAudioWorkspace" class="workspace is-hidden"><div class="controls"><label>Start (seconds)<input id="trimAudioStart" type="number" min="0" step="0.01" value="0" /></label><label>End (seconds)<input id="trimAudioEnd" type="number" min="0.01" step="0.01" value="1" /></label><button id="trimAudioAction" type="button" class="primary" disabled>Trim and Download WAV</button></div><div class="preview-panel"><h2>Preview</h2><audio id="trimAudioPreview" class="audio-preview" controls></audio><p id="trimAudioMeta" class="dimensions"></p></div></section>
 
     <section class="article-section tool-guide" aria-labelledby="trimAudioGuideTitle">
@@ -91,6 +95,18 @@
           <p>Need a smaller delivery file? Use <a href="/audio/to-mp3/">Audio to MP3</a>. For repeat handoffs, use the <a href="/workflows/audio-delivery/">Audio Delivery workflow</a>.</p>
         </article>
       </div>
+    </section>
+    <section class="article-section page-quality-note" aria-labelledby="qualityNoteTitle">
+      <h2 id="qualityNoteTitle">Before you export audio</h2>
+      <p>Audio jobs are easier when trimming, volume changes, and format conversion happen in a clear order. Trim unwanted sections before converting, check loudness before sharing, and choose MP3 only when a smaller delivery file matters more than keeping WAV quality.</p>
+      <p>For spoken audio, clarity and steady volume matter more than aggressive compression. For samples or music ideas, keep a higher-quality source and export a lighter copy for sharing. If the result sounds harsh, reduce gain or bitrate changes and export again from the original file.</p>
+      <ul class="tool-guide-list">
+        <li>Preview the selected section before downloading.</li>
+        <li>Avoid very high gain settings that can clip speech or music.</li>
+        <li>Keep WAV for editing and MP3 for lightweight sharing.</li>
+      </ul>
+      <p>After downloading the result, open it once before using it in a client send, upload form, website, or archive. This final check catches format support issues, unexpected file size changes, missing characters, clipped media, or page-order mistakes while the original file is still available.</p>
+      <p>If the output will be reused, note the settings that produced it. That makes the next export easier to repeat and reduces guesswork when another file needs the same treatment.</p>
     </section>
   </main>
 

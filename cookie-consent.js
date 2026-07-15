@@ -24,6 +24,10 @@
     } catch {
       // ignore storage failures
     }
+
+    window.dispatchEvent(new CustomEvent('kreativ:consent-changed', {
+      detail: { value },
+    }));
   };
 
   const clearConsent = () => {

@@ -86,7 +86,8 @@ Use `worker/README.md` for setup commands. The dashboard is designed for metrics
 ## Advertising readiness
 
 - Do not add AdSense tags until the real publisher ID is available.
-- Add the real `ads.txt` record only after the AdSense account provides the exact `pub-...` value.
+- `ads.txt` is present as a documented placeholder so the route returns `200`; replace the example with the real `google.com, pub-...` record only after AdSense provides the exact publisher ID.
+- To generate AdSense head tags, run `KREATIVTOOLS_ADSENSE_PUBLISHER_ID=ca-pub-... npm run sync:site` after the real publisher ID is available.
 - For EEA, UK, and Switzerland visitors, configure Google AdSense Privacy & messaging or another Google-certified CMP before serving ads.
 - Keep ad slots clearly separated from tool buttons, download actions, cards, and form controls.
 
