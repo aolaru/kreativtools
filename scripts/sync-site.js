@@ -15,6 +15,27 @@ const FONT_AWESOME_INTEGRITY = 'sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfj
 const CURRENT_LASTMOD = '2026-07-15';
 const ADSENSE_PUBLISHER_ID = (process.env.KREATIVTOOLS_ADSENSE_PUBLISHER_ID || '').trim();
 
+const TITLE_OVERRIDES = {
+  '/learn/compress-images-for-faster-websites/': 'Compress Images for Faster Websites | Kreativ Tools',
+  '/learn/merge-pdf-files-in-order/': 'Merge PDF Files in Order | Kreativ Tools Learn',
+  '/learn/resize-before-compressing-images/': 'Resize Before Compressing | Kreativ Tools Learn',
+  '/learn/when-pdf-compression-does-not-help/': 'PDF Compression Limits | Kreativ Tools Learn',
+  '/learn/font-licensing-checklist/': 'Font Licensing Checklist | Kreativ Tools Learn',
+};
+
+const DESCRIPTION_SUFFIXES = {
+  image: 'Includes private previews, local export, and practical quality checks.',
+  pdf: 'Includes private browser handling, local export, and final-file checks.',
+  video: 'Includes browser previews, export limits, and handoff checks.',
+  font: 'Includes license reminders, browser export, and CSS delivery checks.',
+  audio: 'Includes preview steps, local export, and sharing-quality checks.',
+  data: 'Includes local parsing, preview checks, and import-ready export guidance.',
+  workflow: 'Includes setup checks, reusable defaults, and local export guidance.',
+  trust: 'Covers ownership, contact paths, policy limits, and visitor choices.',
+  general: 'Includes practical decision rules, privacy notes, and next-step links.',
+  short: 'Includes next-step links and privacy notes.',
+};
+
 const REDIRECTS = {
   'about.html': '/about/',
   'all-tools.html': '/tools/',
@@ -248,6 +269,25 @@ function contentFamilyForRoute(route) {
   return '';
 }
 
+function titleForRoute(route, title) {
+  return TITLE_OVERRIDES[route] || title;
+}
+
+function descriptionForRoute(route, description) {
+  if (description.length >= 120) return description;
+
+  const family = contentFamilyForRoute(route) || (isCategoryRoute(route) ? 'general' : 'general');
+  const fullSuffix = DESCRIPTION_SUFFIXES[family] || DESCRIPTION_SUFFIXES.general;
+  const suffix = description.length > 112 ? DESCRIPTION_SUFFIXES.short : fullSuffix;
+  const next = `${description} ${suffix}`;
+
+  if (next.length <= 165) return next;
+  if (description.length < 120) {
+    return `${description} ${DESCRIPTION_SUFFIXES.short}`.slice(0, 165).replace(/\s+\S*$/, '.');
+  }
+  return description;
+}
+
 const FAMILY_NOTES = {
   image: {
     title: 'Before you export an image',
@@ -461,6 +501,7 @@ function buildHead({ title, description, route, prefix }) {
   return `<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>${escapeHtml(title)}</title>
   <meta name="description" content="${escapeAttr(description)}" />
   <meta name="robots" content="${robots}" />
@@ -515,7 +556,11 @@ ${navLinks}
 
 function buildBreadcrumbNav(route, title) {
   const data = breadcrumbData(route, title).itemListElement;
-  if (data.length < 2) return '';
+  if (data.length < 2) {
+    return `<nav class="breadcrumbs breadcrumbs-home" aria-label="Breadcrumb">
+    <span aria-current="page">Kreativ Tools</span>
+  </nav>`;
+  }
   const links = data.map((item, index) => {
     const label = escapeHtml(item.name);
     if (index === data.length - 1) return `<span aria-current="page">${label}</span>`;
@@ -525,6 +570,14 @@ function buildBreadcrumbNav(route, title) {
   return `<nav class="breadcrumbs" aria-label="Breadcrumb">
     ${links}
   </nav>`;
+}
+
+function buildArticleTrustMeta() {
+  return `<div class="article-trust-meta" aria-label="Article information">
+        <span>Updated July 15, 2026</span>
+        <span>By Andrei Olaru</span>
+        <span>Reviewed for browser-tool accuracy</span>
+      </div>`;
 }
 
 function listMarkup(items, indent = '        ') {
@@ -627,8 +680,10 @@ function syncCanonicalPage(file) {
   const route = routeForCanonicalFile(file);
   const prefix = prefixForFile(file);
   let content = fs.readFileSync(file, 'utf8');
-  const title = extractMeta(content, /<title>([^<]+)<\/title>/, 'title', rel);
-  const description = extractMeta(content, /<meta name="description" content="([^"]+)"\s*\/?>/, 'description', rel);
+  const rawTitle = extractMeta(content, /<title>([^<]+)<\/title>/, 'title', rel);
+  const rawDescription = extractMeta(content, /<meta name="description" content="([^"]+)"\s*\/?>/, 'description', rel);
+  const title = titleForRoute(route, rawTitle);
+  const description = descriptionForRoute(route, rawDescription);
   const head = buildHead({ title, description, route, prefix });
   const footer = buildFooter();
   const scripts = [
@@ -645,6 +700,14 @@ function syncCanonicalPage(file) {
   content = replaceBlock(content, /<header class="site-header">[\s\S]*?<\/header>/, headerReplacement, 'header', rel);
   content = replaceBlock(content, /<footer class="site-footer">[\s\S]*?<\/footer>/, footer, 'footer', rel);
   content = replaceJobRouters(content, rel);
+  content = content.replace(/\s*<div class="article-trust-meta"[\s\S]*?<\/div>/g, '');
+  if (route.startsWith('/learn/') && route !== '/learn/') {
+    if (/<div class="article-meta">[\s\S]*?<\/div>/.test(content)) {
+      content = content.replace(/(<div class="article-meta">[\s\S]*?<\/div>)/, `$1\n      ${buildArticleTrustMeta()}`);
+    } else {
+      content = content.replace(/(<h1>[\s\S]*?<\/h1>)/, `$1\n      ${buildArticleTrustMeta()}`);
+    }
+  }
   content = content.replace(/<input([^>]*type="file"(?:(?!aria-label)[^>])*?) hidden/g, '<input$1 aria-label="Upload file" hidden');
   content = content.replace(/\s*<section class="article-section page-quality-note"[\s\S]*?<\/section>/g, '');
   content = content.replace(/\n[ \t]+\n[ \t]+\n(\s*<\/main>)/g, '\n$1');
@@ -733,6 +796,7 @@ function buildRedirectPage(route, title, description) {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>${safeTitle}</title>
   <meta name="description" content="${safeDescription}" />
   <meta name="robots" content="index, follow" />

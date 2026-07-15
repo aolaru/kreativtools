@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Kreativ Tools Directory | Browser Tools and Guided Workflows</title>
   <meta name="description" content="Search and filter the Kreativ Tools directory for quick browser utilities and guided workflows for image, PDF, audio, video, font, and data jobs." />
   <meta name="robots" content="index, follow" />
@@ -60,6 +61,36 @@
       <p class="eyebrow">Tool Directory</p>
       <h1>Tools and Guided Workflows</h1>
       <p>Search once, then open the quick tool or guided workflow that matches the job.</p>
+    </section>
+
+    <section class="home-section common-jobs-section" aria-labelledby="commonJobsTitle">
+      <div class="home-section-heading">
+        <p class="eyebrow">Most Common Jobs</p>
+        <h2 id="commonJobsTitle">Start with one of these if you are unsure</h2>
+        <p>These shortcuts cover the jobs people usually need first. Use search below when the file type or output is more specific.</p>
+      </div>
+      <div class="common-jobs-grid">
+        <a class="common-job-card" href="/image/compress/">
+          <span>Make an image smaller</span>
+          <strong>Open Image Compress</strong>
+        </a>
+        <a class="common-job-card" href="/pdf/fill-sign/">
+          <span>Add text or a signature to a PDF</span>
+          <strong>Open PDF Fill &amp; Sign</strong>
+        </a>
+        <a class="common-job-card" href="/pdf/merge/">
+          <span>Combine PDF files in order</span>
+          <strong>Open PDF Merge</strong>
+        </a>
+        <a class="common-job-card" href="/fonts/webfont-convert/">
+          <span>Prepare a font for a website</span>
+          <strong>Open Font to Webfont</strong>
+        </a>
+        <a class="common-job-card" href="/workflows/">
+          <span>Need several ordered steps?</span>
+          <strong>Compare Guided Workflows</strong>
+        </a>
+      </div>
     </section>
 
     <section class="tools-action-section" aria-labelledby="toolsSearchTitle">
@@ -382,9 +413,9 @@
         });
 
         if (visibleCount === totalTools) {
-          summary.textContent = `Showing all ${totalTools} entries.`;
+          summary.textContent = 'Showing all ' + totalTools + ' entries.';
         } else {
-          summary.textContent = `Showing ${visibleCount} of ${totalTools} entries.`;
+          summary.textContent = 'Showing ' + visibleCount + ' of ' + totalTools + ' entries.';
         }
 
         emptyState.hidden = visibleCount > 0;

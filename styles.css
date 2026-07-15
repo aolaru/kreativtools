@@ -926,6 +926,49 @@ button:disabled {
   margin-top: 18px;
 }
 
+.common-jobs-section {
+  margin-top: 20px;
+}
+
+.common-jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.common-job-card {
+  display: grid;
+  gap: 8px;
+  min-height: 132px;
+  padding: 18px;
+  border: 1px solid var(--outline);
+  border-radius: 20px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(245, 250, 255, 0.88)),
+    var(--panel);
+  color: var(--text);
+  text-decoration: none;
+  box-shadow: 0 16px 34px rgba(15, 28, 45, 0.06);
+}
+
+.common-job-card:hover {
+  border-color: color-mix(in oklab, var(--accent) 38%, var(--outline));
+  transform: translateY(-1px);
+}
+
+.common-job-card span {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.common-job-card strong {
+  align-self: end;
+  color: var(--accent-dark);
+  font-size: 0.94rem;
+  line-height: 1.2;
+}
+
 .tools-upsell {
   display: flex;
   justify-content: space-between;
@@ -1052,6 +1095,10 @@ button:disabled {
 
 .breadcrumbs span[aria-current='page'] {
   color: var(--muted);
+}
+
+.breadcrumbs-home {
+  justify-content: center;
 }
 
 .category-jump a {
@@ -2309,6 +2356,24 @@ button:disabled {
   justify-content: center;
 }
 
+.article-trust-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.article-trust-meta span {
+  border: 1px solid var(--outline);
+  border-radius: 999px;
+  padding: 5px 9px;
+  background: rgba(255, 255, 255, 0.6);
+}
+
 .article-pill {
   border: 1px solid var(--outline);
   border-radius: 999px;
@@ -3457,6 +3522,7 @@ input[type='range'] {
   .workflow-proof-grid,
   .studio-hero-grid,
   .job-router-grid,
+  .common-jobs-grid,
   .home-split,
   .home-band,
   .tool-guide-grid,
@@ -3581,6 +3647,14 @@ input[type='range'] {
 
   .home-section-actions {
     display: grid;
+  }
+
+  .common-jobs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .common-job-card {
+    min-height: 0;
   }
 
   .tool-filter-row {

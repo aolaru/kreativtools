@@ -91,6 +91,12 @@ Use `worker/README.md` for setup commands. The dashboard is designed for metrics
 - For EEA, UK, and Switzerland visitors, configure Google AdSense Privacy & messaging or another Google-certified CMP before serving ads.
 - Keep ad slots clearly separated from tool buttons, download actions, cards, and form controls.
 
+## Security headers
+
+- `_headers` contains the intended security-header baseline for hosts or CDNs that support Netlify-style header files.
+- GitHub Pages does not serve custom headers from `_headers`; use a CDN/proxy such as Cloudflare if those headers must appear on the live response.
+- Canonical pages still include a `strict-origin-when-cross-origin` referrer meta tag so the static HTML has a privacy-safe browser fallback.
+
 ## Versioning
 
 Use lightweight semantic versioning for the product:
