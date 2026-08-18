@@ -12,6 +12,8 @@ const OG_IMAGE = `${SITE_URL}/og-image.png`;
 const OG_IMAGE_ALT = 'Kreativ Tools social preview card with the K mark and core browser-based creative workflows';
 const FONT_AWESOME_HREF = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css';
 const FONT_AWESOME_INTEGRITY = 'sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==';
+const CLOUDFLARE_WEB_ANALYTICS_SRC = 'https://static.cloudflareinsights.com/beacon.min.js';
+const CLOUDFLARE_WEB_ANALYTICS_TOKEN = 'f7acecd16c454cfbbb4704b4e665a173';
 const CURRENT_LASTMOD = '2026-07-15';
 
 const TITLE_OVERRIDES = {
@@ -518,6 +520,7 @@ function buildHead({ title, description, route, prefix }) {
   <link rel="stylesheet" href="${FONT_AWESOME_HREF}" integrity="${FONT_AWESOME_INTEGRITY}" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="${prefix}styles.css" />
   ${structuredData}
+  <script type="module" src="${CLOUDFLARE_WEB_ANALYTICS_SRC}" data-cf-beacon='{"token":"${CLOUDFLARE_WEB_ANALYTICS_TOKEN}"}'></script>
 </head>`;
 }
 

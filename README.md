@@ -1,6 +1,6 @@
 # Kreativ Tools
 
-Kreativ Tools is a privacy-first static website of browser-based utilities for image, PDF, video, font, audio, and file workflows. Files are processed locally in the browser by the tools; the site does not include product analytics or an upload backend.
+Kreativ Tools is a privacy-first static website of browser-based utilities for image, PDF, video, font, audio, and file workflows. Files are processed locally in the browser by the tools; the site uses Cloudflare Web Analytics only for aggregate page and performance measurement and has no upload backend.
 
 The project is in maintenance mode. It is a good base for a private tool library, a client-facing utility site, or a focused fork that keeps only the tools you need. Small fixes, compatibility improvements, accessibility work, and documentation corrections are welcome.
 
@@ -78,7 +78,7 @@ Do not manually edit generated headers, footers, metadata, or top-level `*.html`
 Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request. In short:
 
 - Keep changes focused on maintenance: break/fix work, browser compatibility, security, accessibility, performance, or documentation.
-- Preserve local browser processing. Do not add file-upload services, visitor analytics, advertising, or tracking without an explicit maintainer decision.
+- Preserve local browser processing. Do not add file-upload services, advertising, or additional analytics/tracking without an explicit maintainer decision.
 - Run `npm run sync:site` after shared site changes and run `npm test` before requesting review.
 - Use the issue templates for bugs and compatibility reports. Report security issues privately as described in [SECURITY.md](SECURITY.md).
 
@@ -107,11 +107,11 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request. In short:
 
 ## Privacy
 
-Kreativ Tools does not load Google Analytics or product analytics. Tool activity and uploaded files are not used for site analytics. Theme selection and some workflow settings can be stored locally in the visitor's browser.
+Kreativ Tools does not load Google Analytics. Cloudflare Web Analytics measures aggregate page visits and performance. Kreativ Tools does not add uploaded files, file contents, or conversion results to its analytics implementation. Theme selection and some workflow settings can be stored locally in the visitor's browser.
 
 ## Maintenance mode
 
-Kreativ Tools is kept online as a free, privacy-first utility library. Do not add generic tools, Learn articles, workflows, monetization, or analytics unless the project is deliberately restarted.
+Kreativ Tools is kept online as a free, privacy-first utility library. Do not add generic tools, Learn articles, workflows, monetization, or additional analytics/tracking unless the project is deliberately restarted.
 
 Prioritize these existing tools when another Kreativ project needs a practical utility:
 
@@ -119,7 +119,7 @@ Prioritize these existing tools when another Kreativ project needs a practical u
 - Client and creative handoffs: PDF Fill & Sign, PDF Merge, PDF Split, and Image to PDF.
 - Media delivery: Audio to MP3, Video Trim, and Video Thumbnail.
 
-Review Google Search Console once every 90 days without adding visitor tracking. Keep a tool active when it supports another Kreativ project or receives meaningful non-branded search traffic. Otherwise, leave it unchanged rather than expanding it.
+Review Cloudflare Web Analytics, Google Search Console, and basic uptime once every 90 days. Keep a tool active when it supports another Kreativ project or receives meaningful non-branded search traffic. Otherwise, leave it unchanged rather than expanding it.
 
 ## Community files
 

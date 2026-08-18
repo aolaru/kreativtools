@@ -5,8 +5,11 @@ const test = require('node:test');
 
 const root = path.resolve(__dirname, '../..');
 
-test('shared page generator does not add tracking scripts', () => {
+test('shared page generator includes only the approved Cloudflare Web Analytics beacon', () => {
   const generator = fs.readFileSync(path.join(root, 'scripts/sync-site.js'), 'utf8');
+
+  assert.match(generator, /static\.cloudflareinsights\.com\/beacon\.min\.js/);
+  assert.match(generator, /f7acecd16c454cfbbb4704b4e665a173/);
   assert.doesNotMatch(generator, /`\$\{prefix\}analytics\.js`/);
   assert.doesNotMatch(generator, /`\$\{prefix\}cookie-consent\.js`/);
   assert.doesNotMatch(generator, /googletagmanager\.com/);
