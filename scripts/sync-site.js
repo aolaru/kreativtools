@@ -335,7 +335,7 @@ const FAMILY_NOTES = {
     title: 'How to read this site information',
     copy: 'The trust pages explain ownership, contact paths, privacy limits, terms, and advertising separation. They are written to support real use of the tools, not to replace legal advice or platform-specific policy review.',
     detail: 'If a file is sensitive, review the relevant tool page before using it and keep your own copy of the source file. If an ad, browser extension, or third-party page appears near the site in the future, treat it as separate from the tool controls unless it is clearly part of the Kreativ Tools interface.',
-    list: ['Use Contact for bug reports, privacy questions, and unclear tool behavior.', 'Use Privacy to understand analytics, consent, and file-handling limits.', 'Use Terms to understand responsibility for files and exported results.'],
+    list: ['Use Contact for bug reports, privacy questions, and unclear tool behavior.', 'Use Privacy to understand local file handling and browser storage.', 'Use Terms to understand responsibility for files and exported results.'],
   },
 };
 
@@ -687,9 +687,7 @@ function syncCanonicalPage(file) {
   const head = buildHead({ title, description, route, prefix });
   const footer = buildFooter();
   const scripts = [
-    `${prefix}cookie-consent.js`,
     `${prefix}github-pages-prefix.js`,
-    `${prefix}analytics.js`,
     `${prefix}theme.js`,
   ];
 
@@ -719,6 +717,8 @@ function syncCanonicalPage(file) {
     if (note) content = content.replace(/(\s*)<\/main>/, `\n    ${note}$1</main>`);
   }
   content = content.replace(/href="(\/[^"]*)"/g, (_match, href) => `href="${normalizeInternalHref(href)}"`);
+  // Remove retired tracking and consent assets before ensuring the current shared scripts.
+  content = content.replace(/\s*<script src="[^"]*(?:analytics|cookie-consent)\.js"><\/script>/g, '');
 
   for (const script of scripts) {
     const scriptRegex = new RegExp(`<script src="${script.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}"><\\/script>`);

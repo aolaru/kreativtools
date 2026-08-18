@@ -145,7 +145,6 @@ test('footer legal links exist across all pages', async ({ page }) => {
     await expect(page.locator('footer a[href="/privacy/"]')).toBeVisible();
     await expect(page.locator('footer a[href="/terms/"]')).toBeVisible();
     await expect(page.locator('footer a[href="/about/"]')).toBeVisible();
-    await expect(page.locator('script[src$="cookie-consent.js"]')).toHaveCount(1);
   }
 });
 
@@ -157,9 +156,8 @@ test('trust and legal pages include visitor trust disclosures', async ({ page })
   await page.goto('/privacy');
   await expect(page.getByRole('heading', { level: 1, name: 'Privacy Policy' })).toBeVisible();
   await expect(page.locator('text=Last updated:')).toBeVisible();
-  await expect(page.getByText('Advertising partners')).toBeVisible();
-  await expect(page.getByText('Google-certified consent management platform')).toBeVisible();
-  await expect(page.locator('a[href="https://policies.google.com/technologies/partner-sites"]')).toBeVisible();
+  await expect(page.getByText('Analytics and advertising')).toBeVisible();
+  await expect(page.getByText('does not use Google Analytics')).toBeVisible();
 
   await page.goto('/terms');
   await expect(page.getByRole('heading', { level: 1, name: 'Terms of Use' })).toBeVisible();

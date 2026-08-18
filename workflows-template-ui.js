@@ -31,8 +31,6 @@
     describeTemplate,
     applyTemplate,
     collectTemplate,
-    track,
-    eventPrefix,
     emptyText = 'No saved templates yet.',
     savedText = (name) => `${name} saved as a workflow template.`,
     deletedText = (name) => `${name} removed.`,
@@ -43,12 +41,6 @@
     const hideLimit = () => {
       if (limitCard) limitCard.hidden = true;
     };
-    const emit = (suffix, properties = {}) => {
-      if (typeof track === 'function' && eventPrefix) {
-        track(`${eventPrefix}_${suffix}`, properties);
-      }
-    };
-
     const render = () => {
       const templates = read();
       list.replaceChildren();
@@ -84,7 +76,6 @@
             render();
             hideLimit();
             updateStatus(deletedText(template.name));
-            emit('deleted', { template_name: template.name });
           })
         );
 
@@ -112,7 +103,6 @@
       if (existingIndex < 0 && templates.length >= maxTemplates) {
         updateStatus(`This browser keeps up to ${maxTemplates} named templates. Delete one before saving another.`);
         if (limitCard) limitCard.hidden = false;
-        emit('limit_prompt_shown', { template_limit: maxTemplates });
         return false;
       }
 
@@ -124,7 +114,6 @@
       render();
       hideLimit();
       updateStatus(savedText(templateName));
-      emit('saved', { template_name: templateName });
       return true;
     };
 

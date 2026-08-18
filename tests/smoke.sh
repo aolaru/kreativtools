@@ -106,7 +106,6 @@ main() {
   expect_file "styles.css"
   expect_file "theme.js"
   expect_file "image-format-support.js"
-  expect_file "analytics.js"
   expect_file "workflows-template-ui.js"
   expect_file "robots.txt"
   expect_file "workflows/pricing/index.html"
@@ -123,9 +122,6 @@ main() {
     expect_nav_order "$p"
   done
 
-  expect_pattern "analytics.js" "G-52WXEBLJY7"
-  expect_pattern "analytics.js" "googletagmanager\\.com/gtag/js\\?id="
-  expect_pattern "analytics.js" "window\\.gtag"
   expect_pattern "robots.txt" "Sitemap: https://kreativtools\\.com/sitemap\\.xml"
 
   expect_pattern "image/index.html" 'Which image tool should I use\\?'
@@ -198,7 +194,8 @@ main() {
   expect_pattern "file/json-to-csv/index.html" 'JSON to CSV guide'
   expect_pattern "file/csv-to-json/index.html" 'CSV to JSON guide'
   expect_pattern "about/index.html" '<h1>Independent browser tools for practical file work</h1>'
-  expect_pattern "privacy/index.html" 'Advertising partners'
+  expect_pattern "privacy/index.html" 'Analytics and advertising'
+  expect_pattern "privacy/index.html" 'does not use Google Analytics'
   expect_pattern "terms/index.html" 'Advertising:'
 
   expect_pattern "changes/index.html" 'class="changelog-list"'

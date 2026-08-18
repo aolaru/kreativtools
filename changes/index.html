@@ -96,6 +96,7 @@
         <p>Older launch details are still kept below, but the top of this page now stays focused on the recent direction.</p>
       </div>
       <div class="changelog-list">
+        <p>2026-08-18 UPDATE - Removed Google Analytics, the unused product analytics worker, tracking scripts, and the related consent prompt. Tool use and uploaded files are not used for site analytics.</p>
         <p>2026-07-15 UPDATE - Improved consent handling so optional analytics waits for acceptance, disabled static product-event posts that caused 405 errors, added visible breadcrumbs, refreshed sitemap dates, and expanded thinner guidance pages.</p>
         <p>2026-07-15 UPDATE - Prepared the site structure for AdSense review with a live ads.txt placeholder, clearer advertising separation notes, and generator support for a real AdSense publisher ID when available.</p>
         <p>2026-05-25 UPDATE - Added an <a href="/about/">About page</a>, expanded Privacy Policy and Terms disclosures, and added a robots.txt sitemap pointer so visitors and crawlers can find the core site information more easily.</p>
@@ -104,7 +105,7 @@
         <p>2026-05-24 UPDATE - Added richer practical guide sections to <a href="/image/compress/">Image Compress</a>, <a href="/pdf/fill-sign/">PDF Fill &amp; Sign</a>, <a href="/pdf/merge/">PDF Merge</a>, <a href="/fonts/webfont-convert/">Font to Webfont</a>, and <a href="/audio/to-mp3/">Audio to MP3</a>, covering use cases, supported files, privacy, limits, common issues, and next steps.</p>
         <p>2026-05-06 NEW - Added a launch guide for <a href="/learn/what-are-kreativ-workflows/">What Are Kreativ Workflows?</a> and tightened the Workflows page with a simpler how-it-works explanation plus a clearer single tools versus guided workflows split.</p>
         <p>2026-05-01 RELEASE - v0.9.8 adds <a href="/pdf/to-docx/">PDF Text to DOCX</a> for browser-based text extraction into editable Word documents and improves <a href="/pdf/fill-sign/">PDF Fill &amp; Sign</a> with checkbox placement and saved signatures.</p>
-        <p>2026-04-26 UPDATE - Removed Cloudflare Web Analytics as the active analytics layer and kept Google Analytics as the single shared tracking integration across the site.</p>
+        <p>2026-04-26 UPDATE - Changed the active site analytics integration. This temporary configuration was removed completely on August 18, 2026.</p>
         <p>2026-04-24 RELEASE - v0.9.7 adds <a href="/pdf/fill-sign/">PDF Fill &amp; Sign</a>, a new browser-based PDF tool for placing text and signature images on top of existing PDF forms, and expands Learn with a new guide for filling and signing PDFs without upload limits.</p>
         <p>2026-04-24 NEW - Added <a href="/learn/fill-and-sign-pdf-forms-without-upload-limits/">How to Fill and Sign PDF Forms Without Upload Limits</a> to explain the best order for placing text and signatures before export.</p>
         <p>2026-04-08 RELEASE - v0.9.6 makes <a href="/workflows/">Kreativ Workflows</a> easier to understand, with Image Prep, PDF Delivery, and Audio Delivery aligned around repeat delivery jobs.</p>
@@ -244,11 +245,7 @@
     <p class="footer-meta-actions"></p>
   </div>
 </footer>
-
-
-  <script src="../cookie-consent.js"></script>
   <script src="../github-pages-prefix.js"></script>
-  <script src="../analytics.js"></script>
   <script>
     const updateLinkMap = [
       ['Workflows', '/workflows/'],

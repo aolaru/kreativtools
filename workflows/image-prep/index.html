@@ -533,14 +533,7 @@
     const prefsKey = 'kreativ_workflows_image_prep_prefs';
     const templatesKey = 'kreativ_workflows_image_prep_templates';
 
-    const trackWorkflowEvent = (eventName, properties = {}) => {
-      if (typeof window.kreativTrack === 'function') {
-        window.kreativTrack(eventName, {
-          workflow: 'image-prep',
-          ...properties,
-        });
-      }
-    };
+    const trackWorkflowEvent = () => {};
 
     const formatBytes = (bytes) => {
       if (!Number.isFinite(bytes) || bytes <= 0) return '0 B';
@@ -616,8 +609,6 @@
       describeTemplate: (template) => `${template.width} x ${template.height} • ${extensionForMime(template.format || 'image/jpeg').toUpperCase()} • ${template.quality}%`,
       applyTemplate: applyTemplateConfig,
       collectTemplate: collectTemplateConfig,
-      track: trackWorkflowEvent,
-      eventPrefix: 'workflows_image_prep_template',
     });
     const renderTemplates = () => templateStore.render();
 
@@ -1180,10 +1171,7 @@
     renderTemplates();
     updateSummary();
   </script>
-
-  <script src="../../cookie-consent.js"></script>
   <script src="../../github-pages-prefix.js"></script>
-  <script src="../../analytics.js"></script>
   <script src="../../theme.js"></script>
 </body>
 </html>

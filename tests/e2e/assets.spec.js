@@ -89,39 +89,3 @@ test('robots file allows indexing and points to the sitemap', async ({ page, bas
   await expect(page.locator('body')).toContainText('User-agent: *');
   await expect(page.locator('body')).toContainText('Sitemap: https://kreativtools.com/sitemap.xml');
 });
-
-test('analytics emits privacy-safe tool usage events', async ({ page }) => {
-  await page.addInitScript(() => {
-    window.__kreativEvents = [];
-    window.addEventListener('kreativ:track', (event) => {
-      window.__kreativEvents.push(event.detail);
-    });
-  });
-
-  await page.goto('/image/resize');
-
-  await expect.poll(() => page.evaluate(() => window.__kreativEvents.some((event) => (
-    event.event === 'tool_opened'
-      && event.properties.tool_id === 'image_resize'
-      && event.properties.tool_type === 'free_tool'
-  )))).toBe(true);
-
-  await page.setInputFiles('#imageInput', onePxPng);
-
-  await expect.poll(() => page.evaluate(() => window.__kreativEvents.some((event) => (
-    event.event === 'tool_file_loaded'
-      && event.properties.tool_id === 'image_resize'
-      && event.properties.file_kind === 'image'
-      && event.properties.file_count === 1
-      && !Object.values(event.properties).includes('tiny.png')
-  )))).toBe(true);
-
-  await page.click('#applyButton');
-
-  await expect.poll(() => page.evaluate(() => window.__kreativEvents.some((event) => (
-    event.event === 'tool_export_clicked'
-      && event.properties.tool_id === 'image_resize'
-      && event.properties.action === 'resize'
-      && event.properties.control_id === 'applybutton'
-  )))).toBe(true);
-});

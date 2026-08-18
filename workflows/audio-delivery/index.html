@@ -561,8 +561,6 @@
       describeTemplate: (template) => `${template.format === 'audio/wav' ? 'WAV' : `MP3 ${template.bitrate} kbps`} • ${template.sampleRate === 'keep' ? 'Keep sample rate' : `${template.sampleRate} Hz`} • ${template.mono ? 'Mono' : 'Stereo'}`,
       applyTemplate: applyTemplateConfig,
       collectTemplate: collectTemplateConfig,
-      track: (...args) => trackWorkflowEvent(...args),
-      eventPrefix: 'workflows_audio_delivery_template',
     });
     const renderTemplates = () => templateStore.render();
 
@@ -570,11 +568,7 @@
       templateStore.save();
     };
 
-    const trackWorkflowEvent = (eventName, properties = {}) => {
-      if (typeof window.kreativTrack === 'function') {
-        window.kreativTrack(eventName, { workflow: 'audio-delivery', ...properties });
-      }
-    };
+    const trackWorkflowEvent = () => {};
 
     const formatBytes = (bytes) => {
       if (!Number.isFinite(bytes) || bytes <= 0) return '0 B';
@@ -999,9 +993,7 @@
     updateTemplateStatus(readTemplates().length ? 'Choose a saved template or create a new one.' : 'Save multiple named templates for repeat audio delivery jobs.');
     window.addEventListener('beforeunload', revokePreviewUrls);
   </script>
-  <script src="../../cookie-consent.js"></script>
   <script src="../../github-pages-prefix.js"></script>
-  <script src="../../analytics.js"></script>
   <script src="../../theme.js"></script>
 </body>
 </html>

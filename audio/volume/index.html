@@ -244,8 +244,7 @@
     dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag-over'));
     dropzone.addEventListener('drop', (event) => { event.preventDefault(); dropzone.classList.remove('drag-over'); const [file] = event.dataTransfer?.files || []; if (file) loadAudio(file); });
     actionButton.addEventListener('click', applyGain);
-  </script>
-  <script src="../../cookie-consent.js"></script><script src="../../github-pages-prefix.js"></script><script src="../../analytics.js"></script>
+  </script><script src="../../github-pages-prefix.js"></script>
   <script src="../../theme.js"></script>
 </body>
 </html>

@@ -16,7 +16,7 @@ Kreativ Tools is a browser-based utility site for image, PDF, video, font, audio
 - Learn: compact start-here guide hub with focused follow-up articles in an archive
 - Updates: public product log for launches, UX updates, and design improvements
 - Workflows: short explainer route for the guided workflow format, with Image Prep, PDF Delivery, and Audio Delivery listed inside the Tools directory
-- About, Privacy, Terms, and Contact: trust and policy pages linked site-wide for transparency and monetization readiness
+- About, Privacy, Terms, and Contact: trust and policy pages linked site-wide for transparency
 
 ### Tool categories
 - Image: crop, compress, resize, convert to WebP
@@ -65,31 +65,13 @@ Use `npm run sync:site` after shared layout or metadata changes. The sync script
 - `changes/index.html`: canonical Updates page
 - `styles.css`: shared visual system
 - `theme.js`: theme toggle and share menu behavior
-- `analytics.js`: Google Analytics plus anonymous product analytics event forwarding
-- `worker/`: Cloudflare Worker and D1 schema for private product analytics
 - `scripts/sync-site.js`: shared metadata/header/footer generator
 - `sitemap.xml`: canonical URL list
 - `favicon.svg`: primary branded favicon
 
-## Private Product Analytics
+## Privacy
 
-The static site emits anonymous product events from `analytics.js` after analytics consent. Google Analytics receives the broad event stream, and `/api/analytics/events` can receive the same privacy-safe events for the owned Cloudflare D1 dashboard.
-
-The Worker implementation lives in `worker/`:
-
-- `worker/analytics-worker.mjs`: event ingest, protected JSON API, and private HTML dashboard
-- `worker/schema.sql`: D1 table and indexes
-- `worker/wrangler.toml.example`: deployment template
-
-Use `worker/README.md` for setup commands. The dashboard is designed for metrics like most used tools, upload starts, export/download completion, output formats, size buckets, and daily/weekly trends.
-
-## Advertising readiness
-
-- Do not add AdSense tags until the real publisher ID is available.
-- `ads.txt` is present as a documented placeholder so the route returns `200`; replace the example with the real `google.com, pub-...` record only after AdSense provides the exact publisher ID.
-- To generate AdSense head tags, run `KREATIVTOOLS_ADSENSE_PUBLISHER_ID=ca-pub-... npm run sync:site` after the real publisher ID is available.
-- For EEA, UK, and Switzerland visitors, configure Google AdSense Privacy & messaging or another Google-certified CMP before serving ads.
-- Keep ad slots clearly separated from tool buttons, download actions, cards, and form controls.
+Kreativ Tools does not load Google Analytics, advertising tags, or product analytics. Tool activity and uploaded files are not used for site analytics. Theme selection and some workflow settings can be stored locally in the visitor's browser.
 
 ## Security headers
 

@@ -504,11 +504,7 @@
     let templateStore;
     const readTemplates = () => (templateStore ? templateStore.read() : []);
 
-    const trackWorkflowEvent = (eventName, properties = {}) => {
-      if (typeof window.kreativTrack === 'function') {
-        window.kreativTrack(eventName, { workflow: 'pdf-delivery', ...properties });
-      }
-    };
+    const trackWorkflowEvent = () => {};
 
     const setPdfStage = (step) => {
       pdfStageButtons.forEach((button) => {
@@ -577,8 +573,6 @@
       describeTemplate: (template) => `${template.mode === 'every' ? 'Every page split' : (template.ranges || 'Custom ranges')} • ${template.deliveryTemplate === 'review' ? 'Internal review' : 'Client handoff'}`,
       applyTemplate: applyTemplateConfig,
       collectTemplate: collectTemplateConfig,
-      track: trackWorkflowEvent,
-      eventPrefix: 'workflows_pdf_delivery_template',
     });
     const renderTemplates = () => templateStore.render();
 
@@ -1014,9 +1008,7 @@
     updateTemplateStatus(readTemplates().length ? 'Choose a saved template or create a new one.' : 'Save multiple named templates for repeat PDF delivery jobs.');
     updateSummary();
   </script>
-  <script src="../../cookie-consent.js"></script>
   <script src="../../github-pages-prefix.js"></script>
-  <script src="../../analytics.js"></script>
   <script src="../../theme.js"></script>
 </body>
 </html>
