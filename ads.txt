@@ -1,4 +1,0 @@
-# Kreativ Tools advertising sellers file
-# Add the Google AdSense record here after AdSense provides the exact publisher ID.
-# Expected format:
-# google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0

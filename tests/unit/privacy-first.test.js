@@ -16,4 +16,6 @@ test('Google Analytics implementation is not present', () => {
   assert.equal(fs.existsSync(path.join(root, 'analytics.js')), false);
   assert.equal(fs.existsSync(path.join(root, 'cookie-consent.js')), false);
   assert.equal(fs.existsSync(path.join(root, 'worker', 'analytics-worker.mjs')), false);
+  assert.equal(fs.existsSync(path.join(root, 'ads.txt')), false);
+  assert.equal(fs.existsSync(path.join(root, '.env.example')), false);
 });

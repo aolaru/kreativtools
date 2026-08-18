@@ -1,0 +1,30 @@
+name: Maintenance improvement
+description: Propose a focused reliability, accessibility, performance, or documentation improvement.
+title: "Maintenance: "
+labels:
+  - maintenance
+body:
+  - type: markdown
+    attributes:
+      value: Kreativ Tools is in maintenance mode. New generic tools, analytics, advertising, payment features, and server-side processing need prior discussion and are normally out of scope.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem to solve
+      description: Describe the visitor or maintainer problem, not only the preferred implementation.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Smallest useful change
+      description: Explain the focused change and why it belongs in maintenance scope.
+    validations:
+      required: true
+  - type: textarea
+    id: verification
+    attributes:
+      label: Verification approach
+      description: Describe how the improvement could be checked locally.
+    validations:
+      required: true

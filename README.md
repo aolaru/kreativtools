@@ -1,12 +1,20 @@
 # Kreativ Tools
 
-Kreativ Tools is a browser-based utility site for image, PDF, video, font, audio, and file workflows. The site includes dedicated tool pages, guided workflows inside the Tools directory, a focused Learn section, a public Updates page, and a shared UI/metadata generation step to keep static pages consistent.
+Kreativ Tools is a privacy-first static website of browser-based utilities for image, PDF, video, font, audio, and file workflows. Files are processed locally in the browser by the tools; the site does not include product analytics or an upload backend.
+
+The project is in maintenance mode. It is a good base for a private tool library, a client-facing utility site, or a focused fork that keeps only the tools you need. Small fixes, compatibility improvements, accessibility work, and documentation corrections are welcome.
+
+**Live site:** [kreativtools.com](https://kreativtools.com/)
+
+## Reuse status
+
+The repository is being prepared for public reuse. A software license has not yet been selected, so cloning and reviewing the code is welcome, but permission to redistribute, modify, or use it in another project is not granted until a `LICENSE` file is added. See [CONTRIBUTING.md](CONTRIBUTING.md) for the intended contribution scope and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for bundled and CDN-loaded dependencies.
 
 ## Current version
 
 - Current product version: `v0.9.8`
 - Version source of truth: `package.json`
-- Current release stage: pre-`1.0`, stable enough to promote, still actively evolving
+- Current release stage: maintenance mode; stable tools remain online without planned catalogue expansion
 
 ## Current scope
 
@@ -35,7 +43,24 @@ Kreativ Tools is a browser-based utility site for image, PDF, video, font, audio
 
 ## Run locally
 
-Serve the project root with any static file server.
+Requirements: Node.js 20 or newer for the generation and test commands. Python 3 is only used in the example static server command.
+
+```bash
+git clone git@github.com:aolaru/kreativtools.git
+cd kreativtools
+npm install
+npm run sync:site
+python3 -m http.server 4173
+```
+
+Open [http://localhost:4173](http://localhost:4173). Stop the server with `Ctrl+C`.
+
+To run the full test suite locally, install the Playwright browser once and then run the tests:
+
+```bash
+npx playwright install chromium
+npm test
+```
 
 ## Shared generation
 
@@ -45,6 +70,17 @@ Use `npm run sync:site` after shared layout or metadata changes. The sync script
 - normalizes title, description, canonical, Open Graph, and Twitter metadata on public pages
 - applies the shared header and footer markup across canonical pages
 - regenerates legacy `*.html` route aliases as redirect stubs to the clean routes
+
+Do not manually edit generated headers, footers, metadata, or top-level `*.html` redirect aliases. Change the source layout or metadata in `scripts/sync-site.js`, then run `npm run sync:site` and include the generated files in the same pull request.
+
+## Contributing
+
+Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request. In short:
+
+- Keep changes focused on maintenance: break/fix work, browser compatibility, security, accessibility, performance, or documentation.
+- Preserve local browser processing. Do not add file-upload services, visitor analytics, advertising, or tracking without an explicit maintainer decision.
+- Run `npm run sync:site` after shared site changes and run `npm test` before requesting review.
+- Use the issue templates for bugs and compatibility reports. Report security issues privately as described in [SECURITY.md](SECURITY.md).
 
 ## Tests
 
@@ -71,7 +107,27 @@ Use `npm run sync:site` after shared layout or metadata changes. The sync script
 
 ## Privacy
 
-Kreativ Tools does not load Google Analytics, advertising tags, or product analytics. Tool activity and uploaded files are not used for site analytics. Theme selection and some workflow settings can be stored locally in the visitor's browser.
+Kreativ Tools does not load Google Analytics or product analytics. Tool activity and uploaded files are not used for site analytics. Theme selection and some workflow settings can be stored locally in the visitor's browser.
+
+## Maintenance mode
+
+Kreativ Tools is kept online as a free, privacy-first utility library. Do not add generic tools, Learn articles, workflows, monetization, or analytics unless the project is deliberately restarted.
+
+Prioritize these existing tools when another Kreativ project needs a practical utility:
+
+- Kreativ WP and ecommerce work: Image Compress, Image to WebP, Image Resize, and Font to Webfont.
+- Client and creative handoffs: PDF Fill & Sign, PDF Merge, PDF Split, and Image to PDF.
+- Media delivery: Audio to MP3, Video Trim, and Video Thumbnail.
+
+Review Google Search Console once every 90 days without adding visitor tracking. Keep a tool active when it supports another Kreativ project or receives meaningful non-branded search traffic. Otherwise, leave it unchanged rather than expanding it.
+
+## Community files
+
+- [Contributing guide](CONTRIBUTING.md)
+- [Code of conduct](CODE_OF_CONDUCT.md)
+- [Security policy](SECURITY.md)
+- [Support guide](SUPPORT.md)
+- [Third-party notices](THIRD_PARTY_NOTICES.md)
 
 ## Security headers
 
@@ -83,20 +139,20 @@ Kreativ Tools does not load Google Analytics, advertising tags, or product analy
 
 Use lightweight semantic versioning for the product:
 
-- Patch: single shipped tool or workflow, small fixes, copy changes, small UI polish, metadata cleanup, test-only maintenance
-- Minor: grouped tool or workflow expansions, meaningful UX improvements across multiple areas, new Learn article batches, structural site improvements
-- Major: a real public milestone, major product repositioning, or a release you want to promote as a stable foundation
+- Patch: security, compatibility, or break/fix maintenance only
+- Minor: a deliberate restart of active product development
+- Major: a deliberate product repositioning or ownership transfer
 
 For Kreativ Tools right now:
 
-- stay in `0.x` while the product is still expanding quickly
-- use `1.0.0` only when the core tool set, site structure, and public positioning feel stable enough for a stronger launch push
+- keep the current version unless a maintenance release must be published
+- restart active versioning only if the project leaves maintenance mode
 
 ## Release workflow
 
-1. Ship the product changes.
-2. Update the Updates page with the important release notes.
-3. Bump the version:
+1. Make only a security, dependency, compatibility, or break/fix change.
+2. Update the Updates page only when the change affects visitors.
+3. Bump the version only when a release is necessary:
    - `npm run version:patch`
    - `npm run version:minor`
    - `npm run version:major`

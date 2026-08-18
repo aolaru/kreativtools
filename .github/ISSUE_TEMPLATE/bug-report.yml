@@ -1,0 +1,48 @@
+name: Bug report
+description: Report a reproducible problem with an existing page or tool.
+title: "Bug: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: Do not attach sensitive, personal, or client files. Use a minimal safe sample or describe the file characteristics instead.
+  - type: input
+    id: url
+    attributes:
+      label: Affected URL
+      description: Use the clean route when possible, for example https://kreativtools.com/pdf/merge/.
+      placeholder: https://kreativtools.com/
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and version
+      placeholder: Chrome 136 on macOS 15
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: 1. Open the page\n2. Choose...\n3. Click...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result
+    validations:
+      required: true
+  - type: textarea
+    id: file-details
+    attributes:
+      label: Safe file details
+      description: Optional. State file type, approximate size, and non-sensitive properties. Do not upload private documents.

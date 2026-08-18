@@ -13,7 +13,6 @@ const OG_IMAGE_ALT = 'Kreativ Tools social preview card with the K mark and core
 const FONT_AWESOME_HREF = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css';
 const FONT_AWESOME_INTEGRITY = 'sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==';
 const CURRENT_LASTMOD = '2026-07-15';
-const ADSENSE_PUBLISHER_ID = (process.env.KREATIVTOOLS_ADSENSE_PUBLISHER_ID || '').trim();
 
 const TITLE_OVERRIDES = {
   '/learn/compress-images-for-faster-websites/': 'Compress Images for Faster Websites | Kreativ Tools',
@@ -333,8 +332,8 @@ const FAMILY_NOTES = {
   },
   trust: {
     title: 'How to read this site information',
-    copy: 'The trust pages explain ownership, contact paths, privacy limits, terms, and advertising separation. They are written to support real use of the tools, not to replace legal advice or platform-specific policy review.',
-    detail: 'If a file is sensitive, review the relevant tool page before using it and keep your own copy of the source file. If an ad, browser extension, or third-party page appears near the site in the future, treat it as separate from the tool controls unless it is clearly part of the Kreativ Tools interface.',
+    copy: 'The trust pages explain ownership, contact paths, privacy limits, and terms. They are written to support real use of the tools, not to replace legal advice or platform-specific policy review.',
+    detail: 'If a file is sensitive, review the relevant tool page before using it and keep your own copy of the source file. Browser extensions and third-party pages are separate from the Kreativ Tools interface unless clearly identified as part of the site.',
     list: ['Use Contact for bug reports, privacy questions, and unclear tool behavior.', 'Use Privacy to understand local file handling and browser storage.', 'Use Terms to understand responsibility for files and exported results.'],
   },
 };
@@ -485,19 +484,11 @@ function buildStructuredData(meta) {
   return `<script type="application/ld+json">${JSON.stringify(graph)}</script>`;
 }
 
-function buildAdsenseHeadTags() {
-  if (!/^ca-pub-\d+$/.test(ADSENSE_PUBLISHER_ID)) return '';
-  return `  <meta name="google-adsense-account" content="${ADSENSE_PUBLISHER_ID}" />
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_PUBLISHER_ID}" crossorigin="anonymous"></script>
-`;
-}
-
 function buildHead({ title, description, route, prefix }) {
   const canonical = `${SITE_URL}${route}`;
   const ogType = ogTypeForRoute(route);
   const robots = robotsForRoute(route);
   const structuredData = buildStructuredData({ title, description, route });
-  const adsenseHeadTags = buildAdsenseHeadTags();
   return `<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -526,7 +517,7 @@ function buildHead({ title, description, route, prefix }) {
   <link rel="apple-touch-icon" href="${prefix}apple-touch-icon.png" />
   <link rel="stylesheet" href="${FONT_AWESOME_HREF}" integrity="${FONT_AWESOME_INTEGRITY}" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="${prefix}styles.css" />
-${adsenseHeadTags}  ${structuredData}
+  ${structuredData}
 </head>`;
 }
 
