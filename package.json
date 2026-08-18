@@ -1,5 +1,6 @@
 {
   "name": "kreativtools",
+  "license": "MIT",
   "private": true,
   "version": "0.9.8",
   "scripts": {

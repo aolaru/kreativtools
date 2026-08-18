@@ -683,7 +683,7 @@ function syncCanonicalPage(file) {
   ];
 
   content = replaceBlock(content, /<head>[\s\S]*?<\/head>/, head, 'head', rel);
-  content = content.replace(/<nav class="breadcrumbs" aria-label="Breadcrumb">[\s\S]*?<\/nav>\s*/g, '');
+  content = content.replace(/<nav class="breadcrumbs(?:\s+[^"]*)?" aria-label="Breadcrumb">[\s\S]*?<\/nav>\s*/g, '');
   const breadcrumbNav = buildBreadcrumbNav(route, title);
   const headerReplacement = breadcrumbNav ? `${buildHeader(route)}\n\n  ${breadcrumbNav}` : buildHeader(route);
   content = replaceBlock(content, /<header class="site-header">[\s\S]*?<\/header>/, headerReplacement, 'header', rel);

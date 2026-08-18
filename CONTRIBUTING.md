@@ -51,4 +51,4 @@ Before adding a library, pin its version, document it in `THIRD_PARTY_NOTICES.md
 
 ## License
 
-This repository does not yet have a software license. Do not submit code copied from a project unless you have the right to contribute it and its license is compatible with the license ultimately chosen for this repository.
+By contributing, you agree that your contributions are licensed under the [MIT License](LICENSE). Do not submit code copied from another project unless you have the right to contribute it and its license is compatible with this repository and its third-party dependencies.

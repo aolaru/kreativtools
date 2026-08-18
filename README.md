@@ -6,9 +6,9 @@ The project is in maintenance mode. It is a good base for a private tool library
 
 **Live site:** [kreativtools.com](https://kreativtools.com/)
 
-## Reuse status
+## Reuse
 
-The repository is being prepared for public reuse. A software license has not yet been selected, so cloning and reviewing the code is welcome, but permission to redistribute, modify, or use it in another project is not granted until a `LICENSE` file is added. See [CONTRIBUTING.md](CONTRIBUTING.md) for the intended contribution scope and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for bundled and CDN-loaded dependencies.
+This project is available under the [MIT License](LICENSE). You may use, modify, and distribute the project, including in commercial work, provided the license notice is retained. See [CONTRIBUTING.md](CONTRIBUTING.md) for the maintenance scope and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for bundled and CDN-loaded dependencies that carry their own terms.
 
 ## Current version
 

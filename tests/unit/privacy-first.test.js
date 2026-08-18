@@ -19,3 +19,9 @@ test('Google Analytics implementation is not present', () => {
   assert.equal(fs.existsSync(path.join(root, 'ads.txt')), false);
   assert.equal(fs.existsSync(path.join(root, '.env.example')), false);
 });
+
+test('homepage has one generated breadcrumb navigation', () => {
+  const home = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const breadcrumbs = home.match(/<nav class="breadcrumbs(?:\s+[^"]*)?" aria-label="Breadcrumb">/g) || [];
+  assert.equal(breadcrumbs.length, 1);
+});
