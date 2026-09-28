@@ -14,24 +14,24 @@ test('homepage routes users through one job-first decision path', async ({ page 
   await expect(page.locator('.hero-actions a[href="#homeJobRouterTitle"]')).toBeVisible();
   await expect(page.locator('.hero-actions a[href="/tools/"]')).toBeVisible();
   await expect(page.locator('.job-router-card')).toHaveCount(6);
-  await expect(page.locator('.job-router-card[href="/tools/#guidedWorkflows"]')).toBeVisible();
+  await expect(page.locator('.job-router-card[href="/image/resize/"]')).toBeVisible();
   await expect(page.locator('.home-panel').getByRole('link', { name: 'Open Tools Directory' })).toBeVisible();
-  await expect(page.locator('.home-panel').getByRole('link', { name: 'Read the chooser guide' })).toBeVisible();
+  await expect(page.locator('.home-panel').getByRole('link', { name: 'How browser tools work' })).toBeVisible();
   await expect(page.locator('.tool-card')).toHaveCount(0);
 });
 
-test('workflows landing page introduces workflow lineup and image prep entry point', async ({ page }) => {
+test('workflows landing page retains direct access without primary discovery', async ({ page }) => {
   await page.goto('/workflows');
-  await expect(page.getByRole('heading', { level: 1, name: 'Kreativ Workflows' })).toBeVisible();
-  await expect(page.getByText('Workflows are the guided entries inside the Tools directory')).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Browse Guided in Tools' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: 'Archived Guided Workflows' })).toBeVisible();
+  await expect(page.getByText('These multi-step browser helpers remain available for existing links')).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Browse Focused Tools' })).toBeVisible();
   await expect(page.locator('.tool-card[href="/workflows/image-prep/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/workflows/pdf-delivery/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/workflows/audio-delivery/"]')).toBeVisible();
   await expect(page.locator('.tool-card')).toHaveCount(3);
-  await expect(page.getByRole('heading', { level: 2, name: 'Which workflow should I use?' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 2, name: 'When should I use an archived workflow?' })).toBeVisible();
   await expect(page.getByText('Use a quick tool instead when you only need')).toHaveCount(3);
-  await expect(page.getByText('These are not a separate product catalog anymore')).toBeVisible();
+  await expect(page.getByText('These routes are no longer promoted in the main directory')).toBeVisible();
 });
 
 test('studio image prep runs through a basic guided export flow', async ({ page }) => {

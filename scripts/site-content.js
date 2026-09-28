@@ -5,7 +5,6 @@ const FOOTER_SECTIONS = {
     ['Tools', '/tools/'],
     ['Learn', '/learn/'],
     ['Updates', '/changes/'],
-    ['Workflows', '/workflows/'],
   ],
   popular: [
     ['PDF Fill & Sign', '/pdf/fill-sign/'],
@@ -47,13 +46,12 @@ const JOB_PATHS = [
     tags: ['merge', 'handoff'],
   },
   {
-    title: 'Use a guided workflow',
-    label: 'Guided',
-    description: 'Open Image Prep, PDF Delivery, or Audio Delivery when several steps belong together.',
-    href: '/tools/#guidedWorkflows',
-    icon: 'fa-route',
-    tags: ['multi-step', 'templates'],
-    featured: true,
+    title: 'Resize an image for a website',
+    label: 'Image',
+    description: 'Set exact dimensions, convert formats, and export an image ready for web use.',
+    href: '/image/resize/',
+    icon: 'fa-up-right-and-down-left-from-center',
+    tags: ['resize', 'WebP'],
   },
   {
     title: 'Convert audio for sharing',
@@ -77,19 +75,19 @@ const JOB_ROUTER_VARIANTS = {
   home: {
     eyebrow: 'Choose by Outcome',
     title: 'Pick the job you need done.',
-    description: 'Choose a common job to open the right quick tool or guided workflow.',
+    description: 'Choose a common job to open the focused browser tool that fits.',
     limit: 6,
   },
   tools: {
     eyebrow: 'Job Shortcuts',
-    title: 'Open the right tool or guided workflow by outcome.',
+    title: 'Open the right browser tool by outcome.',
     description: 'If search feels too broad, start with one of the common jobs below.',
     limit: 6,
   },
   learn: {
     eyebrow: 'Job Paths',
     title: 'Learn by delivery outcome.',
-    description: 'Each path gives you the guide, the tool, and the workflow alternative when the job repeats.',
+    description: 'Each path gives you a practical guide and the focused tool for the job.',
     limit: 6,
   },
 };

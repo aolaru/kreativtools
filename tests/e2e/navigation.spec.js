@@ -46,7 +46,7 @@ test('tools nav item points to the directory and stays active on workflow routes
   await expect(toolsLink).toHaveText('Tools');
   await toolsLink.click();
   await expect.poll(() => new URL(page.url()).pathname).toBe('/tools/');
-  await expect(page.getByRole('heading', { level: 1, name: 'Tools and Guided Workflows' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: 'Focused Browser Tools' })).toBeVisible();
 
   await page.goto('/workflows/image-prep');
   await expect(page.locator('nav.top-nav a[href="/tools/"]')).toHaveAttribute('aria-current', 'page');
@@ -75,7 +75,7 @@ test('clean routes resolve without breaking tool pages', async ({ page }) => {
 
   await page.goto('/tools');
   await expect.poll(() => new URL(page.url()).pathname).toMatch(/^\/tools\/?$/);
-  await expect(page.getByRole('heading', { level: 1, name: 'Tools and Guided Workflows' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: 'Focused Browser Tools' })).toBeVisible();
 });
 
 test('legacy alias routes redirect to canonical clean routes', async ({ page }) => {

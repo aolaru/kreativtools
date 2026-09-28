@@ -19,11 +19,11 @@ This project is available under the [MIT License](LICENSE). You may use, modify,
 ## Current scope
 
 ### Main sections
-- Home: simplified job-first router into the right tool, guided workflow, or Learn path
-- Tools directory: primary action hub for quick tools and guided workflows
+- Home: simplified job-first router into the right focused tool or Learn path
+- Tools directory: primary action hub for focused browser tools
 - Learn: compact start-here guide hub with focused follow-up articles in an archive
 - Updates: public product log for launches, UX updates, and design improvements
-- Workflows: short explainer route for the guided workflow format, with Image Prep, PDF Delivery, and Audio Delivery listed inside the Tools directory
+- Workflows: archived, functional routes retained for existing links but removed from primary discovery and search indexing
 - About, Privacy, Terms, and Contact: trust and policy pages linked site-wide for transparency
 
 ### Tool categories
@@ -119,7 +119,7 @@ Prioritize these existing tools when another Kreativ project needs a practical u
 - Client and creative handoffs: PDF Fill & Sign, PDF Merge, PDF Split, and Image to PDF.
 - Media delivery: Audio to MP3, Video Trim, and Video Thumbnail.
 
-Review Cloudflare Web Analytics, Google Search Console, and basic uptime once every 90 days. Keep a tool active when it supports another Kreativ project or receives meaningful non-branded search traffic. Otherwise, leave it unchanged rather than expanding it.
+Follow the review and archive decision rule in [MAINTENANCE.md](MAINTENANCE.md). Keep a tool active when it supports another Kreativ project or receives meaningful non-branded search traffic. Otherwise, leave it unchanged rather than expanding it.
 
 ## Community files
 

@@ -9,12 +9,20 @@ const {
 
 const ROOT = process.cwd();
 const OG_IMAGE = `${SITE_URL}/og-image.png`;
-const OG_IMAGE_ALT = 'Kreativ Tools social preview card with the K mark and core browser-based creative workflows';
+const OG_IMAGE_ALT = 'Kreativ Tools social preview card with the K mark and focused browser-based creative tools';
 const FONT_AWESOME_HREF = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css';
 const FONT_AWESOME_INTEGRITY = 'sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==';
 const CLOUDFLARE_WEB_ANALYTICS_SRC = 'https://static.cloudflareinsights.com/beacon.min.js';
 const CLOUDFLARE_WEB_ANALYTICS_TOKEN = 'f7acecd16c454cfbbb4704b4e665a173';
 const CURRENT_LASTMOD = '2026-07-15';
+const ARCHIVED_WORKFLOW_LEARN_ROUTES = new Set([
+  '/learn/choose-kreativ-workflows-or-single-tools/',
+  '/learn/prepare-a-sendable-pdf-in-kreativ-workflows/',
+  '/learn/save-time-with-kreativ-workflows-defaults/',
+  '/learn/use-kreativ-workflows-audio-delivery-for-shareable-audio/',
+  '/learn/use-kreativ-workflows-image-prep-for-web-ready-images/',
+  '/learn/what-are-kreativ-workflows/',
+]);
 
 const TITLE_OVERRIDES = {
   '/learn/compress-images-for-faster-websites/': 'Compress Images for Faster Websites | Kreativ Tools',
@@ -182,8 +190,7 @@ function ogTypeForRoute(route) {
 }
 
 function robotsForRoute(route) {
-  if (route === '/workflows/pricing/') return 'noindex, follow';
-  if (route === '/workflows/success/') return 'noindex, nofollow';
+  if (route.startsWith('/workflows/') || ARCHIVED_WORKFLOW_LEARN_ROUTES.has(route)) return 'noindex, nofollow';
   return 'index, follow';
 }
 
