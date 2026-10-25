@@ -48,8 +48,10 @@ test('WOFF and WOFF2 conversion produce valid downloadable fonts', async ({ page
   await page.setInputFiles('#fontInput', unicodeFont);
   for (const format of ['woff', 'woff2']) {
     await page.selectOption('#outputFormat', format);
-    const downloadPromise = page.waitForEvent('download');
     await page.click('#fontConvertButton');
+    await expect(page.locator('#fontDownloadButton')).toBeEnabled();
+    const downloadPromise = page.waitForEvent('download');
+    await page.click('#fontDownloadButton');
     const download = await downloadPromise;
     const bytes = fs.readFileSync(await download.path());
     expect(bytes.subarray(0, 4).toString()).toBe(format === 'woff2' ? 'wOF2' : 'wOFF');
@@ -66,8 +68,10 @@ test('font CSS uses the source format and can load the converted WOFF2', async (
   await page.goto('/fonts/webfont-convert/');
   await page.setInputFiles('#fontInput', unicodeFont);
   await page.selectOption('#outputFormat', 'woff2');
-  const downloadPromise = page.waitForEvent('download');
   await page.click('#fontConvertButton');
+  await expect(page.locator('#fontDownloadButton')).toBeEnabled();
+  const downloadPromise = page.waitForEvent('download');
+  await page.click('#fontDownloadButton');
   const download = await downloadPromise;
   const file = await download.path();
   await page.goto('/fonts/css-generator/');

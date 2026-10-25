@@ -75,6 +75,8 @@ Use `npm run sync:site` after shared layout or metadata changes. The sync script
 
 PDF previews, export fonts, the CSV parser, and the font converter are bundled under `vendor/`. After updating their pinned npm versions, run `npm run vendor:build` and include the generated assets and notices. The WOFF2 converter loads its encoder from the bundled WASM file.
 
+Shared tool UI lives in `tool-upload-ui.js` and `tool-export-ui.js`. Keep live feedback outside the hidden dropzone after upload. Exporting tools follow Prepare, Review, Download; `scripts/tool-exports.js` defines their button IDs and labels. New conversion handlers should return a `{ blob, filename }` result through the export controller instead of starting a download automatically. Settings changes invalidate a prepared result.
+
 Do not manually edit generated headers, footers, metadata, or top-level `*.html` redirect aliases. Change the source layout or metadata in `scripts/sync-site.js`, then run `npm run sync:site` and include the generated files in the same pull request.
 
 ## Contributing

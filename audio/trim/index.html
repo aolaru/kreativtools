@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'sha256-bPtJuAwLYIvUqR0lkHz1i1GcnRNfxTwQ2RPhvsWRv6o='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'sha256-FzZSaPvxHotAZfRB8uZ0AaWVpT/iiqRfrMM+o//KnF0='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Kreativ Tools | Audio Trim</title>
@@ -29,7 +29,7 @@
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../../styles.css" />
-  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Audio Trim","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/audio/trim/","description":"Choose a start and end time, preview the selected audio range, and export a trimmed WAV for notes, clips, samples, or handoff.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Audio Tools","item":"https://kreativtools.com/audio/"},{"@type":"ListItem","position":3,"name":"Audio Trim","item":"https://kreativtools.com/audio/trim/"}]}]</script>
+  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Audio Trim","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/audio/trim/","description":"Choose a start and end time, preview the selected audio range, and export a trimmed WAV for notes, clips, samples, or handoff.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Audio Tools","item":"https://kreativtools.com/audio/"},{"@type":"ListItem","position":3,"name":"Audio Trim","item":"https://kreativtools.com/audio/trim/"}]}]</script>
   <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"f7acecd16c454cfbbb4704b4e665a173"}'></script>
 </head>
 <body>
@@ -53,13 +53,14 @@
   </header>
 
   <nav class="breadcrumbs" aria-label="Breadcrumb">
-    <a href="/">Kreativ Tools</a><span aria-hidden="true">/</span><a href="/audio/">Audio Tools</a><span aria-hidden="true">/</span><span aria-current="page">Audio Trim</span>
+    <a href="/">Home</a><span aria-hidden="true">/</span><a href="/audio/">Audio Tools</a><span aria-hidden="true">/</span><span aria-current="page">Audio Trim</span>
   </nav>
 
   <main class="container">
     <section class="hero"><p class="eyebrow">Audio Tools</p><h1>Audio Trim</h1><p>Select start/end time and export only the needed audio segment as WAV.</p></section>
     <section class="upload-card"><input id="trimAudioInput" type="file" accept="audio/*" aria-label="Upload file" hidden /><div id="trimAudioDropzone" class="dropzone" role="group" aria-label="Upload audio"><div class="drop-icon" aria-hidden="true"></div><button id="trimAudioUploadButton" type="button" class="primary upload-trigger">Upload Audio</button><p>or drag and drop an audio file here</p><p id="trimAudioStatus" class="status status-empty">No audio selected yet.</p></div></section>
-    <section id="trimAudioWorkspace" class="workspace is-hidden"><div class="controls"><label>Start (seconds)<input id="trimAudioStart" type="number" min="0" step="0.01" value="0" /></label><label>End (seconds)<input id="trimAudioEnd" type="number" min="0.01" step="0.01" value="1" /></label><button id="trimAudioAction" type="button" class="primary" disabled>Trim and Download WAV</button></div><div class="preview-panel"><h2>Preview</h2><audio id="trimAudioPreview" class="audio-preview" controls></audio><p id="trimAudioMeta" class="dimensions"></p></div></section>
+    <section id="trimAudioWorkspace" class="workspace is-hidden"><div class="controls"><label>Start (seconds)<input id="trimAudioStart" type="number" min="0" step="0.01" value="0" /></label><label>End (seconds)<input id="trimAudioEnd" type="number" min="0.01" step="0.01" value="1" /></label><button id="trimAudioAction" type="button" class="primary" disabled data-export-prepare>Prepare WAV</button>
+        <button id="trimAudioDownloadButton" type="button" class="secondary-button" disabled data-export-download>Download WAV</button></div><div class="preview-panel"><h2>Preview</h2><audio id="trimAudioPreview" class="audio-preview" controls></audio><p id="trimAudioMeta" class="dimensions"></p></div></section>
 
     <section class="article-section tool-guide" aria-labelledby="trimAudioGuideTitle">
       <h2 id="trimAudioGuideTitle">Audio trim guide</h2>
@@ -145,6 +146,7 @@
     <p class="footer-meta-actions"></p>
   </div>
 </footer>
+  <script src="../../tool-export-ui.js"></script>
   <script src="../../tool-upload-ui.js"></script>
   <script>
     const input = document.getElementById('trimAudioInput');
@@ -168,6 +170,8 @@
       dropzone: dropzone,
       workspace: workspace,
     });
+    const exportUi = window.kreativExportUi.create({ prepareButton: actionButton, downloadButton: document.getElementById('trimAudioDownloadButton'), workspace, status: statusEl });
+    document.getElementById('trimAudioDownloadButton').addEventListener('click', exportUi.download);
 
     const toWavBlob = (audioBuffer) => {
       const channels = audioBuffer.numberOfChannels;
@@ -191,6 +195,9 @@
     };
 
     const loadAudio = async (file) => {
+      exportUi.reset();
+      decodedBuffer = null;
+      actionButton.disabled = true;
       if (!file || !file.type.startsWith('audio/')) { setStatus('Please upload a valid audio file.'); return; }
       sourceName = file.name.replace(/\.[^.]+$/, '');
       try {
@@ -213,7 +220,7 @@
       if (!decodedBuffer) return;
       const start = Math.max(0, Number(startInput.value) || 0);
       const end = Math.min(decodedBuffer.duration, Number(endInput.value) || 0);
-      if (!(end > start)) { setStatus('End time must be greater than start time.'); return; }
+      if (!(end > start)) throw new Error('End time must be greater than start time.');
 
       actionButton.disabled = true;
       setStatus('Trimming audio...');
@@ -227,15 +234,8 @@
         source.start(0, start, duration);
         const rendered = await offline.startRendering();
         const wavBlob = toWavBlob(rendered);
-        const url = URL.createObjectURL(wavBlob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `${sourceName}-trimmed.wav`;
-        link.click();
-        URL.revokeObjectURL(url);
-        setStatus(`Downloaded ${sourceName}-trimmed.wav`);
-      } catch { setStatus('Trim failed for this file.'); }
-      actionButton.disabled = false;
+        return { blob: wavBlob, filename: `${sourceName}-trimmed.wav` };
+      } catch { throw new Error('Trim failed for this file.'); }
     };
 
     uploadButton.addEventListener('click', () => input.click());
@@ -244,7 +244,7 @@
     dropzone.addEventListener('dragover', (event) => { event.preventDefault(); dropzone.classList.add('drag-over'); });
     dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag-over'));
     dropzone.addEventListener('drop', (event) => { event.preventDefault(); dropzone.classList.remove('drag-over'); const [file] = event.dataTransfer?.files || []; if (file) loadAudio(file); });
-    actionButton.addEventListener('click', trimAudio);
+    actionButton.addEventListener('click', () => exportUi.prepare(trimAudio));
   </script><script src="../../github-pages-prefix.js"></script>
   <script src="../../theme.js"></script>
 </body>

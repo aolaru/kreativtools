@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'sha256-1zftYC8tZmQ/OYAg3Mf6YczHJTTpb5DPGwLwzpZNjFM='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'sha256-R79ihQKs8w9RftEuhJDjErf3c5SQhboSXw3JYA/4d1A='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Kreativ Tools | Font to Webfont</title>
@@ -29,7 +29,7 @@
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../../styles.css" />
-  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Font to Webfont","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/fonts/webfont-convert/","description":"Convert licensed TTF or OTF files into WOFF and WOFF2 webfont files, then pair the export with CSS and fallback planning.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Font Tools","item":"https://kreativtools.com/fonts/"},{"@type":"ListItem","position":3,"name":"Font to Webfont","item":"https://kreativtools.com/fonts/webfont-convert/"}]}]</script>
+  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Font to Webfont","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/fonts/webfont-convert/","description":"Convert licensed TTF or OTF files into WOFF and WOFF2 webfont files, then pair the export with CSS and fallback planning.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Font Tools","item":"https://kreativtools.com/fonts/"},{"@type":"ListItem","position":3,"name":"Font to Webfont","item":"https://kreativtools.com/fonts/webfont-convert/"}]}]</script>
   <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"f7acecd16c454cfbbb4704b4e665a173"}'></script>
 </head>
 <body>
@@ -55,7 +55,7 @@
   </header>
 
   <nav class="breadcrumbs" aria-label="Breadcrumb">
-    <a href="/">Kreativ Tools</a><span aria-hidden="true">/</span><a href="/fonts/">Font Tools</a><span aria-hidden="true">/</span><span aria-current="page">Font to Webfont</span>
+    <a href="/">Home</a><span aria-hidden="true">/</span><a href="/fonts/">Font Tools</a><span aria-hidden="true">/</span><span aria-current="page">Font to Webfont</span>
   </nav>
 
   <main class="container">
@@ -90,7 +90,8 @@
           </select>
         </label>
 
-        <button id="fontConvertButton" type="button" class="primary" disabled>Convert Font</button>
+        <button id="fontConvertButton" type="button" class="primary" disabled data-export-prepare>Prepare webfont</button>
+        <button id="fontDownloadButton" type="button" class="secondary-button" disabled data-export-download>Download webfont</button>
       </div>
 
       <div class="preview-panel">
@@ -113,7 +114,7 @@
         </article>
         <article class="tool-guide-card">
           <h3>How it works</h3>
-          <p>The browser reads the source font, converts it with the client-side font engine, then downloads the converted webfont file.</p>
+          <p>Prepare a webfont, check the output filename and size, then choose Download to save it.</p>
         </article>
         <article class="tool-guide-card">
           <h3>Supported files</h3>
@@ -190,6 +191,7 @@
   </div>
 </footer>
 
+  <script src="../../tool-export-ui.js"></script>
   <script src="../../tool-upload-ui.js"></script>
   <script type="module">
     import { createFont, woff2, deflate } from '../../vendor/fonteditor/font-editor.mjs';
@@ -217,6 +219,8 @@
       dropzone: dropzone,
       workspace: workspace,
     });
+    const exportUi = window.kreativExportUi.create({ prepareButton: convertButton, downloadButton: document.getElementById('fontDownloadButton'), workspace, status: statusEl });
+    document.getElementById('fontDownloadButton').addEventListener('click', exportUi.download);
 
     const inferInputType = (file) => {
       const lower = file.name.toLowerCase();
@@ -232,6 +236,10 @@
     };
 
     const loadFontFile = (file) => {
+      exportUi.reset();
+      selectedFile = null;
+      inputType = null;
+      convertButton.disabled = true;
       const detected = file && inferInputType(file);
       if (!file || !detected) {
         setStatus('Please upload a .ttf or .otf font file.');
@@ -246,16 +254,6 @@
       convertButton.disabled = false;
       setStatus(`Loaded font: ${file.name}`);
         uploadUi?.setLoaded({ name: file.name, size: file.size });
-    };
-
-    const downloadBuffer = (buffer, filename, mime) => {
-      const blob = new Blob([buffer], { type: mime });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = filename;
-      link.click();
-      URL.revokeObjectURL(url);
     };
 
     const convertFont = async () => {
@@ -287,11 +285,10 @@
 
         const outputName = `${selectedFile.name.replace(/\.[^.]+$/, '')}.${outputType}`;
         const mime = outputType === 'woff2' ? 'font/woff2' : 'font/woff';
-        downloadBuffer(outputBuffer, outputName, mime);
-        setStatus(`Downloaded ${outputName}`);
+        return { blob: new Blob([outputBuffer], { type: mime }), filename: outputName };
       } catch (error) {
         console.error(error);
-        setStatus('Conversion failed. Check the font file or try WOFF if WOFF2 could not load.');
+        throw new Error('Conversion failed. Check the font file or try WOFF if WOFF2 could not load.');
       } finally {
         convertButton.disabled = false;
       }
@@ -327,7 +324,7 @@
       if (file) loadFontFile(file);
     });
 
-    convertButton.addEventListener('click', convertFont);
+    convertButton.addEventListener('click', () => exportUi.prepare(convertFont));
   </script>
   <script src="../../github-pages-prefix.js"></script>
   <script src="../../theme.js"></script>

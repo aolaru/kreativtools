@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'sha256-15CFpwKE6MJ2/xrLjRj1Tlwd0UgPL4q1m2DfI1BdPLg='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'sha256-C0a2qn+hTEXx+UXTiCJELGG74E/xfgt7rWIZIBRbcxo='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Kreativ Tools | Audio to WAV Converter</title>
@@ -29,7 +29,7 @@
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../../styles.css" />
-  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Audio to WAV Converter","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/audio/to-wav/","description":"Convert audio files to WAV in your browser, with sample-rate and mono options for editing, archiving, and compatibility.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Audio Tools","item":"https://kreativtools.com/audio/"},{"@type":"ListItem","position":3,"name":"Audio to WAV Converter","item":"https://kreativtools.com/audio/to-wav/"}]}]</script>
+  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Audio to WAV Converter","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/audio/to-wav/","description":"Convert audio files to WAV in your browser, with sample-rate and mono options for editing, archiving, and compatibility.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Audio Tools","item":"https://kreativtools.com/audio/"},{"@type":"ListItem","position":3,"name":"Audio to WAV Converter","item":"https://kreativtools.com/audio/to-wav/"}]}]</script>
   <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"f7acecd16c454cfbbb4704b4e665a173"}'></script>
 </head>
 <body>
@@ -55,7 +55,7 @@
   </header>
 
   <nav class="breadcrumbs" aria-label="Breadcrumb">
-    <a href="/">Kreativ Tools</a><span aria-hidden="true">/</span><a href="/audio/">Audio Tools</a><span aria-hidden="true">/</span><span aria-current="page">Audio to WAV Converter</span>
+    <a href="/">Home</a><span aria-hidden="true">/</span><a href="/audio/">Audio Tools</a><span aria-hidden="true">/</span><span aria-current="page">Audio to WAV Converter</span>
   </nav>
 
   <main class="container">
@@ -97,7 +97,8 @@
           Export mono (single channel)
         </label>
 
-        <button id="audioConvertButton" type="button" class="primary" disabled>Convert to WAV</button>
+        <button id="audioConvertButton" type="button" class="primary" disabled data-export-prepare>Prepare WAV</button>
+        <button id="audioDownloadButton" type="button" class="secondary-button" disabled data-export-download>Download WAV</button>
       </div>
 
       <div class="preview-panel">
@@ -191,6 +192,7 @@
     <p class="footer-meta-actions"></p>
   </div>
 </footer>
+  <script src="../../tool-export-ui.js"></script>
   <script src="../../tool-upload-ui.js"></script>
   <script>
     const audioInput = document.getElementById('audioInput');
@@ -219,6 +221,8 @@
       dropzone: dropzone,
       workspace: workspace,
     });
+    const exportUi = window.kreativExportUi.create({ prepareButton: convertButton, downloadButton: document.getElementById('audioDownloadButton'), workspace, status: statusEl });
+    document.getElementById('audioDownloadButton').addEventListener('click', exportUi.download);
 
     const formatDuration = (seconds) => {
       const s = Math.max(0, Math.round(seconds));
@@ -297,6 +301,9 @@
     };
 
     const loadAudioFile = async (file) => {
+      exportUi.reset();
+      decodedBuffer = null;
+      convertButton.disabled = true;
       if (!file || !file.type.startsWith('audio/')) {
         setStatus('Please select a valid audio file.');
         return;
@@ -338,16 +345,9 @@
         const rendered = await renderBuffer(decodedBuffer, targetSampleRate, monoInput.checked);
         const wavBlob = createWavBlob(rendered);
 
-        const url = URL.createObjectURL(wavBlob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `${sourceName}-converted.wav`;
-        link.click();
-        URL.revokeObjectURL(url);
-
-        setStatus(`Downloaded ${sourceName}-converted.wav`);
+        return { blob: wavBlob, filename: `${sourceName}-converted.wav` };
       } catch {
-        setStatus('Conversion failed for this file. Please try another one.');
+        throw new Error('Conversion failed for this file. Please try another one.');
       } finally {
         convertButton.disabled = false;
       }
@@ -383,7 +383,7 @@
       if (file) loadAudioFile(file);
     });
 
-    convertButton.addEventListener('click', convertAudio);
+    convertButton.addEventListener('click', () => exportUi.prepare(convertAudio));
   </script>
   <script src="../../github-pages-prefix.js"></script>
   <script src="../../theme.js"></script>

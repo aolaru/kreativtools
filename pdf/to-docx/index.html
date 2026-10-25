@@ -29,7 +29,7 @@
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../../styles.css" />
-  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"PDF Text to DOCX","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/pdf/to-docx/","description":"Convert text-based PDF files into structured DOCX documents directly in your browser.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"PDF Tools","item":"https://kreativtools.com/pdf/"},{"@type":"ListItem","position":3,"name":"PDF Text to DOCX","item":"https://kreativtools.com/pdf/to-docx/"}]}]</script>
+  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"PDF Text to DOCX","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/pdf/to-docx/","description":"Convert text-based PDF files into structured DOCX documents directly in your browser.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"PDF Tools","item":"https://kreativtools.com/pdf/"},{"@type":"ListItem","position":3,"name":"PDF Text to DOCX","item":"https://kreativtools.com/pdf/to-docx/"}]}]</script>
   <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"f7acecd16c454cfbbb4704b4e665a173"}'></script>
 </head>
 <body>
@@ -55,7 +55,7 @@
   </header>
 
   <nav class="breadcrumbs" aria-label="Breadcrumb">
-    <a href="/">Kreativ Tools</a><span aria-hidden="true">/</span><a href="/pdf/">PDF Tools</a><span aria-hidden="true">/</span><span aria-current="page">PDF Text to DOCX</span>
+    <a href="/">Home</a><span aria-hidden="true">/</span><a href="/pdf/">PDF Tools</a><span aria-hidden="true">/</span><span aria-current="page">PDF Text to DOCX</span>
   </nav>
 
   <main class="container">
@@ -80,8 +80,8 @@
       <div class="controls">
         <p id="pdfDocxMeta" class="status status-empty">Upload a text-based PDF to begin conversion.</p>
         <div class="inline-actions">
-          <button id="pdfDocxConvertButton" type="button" class="primary" disabled>Convert to DOCX</button>
-          <button id="pdfDocxDownloadButton" type="button" class="secondary-button" disabled>Download DOCX</button>
+          <button id="pdfDocxConvertButton" type="button" class="primary" disabled data-export-prepare>Prepare DOCX</button>
+          <button id="pdfDocxDownloadButton" type="button" class="secondary-button" disabled data-export-download>Download DOCX</button>
           <button id="pdfDocxResetButton" type="button" class="ghost">Choose Another PDF</button>
         </div>
       </div>
@@ -200,6 +200,7 @@
   <script src="../../github-pages-prefix.js"></script>
   <script src="../../theme.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="../../tool-export-ui.js"></script>
   <script src="../../tool-upload-ui.js"></script>
   <script type="module">
     import { loadPdfPreview } from '../../pdf-engine.mjs';

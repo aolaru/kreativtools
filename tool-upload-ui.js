@@ -28,6 +28,7 @@
     input,
     dropzone,
     workspace,
+    feedbackTarget,
     resetMode = 'reload',
     onReset,
   }) => {
@@ -47,12 +48,26 @@
     const metaEl = bar.querySelector('.loaded-file-copy span');
     const replaceButton = bar.querySelector('[data-upload-replace]');
     const removeButton = bar.querySelector('[data-upload-remove]');
+    const feedback = dropzone.querySelector('[id].status');
+    if (feedback) {
+      feedback.classList.add('tool-feedback');
+      feedback.classList.remove('status-empty');
+      feedback.setAttribute('role', 'status');
+      feedback.setAttribute('aria-live', 'polite');
+      feedback.setAttribute('aria-atomic', 'true');
+    }
 
     const setVisibleState = (isLoaded) => {
       dropzone.classList.toggle('is-hidden', isLoaded);
       bar.classList.toggle('is-hidden', !isLoaded);
       if (workspace) {
         workspace.classList.toggle('workspace-has-loaded-bar', isLoaded);
+      }
+      if (feedback) {
+        const destination = isLoaded && workspace
+          ? feedbackTarget || workspace.querySelector('.controls') || workspace
+          : uploadCard;
+        destination.appendChild(feedback);
       }
     };
 

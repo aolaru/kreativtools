@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'sha256-cpwiAgd18ydWnFx12rZZci7aKjxOvOQv9MX0CePWhh4='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'sha256-nMLKGQiAPUp05R5gq6nzhhp0BcgdmwBoiCXFx+vic98='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Kreativ Tools | Audio Volume Booster</title>
@@ -29,7 +29,7 @@
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../../styles.css" />
-  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Audio Volume Booster","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/audio/volume/","description":"Adjust audio gain, preview loudness changes, avoid clipping, and export a processed WAV for voice notes, samples, or delivery.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Audio Tools","item":"https://kreativtools.com/audio/"},{"@type":"ListItem","position":3,"name":"Audio Volume Booster","item":"https://kreativtools.com/audio/volume/"}]}]</script>
+  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Audio Volume Booster","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/audio/volume/","description":"Adjust audio gain, preview loudness changes, avoid clipping, and export a processed WAV for voice notes, samples, or delivery.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Audio Tools","item":"https://kreativtools.com/audio/"},{"@type":"ListItem","position":3,"name":"Audio Volume Booster","item":"https://kreativtools.com/audio/volume/"}]}]</script>
   <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"f7acecd16c454cfbbb4704b4e665a173"}'></script>
 </head>
 <body>
@@ -53,13 +53,14 @@
   </header>
 
   <nav class="breadcrumbs" aria-label="Breadcrumb">
-    <a href="/">Kreativ Tools</a><span aria-hidden="true">/</span><a href="/audio/">Audio Tools</a><span aria-hidden="true">/</span><span aria-current="page">Audio Volume Booster</span>
+    <a href="/">Home</a><span aria-hidden="true">/</span><a href="/audio/">Audio Tools</a><span aria-hidden="true">/</span><span aria-current="page">Audio Volume Booster</span>
   </nav>
 
   <main class="container">
     <section class="hero"><p class="eyebrow">Audio Tools</p><h1>Audio Volume Booster</h1><p>Adjust volume gain and export your processed audio as WAV.</p></section>
     <section class="upload-card"><input id="volumeAudioInput" type="file" accept="audio/*" aria-label="Upload file" hidden /><div id="volumeAudioDropzone" class="dropzone" role="group" aria-label="Upload audio"><div class="drop-icon" aria-hidden="true"></div><button id="volumeAudioUploadButton" type="button" class="primary upload-trigger">Upload Audio</button><p>or drag and drop an audio file here</p><p id="volumeAudioStatus" class="status status-empty">No audio selected yet.</p></div></section>
-    <section id="volumeAudioWorkspace" class="workspace is-hidden"><div class="controls"><label><span class="quality-head">Gain <strong><span id="volumeGainValue">120</span>%</strong></span><input id="volumeGainInput" type="range" min="20" max="300" value="120" /></label><button id="volumeAudioAction" type="button" class="primary" disabled>Apply Gain and Download WAV</button></div><div class="preview-panel"><h2>Preview</h2><audio id="volumeAudioPreview" class="audio-preview" controls></audio><p id="volumeAudioMeta" class="dimensions"></p></div></section>
+    <section id="volumeAudioWorkspace" class="workspace is-hidden"><div class="controls"><label><span class="quality-head">Gain <strong><span id="volumeGainValue">120</span>%</strong></span><input id="volumeGainInput" type="range" min="20" max="300" value="120" /></label><button id="volumeAudioAction" type="button" class="primary" disabled data-export-prepare>Prepare WAV</button>
+        <button id="volumeAudioDownloadButton" type="button" class="secondary-button" disabled data-export-download>Download WAV</button></div><div class="preview-panel"><h2>Preview</h2><audio id="volumeAudioPreview" class="audio-preview" controls></audio><p id="volumeAudioMeta" class="dimensions"></p></div></section>
 
     <section class="article-section tool-guide" aria-labelledby="volumeAudioGuideTitle">
       <h2 id="volumeAudioGuideTitle">Audio volume guide</h2>
@@ -145,6 +146,7 @@
     <p class="footer-meta-actions"></p>
   </div>
 </footer>
+  <script src="../../tool-export-ui.js"></script>
   <script src="../../tool-upload-ui.js"></script>
   <script>
     const input = document.getElementById('volumeAudioInput');
@@ -168,6 +170,8 @@
       dropzone: dropzone,
       workspace: workspace,
     });
+    const exportUi = window.kreativExportUi.create({ prepareButton: actionButton, downloadButton: document.getElementById('volumeAudioDownloadButton'), workspace, status: statusEl });
+    document.getElementById('volumeAudioDownloadButton').addEventListener('click', exportUi.download);
 
     const toWavBlob = (audioBuffer) => {
       const channels = audioBuffer.numberOfChannels;
@@ -190,6 +194,9 @@
     };
 
     const loadAudio = async (file) => {
+      exportUi.reset();
+      decodedBuffer = null;
+      actionButton.disabled = true;
       if (!file || !file.type.startsWith('audio/')) { setStatus('Please upload a valid audio file.'); return; }
       sourceName = file.name.replace(/\.[^.]+$/, '');
       try {
@@ -216,13 +223,7 @@
         for (let i = 0; i < src.length; i += 1) dst[i] = Math.max(-1, Math.min(1, src[i] * gain));
       }
       const wavBlob = toWavBlob(out);
-      const url = URL.createObjectURL(wavBlob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `${sourceName}-volume.wav`;
-      link.click();
-      URL.revokeObjectURL(url);
-      setStatus(`Downloaded ${sourceName}-volume.wav`);
+      return { blob: wavBlob, filename: `${sourceName}-volume.wav` };
     };
 
     gainInput.addEventListener('input', () => { gainValue.textContent = gainInput.value; });
@@ -232,7 +233,7 @@
     dropzone.addEventListener('dragover', (event) => { event.preventDefault(); dropzone.classList.add('drag-over'); });
     dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag-over'));
     dropzone.addEventListener('drop', (event) => { event.preventDefault(); dropzone.classList.remove('drag-over'); const [file] = event.dataTransfer?.files || []; if (file) loadAudio(file); });
-    actionButton.addEventListener('click', applyGain);
+    actionButton.addEventListener('click', () => exportUi.prepare(applyGain));
   </script><script src="../../github-pages-prefix.js"></script>
   <script src="../../theme.js"></script>
 </body>

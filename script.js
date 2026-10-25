@@ -121,7 +121,7 @@ const syncToolUi = () => {
   formatFields.classList.toggle('is-hidden', isPdf);
   pdfFields.classList.toggle('is-hidden', !isPdf);
   pdfMarginRow.classList.toggle('is-hidden', !isPdf);
-  applyButton.textContent = isResize ? 'Apply Resize' : isPdf ? 'Prepare PDF' : 'Prepare Convert';
+  applyButton.textContent = isPdf ? 'Prepare PDF' : 'Prepare image';
   downloadButton.textContent = isPdf ? 'Download PDF' : 'Download Image';
 };
 

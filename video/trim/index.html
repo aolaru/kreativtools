@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'sha256-s/NkNV0E690d9/lXGtgSdYiNZgP22GHKST3x0X5GruE='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'sha256-PuTg8UpgJzX2a4N5Kr0i3f7AClU1xkcZdzbT5bcOkrI='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Kreativ Tools | Video Trim</title>
@@ -29,7 +29,7 @@
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../../styles.css" />
-  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Video Trim","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/video/trim/","description":"Select a start and end time, preview the chosen range, and export a shorter WEBM clip for sharing, review, or upload.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Video Tools","item":"https://kreativtools.com/video/"},{"@type":"ListItem","position":3,"name":"Video Trim","item":"https://kreativtools.com/video/trim/"}]}]</script>
+  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Video Trim","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/video/trim/","description":"Select a start and end time, preview the chosen range, and export a shorter WEBM clip for sharing, review, or upload.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Video Tools","item":"https://kreativtools.com/video/"},{"@type":"ListItem","position":3,"name":"Video Trim","item":"https://kreativtools.com/video/trim/"}]}]</script>
   <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"f7acecd16c454cfbbb4704b4e665a173"}'></script>
 </head>
 <body>
@@ -55,7 +55,7 @@
   </header>
 
   <nav class="breadcrumbs" aria-label="Breadcrumb">
-    <a href="/">Kreativ Tools</a><span aria-hidden="true">/</span><a href="/video/">Video Tools</a><span aria-hidden="true">/</span><span aria-current="page">Video Trim</span>
+    <a href="/">Home</a><span aria-hidden="true">/</span><a href="/video/">Video Tools</a><span aria-hidden="true">/</span><span aria-current="page">Video Trim</span>
   </nav>
 
   <main class="container">
@@ -90,7 +90,8 @@
           <input id="trimFpsInput" type="number" min="12" max="60" value="30" />
         </label>
         <p id="trimMeta" class="status">Output is video-only WEBM (audio not included in this browser flow).</p>
-        <button id="trimActionButton" type="button" class="primary" disabled>Trim and Download</button>
+        <button id="trimActionButton" type="button" class="primary" disabled data-export-prepare>Prepare WEBM</button>
+        <button id="trimDownloadButton" type="button" class="secondary-button" disabled data-export-download>Download WEBM</button>
       </div>
 
       <div class="preview-panel">
@@ -184,6 +185,7 @@
     <p class="footer-meta-actions"></p>
   </div>
 </footer>
+  <script src="../../tool-export-ui.js"></script>
   <script src="../../tool-upload-ui.js"></script>
   <script>
     const input = document.getElementById('trimVideoInput');
@@ -209,6 +211,8 @@
       dropzone: dropzone,
       workspace: workspace,
     });
+    const exportUi = window.kreativExportUi.create({ prepareButton: actionButton, downloadButton: document.getElementById('trimDownloadButton'), workspace, status: statusEl });
+    document.getElementById('trimDownloadButton').addEventListener('click', exportUi.download);
 
     const getRecorderMime = () => {
       const candidates = ['video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/webm'];
@@ -216,6 +220,8 @@
     };
 
     const loadVideo = (file) => {
+      exportUi.reset();
+      actionButton.disabled = true;
       if (!file || !file.type.startsWith('video/')) {
         setStatus('Please select a valid video file.');
         return;
@@ -230,7 +236,7 @@
         endInput.value = String(Math.max(0.1, Number(preview.duration.toFixed(1))));
         actionButton.disabled = false;
         dimsEl.textContent = `${Math.round(preview.videoWidth)} x ${Math.round(preview.videoHeight)}px • ${preview.duration.toFixed(2)}s`;
-        metaEl.textContent = 'Set start and end time, then click Trim and Download.';
+        metaEl.textContent = 'Set the start and end time, prepare the clip, then download.';
         setStatus(`Loaded video: ${file.name}`);
         uploadUi?.setLoaded({ name: file.name, size: file.size });
       };
@@ -239,15 +245,13 @@
     const trimVideo = async () => {
       const mime = getRecorderMime();
       if (!mime) {
-        setStatus('This browser cannot record WEBM.');
-        return;
+        throw new Error('This browser cannot record WEBM.');
       }
 
       const start = Math.max(0, Number(startInput.value) || 0);
       const end = Math.min(preview.duration || 0, Number(endInput.value) || 0);
       if (!(end > start)) {
-        setStatus('End time must be greater than start time.');
-        return;
+        throw new Error('End time must be greater than start time.');
       }
 
       const fps = Math.min(60, Math.max(12, Number(fpsInput.value) || 30));
@@ -265,19 +269,6 @@
         if (event.data && event.data.size > 0) chunks.push(event.data);
       };
 
-      recorder.onstop = () => {
-        if (drawFrameId) cancelAnimationFrame(drawFrameId);
-        const blob = new Blob(chunks, { type: 'video/webm' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `${selectedName}-trimmed.webm`;
-        link.click();
-        URL.revokeObjectURL(url);
-        actionButton.disabled = false;
-        setStatus(`Downloaded ${selectedName}-trimmed.webm`);
-      };
-
       const draw = () => {
         ctx.drawImage(preview, 0, 0, canvas.width, canvas.height);
         if (!preview.paused && !preview.ended && preview.currentTime < end) {
@@ -289,25 +280,36 @@
       setStatus('Trimming video...');
       preview.pause();
       preview.muted = true;
-      preview.currentTime = start;
-
-      const onSeekedStart = () => {
-        preview.removeEventListener('seeked', onSeekedStart);
-        recorder.start();
-        preview.play();
-        draw();
+      const finish = () => {
+        if (recorder.state !== 'inactive') recorder.stop();
       };
-
-      const onTimeUpdate = () => {
-        if (preview.currentTime >= end) {
-          preview.pause();
-          preview.removeEventListener('timeupdate', onTimeUpdate);
-          recorder.stop();
-        }
-      };
-
-      preview.addEventListener('seeked', onSeekedStart);
-      preview.addEventListener('timeupdate', onTimeUpdate);
+      const onTimeUpdate = () => { if (preview.currentTime >= end) finish(); };
+      let startRecording;
+      try {
+        return await new Promise((resolve, reject) => {
+          recorder.onstop = () => resolve({ blob: new Blob(chunks, { type: 'video/webm' }), filename: `${selectedName}-trimmed.webm` });
+          recorder.onerror = () => reject(new Error('Video trimming failed. Please try another file.'));
+          startRecording = () => {
+            recorder.start();
+            preview.play().then(draw).catch(reject);
+          };
+          preview.addEventListener('timeupdate', onTimeUpdate);
+          preview.addEventListener('ended', finish);
+          if (Math.abs(preview.currentTime - start) < 0.001) startRecording();
+          else {
+            preview.addEventListener('seeked', startRecording, { once: true });
+            preview.currentTime = start;
+          }
+        });
+      } finally {
+        preview.removeEventListener('seeked', startRecording);
+        preview.removeEventListener('timeupdate', onTimeUpdate);
+        preview.removeEventListener('ended', finish);
+        preview.pause();
+        if (drawFrameId) cancelAnimationFrame(drawFrameId);
+        if (recorder.state !== 'inactive') recorder.stop();
+        stream.getTracks().forEach((track) => track.stop());
+      }
     };
 
     uploadButton.addEventListener('click', () => input.click());
@@ -335,7 +337,7 @@
       const [file] = event.dataTransfer?.files || [];
       if (file) loadVideo(file);
     });
-    actionButton.addEventListener('click', trimVideo);
+    actionButton.addEventListener('click', () => exportUi.prepare(trimVideo));
   </script>
   <script src="../../github-pages-prefix.js"></script>
   <script src="../../theme.js"></script>

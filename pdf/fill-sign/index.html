@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'sha256-odLbBCQbtuxxKtPE1KYKXxxVdO7WJA03xSi/qrG0WM4='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'sha256-62jr9hrJVIAx42n99YUiYQMriGc5PKxFeYnVuYaTjUo='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Kreativ Tools | PDF Fill &amp; Sign</title>
@@ -29,7 +29,7 @@
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../../styles.css" />
-  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"PDF Fill & Sign","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/pdf/fill-sign/","description":"Fill fixed PDF forms by placing text, dates, checkboxes, and signature images over existing pages, then export the finished PDF locally.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"PDF Tools","item":"https://kreativtools.com/pdf/"},{"@type":"ListItem","position":3,"name":"PDF Fill & Sign","item":"https://kreativtools.com/pdf/fill-sign/"}]}]</script>
+  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"PDF Fill & Sign","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/pdf/fill-sign/","description":"Fill fixed PDF forms by placing text, dates, checkboxes, and signature images over existing pages, then export the finished PDF locally.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"PDF Tools","item":"https://kreativtools.com/pdf/"},{"@type":"ListItem","position":3,"name":"PDF Fill & Sign","item":"https://kreativtools.com/pdf/fill-sign/"}]}]</script>
   <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"f7acecd16c454cfbbb4704b4e665a173"}'></script>
 </head>
 <body>
@@ -55,7 +55,7 @@
   </header>
 
   <nav class="breadcrumbs" aria-label="Breadcrumb">
-    <a href="/">Kreativ Tools</a><span aria-hidden="true">/</span><a href="/pdf/">PDF Tools</a><span aria-hidden="true">/</span><span aria-current="page">PDF Fill &amp; Sign</span>
+    <a href="/">Home</a><span aria-hidden="true">/</span><a href="/pdf/">PDF Tools</a><span aria-hidden="true">/</span><span aria-current="page">PDF Fill &amp; Sign</span>
   </nav>
 
   <main class="container">
@@ -83,24 +83,32 @@
           <p id="pdfFillMeta" class="pdf-fill-file-status">No PDF loaded yet.</p>
         </div>
         <div class="inline-actions">
-          <button id="pdfFillExportButton" type="button" class="primary" disabled>Generate Filled PDF</button>
-          <button id="pdfFillDownloadButton" type="button" class="secondary-button" disabled>Download Filled PDF</button>
+          <button id="pdfFillExportButton" type="button" class="primary" disabled data-export-waiting="Add text, a checkbox, or a signature to enable Prepare." data-export-prepare>Prepare PDF</button>
+          <button id="pdfFillDownloadButton" type="button" class="secondary-button" disabled data-export-download>Download PDF</button>
           <button id="pdfFillResetButton" type="button" class="ghost">Start Over</button>
         </div>
       </div>
 
       <div class="pdf-fill-layout">
-        <aside class="pdf-fill-sidebar">
-          <section class="tool-intro-card pdf-fill-card">
-            <h2>Placement Mode</h2>
-            <div class="pdf-fill-mode-row">
+          <section class="tool-intro-card pdf-fill-card pdf-fill-toolbar" aria-label="PDF editing toolbar">
+            <div class="pdf-fill-mode-row" role="group" aria-label="Placement mode">
               <button id="pdfFillToolText" type="button" class="ghost is-active">Add Text</button>
               <button id="pdfFillToolCheckbox" type="button" class="ghost">Add Checkbox</button>
               <button id="pdfFillToolSignature" type="button" class="ghost">Add Signature</button>
             </div>
-            <p class="status">Click a page preview to place the active item. Drag any placed item to fine-tune its position.</p>
+            <label class="pdf-fill-zoom">Zoom
+              <select id="pdfFillZoom" aria-label="PDF preview zoom" data-export-ignore>
+                <option value="1">Fit width</option>
+                <option value="1.5">150%</option>
+                <option value="2">200%</option>
+                <option value="3">300%</option>
+              </select>
+            </label>
           </section>
 
+        <details id="pdfFillOptions" class="pdf-fill-sidebar" open>
+          <summary>Text &amp; placement settings</summary>
+          <div class="pdf-fill-option-cards">
           <section id="pdfFillCheckboxCard" class="tool-intro-card pdf-fill-card" data-pdf-fill-mode-card="checkbox" hidden>
             <h2>Checkbox</h2>
             <div class="pdf-fill-field-row">
@@ -165,7 +173,8 @@
             <h2>Placed Items</h2>
             <div id="pdfFillPlacementList" class="queue-list"></div>
           </section>
-        </aside>
+          </div>
+        </details>
 
         <div class="preview-panel pdf-fill-preview-panel">
           <div class="tool-results pdf-fill-results">
@@ -185,7 +194,8 @@
                 <strong id="pdfFillExportStatus">Waiting for changes</strong>
               </div>
             </div>
-            <div id="pdfFillPages" class="pdf-fill-pages" aria-live="polite"></div>
+            <p class="status">Choose a placement mode, then tap the document. Drag an item to move it. Zoom in for smaller fields.</p>
+            <div id="pdfFillPages" class="pdf-fill-pages" tabindex="0" role="region" aria-label="Scrollable PDF pages"></div>
           </div>
         </div>
       </div>
@@ -284,6 +294,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
   <script src="../../vendor/fontkit.umd.min.js"></script>
+  <script src="../../tool-export-ui.js"></script>
   <script src="../../tool-upload-ui.js"></script>
   <script type="module">
     import { loadPdfPreview } from '../../pdf-engine.mjs';
@@ -324,6 +335,11 @@
     const pdfFillDuplicateButton = document.getElementById('pdfFillDuplicateButton');
     const pdfFillDeleteButton = document.getElementById('pdfFillDeleteButton');
     const pdfFillPlacementList = document.getElementById('pdfFillPlacementList');
+    const pdfFillZoom = document.getElementById('pdfFillZoom');
+    const pdfFillOptions = document.getElementById('pdfFillOptions');
+    const compactEditor = window.matchMedia('(max-width: 980px)');
+    pdfFillOptions.open = !compactEditor.matches;
+    compactEditor.addEventListener('change', () => { pdfFillOptions.open = !compactEditor.matches; });
 
     let originalBytes = null;
     let pdfPreviewDoc = null;
@@ -349,6 +365,7 @@
       input: pdfFillInput,
       dropzone: pdfFillDropzone,
       workspace: pdfFillWorkspace,
+      feedbackTarget: document.querySelector('.pdf-fill-toolbar'),
     });
 
     function todayStamp() {
@@ -364,6 +381,8 @@
       pdfFillToolText.classList.toggle('is-active', mode === 'text');
       pdfFillToolCheckbox.classList.toggle('is-active', mode === 'checkbox');
       pdfFillToolSignature.classList.toggle('is-active', mode === 'signature');
+      [[pdfFillToolText, 'text'], [pdfFillToolCheckbox, 'checkbox'], [pdfFillToolSignature, 'signature']]
+        .forEach(([button, value]) => button.setAttribute('aria-pressed', String(value === mode)));
       pdfFillModeCards.forEach((card) => {
         card.hidden = card.dataset.pdfFillModeCard !== mode;
       });
@@ -630,13 +649,13 @@
           overlay.style.top = `${placement.yRatio * 100}%`;
 
           if (placement.type === 'text') {
-            overlay.style.fontSize = `${placement.fontSize}px`;
+            overlay.style.fontSize = `${placement.fontSize * page.stage.clientWidth / page.pdfWidth}px`;
             overlay.style.color = placement.color;
             overlay.textContent = placement.text;
           } else if (placement.type === 'checkbox') {
             overlay.style.width = `${placement.widthRatio * 100}%`;
             overlay.style.height = `${placement.heightRatio * 100}%`;
-            overlay.style.fontSize = `${placement.previewWidth}px`;
+            overlay.style.fontSize = `${placement.previewWidth * page.stage.clientWidth / page.pdfWidth}px`;
             overlay.style.color = placement.color;
             overlay.textContent = placement.checked ? '☑' : '☐';
           } else {
@@ -746,8 +765,8 @@
       if (!selected) return;
       const previewWidth = clamp(Number(pdfFillSelectedWidth.value) || 140, 40, 360);
       selected.previewWidth = previewWidth;
-      const stageWidth = pageState[selected.pageIndex]?.stage.clientWidth || 700;
-      const stageHeight = pageState[selected.pageIndex]?.stage.clientHeight || 900;
+      const stageWidth = pageState[selected.pageIndex]?.pdfWidth || 700;
+      const stageHeight = pageState[selected.pageIndex]?.pdfHeight || 900;
       selected.widthRatio = clamp(previewWidth / stageWidth, 0.04, 0.9);
       selected.heightRatio = clamp((previewWidth / selected.aspectRatio) / stageHeight, 0.02, 0.4);
       markDirty();
@@ -759,8 +778,8 @@
       if (!selected) return;
       const previewWidth = clamp(Number(pdfFillSelectedWidth.value || pdfFillCheckboxSize.value) || 18, 10, 42);
       selected.previewWidth = previewWidth;
-      const stageWidth = pageState[selected.pageIndex]?.stage.clientWidth || 700;
-      const stageHeight = pageState[selected.pageIndex]?.stage.clientHeight || 900;
+      const stageWidth = pageState[selected.pageIndex]?.pdfWidth || 700;
+      const stageHeight = pageState[selected.pageIndex]?.pdfHeight || 900;
       selected.widthRatio = clamp(previewWidth / stageWidth, 0.01, 0.15);
       selected.heightRatio = clamp(previewWidth / stageHeight, 0.01, 0.12);
       selected.checked = Boolean(pdfFillCheckboxChecked.checked);
@@ -804,8 +823,8 @@
         mime: signatureAsset.mime,
         aspectRatio,
         previewWidth,
-        widthRatio: clamp(previewWidth / stageWidth, 0.04, 0.9),
-        heightRatio: clamp((previewWidth / aspectRatio) / stageHeight, 0.02, 0.4),
+        widthRatio: clamp(previewWidth / pageState[pageIndex].pdfWidth, 0.04, 0.9),
+        heightRatio: clamp((previewWidth / aspectRatio) / pageState[pageIndex].pdfHeight, 0.02, 0.4),
         xRatio: clamp(x / stageWidth, 0.01, 0.95),
         yRatio: clamp(y / stageHeight, 0.01, 0.95),
       };
@@ -820,8 +839,8 @@
         previewWidth,
         checked: Boolean(pdfFillCheckboxChecked.checked),
         color: pdfFillColor.value || '#111827',
-        widthRatio: clamp(previewWidth / stageWidth, 0.01, 0.15),
-        heightRatio: clamp(previewWidth / stageHeight, 0.01, 0.12),
+        widthRatio: clamp(previewWidth / pageState[pageIndex].pdfWidth, 0.01, 0.15),
+        heightRatio: clamp(previewWidth / pageState[pageIndex].pdfHeight, 0.01, 0.12),
         xRatio: clamp(x / stageWidth, 0.01, 0.95),
         yRatio: clamp(y / stageHeight, 0.01, 0.95),
       };
@@ -886,15 +905,32 @@
         });
 
         stage.append(canvas, overlay);
-        wrapper.append(label, stage);
+        const scroll = document.createElement('div');
+        scroll.className = 'pdf-fill-page-scroll';
+        scroll.tabIndex = 0;
+        scroll.setAttribute('role', 'region');
+        scroll.setAttribute('aria-label', `Page ${pageNumber} preview`);
+        scroll.append(stage);
+        wrapper.append(label, scroll);
         pdfFillPages.appendChild(wrapper);
-        pageState.push({ pageIndex, stage, overlay, viewport });
+        pageState.push({ pageIndex, stage, overlay, viewport, scroll, pdfWidth: viewport.width / 1.15, pdfHeight: viewport.height / 1.15 });
 
         await page.render({ canvasContext: context, viewport }).promise;
       }
 
       renderPlacements();
     }
+
+    function updatePageSizes() {
+      pageState.forEach((page) => {
+        if (!page.scroll.clientWidth) return;
+        page.stage.style.width = `${Math.min(page.scroll.clientWidth, page.viewport.width) * Number(pdfFillZoom.value)}px`;
+      });
+      renderPlacements();
+    }
+
+    pdfFillZoom.addEventListener('change', updatePageSizes);
+    new ResizeObserver(updatePageSizes).observe(pdfFillPages);
 
     async function loadPdfFile(file) {
       const previousPreview = pdfPreviewDoc;
@@ -928,6 +964,7 @@
       await renderPdfPages();
 
       pdfFillWorkspace.classList.remove('is-hidden');
+      updatePageSizes();
       pdfFillSummary.textContent = `Loaded ${file.name}. Click a page to place text, checkboxes, or a signature.`;
       pdfFillPageCount.textContent = String(pdfPreviewDoc.numPages);
       pdfFillPlacementCount.textContent = '0';
@@ -936,12 +973,13 @@
       pdfFillDownloadButton.disabled = true;
       pdfFillExportStatus.textContent = 'Waiting for changes';
       pdfFillSelectionStatus.textContent = 'No placement selected yet.';
-      setStatus(`Loaded ${file.name}. Place text, checkboxes, or a signature on any page.`);
+      setStatus('Ready. Choose a mode, then tap the PDF.');
       uploadUi?.setLoaded({
         name: file.name,
         size: file.size,
         meta: `${pdfPreviewDoc.numPages} page${pdfPreviewDoc.numPages === 1 ? '' : 's'} loaded`,
       });
+      if (compactEditor.matches) document.querySelector('.pdf-fill-toolbar').scrollIntoView({ block: 'start' });
     }
 
     async function exportPdf() {
@@ -1085,9 +1123,13 @@
       }
     });
 
-    pdfFillToolText.addEventListener('click', () => setActiveMode('text'));
-    pdfFillToolCheckbox.addEventListener('click', () => setActiveMode('checkbox'));
-    pdfFillToolSignature.addEventListener('click', () => setActiveMode('signature'));
+    const chooseMode = (mode) => {
+      setActiveMode(mode);
+      pdfFillOptions.open = true;
+    };
+    pdfFillToolText.addEventListener('click', () => chooseMode('text'));
+    pdfFillToolCheckbox.addEventListener('click', () => chooseMode('checkbox'));
+    pdfFillToolSignature.addEventListener('click', () => chooseMode('signature'));
     pdfFillInsertTodayButton.addEventListener('click', () => {
       pdfFillText.value = todayStamp();
       updateSelectedTextPlacement();
@@ -1108,6 +1150,7 @@
     window.addEventListener('pointerup', () => {
       dragState = null;
     });
+    window.addEventListener('pointercancel', () => { dragState = null; });
     pdfFillDuplicateButton.addEventListener('click', duplicateSelectedPlacement);
     pdfFillDeleteButton.addEventListener('click', () => {
       if (selectedPlacementId) deletePlacement(selectedPlacementId);
@@ -1129,9 +1172,13 @@
       setStatus('Ready for upload.');
     });
     pdfFillExportButton.addEventListener('click', () => {
+      pdfFillExportButton.disabled = true;
+      setStatus('Preparing your PDF...');
       exportPdf().catch((error) => {
         console.error(error);
         setStatus('Could not generate the filled PDF. Try again.');
+      }).finally(() => {
+        pdfFillExportButton.disabled = !originalBytes || placements.length === 0;
       });
     });
     pdfFillDownloadButton.addEventListener('click', downloadOutput);

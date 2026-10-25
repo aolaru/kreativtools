@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'sha256-n9voOGMtGbwMJvi0rhfDTEr54Iwu5dGAyTBBtfmGp8w='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'sha256-bSiWjheZPJ5kuYIzUGz3GbIcaa6tE9c07K4Ycv/Q/Q8='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Kreativ Tools | Video Converter</title>
@@ -29,7 +29,7 @@
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../../styles.css" />
-  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Video Converter","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/video/convert-webm/","description":"Convert supported video uploads to WEBM, preview browser compatibility, and export a lighter clip for web delivery or sharing.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Video Tools","item":"https://kreativtools.com/video/"},{"@type":"ListItem","position":3,"name":"Video Converter","item":"https://kreativtools.com/video/convert-webm/"}]}]</script>
+  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Video Converter","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/video/convert-webm/","description":"Convert supported video uploads to WEBM, preview browser compatibility, and export a lighter clip for web delivery or sharing.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Video Tools","item":"https://kreativtools.com/video/"},{"@type":"ListItem","position":3,"name":"Video Converter","item":"https://kreativtools.com/video/convert-webm/"}]}]</script>
   <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"f7acecd16c454cfbbb4704b4e665a173"}'></script>
 </head>
 <body>
@@ -55,7 +55,7 @@
   </header>
 
   <nav class="breadcrumbs" aria-label="Breadcrumb">
-    <a href="/">Kreativ Tools</a><span aria-hidden="true">/</span><a href="/video/">Video Tools</a><span aria-hidden="true">/</span><span aria-current="page">Video Converter</span>
+    <a href="/">Home</a><span aria-hidden="true">/</span><a href="/video/">Video Tools</a><span aria-hidden="true">/</span><span aria-current="page">Video Converter</span>
   </nav>
 
   <main class="container">
@@ -89,7 +89,8 @@
 
         <p class="status">Note: current browser conversion exports video only (no audio track).</p>
 
-        <button id="videoConvertButton" type="button" class="primary" disabled>Convert to WEBM</button>
+        <button id="videoConvertButton" type="button" class="primary" disabled data-export-prepare>Prepare WEBM</button>
+        <button id="videoDownloadButton" type="button" class="secondary-button" disabled data-export-download>Download WEBM</button>
       </div>
 
       <div class="preview-panel">
@@ -189,6 +190,7 @@
     <p class="footer-meta-actions"></p>
   </div>
 </footer>
+  <script src="../../tool-export-ui.js"></script>
   <script src="../../tool-upload-ui.js"></script>
   <script>
     const videoInput = document.getElementById('videoInput');
@@ -216,8 +218,12 @@
       dropzone: dropzone,
       workspace: workspace,
     });
+    const exportUi = window.kreativExportUi.create({ prepareButton: convertButton, downloadButton: document.getElementById('videoDownloadButton'), workspace, status: statusEl });
+    document.getElementById('videoDownloadButton').addEventListener('click', exportUi.download);
 
     const loadVideoFile = (file) => {
+      exportUi.reset();
+      convertButton.disabled = true;
       if (!file || !file.type.startsWith('video/')) {
         setStatus('Please select a valid video file.');
         return;
@@ -252,8 +258,7 @@
 
       const mimeType = getSupportedRecorderMime();
       if (!mimeType) {
-        setStatus('This browser does not support WEBM recording.');
-        return;
+        throw new Error('This browser does not support WEBM recording.');
       }
 
       const fpsRaw = Number(fpsInput.value);
@@ -272,19 +277,6 @@
         if (event.data && event.data.size > 0) chunks.push(event.data);
       };
 
-      recorder.onstop = () => {
-        if (animationFrameId) cancelAnimationFrame(animationFrameId);
-
-        const blob = new Blob(chunks, { type: 'video/webm' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `${selectedName}-converted.webm`;
-        link.click();
-        URL.revokeObjectURL(url);
-        setStatus(`Downloaded ${selectedName}-converted.webm`);
-      };
-
       const drawFrame = () => {
         ctx.drawImage(preview, 0, 0, canvas.width, canvas.height);
         if (!preview.paused && !preview.ended) {
@@ -298,14 +290,21 @@
       preview.currentTime = 0;
       preview.muted = true;
 
-      recorder.start();
-      preview.play();
-      drawFrame();
-
-      preview.onended = () => {
-        recorder.stop();
-        convertButton.disabled = false;
-      };
+      try {
+        return await new Promise((resolve, reject) => {
+          recorder.onstop = () => resolve({ blob: new Blob(chunks, { type: 'video/webm' }), filename: `${selectedName}-converted.webm` });
+          recorder.onerror = () => reject(new Error('Video recording failed. Please try another file.'));
+          preview.onended = () => { if (recorder.state !== 'inactive') recorder.stop(); };
+          recorder.start();
+          preview.play().then(drawFrame).catch(reject);
+        });
+      } finally {
+        if (animationFrameId) cancelAnimationFrame(animationFrameId);
+        if (recorder.state !== 'inactive') recorder.stop();
+        stream.getTracks().forEach((track) => track.stop());
+        preview.onended = null;
+        preview.pause();
+      }
     };
 
     uploadButton.addEventListener('click', () => videoInput.click());
@@ -338,7 +337,7 @@
       if (file) loadVideoFile(file);
     });
 
-    convertButton.addEventListener('click', convertVideo);
+    convertButton.addEventListener('click', () => exportUi.prepare(convertVideo));
   </script>
   <script src="../../github-pages-prefix.js"></script>
   <script src="../../theme.js"></script>

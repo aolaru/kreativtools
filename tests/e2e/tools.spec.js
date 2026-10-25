@@ -142,8 +142,10 @@ test('audio to mp3 converts a wav upload into a downloadable mp3', async ({ page
   await expect(page.locator('#mp3ConvertButton')).toBeEnabled();
   await expect(page.locator('#mp3AudioMeta')).toContainText('Hz');
 
-  const downloadPromise = page.waitForEvent('download');
   await page.click('#mp3ConvertButton');
+  await expect(page.locator('#mp3DownloadButton')).toBeEnabled();
+  const downloadPromise = page.waitForEvent('download');
+  await page.click('#mp3DownloadButton');
   const download = await downloadPromise;
 
   expect(download.suggestedFilename()).toMatch(/fixture-128kbps\.mp3$/);

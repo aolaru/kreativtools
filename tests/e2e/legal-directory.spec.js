@@ -70,7 +70,7 @@ test('all tools directory supports search and media filters', async ({ page }) =
   const visibleCards = page.locator('.category-grid .tool-card:not([hidden])');
 
   await expect(visibleCards).toHaveCount(23);
-  await expect(page.locator('.tool-filter-button')).toHaveCount(4);
+  await expect(page.locator('.tool-filter-button')).toHaveCount(7);
   await page.getByRole('button', { name: 'Image' }).click();
   await expect(visibleCards).toHaveCount(4);
   await expect(page.locator('.tool-card[href="/image/compress/"]')).toBeVisible();

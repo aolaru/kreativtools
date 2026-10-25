@@ -29,7 +29,7 @@
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../../styles.css" />
-  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"@font-face CSS Generator","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/fonts/css-generator/","description":"Generate @font-face CSS from uploaded font files, with guidance for font family names, weight, style, display, and browser delivery.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Font Tools","item":"https://kreativtools.com/fonts/"},{"@type":"ListItem","position":3,"name":"@font-face CSS Generator","item":"https://kreativtools.com/fonts/css-generator/"}]}]</script>
+  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"@font-face CSS Generator","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/fonts/css-generator/","description":"Generate @font-face CSS from uploaded font files, with guidance for font family names, weight, style, display, and browser delivery.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Font Tools","item":"https://kreativtools.com/fonts/"},{"@type":"ListItem","position":3,"name":"@font-face CSS Generator","item":"https://kreativtools.com/fonts/css-generator/"}]}]</script>
   <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"f7acecd16c454cfbbb4704b4e665a173"}'></script>
 </head>
 <body>
@@ -53,7 +53,7 @@
   </header>
 
   <nav class="breadcrumbs" aria-label="Breadcrumb">
-    <a href="/">Kreativ Tools</a><span aria-hidden="true">/</span><a href="/fonts/">Font Tools</a><span aria-hidden="true">/</span><span aria-current="page">@font-face CSS Generator</span>
+    <a href="/">Home</a><span aria-hidden="true">/</span><a href="/fonts/">Font Tools</a><span aria-hidden="true">/</span><span aria-current="page">@font-face CSS Generator</span>
   </nav>
 
   <main class="container">
@@ -65,8 +65,8 @@
         <label>Font weight<input id="cssWeightInput" type="text" value="400" /></label>
         <label>Font style<select id="cssStyleInput"><option value="normal" selected>normal</option><option value="italic">italic</option></select></label>
         <label>Font display<select id="cssDisplayInput"><option value="swap" selected>swap</option><option value="auto">auto</option><option value="fallback">fallback</option><option value="optional">optional</option><option value="block">block</option></select></label>
-        <button id="cssGenerateButton" type="button" class="primary" disabled>Generate CSS</button>
-        <button id="cssDownloadButton" type="button" class="primary" disabled>Download CSS</button>
+        <button id="cssGenerateButton" type="button" class="primary" disabled data-export-prepare>Prepare CSS</button>
+        <button id="cssDownloadButton" type="button" class="primary" disabled data-export-download>Download CSS</button>
       </div>
       <div class="preview-panel"><h2>Generated CSS</h2><pre id="cssOutput" class="code-preview empty-note">Upload a font and click Generate CSS.</pre></div>
     </section>
@@ -155,6 +155,7 @@
     <p class="footer-meta-actions"></p>
   </div>
 </footer>
+  <script src="../../tool-export-ui.js"></script>
   <script src="../../tool-upload-ui.js"></script>
   <script>
     const input = document.getElementById('cssFontInput');

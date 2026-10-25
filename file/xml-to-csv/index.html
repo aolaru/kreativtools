@@ -29,7 +29,7 @@
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../../styles.css" />
-  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"XML to CSV","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/file/xml-to-csv/","description":"Convert XML files to CSV in your browser, choose repeated record elements, preview rows, and export spreadsheet-ready data.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"File Tools","item":"https://kreativtools.com/file/"},{"@type":"ListItem","position":3,"name":"XML to CSV","item":"https://kreativtools.com/file/xml-to-csv/"}]}]</script>
+  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"XML to CSV","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/file/xml-to-csv/","description":"Convert XML files to CSV in your browser, choose repeated record elements, preview rows, and export spreadsheet-ready data.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"File Tools","item":"https://kreativtools.com/file/"},{"@type":"ListItem","position":3,"name":"XML to CSV","item":"https://kreativtools.com/file/xml-to-csv/"}]}]</script>
   <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"f7acecd16c454cfbbb4704b4e665a173"}'></script>
 </head>
 <body>
@@ -55,7 +55,7 @@
   </header>
 
   <nav class="breadcrumbs" aria-label="Breadcrumb">
-    <a href="/">Kreativ Tools</a><span aria-hidden="true">/</span><a href="/file/">File Tools</a><span aria-hidden="true">/</span><span aria-current="page">XML to CSV</span>
+    <a href="/">Home</a><span aria-hidden="true">/</span><a href="/file/">File Tools</a><span aria-hidden="true">/</span><span aria-current="page">XML to CSV</span>
   </nav>
 
   <main class="container">
@@ -83,8 +83,8 @@
           <select id="recordSelect"></select>
         </label>
 
-        <button id="xmlConvertButton" type="button" class="primary" disabled>Convert to CSV</button>
-        <button id="xmlDownloadButton" type="button" class="primary" disabled>Download CSV</button>
+        <button id="xmlConvertButton" type="button" class="primary" disabled data-export-prepare>Prepare CSV</button>
+        <button id="xmlDownloadButton" type="button" class="primary" disabled data-export-download>Download CSV</button>
       </div>
 
       <div class="preview-panel">
@@ -178,6 +178,7 @@
     <p class="footer-meta-actions"></p>
   </div>
 </footer>
+  <script src="../../tool-export-ui.js"></script>
   <script src="../../tool-upload-ui.js"></script>
   <script>
     const xmlInput = document.getElementById('xmlInput');

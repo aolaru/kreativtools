@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'sha256-U4v2YjCQEIu7TgGN0EbUUCnpHOFdMXtRtXyWWrp48wE='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'sha256-oJjT/IA9WCAZqVm1Co/w/LUo24L5U6jhcaN8D3glRvQ='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Kreativ Tools | Image Compress</title>
@@ -29,7 +29,7 @@
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../../styles.css" />
-  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Image Compress","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/image/compress/","description":"Compress images in your browser by adjusting quality and exporting optimized JPG, PNG, WebP, or AVIF files.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Image Tools","item":"https://kreativtools.com/image/"},{"@type":"ListItem","position":3,"name":"Image Compress","item":"https://kreativtools.com/image/compress/"}]}]</script>
+  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Image Compress","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/image/compress/","description":"Compress images in your browser by adjusting quality and exporting optimized JPG, PNG, WebP, or AVIF files.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Image Tools","item":"https://kreativtools.com/image/"},{"@type":"ListItem","position":3,"name":"Image Compress","item":"https://kreativtools.com/image/compress/"}]}]</script>
   <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"f7acecd16c454cfbbb4704b4e665a173"}'></script>
 </head>
 <body>
@@ -55,7 +55,7 @@
   </header>
 
   <nav class="breadcrumbs" aria-label="Breadcrumb">
-    <a href="/">Kreativ Tools</a><span aria-hidden="true">/</span><a href="/image/">Image Tools</a><span aria-hidden="true">/</span><span aria-current="page">Image Compress</span>
+    <a href="/">Home</a><span aria-hidden="true">/</span><a href="/image/">Image Tools</a><span aria-hidden="true">/</span><span aria-current="page">Image Compress</span>
   </nav>
 
   <main class="container">
@@ -105,8 +105,8 @@
 
         <p id="compressMeta" class="status status-empty">Upload an image to view compression details.</p>
 
-        <button id="compressApplyButton" type="button" class="primary" disabled>Compress Image</button>
-        <button id="compressDownloadButton" type="button" class="primary" disabled>Download Compressed Image</button>
+        <button id="compressApplyButton" type="button" class="primary" disabled data-export-prepare>Prepare image</button>
+        <button id="compressDownloadButton" type="button" class="primary" disabled data-export-download>Download image</button>
       </div>
 
       <div class="preview-panel">
@@ -211,6 +211,8 @@
 </footer>
 
   <script src="../../image-format-support.js"></script>
+  <script src="../../tool-export-ui.js"></script>
+  <script src="../../tool-upload-ui.js"></script>
   <script>
     const imageFormats = window.kreativImageFormats;
     const imageInput = document.getElementById('compressImageInput');
@@ -234,6 +236,7 @@
     const canvas = document.getElementById('compressPreviewCanvas');
     const dimensionsEl = document.getElementById('compressDimensions');
     const ctx = canvas.getContext('2d');
+    const uploadUi = window.kreativUploadUi.init({ input: imageInput, dropzone, workspace });
 
     let sourceImage = null;
     let sourceName = 'image';
@@ -253,6 +256,8 @@
     };
 
     const setLoadedState = (isLoaded, fileName = '', fileSize = 0) => {
+      if (isLoaded) uploadUi.setLoaded({ name: fileName, size: fileSize });
+      else uploadUi.clear();
       dropzone.classList.toggle('is-hidden', isLoaded);
       loadedBar.classList.toggle('is-hidden', !isLoaded);
 

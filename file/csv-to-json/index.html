@@ -29,7 +29,7 @@
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../../styles.css" />
-  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"CSV to JSON","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/file/csv-to-json/","description":"Convert CSV rows into JSON objects, inspect the preview, and download structured data for imports, automation, or developer handoff.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"File Tools","item":"https://kreativtools.com/file/"},{"@type":"ListItem","position":3,"name":"CSV to JSON","item":"https://kreativtools.com/file/csv-to-json/"}]}]</script>
+  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"CSV to JSON","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/file/csv-to-json/","description":"Convert CSV rows into JSON objects, inspect the preview, and download structured data for imports, automation, or developer handoff.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"File Tools","item":"https://kreativtools.com/file/"},{"@type":"ListItem","position":3,"name":"CSV to JSON","item":"https://kreativtools.com/file/csv-to-json/"}]}]</script>
   <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"f7acecd16c454cfbbb4704b4e665a173"}'></script>
 </head>
 <body>
@@ -53,13 +53,13 @@
   </header>
 
   <nav class="breadcrumbs" aria-label="Breadcrumb">
-    <a href="/">Kreativ Tools</a><span aria-hidden="true">/</span><a href="/file/">File Tools</a><span aria-hidden="true">/</span><span aria-current="page">CSV to JSON</span>
+    <a href="/">Home</a><span aria-hidden="true">/</span><a href="/file/">File Tools</a><span aria-hidden="true">/</span><span aria-current="page">CSV to JSON</span>
   </nav>
 
   <main class="container">
     <section class="hero"><p class="eyebrow">File Tools</p><h1>CSV to JSON</h1><p>Upload CSV and export row-based JSON objects.</p></section>
     <section class="upload-card"><input id="csvInput" type="file" accept=".csv,text/csv" aria-label="Upload file" hidden /><div id="csvDropzone" class="dropzone" role="group" aria-label="Upload CSV"><div class="drop-icon" aria-hidden="true"></div><button id="csvUploadButton" type="button" class="primary upload-trigger">Upload CSV</button><p>or drag and drop a CSV file here</p><p id="csvStatus" class="status status-empty">No CSV file selected yet.</p></div></section>
-    <section id="csvWorkspace" class="workspace is-hidden"><div class="controls"><button id="csvConvertButton" type="button" class="primary" disabled>Convert to JSON</button><button id="csvDownloadButton" type="button" class="primary" disabled>Download JSON</button></div><div class="preview-panel"><h2>JSON Preview</h2><pre id="csvPreview" class="code-preview empty-note">Upload CSV to preview JSON.</pre><p id="csvMeta" class="dimensions"></p></div></section>
+    <section id="csvWorkspace" class="workspace is-hidden"><div class="controls"><button id="csvConvertButton" type="button" class="primary" disabled data-export-prepare>Prepare JSON</button><button id="csvDownloadButton" type="button" class="primary" disabled data-export-download>Download JSON</button></div><div class="preview-panel"><h2>JSON Preview</h2><pre id="csvPreview" class="code-preview empty-note">Upload CSV to preview JSON.</pre><p id="csvMeta" class="dimensions"></p></div></section>
 
     <section class="article-section tool-guide" aria-labelledby="csvJsonGuideTitle">
       <h2 id="csvJsonGuideTitle">CSV to JSON guide</h2>
@@ -145,6 +145,7 @@
     <p class="footer-meta-actions"></p>
   </div>
 </footer>
+  <script src="../../tool-export-ui.js"></script>
   <script src="../../tool-upload-ui.js"></script>
   <script src="../../vendor/papaparse.min.js"></script>
   <script>

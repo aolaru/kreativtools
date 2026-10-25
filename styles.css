@@ -20,6 +20,31 @@
   grid-template-columns: minmax(300px, 380px) minmax(0, 1fr);
   gap: 20px;
   align-items: start;
+  grid-template-areas: 'toolbar toolbar' 'options preview';
+}
+
+.pdf-fill-toolbar {
+  grid-area: toolbar;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 8px;
+  z-index: 20;
+  background: var(--panel);
+}
+
+.pdf-fill-zoom {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+}
+
+.pdf-fill-zoom select {
+  width: auto;
+  min-height: 44px;
 }
 
 .workspace.pdf-fill-workspace {
@@ -31,12 +56,26 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+  flex-wrap: wrap;
 }
 
 #pdfFillWorkspace .pdf-fill-action-bar .inline-actions {
   justify-content: flex-end;
   flex: 0 0 auto;
 }
+
+#pdfFillWorkspace .pdf-fill-file-copy,
+#pdfFillWorkspace .export-steps,
+#pdfFillSummary { display: none; }
+
+#pdfFillWorkspace .pdf-fill-action-bar .export-state {
+  flex: 1 1 180px;
+  width: auto;
+  order: -1;
+}
+
+.pdf-fill-results > .result-card { display: flex; flex-wrap: wrap; gap: 16px; }
+.pdf-fill-results > .result-card .result-row { gap: 8px; }
 
 .pdf-fill-file-copy {
   display: grid;
@@ -60,12 +99,14 @@
 }
 
 .pdf-fill-sidebar {
-  display: grid;
-  gap: 14px;
+  grid-area: options;
   align-self: start;
   position: sticky;
-  top: 18px;
+  top: 96px;
 }
+
+.pdf-fill-sidebar > summary { display: none; }
+.pdf-fill-option-cards { display: grid; gap: 14px; }
 
 .pdf-fill-card {
   display: grid;
@@ -112,6 +153,7 @@
 }
 
 .pdf-fill-preview-panel {
+  grid-area: preview;
   min-width: 0;
   overflow-x: auto;
 }
@@ -123,10 +165,22 @@
 
 .pdf-fill-pages {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 18px;
+  max-height: 72svh;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.pdf-fill-page-scroll {
+  overflow-x: auto;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
 }
 
 .pdf-fill-page-card {
+  min-width: 0;
   background: rgba(255, 255, 255, 0.86);
   border: 1px solid rgba(15, 23, 42, 0.08);
   border-radius: 22px;
@@ -144,7 +198,7 @@
 .pdf-fill-page-stage {
   position: relative;
   width: fit-content;
-  max-width: 100%;
+  max-width: none;
   margin: 0 auto;
   border-radius: 18px;
   overflow: hidden;
@@ -155,7 +209,7 @@
 
 .pdf-fill-page-canvas {
   display: block;
-  max-width: 100%;
+  width: 100%;
   height: auto;
 }
 
@@ -174,6 +228,7 @@
   text-align: left;
   white-space: pre-wrap;
   cursor: grab;
+  touch-action: none;
 }
 
 .pdf-fill-placement:active {
@@ -189,6 +244,8 @@
   min-width: 36px;
   color: #111827;
   background: rgba(255, 255, 255, 0.72);
+  padding: 0;
+  line-height: 1.15;
 }
 
 .pdf-fill-placement-signature {
@@ -228,15 +285,11 @@
   color: #cbd5e1;
 }
 
-[data-theme='dark'] .pdf-fill-placement-text {
-  background: rgba(15, 23, 42, 0.72);
-  color: #f8fafc;
-}
-
 @media (max-width: 980px) {
   #pdfFillWorkspace .pdf-fill-action-bar {
-    align-items: flex-start;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
   }
 
   #pdfFillWorkspace .pdf-fill-action-bar .inline-actions {
@@ -245,16 +298,30 @@
 
   .pdf-fill-layout {
     grid-template-columns: 1fr;
+    grid-template-areas: 'toolbar' 'options' 'preview';
   }
 
   .pdf-fill-sidebar {
     position: static;
+    border: 1px solid var(--outline);
+    border-radius: 14px;
+    background: var(--panel);
   }
+
+  .pdf-fill-sidebar > summary { display: list-item; padding: 12px 16px; cursor: pointer; font-weight: 700; }
+  .pdf-fill-option-cards { padding: 0 12px 12px; }
+  .pdf-fill-pages { max-height: 65svh; }
+  .pdf-fill-toolbar { gap: 10px; padding: 10px; }
+  .pdf-fill-toolbar .pdf-fill-mode-row { flex: 1 1 100%; }
+  .pdf-fill-toolbar button { padding: 8px; min-height: 44px; }
+  .pdf-fill-results { gap: 10px; }
+  .pdf-fill-results > p, .pdf-fill-results > .result-card, .pdf-fill-file-copy { display: none; }
+  #pdfFillWorkspace .export-steps { display: none; }
 }
 
 @media (max-width: 560px) {
   .pdf-fill-mode-row {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -582,6 +649,72 @@ button:disabled {
 .hero {
   text-align: center;
   margin-bottom: 24px;
+}
+
+.container:has(> .upload-card) > .hero,
+.tools-directory > .hero {
+  margin-bottom: 18px;
+}
+
+.container:has(> .upload-card) > .hero h1,
+.tools-directory > .hero h1 {
+  font-size: clamp(1.85rem, 3.5vw, 2.75rem);
+}
+
+.container:has(> .upload-card) > .hero > p:not(.eyebrow) {
+  max-width: 65ch;
+  margin-inline: auto;
+}
+
+.tool-feedback {
+  grid-column: 1 / -1;
+  flex-basis: 100%;
+  width: 100%;
+  margin: 10px 0 0;
+  padding: 12px 14px;
+  border: 1px solid var(--outline);
+  border-radius: 12px;
+  background: var(--panel);
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+
+.tool-feedback:empty {
+  display: none;
+}
+
+.export-steps, .export-state {
+  grid-column: 1 / -1;
+  flex-basis: 100%;
+  width: 100%;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+  overflow-wrap: anywhere;
+}
+
+.export-state[data-state='ready'] { color: var(--accent-dark); font-weight: 700; }
+.export-state[data-state='processing'] { color: var(--text); font-weight: 700; }
+.export-preview { grid-column: 1 / -1; width: 100%; min-width: 0; }
+.export-preview p { margin: 0 0 8px; color: var(--text); font-weight: 700; }
+.export-media { display: block; width: 100%; max-width: 100%; }
+[aria-busy='true'] { cursor: progress; }
+.pdf-fill-toolbar.pdf-fill-card { display: flex; }
+.pdf-fill-toolbar .tool-feedback { flex: 1 1 200px; width: auto; margin: 0; padding: 8px 10px; font-size: 0.85rem; }
+.upload-card:has(> .loaded-file-bar:not(.is-hidden)) { padding: 12px; }
+
+@media (max-width: 980px) {
+  .pdf-fill-toolbar.pdf-fill-card .tool-feedback { flex-basis: 100%; width: 100%; }
+}
+
+.common-jobs-section > summary {
+  cursor: pointer;
+  font-weight: 700;
+  padding: 12px 0;
+}
+
+.common-jobs-section[open] .common-jobs-grid {
+  margin-bottom: 18px;
 }
 
 .hero-home {
@@ -3670,8 +3803,7 @@ input[type='range'] {
 
   .tool-filter-row {
     display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
+    flex-wrap: wrap;
     padding-bottom: 4px;
     scroll-snap-type: x proximity;
   }
@@ -3680,6 +3812,11 @@ input[type='range'] {
     flex: 0 0 auto;
     scroll-snap-align: start;
   }
+
+  .container:has(> .upload-card) { margin-top: 16px; }
+  .container:has(> .upload-card) > .hero .eyebrow { display: none; }
+  .container:has(> .upload-card) > .hero p { font-size: 0.95rem; }
+  .upload-card:has(> .loaded-file-bar:not(.is-hidden)) { padding: 12px; }
 
   .loaded-file-bar {
     align-items: flex-start;

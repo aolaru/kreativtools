@@ -3,6 +3,7 @@ const path = require('path');
 const { createHash } = require('node:crypto');
 const { execFileSync } = require('node:child_process');
 const { secureDocument, contentSecurityPolicy, scriptHashes } = require('./security-policy');
+const TOOL_EXPORTS = require('./tool-exports');
 const {
   FOOTER_SECTIONS,
   JOB_PATHS,
@@ -275,11 +276,15 @@ function descriptionForRoute(route, description) {
 }
 
 function breadcrumbData(route, title) {
+  const labels = {
+    '/tools/': 'Tools', '/learn/': 'Learn', '/changes/': 'Updates',
+    '/about/': 'About', '/contact/': 'Contact', '/privacy/': 'Privacy', '/terms/': 'Terms',
+  };
   const items = [
     {
       '@type': 'ListItem',
       position: 1,
-      name: 'Kreativ Tools',
+      name: 'Home',
       item: SITE_URL,
     },
   ];
@@ -298,7 +303,7 @@ function breadcrumbData(route, title) {
     items.push({
       '@type': 'ListItem',
       position: items.length + 1,
-      name: plainTitle(title),
+      name: labels[route] || (isCategoryRoute(route) ? sectionLabelForRoute(route) : plainTitle(title)),
       item: `${SITE_URL}${route}`,
     });
   }
@@ -608,6 +613,21 @@ function syncCanonicalPage(file) {
   const headerReplacement = breadcrumbNav ? `${buildHeader(route)}\n\n  ${breadcrumbNav}` : buildHeader(route);
   content = replaceBlock(content, /<header class="site-header">[\s\S]*?<\/header>/, headerReplacement, 'header', rel);
   content = replaceBlock(content, /<footer class="site-footer">[\s\S]*?<\/footer>/, footer, 'footer', rel);
+  if (TOOL_EXPORTS[route]) {
+    const [prepareId, downloadId, prepareLabel, downloadLabel] = TOOL_EXPORTS[route];
+    if (!content.includes(`id="${downloadId}"`)) {
+      const prepare = new RegExp(`(<button\\b[^>]*id="${prepareId}"[^>]*>[\\s\\S]*?<\\/button>)`);
+      content = content.replace(prepare, `$1\n        <button id="${downloadId}" type="button" class="secondary-button" disabled>${downloadLabel}</button>`);
+    }
+    for (const [id, marker, label] of [[prepareId, 'prepare', prepareLabel], [downloadId, 'download', downloadLabel]]) {
+      const button = new RegExp(`<button\\b([^>]*id="${id}"[^>]*)>[\\s\\S]*?<\\/button>`);
+      if (!button.test(content)) throw new Error(`Missing export button ${id} in ${rel}`);
+      content = content.replace(button, (_, attributes) => `<button${attributes.replace(/\s+data-export-(?:prepare|download)(?:="[^"]*")?/g, '')} data-export-${marker}>${label}</button>`);
+    }
+    if (!content.includes(`${prefix}tool-export-ui.js`)) {
+      content = content.replace(`<script src="${prefix}tool-upload-ui.js">`, `<script src="${prefix}tool-export-ui.js"></script>\n  <script src="${prefix}tool-upload-ui.js">`);
+    }
+  }
   content = replaceJobRouters(content, rel);
   content = content.replace(/\s*<div class="article-trust-meta"[\s\S]*?<\/div>/g, '');
   if (route.startsWith('/learn/') && route !== '/learn/') {

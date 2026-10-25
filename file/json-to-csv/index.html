@@ -29,7 +29,7 @@
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../../styles.css" />
-  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"JSON to CSV","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/file/json-to-csv/","description":"Convert JSON arrays of objects into CSV, preview column output, and download a spreadsheet-ready file without uploading source data.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"File Tools","item":"https://kreativtools.com/file/"},{"@type":"ListItem","position":3,"name":"JSON to CSV","item":"https://kreativtools.com/file/json-to-csv/"}]}]</script>
+  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"JSON to CSV","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/file/json-to-csv/","description":"Convert JSON arrays of objects into CSV, preview column output, and download a spreadsheet-ready file without uploading source data.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"File Tools","item":"https://kreativtools.com/file/"},{"@type":"ListItem","position":3,"name":"JSON to CSV","item":"https://kreativtools.com/file/json-to-csv/"}]}]</script>
   <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"f7acecd16c454cfbbb4704b4e665a173"}'></script>
 </head>
 <body>
@@ -53,13 +53,13 @@
   </header>
 
   <nav class="breadcrumbs" aria-label="Breadcrumb">
-    <a href="/">Kreativ Tools</a><span aria-hidden="true">/</span><a href="/file/">File Tools</a><span aria-hidden="true">/</span><span aria-current="page">JSON to CSV</span>
+    <a href="/">Home</a><span aria-hidden="true">/</span><a href="/file/">File Tools</a><span aria-hidden="true">/</span><span aria-current="page">JSON to CSV</span>
   </nav>
 
   <main class="container">
     <section class="hero"><p class="eyebrow">File Tools</p><h1>JSON to CSV</h1><p>Upload a JSON file containing an array of objects and export CSV.</p></section>
     <section class="upload-card"><input id="jsonInput" type="file" accept=".json,application/json,text/json" aria-label="Upload file" hidden /><div id="jsonDropzone" class="dropzone" role="group" aria-label="Upload JSON"><div class="drop-icon" aria-hidden="true"></div><button id="jsonUploadButton" type="button" class="primary upload-trigger">Upload JSON</button><p>or drag and drop a JSON file here</p><p id="jsonStatus" class="status status-empty">No JSON file selected yet.</p></div></section>
-    <section id="jsonWorkspace" class="workspace is-hidden"><div class="controls"><button id="jsonConvertButton" type="button" class="primary" disabled>Convert to CSV</button><button id="jsonDownloadButton" type="button" class="primary" disabled>Download CSV</button></div><div class="preview-panel"><h2>CSV Preview</h2><pre id="jsonPreview" class="code-preview empty-note">Upload JSON to preview CSV.</pre><p id="jsonMeta" class="dimensions"></p></div></section>
+    <section id="jsonWorkspace" class="workspace is-hidden"><div class="controls"><button id="jsonConvertButton" type="button" class="primary" disabled data-export-prepare>Prepare CSV</button><button id="jsonDownloadButton" type="button" class="primary" disabled data-export-download>Download CSV</button></div><div class="preview-panel"><h2>CSV Preview</h2><pre id="jsonPreview" class="code-preview empty-note">Upload JSON to preview CSV.</pre><p id="jsonMeta" class="dimensions"></p></div></section>
 
     <section class="article-section tool-guide" aria-labelledby="jsonCsvGuideTitle">
       <h2 id="jsonCsvGuideTitle">JSON to CSV guide</h2>
@@ -151,6 +151,7 @@
     <p class="footer-meta-actions"></p>
   </div>
 </footer>
+  <script src="../../tool-export-ui.js"></script>
   <script src="../../tool-upload-ui.js"></script>
   <script>
     const input = document.getElementById('jsonInput');
