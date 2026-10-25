@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'sha256-g9F1LkM3tINjiCX9lgUKl0VMGnjf7iaws5YH/TVSmJg='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Kreativ Tools | @font-face CSS Generator</title>
@@ -57,7 +58,7 @@
 
   <main class="container">
     <section class="hero"><p class="eyebrow">Font Tools</p><h1>@font-face CSS Generator</h1><p>Upload a font file and generate ready-to-paste CSS for a local webfont setup.</p></section>
-    <section class="upload-card"><input id="cssFontInput" type="file" accept=".ttf,.otf,.woff,.woff2,font/ttf,font/otf,font/woff,font/woff2" aria-label="Upload file" hidden /><div id="cssFontDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload font file"><div class="drop-icon" aria-hidden="true"></div><button id="cssFontUploadButton" type="button" class="primary upload-trigger">Upload Font</button><p>or drag and drop a font file here</p><p id="cssFontStatus" class="status status-empty">No font selected yet.</p></div></section>
+    <section class="upload-card"><input id="cssFontInput" type="file" accept=".ttf,.otf,.woff,.woff2,font/ttf,font/otf,font/woff,font/woff2" aria-label="Upload file" hidden /><div id="cssFontDropzone" class="dropzone" role="group" aria-label="Upload font file"><div class="drop-icon" aria-hidden="true"></div><button id="cssFontUploadButton" type="button" class="primary upload-trigger">Upload Font</button><p>or drag and drop a font file here</p><p id="cssFontStatus" class="status status-empty">No font selected yet.</p></div></section>
     <section id="cssWorkspace" class="workspace is-hidden">
       <div class="controls">
         <label>Font family<input id="cssFamilyInput" type="text" value="MyFont" /></label>
@@ -107,18 +108,6 @@
           <p>If the source is still OTF or TTF, use <a href="/fonts/webfont-convert/">Font to Webfont</a> first. If you need to inspect the result visually, open <a href="/fonts/preview/">Font Preview</a>.</p>
         </article>
       </div>
-    </section>
-    <section class="article-section page-quality-note" aria-labelledby="qualityNoteTitle">
-      <h2 id="qualityNoteTitle">Before you ship webfonts</h2>
-      <p>A font file can convert successfully and still be wrong for a website if the license, character coverage, weight selection, or CSS loading strategy is not ready. Test headings, body copy, numbers, and accented characters before publishing.</p>
-      <p>Treat conversion as one part of the webfont job. The final setup also needs correct file paths, fallback fonts, caching, and a font-display choice that matches the site. If the font is only used for headings, avoid shipping unnecessary weights that slow down every page.</p>
-      <ul class="tool-guide-list">
-        <li>Confirm the license allows web use.</li>
-        <li>Ship only the weights and styles the site needs.</li>
-        <li>Use CSS with sensible fallback fonts and a clear font-display choice.</li>
-      </ul>
-      <p>After downloading the result, open it once before using it in a client send, upload form, website, or archive. This final check catches format support issues, unexpected file size changes, missing characters, clipped media, or page-order mistakes while the original file is still available.</p>
-      <p>If the output will be reused, note the settings that produced it. That makes the next export easier to repeat and reduces guesswork when another file needs the same treatment.</p>
     </section>
   </main>
 
@@ -183,6 +172,7 @@
     const output = document.getElementById('cssOutput');
 
     let fileName = 'font';
+    let sourceFormat = 'truetype';
     let dataUrl = '';
     let generatedCss = '';
 
@@ -207,6 +197,7 @@
       const reader = new FileReader();
       reader.onload = () => {
         dataUrl = reader.result;
+        sourceFormat = inferFormat(file.name);
         fileName = file.name.replace(/\.[^.]+$/, '');
         familyInput.value = fileName.replace(/[_-]+/g, ' ');
         workspace.classList.remove('is-hidden');
@@ -225,7 +216,7 @@
         setStatus('Upload a font first.');
         return;
       }
-      const format = inferFormat(fileName);
+      const format = sourceFormat;
       generatedCss = `@font-face {\n  font-family: '${familyInput.value || 'MyFont'}';\n  src: url('${dataUrl}') format('${format}');\n  font-weight: ${weightInput.value || '400'};\n  font-style: ${styleInput.value || 'normal'};\n  font-display: ${displayInput.value || 'swap'};\n}\n\n/* Usage */\n.body-text {\n  font-family: '${familyInput.value || 'MyFont'}', sans-serif;\n}`;
       output.textContent = generatedCss;
       downloadButton.disabled = false;

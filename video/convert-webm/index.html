@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'sha256-n9voOGMtGbwMJvi0rhfDTEr54Iwu5dGAyTBBtfmGp8w='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Kreativ Tools | Video Converter</title>
@@ -66,7 +67,7 @@
 
     <section class="upload-card">
       <input id="videoInput" type="file" accept="video/*" aria-label="Upload file" hidden />
-      <div id="videoDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload video">
+      <div id="videoDropzone" class="dropzone" role="group" aria-label="Upload video">
         <div class="drop-icon" aria-hidden="true"></div>
         <button id="videoUploadButton" type="button" class="primary upload-trigger">Upload Video</button>
         <p>or drag and drop a video here</p>
@@ -141,18 +142,6 @@
       <p><strong>Landing page loop:</strong> export a short silent WEBM at reduced dimensions so the page can show motion without loading a heavy source video.</p>
       <p><strong>Prototype handoff:</strong> convert a quick product recording to WEBM when the reviewer only needs to see the interaction, not hear audio.</p>
       <p><strong>Documentation clip:</strong> trim the source first if only one step matters, then convert that shorter clip for a smaller final file.</p>
-    </section>
-    <section class="article-section page-quality-note" aria-labelledby="qualityNoteTitle">
-      <h2 id="qualityNoteTitle">Before you export video</h2>
-      <p>Browser video support depends on the file format, codec, and device. Short clips are usually easier to process than long recordings. For email or social delivery, trim first, capture the needed thumbnail, then convert only when the destination requires a different format.</p>
-      <p>When a clip is for review, speed and compatibility usually matter more than maximum quality. When a clip is for publishing, check the playback target and keep the original source available. Browser exports are convenient for quick jobs, but long or high-resolution videos can be memory-heavy.</p>
-      <ul class="tool-guide-list">
-        <li>Use short source files when possible.</li>
-        <li>Check the start and end frame before downloading.</li>
-        <li>Keep the original video if the browser export needs to be adjusted.</li>
-      </ul>
-      <p>After downloading the result, open it once before using it in a client send, upload form, website, or archive. This final check catches format support issues, unexpected file size changes, missing characters, clipped media, or page-order mistakes while the original file is still available.</p>
-      <p>If the output will be reused, note the settings that produced it. That makes the next export easier to repeat and reduces guesswork when another file needs the same treatment.</p>
     </section>
   </main>
 

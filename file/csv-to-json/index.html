@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'sha256-f1Oa6aRGQGFXRLE+j+JJFQI6qIVuktBMhGQKmPzQaUY='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Kreativ Tools | CSV to JSON</title>
@@ -57,7 +58,7 @@
 
   <main class="container">
     <section class="hero"><p class="eyebrow">File Tools</p><h1>CSV to JSON</h1><p>Upload CSV and export row-based JSON objects.</p></section>
-    <section class="upload-card"><input id="csvInput" type="file" accept=".csv,text/csv" aria-label="Upload file" hidden /><div id="csvDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload CSV"><div class="drop-icon" aria-hidden="true"></div><button id="csvUploadButton" type="button" class="primary upload-trigger">Upload CSV</button><p>or drag and drop a CSV file here</p><p id="csvStatus" class="status status-empty">No CSV file selected yet.</p></div></section>
+    <section class="upload-card"><input id="csvInput" type="file" accept=".csv,text/csv" aria-label="Upload file" hidden /><div id="csvDropzone" class="dropzone" role="group" aria-label="Upload CSV"><div class="drop-icon" aria-hidden="true"></div><button id="csvUploadButton" type="button" class="primary upload-trigger">Upload CSV</button><p>or drag and drop a CSV file here</p><p id="csvStatus" class="status status-empty">No CSV file selected yet.</p></div></section>
     <section id="csvWorkspace" class="workspace is-hidden"><div class="controls"><button id="csvConvertButton" type="button" class="primary" disabled>Convert to JSON</button><button id="csvDownloadButton" type="button" class="primary" disabled>Download JSON</button></div><div class="preview-panel"><h2>JSON Preview</h2><pre id="csvPreview" class="code-preview empty-note">Upload CSV to preview JSON.</pre><p id="csvMeta" class="dimensions"></p></div></section>
 
     <section class="article-section tool-guide" aria-labelledby="csvJsonGuideTitle">
@@ -97,18 +98,6 @@
           <p>Need to go back to a spreadsheet file? Use <a href="/file/json-to-csv/">JSON to CSV</a>. For XML exports, use <a href="/file/xml-to-csv/">XML to CSV</a>.</p>
         </article>
       </div>
-    </section>
-    <section class="article-section page-quality-note" aria-labelledby="qualityNoteTitle">
-      <h2 id="qualityNoteTitle">Before you convert data files</h2>
-      <p>Data converters are most reliable when the source file is clean before conversion. Check headers, repeated records, delimiters, blank rows, and unexpected nested fields. A converter can preserve structure, but it cannot know the meaning of unclear source data.</p>
-      <p>Before using the export in another system, compare a few rows against the source file. Look for shifted columns, empty fields, escaped quotes, and values that should stay as text, such as IDs or postal codes. Small cleanup before conversion prevents larger import mistakes later.</p>
-      <ul class="tool-guide-list">
-        <li>Keep headers unique and stable.</li>
-        <li>Preview row counts before using the export elsewhere.</li>
-        <li>Save the original file before cleaning or converting it.</li>
-      </ul>
-      <p>After downloading the result, open it once before using it in a client send, upload form, website, or archive. This final check catches format support issues, unexpected file size changes, missing characters, clipped media, or page-order mistakes while the original file is still available.</p>
-      <p>If the output will be reused, note the settings that produced it. That makes the next export easier to repeat and reduces guesswork when another file needs the same treatment.</p>
     </section>
   </main>
 
@@ -157,6 +146,7 @@
   </div>
 </footer>
   <script src="../../tool-upload-ui.js"></script>
+  <script src="../../vendor/papaparse.min.js"></script>
   <script>
     const input = document.getElementById('csvInput');
     const uploadButton = document.getElementById('csvUploadButton');
@@ -180,35 +170,26 @@
       workspace: workspace,
     });
 
-    const parseCsvLine = (line) => {
-      const result = [];
-      let cur = '';
-      let quoted = false;
-      for (let i = 0; i < line.length; i += 1) {
-        const ch = line[i];
-        if (quoted) {
-          if (ch === '"' && line[i + 1] === '"') { cur += '"'; i += 1; }
-          else if (ch === '"') quoted = false;
-          else cur += ch;
-        } else if (ch === ',') { result.push(cur); cur = ''; }
-        else if (ch === '"') quoted = true;
-        else cur += ch;
-      }
-      result.push(cur);
-      return result;
-    };
-
     const convert = () => {
-      const lines = csvText.split(/\r?\n/).filter((l) => l.trim().length > 0);
-      if (lines.length < 2) { setStatus('CSV needs headers and at least one row.'); return; }
-      const headers = parseCsvLine(lines[0]);
-      const rows = [];
-      for (let i = 1; i < lines.length; i += 1) {
-        const cols = parseCsvLine(lines[i]);
-        const row = {};
-        headers.forEach((h, idx) => { row[h] = cols[idx] ?? ''; });
-        rows.push(row);
+      jsonText = '';
+      downloadButton.disabled = true;
+      preview.textContent = '';
+      const parsed = Papa.parse(csvText, { skipEmptyLines: 'greedy' });
+      const [headers, ...records] = parsed.data;
+      const headerNames = headers?.map((header) => header.trim()) || [];
+      if (parsed.errors.length || !records.length || !headers?.length) {
+        setStatus('CSV could not be converted. Check the quotes, headers, and rows.');
+        return;
       }
+      if (headerNames.some((header) => !header) || new Set(headerNames).size !== headers.length) {
+        setStatus('CSV headers must be non-empty and unique.');
+        return;
+      }
+      if (records.some((record) => record.length !== headers.length)) {
+        setStatus('CSV rows must have the same number of columns as the headers.');
+        return;
+      }
+      const rows = records.map((record) => Object.fromEntries(headers.map((header, index) => [header, record[index]])));
       jsonText = JSON.stringify(rows, null, 2);
       preview.textContent = jsonText.split('\n').slice(0, 40).join('\n');
       metaEl.textContent = `${rows.length} rows converted.`;
@@ -218,6 +199,12 @@
 
     const loadCsv = async (file) => {
       if (!file) return;
+      csvText = '';
+      jsonText = '';
+      convertButton.disabled = true;
+      downloadButton.disabled = true;
+      preview.textContent = '';
+      metaEl.textContent = '';
       try {
         sourceName = file.name.replace(/\.[^.]+$/, '');
         csvText = await file.text();

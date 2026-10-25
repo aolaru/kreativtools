@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Kreativ Tools | Image Tools</title>
@@ -122,18 +123,6 @@
         <h3>Image to WebP</h3>
         <p>Convert JPG, PNG, and other formats into efficient WebP output.</p>
       </a>
-    </section>
-    <section class="article-section page-quality-note" aria-labelledby="qualityNoteTitle">
-      <h2 id="qualityNoteTitle">Before you export an image</h2>
-      <p>Check framing first, then dimensions, then file weight. A smaller image is not automatically better if it loses the detail the destination needs. For product images, thumbnails, and social posts, compare the exported file at the size where it will actually appear.</p>
-      <p>If an upload limit is the main problem, reduce dimensions before lowering quality. If visual clarity is the main problem, keep the quality higher and change the format only after reviewing the preview. For ecommerce and portfolio images, consistent dimensions usually matter as much as raw file size.</p>
-      <ul class="tool-guide-list">
-        <li>Crop before resizing when the frame is wrong.</li>
-        <li>Resize before compressing when the source is much larger than needed.</li>
-        <li>Keep an original copy so you can re-export with a different format or quality setting.</li>
-      </ul>
-      <p>After downloading the result, open it once before using it in a client send, upload form, website, or archive. This final check catches format support issues, unexpected file size changes, missing characters, clipped media, or page-order mistakes while the original file is still available.</p>
-      <p>If the output will be reused, note the settings that produced it. That makes the next export easier to repeat and reduces guesswork when another file needs the same treatment.</p>
     </section>
   </main>
 

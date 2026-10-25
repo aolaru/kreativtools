@@ -70,6 +70,10 @@ Use `npm run sync:site` after shared layout or metadata changes. The sync script
 - normalizes title, description, canonical, Open Graph, and Twitter metadata on public pages
 - applies the shared header and footer markup across canonical pages
 - regenerates legacy `*.html` route aliases as redirect stubs to the clean routes
+- creates per-page Content Security Policies with hashes for each inline script
+- tracks content hashes and publication/modification dates in `scripts/page-dates.json`, so an unchanged page keeps its date
+
+PDF previews, export fonts, the CSV parser, and the font converter are bundled under `vendor/`. After updating their pinned npm versions, run `npm run vendor:build` and include the generated assets and notices. The WOFF2 converter loads its encoder from the bundled WASM file.
 
 Do not manually edit generated headers, footers, metadata, or top-level `*.html` redirect aliases. Change the source layout or metadata in `scripts/sync-site.js`, then run `npm run sync:site` and include the generated files in the same pull request.
 
@@ -107,7 +111,7 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request. In short:
 
 ## Privacy
 
-Kreativ Tools does not load Google Analytics. Cloudflare Web Analytics measures aggregate page visits and performance. Kreativ Tools does not add uploaded files, file contents, or conversion results to its analytics implementation. Theme selection and some workflow settings can be stored locally in the visitor's browser.
+Kreativ Tools does not load Google Analytics. Cloudflare Web Analytics measures aggregate page visits and performance. Kreativ Tools does not add uploaded files, file contents, or conversion results to its analytics implementation. Theme selection and some workflow settings can be stored locally in the visitor's browser. Saving a signature in PDF Fill & Sign also stores its image on that device until the visitor removes it or clears site storage; Start Over does not delete saved signatures.
 
 ## Maintenance mode
 
@@ -131,9 +135,10 @@ Follow the review and archive decision rule in [MAINTENANCE.md](MAINTENANCE.md).
 
 ## Security headers
 
-- `_headers` contains the intended security-header baseline for hosts or CDNs that support Netlify-style header files.
-- GitHub Pages does not serve custom headers from `_headers`; use a CDN/proxy such as Cloudflare if those headers must appear on the live response.
+- `npm run sync:site` generates matching CSP rules in the HTML and `_headers` for hosts that support Netlify-style header files.
+- GitHub Pages enforces the HTML Content Security Policy, which blocks unapproved inline scripts and event handlers. GitHub Pages does not serve custom response headers from `_headers`; response-only protections such as `frame-ancestors`, HSTS, and `nosniff` require a host/CDN configuration.
 - Canonical pages still include a `strict-origin-when-cross-origin` referrer meta tag so the static HTML has a privacy-safe browser fallback.
+- The Pages deployment waits for the reusable test and Lighthouse jobs to pass.
 
 ## Versioning
 

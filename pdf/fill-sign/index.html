@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'sha256-odLbBCQbtuxxKtPE1KYKXxxVdO7WJA03xSi/qrG0WM4='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Kreativ Tools | PDF Fill &amp; Sign</title>
@@ -66,11 +67,11 @@
 
     <section class="upload-card">
       <input id="pdfFillInput" type="file" accept="application/pdf,.pdf" aria-label="Upload file" hidden />
-      <div id="pdfFillDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload a PDF file to fill and sign">
+      <div id="pdfFillDropzone" class="dropzone" role="group" aria-label="Upload a PDF file to fill and sign">
         <div class="drop-icon" aria-hidden="true"></div>
         <button id="pdfFillUploadButton" type="button" class="primary upload-trigger">Upload PDF</button>
         <p>or drag and drop a PDF file here</p>
-        <p class="status">Private by default. Your PDF, text, checkboxes, and signatures stay in this browser session.</p>
+        <p class="status">Files are processed in this browser, not uploaded. Signatures are kept on this device only if you choose Save Signature.</p>
         <p id="pdfFillStatus" class="status">Ready for upload.</p>
       </div>
     </section>
@@ -139,6 +140,7 @@
             <div class="inline-actions">
               <button id="pdfSignatureSaveButton" type="button" class="ghost" disabled>Save Signature</button>
             </div>
+            <p class="status">Saving keeps a copy of this signature image in this browser on this device, including after Start Over or closing the page. Use Remove beside a saved signature to delete it. Avoid saving signatures on a shared computer.</p>
             <div id="pdfSignaturePreviewWrap" class="pdf-signature-preview-wrap" hidden>
               <img id="pdfSignaturePreview" alt="Signature preview" />
             </div>
@@ -211,7 +213,7 @@
         </article>
         <article class="tool-guide-card">
           <h3>Privacy and limits</h3>
-          <p>The PDF, typed text, checkbox positions, and signature image stay in the browser session. Password-protected or damaged PDFs may fail to load.</p>
+          <p>The PDF, typed text, and checkbox positions stay in the browser session. Choosing Save Signature stores a copy of that image on this device until you remove it or clear site data. Password-protected or damaged PDFs may fail to load.</p>
         </article>
         <article class="tool-guide-card">
           <h3>Common issues</h3>
@@ -227,35 +229,11 @@
         </article>
       </div>
     </section>
-
-    <section class="home-panel compact-panel slim-panel workflow-bridge" aria-label="PDF fill and sign guided workflow">
-      <div>
-        <p class="eyebrow">When this becomes repeat work</p>
-        <h2>Need the signed PDF to move through a larger handoff?</h2>
-        <p>PDF Fill &amp; Sign stays free for form overlays. Use PDF Delivery when the same document job also needs queue order, optional splitting, merging, or a final sendable export.</p>
-      </div>
-      <div class="home-section-actions">
-        <a class="primary header-link" href="/pdf/merge/">Merge PDF files</a>
-        <a class="ghost header-link" href="/tools/">Browse focused tools</a>
-      </div>
-    </section>
     <section class="article-section">
       <h2>Example PDF fill and sign jobs</h2>
       <p><strong>Fixed approval form:</strong> add the name, date, checkbox, and signature image, then generate the filled PDF and reopen it once before sending.</p>
       <p><strong>Simple contract note:</strong> place short text overlays where the existing PDF has blank space. Use a dedicated PDF editor if the source text itself needs to be changed.</p>
       <p><strong>Scanned form:</strong> use visible text and checkbox overlays for quick completion, then compress the final PDF if the scanned pages make the export too large.</p>
-    </section>
-    <section class="article-section page-quality-note" aria-labelledby="qualityNoteTitle">
-      <h2 id="qualityNoteTitle">Before you send a PDF</h2>
-      <p>Decide whether the job changes visible content, page order, or file size. Fill and sign before final compression, split before merging if only some pages are needed, and review the exported PDF before sending it to a client, portal, or archive.</p>
-      <p>PDF work often fails when the final destination is ignored. A portal may care about file size, an approval flow may care about signatures, and a handoff may care about page order. Work backward from that requirement and keep the final downloaded file separate from the original.</p>
-      <ul class="tool-guide-list">
-        <li>Keep the source PDF until the export has been checked.</li>
-        <li>Protected or damaged PDFs can fail even when the page loads normally.</li>
-        <li>Compression should be the last step after pages and overlays are final.</li>
-      </ul>
-      <p>After downloading the result, open it once before using it in a client send, upload form, website, or archive. This final check catches format support issues, unexpected file size changes, missing characters, clipped media, or page-order mistakes while the original file is still available.</p>
-      <p>If the output will be reused, note the settings that produced it. That makes the next export easier to repeat and reduces guesswork when another file needs the same treatment.</p>
     </section>
   </main>
 
@@ -305,10 +283,10 @@
 </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+  <script src="../../vendor/fontkit.umd.min.js"></script>
   <script src="../../tool-upload-ui.js"></script>
-  <script>
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+  <script type="module">
+    import { loadPdfPreview } from '../../pdf-engine.mjs';
 
     const pdfFillInput = document.getElementById('pdfFillInput');
     const pdfFillUploadButton = document.getElementById('pdfFillUploadButton');
@@ -409,7 +387,11 @@
     function loadSavedSignatures() {
       try {
         const raw = localStorage.getItem(SAVED_SIGNATURES_KEY);
-        savedSignatures = raw ? JSON.parse(raw) : [];
+        const parsed = raw ? JSON.parse(raw) : [];
+        savedSignatures = Array.isArray(parsed) ? parsed.filter((asset) =>
+          asset && typeof asset.name === 'string' && typeof asset.dataUrl === 'string'
+          && /^data:image\/(png|jpeg);base64,/.test(asset.dataUrl)
+        ).slice(0, 8) : [];
       } catch (error) {
         console.error(error);
         savedSignatures = [];
@@ -451,7 +433,11 @@
 
         const meta = document.createElement('div');
         meta.className = 'queue-item-meta';
-        meta.innerHTML = `<strong>${asset.name}</strong><span>Saved signature</span>`;
+        const name = document.createElement('strong');
+        name.textContent = asset.name;
+        const description = document.createElement('span');
+        description.textContent = 'Saved signature';
+        meta.append(name, description);
 
         const actions = document.createElement('div');
         actions.className = 'queue-actions';
@@ -467,7 +453,7 @@
         const deleteButton = document.createElement('button');
         deleteButton.type = 'button';
         deleteButton.className = 'ghost';
-        deleteButton.textContent = 'Delete';
+        deleteButton.textContent = 'Remove';
         deleteButton.addEventListener('click', () => {
           savedSignatures = savedSignatures.filter((entry) => entry.id !== asset.id);
           persistSavedSignatures();
@@ -600,7 +586,11 @@
           : placement.type === 'checkbox'
             ? 'Checkbox'
             : 'Signature';
-        details.innerHTML = `<strong>Page ${placement.pageIndex + 1}</strong><span>${placementTypeLabel} • ${formatPlacementLabel(placement)}</span>`;
+        const pageLabel = document.createElement('strong');
+        pageLabel.textContent = `Page ${placement.pageIndex + 1}`;
+        const placementLabel = document.createElement('span');
+        placementLabel.textContent = `${placementTypeLabel} • ${formatPlacementLabel(placement)}`;
+        details.append(pageLabel, placementLabel);
 
         const actions = document.createElement('div');
         actions.className = 'queue-actions';
@@ -907,6 +897,19 @@
     }
 
     async function loadPdfFile(file) {
+      const previousPreview = pdfPreviewDoc;
+      pdfPreviewDoc = null;
+      originalBytes = null;
+      placements = [];
+      selectedPlacementId = '';
+      pageState.length = 0;
+      pdfFillPages.replaceChildren();
+      pdfFillPlacementList.replaceChildren();
+      resetExport();
+      pdfFillExportButton.disabled = true;
+      pdfFillWorkspace.classList.add('is-hidden');
+      uploadUi?.clear();
+      if (previousPreview) await previousPreview.destroy();
       const isPdf = file && (file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf'));
       if (!isPdf) {
         setStatus('Please upload a valid PDF file.');
@@ -914,7 +917,7 @@
       }
 
       originalBytes = await file.arrayBuffer();
-      pdfPreviewDoc = await pdfjsLib.getDocument({ data: new Uint8Array(originalBytes.slice(0)) }).promise;
+      pdfPreviewDoc = await loadPdfPreview(new Uint8Array(originalBytes.slice(0))).promise;
       sourceFileName = file.name.replace(/\.pdf$/i, '');
       placements = [];
       selectedPlacementId = '';
@@ -945,7 +948,10 @@
       if (!originalBytes || !placements.length) return;
 
       const pdfDoc = await PDFLib.PDFDocument.load(new Uint8Array(originalBytes.slice(0)), { ignoreEncryption: true });
-      const font = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+      pdfDoc.registerFontkit(window.fontkit);
+      const fontResponse = await fetch(new URL('../../vendor/fonts/NotoSans-Regular.ttf', import.meta.url));
+      if (!fontResponse.ok) throw new Error('The PDF export font could not load. Please try again.');
+      const font = await pdfDoc.embedFont(await fontResponse.arrayBuffer(), { subset: true });
       const imageCache = new Map();
 
       for (const placement of placements) {
@@ -1056,7 +1062,10 @@
       });
     }
 
-    pdfFillUploadButton.addEventListener('click', () => pdfFillInput.click());
+    pdfFillUploadButton.addEventListener('click', (event) => {
+      event.stopPropagation();
+      pdfFillInput.click();
+    });
     pdfFillInput.addEventListener('change', () => handleDrop(pdfFillInput.files));
     pdfFillDropzone.addEventListener('click', () => pdfFillInput.click());
     pdfFillDropzone.addEventListener('dragover', (event) => {

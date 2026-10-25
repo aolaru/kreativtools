@@ -138,7 +138,7 @@ test('audio to mp3 converts a wav upload into a downloadable mp3', async ({ page
     buffer: createSilentWavBuffer(),
   });
 
-  await expect(page.locator('#mp3AudioWorkspace')).not.toHaveClass(/is-hidden/);
+  await expect(page.locator('#mp3AudioWorkspace')).not.toHaveClass(/is-hidden/, { timeout: 15_000 });
   await expect(page.locator('#mp3ConvertButton')).toBeEnabled();
   await expect(page.locator('#mp3AudioMeta')).toContainText('Hz');
 

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'sha256-l0t71OEFdRi3HlXRIGxZvLzPLL+JvA1lQjVQSem4wgg='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Kreativ Tools | PDF Delivery Workflow</title>
@@ -109,7 +110,7 @@
 
     <section class="upload-card">
       <input id="studioPdfInput" type="file" accept="application/pdf,.pdf" multiple aria-label="Upload file" hidden />
-      <div id="studioPdfDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload PDF files for the PDF Delivery workflow">
+      <div id="studioPdfDropzone" class="dropzone" role="group" aria-label="Upload PDF files for the PDF Delivery workflow">
         <div class="drop-icon" aria-hidden="true"></div>
         <button id="studioPdfUploadButton" type="button" class="primary upload-trigger">Upload PDFs</button>
         <p>or drag and drop PDF files here</p>
@@ -335,18 +336,6 @@
           </div>
         </section>
       </div>
-    </section>
-    <section class="article-section page-quality-note" aria-labelledby="qualityNoteTitle">
-      <h2 id="qualityNoteTitle">Before you run a guided workflow</h2>
-      <p>Use a guided workflow when the same job has several ordered steps. The workflow keeps the sequence visible, but the best result still depends on checking each stage before export. If you only need one quick action, use the matching single-purpose tool instead.</p>
-      <p>Workflows are meant for repeatable delivery patterns, not for hiding complexity. If the same image, PDF, or audio preparation job happens often, save the settings and reuse the sequence. If the job changes every time, use the individual tools so each decision stays visible.</p>
-      <ul class="tool-guide-list">
-        <li>Load the source file once, then move through the steps in order.</li>
-        <li>Save defaults only after the settings match a repeat job.</li>
-        <li>Review the final export before reusing the workflow for a batch of similar files.</li>
-      </ul>
-      <p>After downloading the result, open it once before using it in a client send, upload form, website, or archive. This final check catches format support issues, unexpected file size changes, missing characters, clipped media, or page-order mistakes while the original file is still available.</p>
-      <p>If the output will be reused, note the settings that produced it. That makes the next export easier to repeat and reduces guesswork when another file needs the same treatment.</p>
     </section>
 
   </main>

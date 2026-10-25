@@ -2,9 +2,7 @@ name: Test
 
 on:
   pull_request:
-  push:
-    branches:
-      - main
+  workflow_call:
   workflow_dispatch:
 
 permissions:
@@ -30,7 +28,7 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Check generated files
-        run: npm run sync:site && git diff --exit-code
+        run: npm run vendor:build && npm run sync:site && git diff --exit-code
 
       - name: Run test suite
         run: npm test

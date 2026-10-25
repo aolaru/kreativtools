@@ -155,7 +155,10 @@ main() {
   expect_pattern "pdf/fill-sign/index.html" 'id="pdfFillToolCheckbox"'
   expect_pattern "pdf/fill-sign/index.html" 'id="pdfSignatureSaveButton"'
   expect_pattern "pdf/fill-sign/index.html" 'id="pdfSavedSignatureList"'
-  expect_pattern "pdf/fill-sign/index.html" 'pdfjs-dist@3\.11\.174'
+  expect_pattern "pdf/fill-sign/index.html" 'pdf-engine\.mjs'
+  expect_pattern "pdf-engine.mjs" 'isEvalSupported: false'
+  expect_file "vendor/pdfjs/pdf.min.mjs"
+  expect_file "vendor/pdfjs/pdf.worker.min.mjs"
   expect_pattern "pdf/to-docx/index.html" 'id="pdfDocxInput"'
   expect_pattern "pdf/to-docx/index.html" 'id="pdfDocxConvertButton"'
   expect_pattern "pdf/to-docx/index.html" 'id="pdfDocxDownloadButton"'
@@ -182,9 +185,9 @@ main() {
   expect_pattern "workflows/index.html" '<h1>Archived Guided Workflows</h1>'
   expect_pattern "workflows/index.html" 'When should I use an archived workflow\\?'
   expect_pattern "workflows/index.html" 'Use a quick tool instead'
-  expect_pattern "workflows/pricing/index.html" '<meta name="robots" content="noindex, follow"'
+  expect_pattern "workflows/pricing/index.html" '<meta name="robots" content="noindex, nofollow"'
   expect_pattern "workflows/pricing/index.html" '<link rel="canonical" href="https://kreativtools\.com/workflows/"'
-  expect_pattern "workflows/pricing/index.html" "window.location.replace\\('/workflows/'\\)"
+  expect_pattern "workflows/pricing/index.html" 'window.location.replace\("/workflows/"\)'
   expect_pattern "workflows/image-prep/index.html" 'workflows-template-ui\.js'
   expect_pattern "workflows/pdf-delivery/index.html" 'workflows-template-ui\.js'
   expect_pattern "workflows/audio-delivery/index.html" 'workflows-template-ui\.js'

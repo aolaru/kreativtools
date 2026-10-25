@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>XML Export Troubleshooting | Kreativ Tools Learn</title>
-  <meta name="description" content="Troubleshoot XML exports before converting repeated records to CSV for spreadsheet review. Includes local parsing, preview checks, and import-ready export guidance." />
+  <meta name="description" content="Troubleshoot XML exports before converting repeated records to CSV for spreadsheet review." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://kreativtools.com/learn/xml-export-troubleshooting/" />
   <meta property="og:title" content="XML Export Troubleshooting | Kreativ Tools Learn" />
-  <meta property="og:description" content="Troubleshoot XML exports before converting repeated records to CSV for spreadsheet review. Includes local parsing, preview checks, and import-ready export guidance." />
+  <meta property="og:description" content="Troubleshoot XML exports before converting repeated records to CSV for spreadsheet review." />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://kreativtools.com/learn/xml-export-troubleshooting/" />
   <meta property="og:image" content="https://kreativtools.com/og-image.png" />
@@ -19,7 +20,7 @@
   <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and focused browser-based creative tools" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="XML Export Troubleshooting | Kreativ Tools Learn" />
-  <meta name="twitter:description" content="Troubleshoot XML exports before converting repeated records to CSV for spreadsheet review. Includes local parsing, preview checks, and import-ready export guidance." />
+  <meta name="twitter:description" content="Troubleshoot XML exports before converting repeated records to CSV for spreadsheet review." />
   <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
   <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and focused browser-based creative tools" />
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
@@ -28,7 +29,7 @@
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../../styles.css" />
-  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"Article","headline":"XML Export Troubleshooting","description":"Troubleshoot XML exports before converting repeated records to CSV for spreadsheet review. Includes local parsing, preview checks, and import-ready export guidance.","url":"https://kreativtools.com/learn/xml-export-troubleshooting/","image":"https://kreativtools.com/og-image.png","datePublished":"2026-07-15","dateModified":"2026-07-15","author":{"@type":"Person","name":"Andrei Olaru"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Learn","item":"https://kreativtools.com/learn/"},{"@type":"ListItem","position":3,"name":"XML Export Troubleshooting","item":"https://kreativtools.com/learn/xml-export-troubleshooting/"}]}]</script>
+  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"Article","headline":"XML Export Troubleshooting","description":"Troubleshoot XML exports before converting repeated records to CSV for spreadsheet review.","url":"https://kreativtools.com/learn/xml-export-troubleshooting/","image":"https://kreativtools.com/og-image.png","datePublished":"2026-03-19","dateModified":"2026-10-25","author":{"@type":"Person","name":"Andrei Olaru"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Learn","item":"https://kreativtools.com/learn/"},{"@type":"ListItem","position":3,"name":"XML Export Troubleshooting","item":"https://kreativtools.com/learn/xml-export-troubleshooting/"}]}]</script>
   <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"f7acecd16c454cfbbb4704b4e665a173"}'></script>
 </head>
 <body>
@@ -61,9 +62,8 @@
       <p>XML exports are easiest to convert when the file has repeated records with the same fields. Problems usually come from mixed structures, namespaces, missing values, or one-off wrapper elements.</p>
       <div class="article-meta"><span class="article-pill">4 minute read</span><span class="article-pill">XML to CSV</span></div>
       <div class="article-trust-meta" aria-label="Article information">
-        <span>Updated July 15, 2026</span>
+        <span>Updated October 25, 2026</span>
         <span>By Andrei Olaru</span>
-        <span>Reviewed for browser-tool accuracy</span>
       </div>
     </section>
     <section class="article-section">
@@ -85,18 +85,6 @@
     <section class="tool-intro" aria-label="Next steps">
       <div class="tool-intro-card"><h2>Convert XML</h2><p>Use <a href="/file/xml-to-csv/">XML to CSV</a> when the record structure is clear.</p></div>
       <div class="tool-intro-card"><h2>CSV cleanup</h2><p>Read <a href="/learn/clean-csv-before-import/">Clean CSV Before Import</a> before uploading converted rows.</p></div>
-    </section>
-    <section class="article-section page-quality-note" aria-labelledby="qualityNoteTitle">
-      <h2 id="qualityNoteTitle">Before you convert data files</h2>
-      <p>Data converters are most reliable when the source file is clean before conversion. Check headers, repeated records, delimiters, blank rows, and unexpected nested fields. A converter can preserve structure, but it cannot know the meaning of unclear source data.</p>
-      <p>Before using the export in another system, compare a few rows against the source file. Look for shifted columns, empty fields, escaped quotes, and values that should stay as text, such as IDs or postal codes. Small cleanup before conversion prevents larger import mistakes later.</p>
-      <ul class="tool-guide-list">
-        <li>Keep headers unique and stable.</li>
-        <li>Preview row counts before using the export elsewhere.</li>
-        <li>Save the original file before cleaning or converting it.</li>
-      </ul>
-      <p>After downloading the result, open it once before using it in a client send, upload form, website, or archive. This final check catches format support issues, unexpected file size changes, missing characters, clipped media, or page-order mistakes while the original file is still available.</p>
-      <p>If the output will be reused, note the settings that produced it. That makes the next export easier to repeat and reduces guesswork when another file needs the same treatment.</p>
     </section>
   </main>
   <footer class="site-footer">

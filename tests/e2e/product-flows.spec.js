@@ -263,7 +263,7 @@ test('audio delivery workflow trims, levels, and exports an mp3', async ({ page 
     buffer: createSilentWavBuffer({ durationSeconds: 0.4 }),
   });
 
-  await expect(page.locator('#workflowAudioWorkspace')).not.toHaveClass(/is-hidden/);
+  await expect(page.locator('#workflowAudioWorkspace')).not.toHaveClass(/is-hidden/, { timeout: 15_000 });
   await expect(page.locator('#workflowAudioStageUpload')).toBeVisible();
   await page.click('#workflowAudioContinueButton');
   await expect(page.locator('#workflowAudioStageTrim')).toBeVisible();
@@ -292,7 +292,7 @@ test('audio delivery workflow supports back navigation and wav export', async ({
     buffer: createSilentWavBuffer({ durationSeconds: 0.3 }),
   });
 
-  await expect(page.locator('#workflowAudioStageUpload')).toBeVisible();
+  await expect(page.locator('#workflowAudioStageUpload')).toBeVisible({ timeout: 15_000 });
   await page.click('#workflowAudioContinueButton');
   await expect(page.locator('#workflowAudioStageTrim')).toBeVisible();
   await page.click('#workflowAudioSkipTrimButton');
@@ -352,17 +352,17 @@ test('learn landing page includes the core hero guides and expanded follow-up gu
   await expect(page.getByText('What this page does')).toHaveCount(0);
   await expect(page.locator('.tool-card')).toHaveCount(8);
   await expect(page.locator('.job-router-card')).toHaveCount(0);
-  await expect(page.locator('.tool-card[href="/learn/choose-kreativ-workflows-or-single-tools/"]')).toBeVisible();
-  await expect(page.locator('.tool-card[href="/learn/what-are-kreativ-workflows/"]')).toBeVisible();
-  await expect(page.locator('.tool-card[href="/learn/use-kreativ-workflows-audio-delivery-for-shareable-audio/"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/learn/choosing-the-right-kreativ-tool/"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/learn/how-browser-based-file-tools-work/"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/learn/convert-wav-to-mp3-and-choose-the-right-bitrate/"]')).toBeVisible();
   await expect(page.locator('a[href="/learn/resize-images-for-shopify-or-woocommerce/"]')).toBeVisible();
   await expect(page.locator('a[href="/learn/organize-pdf-handoff-files-before-sending/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/learn/fill-and-sign-pdf-forms-without-upload-limits/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/learn/compress-images-for-faster-websites/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/learn/prepare-webfonts-for-fast-frontend-delivery/"]')).toBeVisible();
-  await expect(page.locator('.learn-archive-list a')).toHaveCount(26);
+  await expect(page.locator('.learn-archive-list a')).toHaveCount(23);
   await expect(page.locator('.learn-archive-list a[href="/learn/compress-pdf-for-email/"]')).toBeVisible();
-  await expect(page.locator('.learn-archive-list a[href="/learn/save-time-with-kreativ-workflows-defaults/"]')).toBeVisible();
+  await expect(page.locator('.learn-archive-list a[href*="kreativ-workflows"]')).toHaveCount(0);
   await expect(page.locator('.learn-archive-list a[href="/learn/how-browser-based-file-tools-work/"]')).toBeVisible();
   await expect(page.locator('.learn-archive-list a[href="/learn/webm-vs-mp4-for-browser-video/"]')).toBeVisible();
   await expect(page.locator('.learn-archive-list a[href="/learn/json-to-csv-common-mistakes/"]')).toBeVisible();

@@ -6,7 +6,7 @@
   --text: #101725;
   --muted: #5f6c80;
   --outline: #d7e0eb;
-  --accent: #2589d8;
+  --accent: #176eb1;
   --accent-dark: #1d6fb0;
 }
 
@@ -503,6 +503,17 @@ button:disabled {
 
 .primary.header-link:hover {
   background: linear-gradient(135deg, var(--accent-dark) 0%, #14598f 100%);
+}
+
+[data-theme='dark'] .primary,
+[data-theme='dark'] .primary.header-link {
+  background: #4aa9f5;
+  color: #101725;
+}
+
+[data-theme='dark'] .primary:hover:enabled,
+[data-theme='dark'] .primary.header-link:hover {
+  background: #6bb7ff;
 }
 
 .ghost.header-link {
@@ -3129,7 +3140,7 @@ input[type='range'] {
 
 .footer-about p {
   margin: 0;
-  color: #69778c;
+  color: #536176;
   font-size: 1.02rem;
   line-height: 1.55;
   max-width: 420px;
@@ -3179,7 +3190,7 @@ input[type='range'] {
 }
 
 .site-footer a {
-  color: #6f7b8f;
+  color: #536176;
   text-decoration: none;
   font-size: 1rem;
   line-height: 1.45;
@@ -3209,7 +3220,7 @@ input[type='range'] {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  color: #6f7b8f;
+  color: #536176;
   font-size: 0.96rem;
   text-align: center;
 }

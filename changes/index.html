@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'sha256-IfI37InMOqCTo41nsxnR+tzkN2DJSgoqfRNPud0lFpU='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Kreativ Tools Updates | Releases and Changelog</title>
-  <meta name="description" content="Track product direction, release highlights, and the archived changelog for Kreativ Tools and Kreativ Workflows. Includes next-step links and privacy." />
+  <meta name="description" content="Track product direction, release highlights, and the archived changelog for Kreativ Tools and Kreativ Workflows." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://kreativtools.com/changes/" />
   <meta property="og:title" content="Kreativ Tools Updates | Releases and Changelog" />
-  <meta property="og:description" content="Track product direction, release highlights, and the archived changelog for Kreativ Tools and Kreativ Workflows. Includes next-step links and privacy." />
+  <meta property="og:description" content="Track product direction, release highlights, and the archived changelog for Kreativ Tools and Kreativ Workflows." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://kreativtools.com/changes/" />
   <meta property="og:image" content="https://kreativtools.com/og-image.png" />
@@ -19,7 +20,7 @@
   <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and focused browser-based creative tools" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Kreativ Tools Updates | Releases and Changelog" />
-  <meta name="twitter:description" content="Track product direction, release highlights, and the archived changelog for Kreativ Tools and Kreativ Workflows. Includes next-step links and privacy." />
+  <meta name="twitter:description" content="Track product direction, release highlights, and the archived changelog for Kreativ Tools and Kreativ Workflows." />
   <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
   <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and focused browser-based creative tools" />
   <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
@@ -28,7 +29,7 @@
   <link rel="apple-touch-icon" href="../apple-touch-icon.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../styles.css" />
-  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebPage","name":"Kreativ Tools Updates | Releases and Changelog","url":"https://kreativtools.com/changes/","description":"Track product direction, release highlights, and the archived changelog for Kreativ Tools and Kreativ Workflows. Includes next-step links and privacy."},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Kreativ Tools Updates | Releases and Changelog","item":"https://kreativtools.com/changes/"}]}]</script>
+  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebPage","name":"Kreativ Tools Updates | Releases and Changelog","url":"https://kreativtools.com/changes/","description":"Track product direction, release highlights, and the archived changelog for Kreativ Tools and Kreativ Workflows."},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Kreativ Tools Updates | Releases and Changelog","item":"https://kreativtools.com/changes/"}]}]</script>
   <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"f7acecd16c454cfbbb4704b4e665a173"}'></script>
 </head>
 <body>
@@ -61,13 +62,13 @@
     <section class="hero">
       <p class="eyebrow">Product Updates</p>
       <h1>Latest Updates</h1>
-      <p>Use this page as the product log. For the right tool or workflow, go to Learn or the Tools directory instead of reading the changelog first.</p>
+      <p>Recent fixes and changes to the free browser tools. Older releases are kept below for reference.</p>
       <div class="article-meta">
         <span class="article-pill">Curated recent highlights</span>
         <span class="article-pill">Older launch log archived below</span>
       </div>
       <div class="hero-actions">
-        <a class="ghost header-link" href="/learn/what-are-kreativ-workflows/">Read the Workflows launch guide</a>
+        <a class="ghost header-link" href="/learn/choosing-the-right-kreativ-tool/">Choose a tool</a>
         <a class="ghost header-link" href="/tools/">Browse Tools</a>
       </div>
     </section>
@@ -75,28 +76,31 @@
     <section class="home-band" aria-label="Recent update highlights">
       <article class="home-band-card">
         <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
-        <h2>Workflows are now free</h2>
-        <p>Kreativ Workflows now opens directly as a free guided layer for repeat image, PDF, and audio delivery jobs.</p>
+        <h2>Safer PDF editing</h2>
+        <p>PDF previews use an updated local renderer. Fill &amp; Sign exports Romanian names correctly and makes saved-signature storage clearer.</p>
       </article>
       <article class="home-band-card">
         <i class="fa-solid fa-toolbox" aria-hidden="true"></i>
-        <h2>The Tools directory is simpler</h2>
-        <p>The Tools page now starts with search and filters instead of competing shortcut sections.</p>
+        <h2>More reliable conversions</h2>
+        <p>CSV conversion preserves quoted multiline fields, webfont conversion exports WOFF2, and generated font CSS uses the correct format.</p>
       </article>
       <article class="home-band-card">
         <i class="fa-solid fa-book-open" aria-hidden="true"></i>
-        <h2>Priority tool pages got practical guides</h2>
-        <p>High-value tool pages now explain use cases, supported files, privacy, limits, issues, and next steps.</p>
+        <h2>Clearer controls and guides</h2>
+        <p>Upload buttons open once, text is easier to read, and Learn points to the tools that remain supported.</p>
       </article>
     </section>
 
     <section class="upload-card">
       <div class="home-section-heading">
         <p class="eyebrow">Recent Log</p>
-        <h2>The newest product moves stay visible first.</h2>
-        <p>Older launch details are still kept below, but the top of this page now stays focused on the recent direction.</p>
+        <h2>Recent maintenance</h2>
+        <p>The existing tools remain free and online. New product development is paused.</p>
       </div>
       <div class="changelog-list">
+        <p>2026-10-25 FIX - Updated PDF preview security, protected text and saved-signature labels, and added Romanian character support to filled PDF exports. The upload picker now opens once per click.</p>
+        <p>2026-10-25 FIX - Corrected multiline CSV parsing, cleared previous data-conversion results when loading replacement files, restored WOFF2 export, and fixed webfont format labels in generated CSS.</p>
+        <p>2026-10-25 UPDATE - Improved text contrast and upload accessibility, explained saved-signature storage, removed stale workflow promotions and repeated guidance, and made page dates reflect actual changes. Publishing now waits for automated tests and Lighthouse checks.</p>
         <p>2026-09-28 UPDATE - Simplified the public tool journey around focused browser tools. Guided workflow routes remain available for existing links but are no longer promoted or indexed while the site is in maintenance mode.</p>
         <p>2026-08-18 UPDATE - Added Cloudflare Web Analytics for aggregate page and performance measurement. The Kreativ Tools analytics implementation does not add tool files or conversion results to the analytics payload.</p>
         <p>2026-08-18 UPDATE - Moved Kreativ Tools into maintenance mode. The existing browser tools remain free and online; new tool, monetization, and editorial expansion work is paused while the site is reused where it supports other Kreativ projects.</p>

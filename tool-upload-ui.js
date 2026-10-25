@@ -36,6 +36,12 @@
     const uploadCard = dropzone.closest('.upload-card');
     if (!uploadCard) return null;
 
+    // Upload buttons handle their own activation; do not also activate the dropzone.
+    dropzone.querySelectorAll('button').forEach((button) => {
+      button.addEventListener('click', (event) => event.stopPropagation());
+      button.addEventListener('keydown', (event) => event.stopPropagation());
+    });
+
     const bar = uploadCard.querySelector('.loaded-file-bar') || createLoadedBar(uploadCard);
     const nameEl = bar.querySelector('.loaded-file-copy strong');
     const metaEl = bar.querySelector('.loaded-file-copy span');

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'sha256-1zftYC8tZmQ/OYAg3Mf6YczHJTTpb5DPGwLwzpZNjFM='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Kreativ Tools | Font to Webfont</title>
@@ -66,7 +67,7 @@
 
     <section class="upload-card">
       <input id="fontInput" type="file" accept=".ttf,.otf,font/ttf,font/otf" aria-label="Upload file" hidden />
-      <div id="fontDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload font file">
+      <div id="fontDropzone" class="dropzone" role="group" aria-label="Upload font file">
         <div class="drop-icon" aria-hidden="true"></div>
         <button id="fontUploadButton" type="button" class="primary upload-trigger">Upload Font</button>
         <p>or drag and drop a .ttf or .otf file here</p>
@@ -142,18 +143,6 @@
       <p><strong>Legacy browser fallback:</strong> export WOFF2 first and WOFF only when the project support list requires it.</p>
       <p><strong>Design review:</strong> preview headings, numbers, and brand words before publishing the converted font to a live site.</p>
     </section>
-    <section class="article-section page-quality-note" aria-labelledby="qualityNoteTitle">
-      <h2 id="qualityNoteTitle">Before you ship webfonts</h2>
-      <p>A font file can convert successfully and still be wrong for a website if the license, character coverage, weight selection, or CSS loading strategy is not ready. Test headings, body copy, numbers, and accented characters before publishing.</p>
-      <p>Treat conversion as one part of the webfont job. The final setup also needs correct file paths, fallback fonts, caching, and a font-display choice that matches the site. If the font is only used for headings, avoid shipping unnecessary weights that slow down every page.</p>
-      <ul class="tool-guide-list">
-        <li>Confirm the license allows web use.</li>
-        <li>Ship only the weights and styles the site needs.</li>
-        <li>Use CSS with sensible fallback fonts and a clear font-display choice.</li>
-      </ul>
-      <p>After downloading the result, open it once before using it in a client send, upload form, website, or archive. This final check catches format support issues, unexpected file size changes, missing characters, clipped media, or page-order mistakes while the original file is still available.</p>
-      <p>If the output will be reused, note the settings that produced it. That makes the next export easier to repeat and reduces guesswork when another file needs the same treatment.</p>
-    </section>
   </main>
 
   <footer class="site-footer">
@@ -203,7 +192,7 @@
 
   <script src="../../tool-upload-ui.js"></script>
   <script type="module">
-    import * as FontEditorModule from 'https://cdn.jsdelivr.net/npm/fonteditor-core@2.6.3/+esm';
+    import { createFont, woff2, deflate } from '../../vendor/fonteditor/font-editor.mjs';
 
     const fontInput = document.getElementById('fontInput');
     const uploadButton = document.getElementById('fontUploadButton');
@@ -243,7 +232,7 @@
     };
 
     const loadFontFile = (file) => {
-      const detected = inferInputType(file);
+      const detected = file && inferInputType(file);
       if (!file || !detected) {
         setStatus('Please upload a .ttf or .otf font file.');
         return;
@@ -275,19 +264,16 @@
         return;
       }
 
-      const fontEditor = FontEditorModule.default || FontEditorModule;
-      if (!fontEditor || typeof fontEditor.createFont !== 'function') {
-        setStatus('Font engine failed to load. Refresh and try again.');
-        return;
-      }
-
       const outputType = outputFormatEl.value;
       convertButton.disabled = true;
       setStatus(`Converting to ${outputType.toUpperCase()}...`);
 
       try {
         const sourceBuffer = await selectedFile.arrayBuffer();
-        const font = fontEditor.createFont(sourceBuffer, {
+        if (outputType === 'woff2') {
+          await woff2.init(new URL('../../vendor/fonteditor/woff2.wasm', import.meta.url).href);
+        }
+        const font = createFont(sourceBuffer, {
           type: inputType,
           hinting: true,
           compound2simple: false,
@@ -296,6 +282,7 @@
         const outputBuffer = font.write({
           type: outputType,
           hinting: true,
+          deflate,
         });
 
         const outputName = `${selectedFile.name.replace(/\.[^.]+$/, '')}.${outputType}`;
@@ -303,12 +290,8 @@
         downloadBuffer(outputBuffer, outputName, mime);
         setStatus(`Downloaded ${outputName}`);
       } catch (error) {
-        const isWoff2 = outputType === 'woff2';
-        setStatus(
-          isWoff2
-            ? 'WOFF2 conversion is not supported in this browser build. Try WOFF.'
-            : 'Conversion failed for this font. Try another file.'
-        );
+        console.error(error);
+        setStatus('Conversion failed. Check the font file or try WOFF if WOFF2 could not load.');
       } finally {
         convertButton.disabled = false;
       }

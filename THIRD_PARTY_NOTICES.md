@@ -6,14 +6,21 @@ Kreativ Tools uses the following third-party software in the browser. This file 
 | --- | --- | --- | --- |
 | [Font Awesome Free](https://fontawesome.com/) | 6.7.2, loaded from cdnjs | See upstream terms | Interface icons and stylesheet |
 | [pdf-lib](https://github.com/Hopding/pdf-lib) | 1.17.1 | MIT | PDF creation and editing |
-| [PDF.js](https://github.com/mozilla/pdf.js) | 3.11.174 | Apache-2.0 | PDF rendering and preview |
+| [PDF.js](https://github.com/mozilla/pdf.js) | 5.4.296, bundled under `vendor/pdfjs/` | Apache-2.0 | PDF rendering and preview |
+| [fontkit](https://github.com/Hopding/fontkit) | @pdf-lib/fontkit 1.1.1, bundled | MIT | Unicode PDF export font support |
+| [Noto Sans](https://github.com/notofonts/noto-fonts) | bundled regular TTF | SIL Open Font License 1.1 | PDF text export |
+| [Papa Parse](https://github.com/mholt/PapaParse) | 5.5.3, bundled | MIT | Quoted and multiline CSV parsing |
 | [JSZip](https://github.com/Stuk/jszip) | 3.10.1 | MIT OR GPL-3.0-or-later | DOCX archive creation |
 | [jsPDF](https://github.com/parallax/jsPDF) | 2.5.1 | MIT | PDF export |
-| [fonteditor-core](https://github.com/kekee000/fonteditor-core) | 2.6.3 | MIT | Webfont conversion |
+| [fonteditor-core](https://github.com/kekee000/fonteditor-core) | 2.6.3, bundled with WOFF2 WASM | MIT | Webfont conversion |
+| [pako](https://github.com/nodeca/pako) | 2.1.0, bundled | MIT AND Zlib | WOFF compression |
+| [xmldom](https://github.com/xmldom/xmldom) | bundled dependency; see package-lock.json | MIT | Font editor XML support |
 | [LameJS](https://github.com/zhuker/lamejs) | bundled as `audio/lame.min.js` | LGPL-3.0 | MP3 encoding |
 
 ## Redistribution notes
 
 - CDN imports are third-party distributions. Forks should pin and review every external URL before production use.
+- Bundled dependency versions are locked in `package-lock.json`. Rebuild them with `npm run vendor:build`. Licenses are retained under `vendor/`.
+- The WOFF2 bundle replaces its three dynamic JavaScript binding factories with static argument-forwarding and type-conversion wrappers so it works with a Content Security Policy that blocks JavaScript eval. The transformation is recorded in `scripts/vendor-dependencies.js`.
 - `audio/lame.min.js` is a minified LameJS distribution. Its upstream LGPL-3.0 obligations apply, including providing access to the corresponding source when required. The corresponding upstream source is available from the [LameJS repository](https://github.com/zhuker/lamejs).
 - This notice does not replace upstream license texts or obligations. Anyone redistributing a fork is responsible for confirming license compatibility and preserving required notices.

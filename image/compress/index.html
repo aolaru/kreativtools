@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'sha256-U4v2YjCQEIu7TgGN0EbUUCnpHOFdMXtRtXyWWrp48wE='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Kreativ Tools | Image Compress</title>
-  <meta name="description" content="Compress images in your browser by adjusting quality and exporting optimized JPG, PNG, WebP, or AVIF files. Includes next-step links and privacy." />
+  <meta name="description" content="Compress images in your browser by adjusting quality and exporting optimized JPG, PNG, WebP, or AVIF files." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://kreativtools.com/image/compress/" />
   <meta property="og:title" content="Kreativ Tools | Image Compress" />
-  <meta property="og:description" content="Compress images in your browser by adjusting quality and exporting optimized JPG, PNG, WebP, or AVIF files. Includes next-step links and privacy." />
+  <meta property="og:description" content="Compress images in your browser by adjusting quality and exporting optimized JPG, PNG, WebP, or AVIF files." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://kreativtools.com/image/compress/" />
   <meta property="og:image" content="https://kreativtools.com/og-image.png" />
@@ -19,7 +20,7 @@
   <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and focused browser-based creative tools" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Kreativ Tools | Image Compress" />
-  <meta name="twitter:description" content="Compress images in your browser by adjusting quality and exporting optimized JPG, PNG, WebP, or AVIF files. Includes next-step links and privacy." />
+  <meta name="twitter:description" content="Compress images in your browser by adjusting quality and exporting optimized JPG, PNG, WebP, or AVIF files." />
   <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
   <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and focused browser-based creative tools" />
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
@@ -28,7 +29,7 @@
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../../styles.css" />
-  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Image Compress","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/image/compress/","description":"Compress images in your browser by adjusting quality and exporting optimized JPG, PNG, WebP, or AVIF files. Includes next-step links and privacy.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Image Tools","item":"https://kreativtools.com/image/"},{"@type":"ListItem","position":3,"name":"Image Compress","item":"https://kreativtools.com/image/compress/"}]}]</script>
+  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Image Compress","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/image/compress/","description":"Compress images in your browser by adjusting quality and exporting optimized JPG, PNG, WebP, or AVIF files.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Image Tools","item":"https://kreativtools.com/image/"},{"@type":"ListItem","position":3,"name":"Image Compress","item":"https://kreativtools.com/image/compress/"}]}]</script>
   <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"f7acecd16c454cfbbb4704b4e665a173"}'></script>
 </head>
 <body>
@@ -66,7 +67,7 @@
 
     <section class="upload-card">
       <input id="compressImageInput" type="file" accept="image/*,.avif,.gif,.bmp,.tif,.tiff" aria-label="Upload file" hidden />
-      <div id="compressDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload image for compression">
+      <div id="compressDropzone" class="dropzone" role="group" aria-label="Upload image for compression">
         <div class="drop-icon" aria-hidden="true"></div>
         <button id="compressUploadButton" type="button" class="primary upload-trigger">Upload Image</button>
         <p>or drag and drop an image here</p>
@@ -156,35 +157,11 @@
       </div>
     </section>
 
-    <section class="home-panel compact-panel slim-panel workflow-bridge" aria-label="Image compress guided workflow">
-      <div>
-        <p class="eyebrow">When this becomes repeat work</p>
-        <h2>Need framing, dimensions, and compression in one pass?</h2>
-        <p>Image Compress stays right for one quick size reduction. Use Image Prep when the same delivery job also needs crop, resize, format choice, and one guided export path.</p>
-      </div>
-      <div class="home-section-actions">
-        <a class="primary header-link" href="/image/resize/">Resize an image</a>
-        <a class="ghost header-link" href="/tools/">Browse focused tools</a>
-      </div>
-    </section>
-
     <section class="article-section">
       <h2>Example image compression jobs</h2>
       <p><strong>Store product photo:</strong> resize the image to the storefront display size first, then compress to WebP or JPG so the product page loads faster without wasting pixels.</p>
       <p><strong>Support screenshot:</strong> keep the screenshot readable, lower quality only enough to fit chat or email limits, and avoid PNG if the file is mostly photographic.</p>
       <p><strong>Blog graphic:</strong> compress after the final crop and dimensions are set. If the image still feels too heavy, reduce physical dimensions before lowering quality again.</p>
-    </section>
-    <section class="article-section page-quality-note" aria-labelledby="qualityNoteTitle">
-      <h2 id="qualityNoteTitle">Before you export an image</h2>
-      <p>Check framing first, then dimensions, then file weight. A smaller image is not automatically better if it loses the detail the destination needs. For product images, thumbnails, and social posts, compare the exported file at the size where it will actually appear.</p>
-      <p>If an upload limit is the main problem, reduce dimensions before lowering quality. If visual clarity is the main problem, keep the quality higher and change the format only after reviewing the preview. For ecommerce and portfolio images, consistent dimensions usually matter as much as raw file size.</p>
-      <ul class="tool-guide-list">
-        <li>Crop before resizing when the frame is wrong.</li>
-        <li>Resize before compressing when the source is much larger than needed.</li>
-        <li>Keep an original copy so you can re-export with a different format or quality setting.</li>
-      </ul>
-      <p>After downloading the result, open it once before using it in a client send, upload form, website, or archive. This final check catches format support issues, unexpected file size changes, missing characters, clipped media, or page-order mistakes while the original file is still available.</p>
-      <p>If the output will be reused, note the settings that produced it. That makes the next export easier to repeat and reduces guesswork when another file needs the same treatment.</p>
     </section>
   </main>
 

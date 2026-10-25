@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'sha256-SgcZZ+VIVp65ikKg7PrfzuUAx4YDje/EUGTYRmaDPWk='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Kreativ Tools | PDF Split</title>
-  <meta name="description" content="Split one PDF into separate PDF files by page ranges directly in your browser. Includes private browser handling, local export, and final-file checks." />
+  <meta name="description" content="Split one PDF into separate PDF files by page ranges directly in your browser." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://kreativtools.com/pdf/split/" />
   <meta property="og:title" content="Kreativ Tools | PDF Split" />
-  <meta property="og:description" content="Split one PDF into separate PDF files by page ranges directly in your browser. Includes private browser handling, local export, and final-file checks." />
+  <meta property="og:description" content="Split one PDF into separate PDF files by page ranges directly in your browser." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://kreativtools.com/pdf/split/" />
   <meta property="og:image" content="https://kreativtools.com/og-image.png" />
@@ -19,7 +20,7 @@
   <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and focused browser-based creative tools" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Kreativ Tools | PDF Split" />
-  <meta name="twitter:description" content="Split one PDF into separate PDF files by page ranges directly in your browser. Includes private browser handling, local export, and final-file checks." />
+  <meta name="twitter:description" content="Split one PDF into separate PDF files by page ranges directly in your browser." />
   <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
   <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and focused browser-based creative tools" />
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
@@ -28,7 +29,7 @@
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../../styles.css" />
-  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"PDF Split","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/pdf/split/","description":"Split one PDF into separate PDF files by page ranges directly in your browser. Includes private browser handling, local export, and final-file checks.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"PDF Tools","item":"https://kreativtools.com/pdf/"},{"@type":"ListItem","position":3,"name":"PDF Split","item":"https://kreativtools.com/pdf/split/"}]}]</script>
+  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"PDF Split","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/pdf/split/","description":"Split one PDF into separate PDF files by page ranges directly in your browser.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kreativ Tools","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"PDF Tools","item":"https://kreativtools.com/pdf/"},{"@type":"ListItem","position":3,"name":"PDF Split","item":"https://kreativtools.com/pdf/split/"}]}]</script>
   <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"f7acecd16c454cfbbb4704b4e665a173"}'></script>
 </head>
 <body>
@@ -66,7 +67,7 @@
 
     <section class="upload-card">
       <input id="splitPdfInput" type="file" accept="application/pdf,.pdf" aria-label="Upload file" hidden />
-      <div id="splitPdfDropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload a PDF file">
+      <div id="splitPdfDropzone" class="dropzone" role="group" aria-label="Upload a PDF file">
         <div class="drop-icon" aria-hidden="true"></div>
         <button id="splitPdfUploadButton" type="button" class="primary upload-trigger">Upload PDF</button>
         <p>or drag and drop a PDF file here</p>
@@ -160,18 +161,6 @@
         <li><strong>Can I create multiple outputs at once?</strong> Yes. Add one custom range per line to create several PDFs in one run.</li>
         <li><strong>Does the tool change the page content?</strong> No. It is designed to separate pages into new PDF files, not edit the page content itself.</li>
       </ul>
-    </section>
-    <section class="article-section page-quality-note" aria-labelledby="qualityNoteTitle">
-      <h2 id="qualityNoteTitle">Before you send a PDF</h2>
-      <p>Decide whether the job changes visible content, page order, or file size. Fill and sign before final compression, split before merging if only some pages are needed, and review the exported PDF before sending it to a client, portal, or archive.</p>
-      <p>PDF work often fails when the final destination is ignored. A portal may care about file size, an approval flow may care about signatures, and a handoff may care about page order. Work backward from that requirement and keep the final downloaded file separate from the original.</p>
-      <ul class="tool-guide-list">
-        <li>Keep the source PDF until the export has been checked.</li>
-        <li>Protected or damaged PDFs can fail even when the page loads normally.</li>
-        <li>Compression should be the last step after pages and overlays are final.</li>
-      </ul>
-      <p>After downloading the result, open it once before using it in a client send, upload form, website, or archive. This final check catches format support issues, unexpected file size changes, missing characters, clipped media, or page-order mistakes while the original file is still available.</p>
-      <p>If the output will be reused, note the settings that produced it. That makes the next export easier to repeat and reduces guesswork when another file needs the same treatment.</p>
     </section>
   </main>
 
