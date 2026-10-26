@@ -4,3 +4,6 @@ playwright-report/
 .lighthouseci/
 *.log
 .DS_Store
+.playwright-mcp/
+dist/
+downloads/*.zip

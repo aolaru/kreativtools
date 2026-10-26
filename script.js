@@ -128,10 +128,13 @@ const syncToolUi = () => {
 const enableWorkspace = () => {
   workspace.classList.remove('is-hidden');
   applyButton.disabled = false;
-  downloadButton.disabled = false;
+  downloadButton.disabled = true;
 };
 
 const loadFile = (file) => {
+  originalImage = null;
+  applyButton.disabled = true;
+  downloadButton.disabled = true;
   if (!imageFormats?.isSupportedImageFile(file) && (!file || !file.type.startsWith('image/'))) {
     setStatus('Please select a valid image file. JPG, PNG, WebP, AVIF, GIF, BMP, and TIFF are supported when the browser can decode them.');
     return;
@@ -187,18 +190,21 @@ const applyResize = () => {
   }
 
   drawImageToCanvas(originalImage, width, height);
+  downloadButton.disabled = false;
   setStatus('Resize applied. Download when ready.');
 };
 
 const prepareConvert = () => {
   if (!originalImage) return;
   drawImageToCanvas(originalImage, originalWidth, originalHeight);
+  downloadButton.disabled = false;
   setStatus('Convert ready. Choose a format and download.');
 };
 
 const preparePdf = () => {
   if (!originalImage) return;
   drawImageToCanvas(originalImage, originalWidth, originalHeight);
+  downloadButton.disabled = false;
   setStatus('PDF is ready. Choose page options and download.');
 };
 

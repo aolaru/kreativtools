@@ -25,6 +25,8 @@ test('image tool uploads and enables workspace actions', async ({ page }) => {
   await page.setInputFiles('#imageInput', onePxPng);
   await expect(page.locator('#workspace')).not.toHaveClass(/is-hidden/);
   await expect(page.locator('#applyButton')).toBeEnabled();
+  await expect(page.locator('#downloadButton')).toBeDisabled();
+  await page.click('#applyButton');
   await expect(page.locator('#downloadButton')).toBeEnabled();
 });
 

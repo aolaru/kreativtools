@@ -8,7 +8,7 @@ The project is in maintenance mode. It is a good base for a private tool library
 
 ## Reuse
 
-This project is available under the [MIT License](LICENSE). You may use, modify, and distribute the project, including in commercial work, provided the license notice is retained. See [CONTRIBUTING.md](CONTRIBUTING.md) for the maintenance scope and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for bundled and CDN-loaded dependencies that carry their own terms.
+This project is available under the [MIT License](LICENSE). You may use, modify, and distribute the project, including in commercial work, provided the license notice is retained. See [CONTRIBUTING.md](CONTRIBUTING.md) for the maintenance scope and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for bundled dependencies that carry their own terms.
 
 ## Current version
 
@@ -58,9 +58,27 @@ Open [http://localhost:4173](http://localhost:4173). Stop the server with `Ctrl+
 To run the full test suite locally, install the Playwright browser once and then run the tests:
 
 ```bash
-npx playwright install chromium
+npx playwright install chromium firefox webkit
 npm test
 ```
+
+The complete website suite runs in Chromium. PDF validation, cancellation, metadata, rendering, ordering, and mobile-action tests also run in Firefox and WebKit. This is desktop engine coverage, not certification on every Android device.
+
+## Offline toolkit
+
+```bash
+npm ci
+npm run vendor:build
+npm run sync:site
+npm run build:offline
+npm run test:offline
+```
+
+The build creates `downloads/kreativ-pdf-offline.zip` and an unpacked copy in `dist/offline/`. Extract the ZIP and open `index.html` in a current desktop browser. No server, internet connection, or account is required. It includes PDF Merge, PDF Compress, PDF Split, Image Compress, and Image Resize/Convert. Mobile file viewers may not execute local HTML; use the website on those devices. The offline tests open actual `file://` pages with browser networking disabled and verify exports in Chromium, Firefox, and WebKit.
+
+The package embeds the same processing code used by the website, including its PDF workers, preview resources, and metadata cleanup. It has no analytics and does not store uploaded files. The ZIP and unpacked build are ignored by Git; CI builds, tests, and passes the resulting ZIP to the deployment job. Rebuild after changing a packaged tool or shared dependency. The website itself does not gain persistent offline caching from this package.
+
+PDF Merge and Compress check readability, encryption, page counts, and signature fields before export. Merge detects duplicate contents and keeps valid files if another input fails. Limits are 100 MB per PDF, 100 files and 200 MB combined per merge; unusually complex PDFs may still exceed device memory. Cancellation terminates the processing worker. Metadata cleanup is not redaction, and rewriting a digitally signed document can invalidate its signature. Merge copies pages, not document-level editable forms or attachments; flatten completed forms before merging when needed.
 
 ## Shared generation
 
@@ -73,7 +91,9 @@ Use `npm run sync:site` after shared layout or metadata changes. The sync script
 - creates per-page Content Security Policies with hashes for each inline script
 - tracks content hashes and publication/modification dates in `scripts/page-dates.json`, so an unchanged page keeps its date
 
-PDF previews, export fonts, the CSV parser, and the font converter are bundled under `vendor/`. After updating their pinned npm versions, run `npm run vendor:build` and include the generated assets and notices. The WOFF2 converter loads its encoder from the bundled WASM file.
+Processing libraries, PDF previews, export/UI fonts, icons, the CSV parser, and the font converter are bundled under `vendor/`. After updating their pinned npm versions, run `npm run vendor:build` and include the generated assets and notices. The WOFF2 converter loads its encoder from the bundled WASM file.
+
+PDF Merge and Compress use `pdf-operations.mjs` for loading, validation, and export, `pdf-job.mjs` for cancellable worker lifecycle, and `pdf-tool-ui.mjs` for shared upload, download, warning, and thumbnail helpers. Keep heavy operations in `pdf-worker.mjs`, not in page event handlers. Tool-page help is collapsed by the generator; the shared export UI adds a mobile action bar only when the original action is outside the viewport.
 
 Shared tool UI lives in `tool-upload-ui.js` and `tool-export-ui.js`. Keep live feedback outside the hidden dropzone after upload. Exporting tools follow Prepare, Review, Download; `scripts/tool-exports.js` defines their button IDs and labels. New conversion handlers should return a `{ blob, filename }` result through the export controller instead of starting a download automatically. Settings changes invalidate a prepared result.
 
@@ -97,6 +117,7 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request. In short:
   2. `npx playwright install`
   3. `npm run test:e2e`
 - Full test run: `npm test`
+- Standalone package: `npm run build:offline && npm run test:offline`
 - Lighthouse CI: `npm run test:lighthouse`
 
 ## Key files

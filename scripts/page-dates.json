@@ -11,28 +11,28 @@
   },
   "/audio/to-mp3/": {
     "published": "2026-03-08",
-    "modified": "2026-10-25",
-    "hash": "ab9ed927826008e21c30778c87db30a33cac88b11c0459c4a392b5cbb9f9d7aa"
+    "modified": "2026-10-26",
+    "hash": "4dd6cbcf8b176ac397b48acc8e8f3608ca5447aa6e1e5de439fa0964f3528195"
   },
   "/audio/to-wav/": {
     "published": "2026-03-08",
-    "modified": "2026-10-25",
-    "hash": "d0ec2a7767e884ad0e41ed2bcb48b75e1e151b9eddf80714e14ee99edc96311f"
+    "modified": "2026-10-26",
+    "hash": "73882482f95c0f79f4cdb64839617ae8b2b41f850a080e1245ce260b882631aa"
   },
   "/audio/trim/": {
     "published": "2026-03-11",
-    "modified": "2026-10-25",
-    "hash": "189ecd8fab3729ca7d769bf6480b7a543a5690e97b59ea4da2800a8d3608373c"
+    "modified": "2026-10-26",
+    "hash": "fd5a01d5b58fecbfc3c8fb7aa74481d4bba41db0f3f7b80a70a4f8b1425492f1"
   },
   "/audio/volume/": {
     "published": "2026-03-11",
-    "modified": "2026-10-25",
-    "hash": "63f5de2114debe5d0c1893fdb8c005c6ac57b692adcb53fb9f7f3a303e9e4f8a"
+    "modified": "2026-10-26",
+    "hash": "344aabb61f0a7c3eb0438c5383a3b6d4e39497b893f58ce37f27a18a91155a5e"
   },
   "/changes/": {
     "published": "2026-03-09",
-    "modified": "2026-10-25",
-    "hash": "ae6aaae7ec6889cfd947a3d03bc9f1412bc487e2de0a8a361c75a08fa8c3f8ff"
+    "modified": "2026-10-26",
+    "hash": "db1ebf5728817df49b83d31b0a744c3ce5ea874b561fac295f3665f3a9bf0b13"
   },
   "/contact/": {
     "published": "2026-03-09",
@@ -41,8 +41,8 @@
   },
   "/file/csv-to-json/": {
     "published": "2026-03-11",
-    "modified": "2026-10-25",
-    "hash": "3caa269d409fa96b841ab67d243fb07118eb5c78ca84afc826975e73297c60f7"
+    "modified": "2026-10-26",
+    "hash": "8d5298871e772a24801b79a44599bb877e7e4e9b52c242a4b0709354305407e0"
   },
   "/file/": {
     "published": "2026-03-09",
@@ -51,18 +51,18 @@
   },
   "/file/json-to-csv/": {
     "published": "2026-03-11",
-    "modified": "2026-10-25",
-    "hash": "9fd4a4ceeed291ac2f637e7bdef78d4aa470e24f0feb33e6f07dd6e5791b27a8"
+    "modified": "2026-10-26",
+    "hash": "1c8c85d94bc5aeab16080a99eb1145cf037b677705ad36f9a22574fef64f3f77"
   },
   "/file/xml-to-csv/": {
     "published": "2026-03-08",
-    "modified": "2026-10-25",
-    "hash": "3559417774c0c93eed03fbd43b836529e10bef355d2268bae1d41050741d18d6"
+    "modified": "2026-10-26",
+    "hash": "3a86709fcd9eb635c754176641a0add256b02ed3636f2c0a88e8076d51f7cc12"
   },
   "/fonts/css-generator/": {
     "published": "2026-03-11",
-    "modified": "2026-10-25",
-    "hash": "5c42b7c12c310f929ec75f67ca12077434126387f67ece538e970439f25d7052"
+    "modified": "2026-10-26",
+    "hash": "8369a0334884af55263894b8f7d3130df5894ec866a2f68f256d84b07f284cac"
   },
   "/fonts/": {
     "published": "2026-03-09",
@@ -71,23 +71,23 @@
   },
   "/fonts/preview/": {
     "published": "2026-03-11",
-    "modified": "2026-10-25",
-    "hash": "0d2119799cb46374b2cf76e162895a076aa8d8f55f56faf04f5985667f9c9a44"
+    "modified": "2026-10-26",
+    "hash": "38c50be6560adc9c3919672984412d53e88f0efd95d0972f51fddbbaa5bd04eb"
   },
   "/fonts/webfont-convert/": {
     "published": "2026-03-08",
-    "modified": "2026-10-25",
-    "hash": "9eae80fe49ab764663ccf13ddab42b6f1bc1cf0daed16c601e67c19277cc6857"
+    "modified": "2026-10-26",
+    "hash": "6652beac310e5748a8d8c96b0fded9873f7704769b4d1c8561b3af313cc6f2bb"
   },
   "/image/compress/": {
     "published": "2026-03-09",
-    "modified": "2026-10-25",
-    "hash": "e02ac3bb223ee2597e00d23a5315d09f81fdb569ace45f85318b8923f1f687cd"
+    "modified": "2026-10-26",
+    "hash": "6cfcc0d520b18d846e1596d3a1a8246b1ca29031ae839da6399b5150d129dd1f"
   },
   "/image/crop/": {
     "published": "2026-03-22",
-    "modified": "2026-10-25",
-    "hash": "5a1ef79fbabd1eb152d56545d1f50983a07f671d30d74204a83f78ccdc7487ca"
+    "modified": "2026-10-26",
+    "hash": "9570188a8566ba4aaf4786653f453b14c397f4a0fc1a814a3ab77fe3b60a65ef"
   },
   "/image/": {
     "published": "2026-03-09",
@@ -96,13 +96,13 @@
   },
   "/image/resize/": {
     "published": "2026-03-07",
-    "modified": "2026-10-25",
-    "hash": "b2229e91d21309e3ba586a64ccfabeaeac4ccef68d9f92a77142760492e20f8f"
+    "modified": "2026-10-26",
+    "hash": "d5aefeae1f16755ac29f237949f5f1dab5f45dc34351e5e55ad829f189d5c805"
   },
   "/image/to-webp/": {
     "published": "2026-03-09",
-    "modified": "2026-10-25",
-    "hash": "463d2e29344a02fad29d7454a804f49cbb209030d6b326272ecc3b878e976590"
+    "modified": "2026-10-26",
+    "hash": "f1ae3bcc67e9ce5d1af7684b3e2b3b0b9e845b6f69140f7176c1e02c4918e3c3"
   },
   "/": {
     "published": "2026-03-07",
@@ -286,18 +286,18 @@
   },
   "/pdf/compress/": {
     "published": "2026-03-09",
-    "modified": "2026-10-25",
-    "hash": "17630351aeba676dde878a0d12c72986f0afd70fc7655ed428063f78909f7952"
+    "modified": "2026-10-26",
+    "hash": "9049b927cf7d1d1e26899c6de678b9ba24de01844b29a66b3bfa2dc8e65394b1"
   },
   "/pdf/fill-sign/": {
     "published": "2026-04-24",
-    "modified": "2026-10-25",
-    "hash": "034c1697b61a0631876f0607a4f2664621463233d8c2c86e808bd2fbe7d35610"
+    "modified": "2026-10-26",
+    "hash": "940ddcd8df7f12ae475b4ca4df8e3f5474d668cdd9cbd687b596711ec713fd35"
   },
   "/pdf/image-to-pdf/": {
     "published": "2026-03-09",
-    "modified": "2026-10-25",
-    "hash": "19b58f37814507d6f81f51e196160f14030bb1391ca63e82d0f9a12f633a754e"
+    "modified": "2026-10-26",
+    "hash": "f346d07cba1e0985727e12e1f6e8c14cdc2a03f8f6b48bae73320d011b5972fa"
   },
   "/pdf/": {
     "published": "2026-03-09",
@@ -306,18 +306,18 @@
   },
   "/pdf/merge/": {
     "published": "2026-03-09",
-    "modified": "2026-10-25",
-    "hash": "1ce5af9499828f10033d14d50853e49107338381940a616f7d83fe02e3e49d7c"
+    "modified": "2026-10-26",
+    "hash": "8c1311b9a3ac3e91d5ec234671733c0223f641830367b0f302bff5501aaddba7"
   },
   "/pdf/split/": {
     "published": "2026-03-23",
-    "modified": "2026-10-25",
-    "hash": "1b3edc3c16fe4be2cd41de7587372fe0db6f67230ae81e8ee9eaf1e6784dc1b8"
+    "modified": "2026-10-26",
+    "hash": "3d603f8d6da376dec13748b6c6c899cf4a447ff641c66bac685f8a80c44c7255"
   },
   "/pdf/to-docx/": {
     "published": "2026-04-30",
-    "modified": "2026-10-25",
-    "hash": "95371a9c95203ccf8505ab5bd70b206bf4ff3053e6451c12e2ff227a5496dde8"
+    "modified": "2026-10-26",
+    "hash": "ee6a89dbe7b77d41900161c5afefd17e88680d9f726489a4fb12da7d55a8e24e"
   },
   "/privacy/": {
     "published": "2026-03-09",
@@ -336,8 +336,8 @@
   },
   "/video/convert-webm/": {
     "published": "2026-03-08",
-    "modified": "2026-10-25",
-    "hash": "a69f2437704079e513c98cbbbac8e337abc9cfa31130d3efd090dae2a2153913"
+    "modified": "2026-10-26",
+    "hash": "b6d98a4e263e4dac391fc5301d40ca6907463d0936e37da7d24c08c5fe3cde48"
   },
   "/video/": {
     "published": "2026-03-09",
@@ -346,13 +346,13 @@
   },
   "/video/thumbnail/": {
     "published": "2026-03-08",
-    "modified": "2026-10-25",
-    "hash": "2ca3bc20e6a4736f8b95c7416d7b7c21dd187ca3f013d050cc8b9502893438e4"
+    "modified": "2026-10-26",
+    "hash": "cc9964a7852cd5fdfdf73d43ccabe2729486616cb1d80e2499be40d6c13d8474"
   },
   "/video/trim/": {
     "published": "2026-03-11",
-    "modified": "2026-10-25",
-    "hash": "4f9ff458f3a7c50992275e68adc8a3e81befb491ec0f186eb6eb9c37c1aacc2d"
+    "modified": "2026-10-26",
+    "hash": "bba7ce7b8c7ca4526f233412375f984167ecdade388c1c0fcd6c2e0508f9f108"
   },
   "/workflows/audio-delivery/": {
     "published": "2026-03-31",
@@ -371,7 +371,7 @@
   },
   "/workflows/pdf-delivery/": {
     "published": "2026-03-26",
-    "modified": "2026-10-25",
-    "hash": "c38a6c5a6d69d6208278363b95491d82a0abf6fc45e0df499a7c91ded91fea31"
+    "modified": "2026-10-26",
+    "hash": "369f2918dcec1f31ccc2adf1fdbe53904afec1c344be5acded1e262fb0817388"
   }
 }

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'sha256-ZtMAxCzt3F0kPn/5SDKgZaeVoElVHhQ6vUdAE7+p02A='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://static.cloudflareinsights.com; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; font-src 'self' data: blob:; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Kreativ Tools | PDF Merge</title>
@@ -27,12 +27,12 @@
   <link rel="icon" href="../../favicon-32x32.png" sizes="32x32" type="image/png" />
   <link rel="icon" href="../../favicon-16x16.png" sizes="16x16" type="image/png" />
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="../../vendor/fontawesome/css/all.min.css" />
   <link rel="stylesheet" href="../../styles.css" />
   <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"PDF Merge","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/pdf/merge/","description":"Combine several PDF files into one ordered document, review the queue, remove mistakes, and download the merged result locally.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"PDF Tools","item":"https://kreativtools.com/pdf/"},{"@type":"ListItem","position":3,"name":"PDF Merge","item":"https://kreativtools.com/pdf/merge/"}]}]</script>
   <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"f7acecd16c454cfbbb4704b4e665a173"}'></script>
 </head>
-<body>
+<body class="tool-page">
   <div class="bg-glow bg-glow-1"></div>
   <div class="bg-glow bg-glow-2"></div>
 
@@ -62,7 +62,7 @@
     <section class="hero">
       <p class="eyebrow">PDF Tools</p>
       <h1>Merge PDF Files</h1>
-      <p>Combine multiple PDFs into one cleaner handoff document after you confirm the exact order, remove mistakes, and build the right queue.</p>
+      <p>Check the pages, arrange your files, and combine them into one PDF.</p>
     </section>
 
     <section class="upload-card">
@@ -71,7 +71,7 @@
         <div class="drop-icon" aria-hidden="true"></div>
         <button id="mergePdfUploadButton" type="button" class="primary upload-trigger">Upload PDFs</button>
         <p>or drag and drop PDF files here</p>
-        <p class="status">Tip: add more files later without losing the queue you already built.</p>
+        <p class="status">Up to 100 PDFs, 100 MB per file, 200 MB combined. Files stay on your device.</p>
         <p id="mergePdfStatus" class="status">Ready for upload.</p>
       </div>
     </section>
@@ -79,11 +79,19 @@
     <section id="mergePdfWorkspace" class="workspace is-hidden">
       <div class="controls">
         <p id="mergePdfMeta" class="status">Add at least 2 PDF files to merge.</p>
+        <label class="checkbox-row">
+          <input id="mergePdfRemoveMetadata" type="checkbox" aria-describedby="mergePdfMetadataHelp" />
+          Remove metadata
+        </label>
+        <p id="mergePdfMetadataHelp" class="status">Remove author, title, dates, and hidden document properties. Your originals stay unchanged.</p>
+        <details class="metadata-details"><summary>What does metadata cleanup remove?</summary><p>Removes standard and custom Info fields, XMP metadata, and file IDs. This is not redaction: information in page content, annotations, forms, or attachments may remain.</p></details>
         <button id="mergePdfActionButton" type="button" class="primary" disabled data-export-prepare>Prepare PDF</button>
+        <button id="mergePdfCancelButton" type="button" class="ghost" hidden>Cancel</button>
         <div class="inline-actions">
           <button id="mergePdfDownloadButton" type="button" class="secondary-button" disabled data-export-download>Download PDF</button>
           <button id="mergePdfAddMoreButton" type="button" class="ghost">Add More PDFs</button>
         </div>
+        <p id="mergePdfMetadataResult" class="status" role="status"></p>
       </div>
 
       <div class="preview-panel">
@@ -109,7 +117,12 @@
       </div>
     </section>
 
-    <section class="article-section tool-guide" aria-labelledby="pdfMergeGuideTitle">
+    <ul id="mergePdfIssues" class="pdf-input-issues" aria-label="Files that were not added" aria-live="polite"></ul>
+    <p class="pdf-limit-note">Digital signatures can be invalidated by rewriting a PDF. Keep signed originals. Large or complex documents may need a desktop PDF application.</p>
+    <p><a href="../../downloads/kreativ-pdf-offline.zip" download>Download Merge &amp; Compress for offline use</a> (ZIP; open index.html, no server needed).</p>
+
+    <details class="tool-help"><summary>PDF merge guide</summary>
+<section class="article-section tool-guide" aria-labelledby="pdfMergeGuideTitle">
       <h2 id="pdfMergeGuideTitle">PDF merge guide</h2>
       <p>Use this tool when the main job is building one ordered document from several PDF files, and you want to confirm the queue before exporting.</p>
       <div class="tool-guide-grid">
@@ -131,7 +144,7 @@
         </article>
         <article class="tool-guide-card">
           <h3>Privacy and limits</h3>
-          <p>Files are read and merged in the browser session. Very large documents or many high-resolution scanned PDFs can hit browser memory limits.</p>
+          <p>Files are read and merged in the browser session. Select Remove metadata to clean the merged PDF before download; your source files are unchanged. Very large documents or many high-resolution scanned PDFs can hit browser memory limits.</p>
         </article>
         <article class="tool-guide-card">
           <h3>Common issues</h3>
@@ -147,6 +160,7 @@
         </article>
       </div>
     </section>
+    </details>
 
   </main>
 
@@ -195,270 +209,10 @@
   </div>
 </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="../../vendor/pdf-lib.min.js"></script>
   <script src="../../tool-export-ui.js"></script>
   <script src="../../tool-upload-ui.js"></script>
-  <script>
-    const input = document.getElementById('mergePdfInput');
-    const uploadButton = document.getElementById('mergePdfUploadButton');
-    const dropzone = document.getElementById('mergePdfDropzone');
-    const statusEl = document.getElementById('mergePdfStatus');
-
-    const workspace = document.getElementById('mergePdfWorkspace');
-    const metaEl = document.getElementById('mergePdfMeta');
-    const listEl = document.getElementById('mergePdfList');
-    const mergeButton = document.getElementById('mergePdfActionButton');
-    const downloadButton = document.getElementById('mergePdfDownloadButton');
-    const addMoreButton = document.getElementById('mergePdfAddMoreButton');
-    const summaryEl = document.getElementById('mergePdfSummary');
-    const countEl = document.getElementById('mergePdfCount');
-    const totalSizeEl = document.getElementById('mergePdfTotalSize');
-    const outputStatusEl = document.getElementById('mergePdfOutputStatus');
-
-    let files = [];
-    let mergedBytes = null;
-
-    const setStatus = (message) => {
-      statusEl.textContent = message;
-    };
-
-    const uploadUi = window.kreativUploadUi?.init({
-      input: input,
-      dropzone,
-      workspace,
-    });
-
-    const formatBytes = (bytes) => {
-      if (bytes < 1024) return `${bytes} B`;
-      if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-      return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
-    };
-
-    const resetMergeResult = () => {
-      mergedBytes = null;
-      outputStatusEl.textContent = 'Waiting for merge';
-      downloadButton.disabled = true;
-    };
-
-    const moveFile = (index, offset) => {
-      const targetIndex = index + offset;
-      if (targetIndex < 0 || targetIndex >= files.length) return;
-
-      const nextFiles = files.slice();
-      const [item] = nextFiles.splice(index, 1);
-      nextFiles.splice(targetIndex, 0, item);
-      files = nextFiles;
-      resetMergeResult();
-      refreshUi();
-      setStatus(`Moved ${item.name} ${offset < 0 ? 'up' : 'down'} in the queue.`);
-    };
-
-    const removeFile = (index) => {
-      const [removed] = files.splice(index, 1);
-      resetMergeResult();
-      refreshUi();
-      if (removed) {
-        setStatus(`Removed ${removed.name} from the queue.`);
-      }
-    };
-
-    const refreshUi = () => {
-      if (!files.length) {
-        workspace.classList.add('is-hidden');
-        uploadUi?.clear();
-        mergeButton.disabled = true;
-        listEl.replaceChildren();
-        metaEl.textContent = 'Add at least 2 PDF files to merge.';
-        summaryEl.textContent = 'No PDF files added yet.';
-        countEl.textContent = '0';
-        totalSizeEl.textContent = '-';
-        resetMergeResult();
-        return;
-      }
-
-      workspace.classList.remove('is-hidden');
-      uploadUi?.setLoaded({
-        countLabel: `${files.length} PDF file${files.length === 1 ? '' : 's'} in queue`,
-        meta: `${formatBytes(files.reduce((sum, file) => sum + file.size, 0))} • Queue ready to edit`,
-      });
-      mergeButton.disabled = files.length < 2;
-      countEl.textContent = String(files.length);
-      totalSizeEl.textContent = formatBytes(files.reduce((sum, file) => sum + file.size, 0));
-      summaryEl.textContent = files.length < 2
-        ? 'Add one more PDF to enable merging.'
-        : 'Queue looks ready. Adjust the order if needed, then merge.';
-      metaEl.textContent = files.length < 2
-        ? 'Add at least 2 PDF files to merge.'
-        : `${files.length} PDF files ready in the current order.`;
-
-      listEl.replaceChildren(
-        ...files.map((file, index) => {
-          const item = document.createElement('article');
-          item.className = 'queue-item';
-
-          const main = document.createElement('div');
-          main.className = 'queue-item-main';
-
-          const title = document.createElement('div');
-          title.className = 'queue-item-title';
-          title.textContent = `${index + 1}. ${file.name}`;
-
-          const meta = document.createElement('div');
-          meta.className = 'queue-item-meta';
-          meta.textContent = formatBytes(file.size);
-
-          const actions = document.createElement('div');
-          actions.className = 'queue-item-actions';
-
-          const upButton = document.createElement('button');
-          upButton.type = 'button';
-          upButton.className = 'secondary-button';
-          upButton.dataset.action = 'up';
-          upButton.dataset.index = String(index);
-          upButton.disabled = index === 0;
-          upButton.textContent = 'Move Up';
-
-          const downButton = document.createElement('button');
-          downButton.type = 'button';
-          downButton.className = 'secondary-button';
-          downButton.dataset.action = 'down';
-          downButton.dataset.index = String(index);
-          downButton.disabled = index === files.length - 1;
-          downButton.textContent = 'Move Down';
-
-          const removeButton = document.createElement('button');
-          removeButton.type = 'button';
-          removeButton.className = 'danger-button';
-          removeButton.dataset.action = 'remove';
-          removeButton.dataset.index = String(index);
-          removeButton.textContent = 'Remove';
-
-          main.append(title, meta);
-          actions.append(upButton, downButton, removeButton);
-          item.append(main, actions);
-          return item;
-        })
-      );
-    };
-
-    const addFiles = (incoming) => {
-      const pdfFiles = Array.from(incoming || []).filter(
-        (file) => file && (file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf'))
-      );
-
-      if (!pdfFiles.length) {
-        setStatus('Please add valid PDF files.');
-        return;
-      }
-
-      files = files.concat(pdfFiles);
-      resetMergeResult();
-      setStatus(`${pdfFiles.length} PDF file(s) added to the queue.`);
-      refreshUi();
-    };
-
-    const mergePdfFiles = async () => {
-      if (files.length < 2) {
-        setStatus('Add at least 2 PDF files to merge.');
-        return;
-      }
-
-      const PDFLibApi = window.PDFLib;
-      if (!PDFLibApi || !PDFLibApi.PDFDocument) {
-        setStatus('PDF engine failed to load. Refresh and try again.');
-        return;
-      }
-
-      mergeButton.disabled = true;
-      downloadButton.disabled = true;
-      outputStatusEl.textContent = 'Merging in progress';
-      setStatus('Merging PDFs locally...');
-
-      try {
-        const mergedPdf = await PDFLibApi.PDFDocument.create();
-
-        for (const file of files) {
-          const bytes = await file.arrayBuffer();
-          const srcPdf = await PDFLibApi.PDFDocument.load(bytes, { ignoreEncryption: true });
-          const pages = await mergedPdf.copyPages(srcPdf, srcPdf.getPageIndices());
-          pages.forEach((page) => mergedPdf.addPage(page));
-        }
-
-        mergedBytes = await mergedPdf.save();
-        outputStatusEl.textContent = `Ready to download (${formatBytes(mergedBytes.byteLength)})`;
-        downloadButton.disabled = false;
-        setStatus('Merge complete. Review the queue and download when ready.');
-      } catch {
-        mergedBytes = null;
-        outputStatusEl.textContent = 'Merge failed';
-        setStatus('Could not merge these PDFs. Try different files.');
-      } finally {
-        mergeButton.disabled = false;
-      }
-    };
-
-    const downloadMergedPdf = () => {
-      if (!mergedBytes) {
-        setStatus('Merge the PDFs first to enable download.');
-        return;
-      }
-
-      const blob = new Blob([mergedBytes], { type: 'application/pdf' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'merged.pdf';
-      link.click();
-      URL.revokeObjectURL(url);
-      setStatus('Downloaded merged PDF.');
-    };
-
-    uploadButton.addEventListener('click', () => input.click());
-
-    dropzone.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        input.click();
-      }
-    });
-
-    input.addEventListener('change', () => {
-      addFiles(input.files);
-      input.value = '';
-    });
-
-    dropzone.addEventListener('dragover', (event) => {
-      event.preventDefault();
-      dropzone.classList.add('drag-over');
-    });
-
-    dropzone.addEventListener('dragleave', () => {
-      dropzone.classList.remove('drag-over');
-    });
-
-    dropzone.addEventListener('drop', (event) => {
-      event.preventDefault();
-      dropzone.classList.remove('drag-over');
-      addFiles(event.dataTransfer.files);
-    });
-
-    listEl.addEventListener('click', (event) => {
-      const button = event.target.closest('button[data-action]');
-      if (!button) return;
-
-      const index = Number(button.dataset.index);
-      if (!Number.isInteger(index)) return;
-
-      if (button.dataset.action === 'up') moveFile(index, -1);
-      if (button.dataset.action === 'down') moveFile(index, 1);
-      if (button.dataset.action === 'remove') removeFile(index);
-    });
-
-    mergeButton.addEventListener('click', mergePdfFiles);
-    downloadButton.addEventListener('click', downloadMergedPdf);
-    addMoreButton.addEventListener('click', () => input.click());
-    refreshUi();
-  </script>
+  <script type="module" src="../../pdf-merge-ui.mjs"></script>
   <script src="../../github-pages-prefix.js"></script>
   <script src="../../theme.js"></script>
 </body>

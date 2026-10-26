@@ -11,6 +11,19 @@ const copy = (source, destination) => {
 };
 
 async function main() {
+  copy('pdf-lib/dist/pdf-lib.min.js', 'pdf-lib.min.js');
+  copy('pdf-lib/LICENSE.md', 'PDF-LIB-LICENSE');
+  copy('jszip/dist/jszip.min.js', 'jszip.min.js');
+  copy('jszip/LICENSE.markdown', 'JSZIP-LICENSE');
+  copy('jspdf/dist/jspdf.umd.min.js', 'jspdf.umd.min.js');
+  copy('jspdf/LICENSE', 'JSPDF-LICENSE');
+  copy('@fortawesome/fontawesome-free/css/all.min.css', 'fontawesome/css/all.min.css');
+  copy('@fortawesome/fontawesome-free/webfonts', 'fontawesome/webfonts');
+  copy('@fortawesome/fontawesome-free/LICENSE.txt', 'fontawesome/LICENSE.txt');
+  for (const weight of [400, 500, 700]) {
+    copy(`@fontsource/space-grotesk/files/space-grotesk-latin-${weight}-normal.woff2`, `fonts/space-grotesk-${weight}.woff2`);
+  }
+  copy('@fontsource/space-grotesk/LICENSE', 'fonts/SPACE-GROTESK-LICENSE');
   copy('pdfjs-dist/legacy/build/pdf.min.mjs', 'pdfjs/pdf.min.mjs');
   copy('pdfjs-dist/legacy/build/pdf.worker.min.mjs', 'pdfjs/pdf.worker.min.mjs');
   for (const directory of ['cmaps', 'standard_fonts', 'wasm']) {

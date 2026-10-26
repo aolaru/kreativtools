@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'sha256-FzZSaPvxHotAZfRB8uZ0AaWVpT/iiqRfrMM+o//KnF0='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://static.cloudflareinsights.com 'sha256-FzZSaPvxHotAZfRB8uZ0AaWVpT/iiqRfrMM+o//KnF0='; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; font-src 'self' data: blob:; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Kreativ Tools | Audio Trim</title>
@@ -27,12 +27,12 @@
   <link rel="icon" href="../../favicon-32x32.png" sizes="32x32" type="image/png" />
   <link rel="icon" href="../../favicon-16x16.png" sizes="16x16" type="image/png" />
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="../../vendor/fontawesome/css/all.min.css" />
   <link rel="stylesheet" href="../../styles.css" />
   <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Audio Trim","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/audio/trim/","description":"Choose a start and end time, preview the selected audio range, and export a trimmed WAV for notes, clips, samples, or handoff.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Audio Tools","item":"https://kreativtools.com/audio/"},{"@type":"ListItem","position":3,"name":"Audio Trim","item":"https://kreativtools.com/audio/trim/"}]}]</script>
   <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"f7acecd16c454cfbbb4704b4e665a173"}'></script>
 </head>
-<body>
+<body class="tool-page">
   <div class="bg-glow bg-glow-1"></div><div class="bg-glow bg-glow-2"></div>
   <header class="site-header">
     <a class="brand" href="/" aria-label="Kreativ Tools Home">
@@ -62,7 +62,8 @@
     <section id="trimAudioWorkspace" class="workspace is-hidden"><div class="controls"><label>Start (seconds)<input id="trimAudioStart" type="number" min="0" step="0.01" value="0" /></label><label>End (seconds)<input id="trimAudioEnd" type="number" min="0.01" step="0.01" value="1" /></label><button id="trimAudioAction" type="button" class="primary" disabled data-export-prepare>Prepare WAV</button>
         <button id="trimAudioDownloadButton" type="button" class="secondary-button" disabled data-export-download>Download WAV</button></div><div class="preview-panel"><h2>Preview</h2><audio id="trimAudioPreview" class="audio-preview" controls></audio><p id="trimAudioMeta" class="dimensions"></p></div></section>
 
-    <section class="article-section tool-guide" aria-labelledby="trimAudioGuideTitle">
+    <details class="tool-help"><summary>Audio trim guide</summary>
+<section class="article-section tool-guide" aria-labelledby="trimAudioGuideTitle">
       <h2 id="trimAudioGuideTitle">Audio trim guide</h2>
       <p>Use this tool when the source audio is useful but only one section should be delivered, shared, or processed further.</p>
       <div class="tool-guide-grid">
@@ -100,6 +101,7 @@
         </article>
       </div>
     </section>
+    </details>
   </main>
 
   <footer class="site-footer">

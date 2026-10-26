@@ -14,8 +14,6 @@ const {
 const ROOT = process.cwd();
 const OG_IMAGE = `${SITE_URL}/og-image.png`;
 const OG_IMAGE_ALT = 'Kreativ Tools social preview card with the K mark and focused browser-based creative tools';
-const FONT_AWESOME_HREF = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css';
-const FONT_AWESOME_INTEGRITY = 'sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==';
 const CLOUDFLARE_WEB_ANALYTICS_SRC = 'https://static.cloudflareinsights.com/beacon.min.js';
 const CLOUDFLARE_WEB_ANALYTICS_TOKEN = 'f7acecd16c454cfbbb4704b4e665a173';
 const RUN_DATE = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Bucharest' }).format(new Date());
@@ -137,7 +135,7 @@ function walk(dir) {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
   const results = [];
   for (const entry of entries) {
-    if (['.git', 'node_modules', 'vendor', 'test-results', 'playwright-report', '.lighthouseci'].includes(entry.name)) continue;
+    if (['.git', 'node_modules', 'vendor', 'dist', 'downloads', '.playwright-mcp', 'test-results', 'playwright-report', '.lighthouseci'].includes(entry.name)) continue;
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) {
       results.push(...walk(full));
@@ -439,7 +437,7 @@ function buildHead({ title, description, route, prefix }) {
   <link rel="icon" href="${prefix}favicon-32x32.png" sizes="32x32" type="image/png" />
   <link rel="icon" href="${prefix}favicon-16x16.png" sizes="16x16" type="image/png" />
   <link rel="apple-touch-icon" href="${prefix}apple-touch-icon.png" />
-  <link rel="stylesheet" href="${FONT_AWESOME_HREF}" integrity="${FONT_AWESOME_INTEGRITY}" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="${prefix}vendor/fontawesome/css/all.min.css" />
   <link rel="stylesheet" href="${prefix}styles.css" />
   ${structuredData}
   <script type="module" src="${CLOUDFLARE_WEB_ANALYTICS_SRC}" data-cf-beacon='{"token":"${CLOUDFLARE_WEB_ANALYTICS_TOKEN}"}'></script>
@@ -608,6 +606,18 @@ function syncCanonicalPage(file) {
   ];
 
   content = replaceBlock(content, /<head>[\s\S]*?<\/head>/, head, 'head', rel);
+  if (isToolRoute(route) && !route.startsWith('/workflows/')) {
+    content = content.replace(/<body(?: class="tool-page")?>/, '<body class="tool-page">');
+    // Keep useful help in the HTML without letting it dominate the tool workspace.
+    content = content.replace(/(<section class="(?:article-section[^\"]*|tool-intro)"[^>]*>)([\s\S]*?)(<\/section>)/g, (match, opening, body, closing, offset, source) => {
+      if (source.slice(Math.max(0, offset - 150), offset).includes('<details class="tool-help">')) return match;
+      const title = body.match(/<h2[^>]*>([^<]+)<\/h2>/)?.[1] || 'Help and file limits';
+      return `<details class="tool-help"><summary>${title}</summary>\n${opening}${body}${closing}\n    </details>`;
+    });
+  }
+  content = content.replace(/https:\/\/cdn\.jsdelivr\.net\/npm\/pdf-lib@1\.17\.1\/dist\/pdf-lib\.min\.js/g, `${prefix}vendor/pdf-lib.min.js`)
+    .replace(/https:\/\/cdn\.jsdelivr\.net\/npm\/jszip@3\.10\.1\/dist\/jszip\.min\.js/g, `${prefix}vendor/jszip.min.js`)
+    .replace(/https:\/\/cdn\.jsdelivr\.net\/npm\/jspdf@2\.5\.1\/dist\/jspdf\.umd\.min\.js/g, `${prefix}vendor/jspdf.umd.min.js`);
   content = content.replace(/<nav class="breadcrumbs(?:\s+[^"]*)?" aria-label="Breadcrumb">[\s\S]*?<\/nav>\s*/g, '');
   const breadcrumbNav = buildBreadcrumbNav(route, title);
   const headerReplacement = breadcrumbNav ? `${buildHeader(route)}\n\n  ${breadcrumbNav}` : buildHeader(route);

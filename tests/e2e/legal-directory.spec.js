@@ -106,6 +106,9 @@ test('thin utility pages include practical guide sections', async ({ page }) => 
 
   for (const [route, heading] of guidePages) {
     await page.goto(route);
+    const help = page.locator('.tool-help').filter({ has: page.locator('summary', { hasText: heading }) }).first();
+    await expect(help).not.toHaveAttribute('open', '');
+    await help.locator(':scope > summary').click();
     await expect(page.getByRole('heading', { level: 2, name: heading })).toBeVisible();
     await expect(page.getByRole('heading', { level: 3, name: 'Best uses' })).toBeVisible();
     await expect(page.getByRole('heading', { level: 3, name: 'Privacy and limits' })).toBeVisible();

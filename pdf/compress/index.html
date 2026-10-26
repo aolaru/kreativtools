@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'sha256-EXXoDclB7RrUr1zBhGXwgJniCDbWZ19Z7qPxQ9Vs1aU='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://static.cloudflareinsights.com; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; font-src 'self' data: blob:; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Kreativ Tools | PDF Compress</title>
@@ -27,12 +27,12 @@
   <link rel="icon" href="../../favicon-32x32.png" sizes="32x32" type="image/png" />
   <link rel="icon" href="../../favicon-16x16.png" sizes="16x16" type="image/png" />
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="../../vendor/fontawesome/css/all.min.css" />
   <link rel="stylesheet" href="../../styles.css" />
   <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"PDF Compress","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/pdf/compress/","description":"Reduce PDF file size after editing or merging, compare the result, and download a lighter PDF for email, portals, or handoff.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"PDF Tools","item":"https://kreativtools.com/pdf/"},{"@type":"ListItem","position":3,"name":"PDF Compress","item":"https://kreativtools.com/pdf/compress/"}]}]</script>
   <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"f7acecd16c454cfbbb4704b4e665a173"}'></script>
 </head>
-<body>
+<body class="tool-page">
   <div class="bg-glow bg-glow-1"></div>
   <div class="bg-glow bg-glow-2"></div>
 
@@ -62,7 +62,7 @@
     <section class="hero">
       <p class="eyebrow">PDF Tools</p>
       <h1>Compress PDF</h1>
-      <p>Reduce PDF file size for email, uploads, and client delivery while keeping a result-first comparison before you download anything.</p>
+      <p>Check whether your PDF can be made smaller before downloading.</p>
     </section>
 
     <section class="upload-card">
@@ -79,16 +79,26 @@
     <section id="compressPdfWorkspace" class="workspace is-hidden">
       <div class="controls">
         <p id="compressPdfMeta" class="status status-empty">Upload a PDF file to continue.</p>
+        <label class="checkbox-row">
+          <input id="compressPdfRemoveMetadata" type="checkbox" aria-describedby="compressPdfMetadataHelp" />
+          Remove metadata
+        </label>
+        <p id="compressPdfMetadataHelp" class="status">Remove author, title, dates, and hidden document properties. Your original stays unchanged.</p>
+        <details class="metadata-details"><summary>What does metadata cleanup remove?</summary><p>Removes standard and custom Info fields, XMP metadata, and file IDs. This is not redaction: visible content, annotations, form values, and attachments remain.</p></details>
+        <p id="compressPdfWarnings" class="pdf-warning" role="status"></p>
         <button id="compressPdfActionButton" type="button" class="primary" disabled data-export-prepare>Prepare PDF</button>
+        <button id="compressPdfCancelButton" type="button" class="ghost" hidden>Cancel</button>
         <div class="inline-actions">
           <button id="compressPdfDownloadButton" type="button" class="secondary-button" disabled data-export-download>Download PDF</button>
           <button id="compressPdfResetButton" type="button" class="ghost">Choose Another PDF</button>
         </div>
+        <p id="compressPdfMetadataResult" class="status" role="status"></p>
       </div>
 
       <div class="preview-panel">
         <div id="compressPdfResults" class="tool-results">
           <h2>Compression Results</h2>
+          <p id="compressPdfOutcome" class="pdf-outcome" role="status"></p>
           <p id="compressPdfSummary">No PDF analyzed yet.</p>
           <div class="result-card">
             <div class="result-row">
@@ -100,19 +110,23 @@
               <strong id="compressPdfOutputSize">-</strong>
             </div>
             <div id="compressPdfSavingsRow" class="result-row">
-              <span>Saved</span>
+              <span>Size change</span>
               <strong id="compressPdfSavings">-</strong>
             </div>
           </div>
           <ul class="result-list">
             <li>Compression is file-dependent. Already optimized or image-heavy PDFs may not shrink much.</li>
-            <li>If savings are minimal, you can skip the download and keep your original file.</li>
+            <li>If savings are minimal, you can keep the original. If you selected Remove metadata, download the result to keep that change even when the file is not smaller.</li>
           </ul>
         </div>
       </div>
     </section>
 
-    <section class="tool-intro" aria-label="How this tool works">
+    <p class="pdf-limit-note">One PDF up to 100 MB. Digital signatures can be invalidated by rewriting a PDF. Keep signed originals.</p>
+    <p><a href="../../downloads/kreativ-pdf-offline.zip" download>Download Merge &amp; Compress for offline use</a> (ZIP; open index.html, no server needed).</p>
+
+    <details class="tool-help"><summary>Before you upload</summary>
+<section class="tool-intro" aria-label="How this tool works">
       <div class="tool-intro-card">
         <h2>Before you upload</h2>
         <ul class="tool-intro-list">
@@ -126,8 +140,10 @@
         <p>You will see the original size, optimized size, and savings before deciding to download the output file.</p>
       </div>
     </section>
+    </details>
 
-    <section class="tool-intro" aria-label="PDF compress next steps">
+    <details class="tool-help"><summary>Common use cases</summary>
+<section class="tool-intro" aria-label="PDF compress next steps">
       <div class="tool-intro-card">
         <h2>Common use cases</h2>
         <ul class="tool-intro-list">
@@ -141,8 +157,10 @@
         <p>If the pages are not in the right order yet, start with <a href="/pdf/merge/">PDF Merge</a>. If the file needs to be broken into parts instead of compressed, use <a href="/pdf/split/">PDF Split</a>.</p>
       </div>
     </section>
+    </details>
 
-    <section class="article-section">
+    <details class="tool-help"><summary>Quick FAQ</summary>
+<section class="article-section">
       <h2>Quick FAQ</h2>
       <ul>
         <li><strong>Will every PDF shrink a lot?</strong> No. Already optimized files or image-heavy exports may only change a little.</li>
@@ -150,6 +168,7 @@
         <li><strong>Is this a full PDF optimizer?</strong> No. It is a practical browser tool for lighter exports, not a complete document editing suite.</li>
       </ul>
     </section>
+    </details>
   </main>
 
   <footer class="site-footer">
@@ -197,201 +216,10 @@
   </div>
 </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="../../vendor/pdf-lib.min.js"></script>
   <script src="../../tool-export-ui.js"></script>
   <script src="../../tool-upload-ui.js"></script>
-  <script>
-    const input = document.getElementById('compressPdfInput');
-    const uploadButton = document.getElementById('compressPdfUploadButton');
-    const dropzone = document.getElementById('compressPdfDropzone');
-    const statusEl = document.getElementById('compressPdfStatus');
-
-    const workspace = document.getElementById('compressPdfWorkspace');
-    const metaEl = document.getElementById('compressPdfMeta');
-    const actionButton = document.getElementById('compressPdfActionButton');
-    const downloadButton = document.getElementById('compressPdfDownloadButton');
-    const resetButton = document.getElementById('compressPdfResetButton');
-    const summaryEl = document.getElementById('compressPdfSummary');
-    const inputSizeEl = document.getElementById('compressPdfInputSize');
-    const outputSizeEl = document.getElementById('compressPdfOutputSize');
-    const savingsEl = document.getElementById('compressPdfSavings');
-    const savingsRow = document.getElementById('compressPdfSavingsRow');
-
-    let selectedFile = null;
-    let compressedBytes = null;
-    let outputName = '';
-
-    const setStatus = (message) => {
-      statusEl.textContent = message;
-    };
-
-    const uploadUi = window.kreativUploadUi?.init({
-      input: input,
-      dropzone: dropzone,
-      workspace: workspace,
-    });
-
-    const formatBytes = (bytes) => {
-      if (bytes < 1024) return `${bytes} B`;
-      if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-      return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
-    };
-
-    const resetResults = () => {
-      compressedBytes = null;
-      outputName = '';
-      summaryEl.textContent = 'No PDF analyzed yet.';
-      inputSizeEl.textContent = selectedFile ? formatBytes(selectedFile.size) : '-';
-      outputSizeEl.textContent = '-';
-      savingsEl.textContent = '-';
-      savingsRow.classList.remove('result-savings-positive');
-      downloadButton.disabled = true;
-    };
-
-    const resetTool = () => {
-      selectedFile = null;
-      workspace.classList.add('is-hidden');
-      actionButton.disabled = true;
-      metaEl.textContent = 'Upload a PDF file to continue.';
-      resetResults();
-      setStatus('Ready for upload.');
-    };
-
-    const loadPdf = (file) => {
-      const isPdf = file && (file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf'));
-      if (!isPdf) {
-        setStatus('Please upload a valid PDF file.');
-        return;
-      }
-
-      selectedFile = file;
-      workspace.classList.remove('is-hidden');
-      actionButton.disabled = false;
-      metaEl.textContent = `${file.name} • ${formatBytes(file.size)}`;
-      resetResults();
-      summaryEl.textContent = 'File loaded. Run compression to compare the optimized version before downloading.';
-      setStatus(`Loaded PDF: ${file.name}. Ready to compress.`);
-        uploadUi?.setLoaded({ name: file.name, size: file.size });
-    };
-
-    const downloadBuffer = (buffer, filename) => {
-      const blob = new Blob([buffer], { type: 'application/pdf' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = filename;
-      link.click();
-      URL.revokeObjectURL(url);
-    };
-
-    const compressPdf = async () => {
-      if (!selectedFile) {
-        setStatus('Upload a PDF first.');
-        return;
-      }
-
-      const PDFLibApi = window.PDFLib;
-      if (!PDFLibApi || !PDFLibApi.PDFDocument) {
-        setStatus('PDF engine failed to load. Refresh and try again.');
-        return;
-      }
-
-      actionButton.disabled = true;
-      downloadButton.disabled = true;
-      setStatus('Compressing PDF locally...');
-      summaryEl.textContent = 'Optimizing your PDF. This can take a moment for larger files.';
-
-      try {
-        const srcBytes = await selectedFile.arrayBuffer();
-        const pdfDoc = await PDFLibApi.PDFDocument.load(srcBytes, { ignoreEncryption: true });
-
-        const outputBytes = await pdfDoc.save({
-          useObjectStreams: true,
-          addDefaultPage: false,
-          updateFieldAppearances: false,
-          objectsPerTick: 25
-        });
-
-        const inputSize = selectedFile.size;
-        const outputSize = outputBytes.byteLength;
-        const savedBytes = inputSize - outputSize;
-        const savedPercent = inputSize > 0 ? ((savedBytes / inputSize) * 100).toFixed(1) : '0.0';
-
-        compressedBytes = outputBytes;
-        outputName = `${selectedFile.name.replace(/\.[^.]+$/, '')}.compressed.pdf`;
-        inputSizeEl.textContent = formatBytes(inputSize);
-        outputSizeEl.textContent = formatBytes(outputSize);
-        savingsEl.textContent = `${savedBytes > 0 ? formatBytes(savedBytes) : '0 B'} (${savedBytes > 0 ? savedPercent : '0.0'}%)`;
-        summaryEl.textContent = savedBytes > 0
-          ? 'Compression finished. Review the savings below, then download the optimized PDF if you want to keep it.'
-          : 'Compression finished, but this file did not get smaller. You can skip the download if the result is not useful.';
-        savingsRow.classList.toggle('result-savings-positive', savedBytes > 0);
-        downloadButton.disabled = false;
-
-        if (savedBytes > 0) {
-          setStatus(`Compression complete. Optimized PDF is ready to download.`);
-        } else {
-          setStatus('Compression complete. This PDF did not shrink.');
-        }
-      } catch {
-        compressedBytes = null;
-        outputName = '';
-        summaryEl.textContent = 'Compression failed. Try another PDF or keep the original file.';
-        outputSizeEl.textContent = '-';
-        savingsEl.textContent = '-';
-        savingsRow.classList.remove('result-savings-positive');
-        setStatus('Could not compress this PDF. Try a different file.');
-      } finally {
-        actionButton.disabled = false;
-      }
-    };
-
-    const downloadCompressedPdf = () => {
-      if (!compressedBytes || !outputName) {
-        setStatus('Compress the PDF first to enable download.');
-        return;
-      }
-
-      downloadBuffer(compressedBytes, outputName);
-      setStatus(`Downloaded optimized PDF: ${outputName}`);
-    };
-
-    uploadButton.addEventListener('click', () => input.click());
-
-    dropzone.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        input.click();
-      }
-    });
-
-    input.addEventListener('change', () => {
-      const [file] = input.files || [];
-      if (file) loadPdf(file);
-      input.value = '';
-    });
-
-    dropzone.addEventListener('dragover', (event) => {
-      event.preventDefault();
-      dropzone.classList.add('drag-over');
-    });
-
-    dropzone.addEventListener('dragleave', () => {
-      dropzone.classList.remove('drag-over');
-    });
-
-    dropzone.addEventListener('drop', (event) => {
-      event.preventDefault();
-      dropzone.classList.remove('drag-over');
-      const [file] = event.dataTransfer.files || [];
-      if (file) loadPdf(file);
-    });
-
-    actionButton.addEventListener('click', compressPdf);
-    downloadButton.addEventListener('click', downloadCompressedPdf);
-    resetButton.addEventListener('click', () => input.click());
-    resetTool();
-  </script>
+  <script type="module" src="../../pdf-compress-ui.mjs"></script>
   <script src="../../github-pages-prefix.js"></script>
   <script src="../../theme.js"></script>
 </body>

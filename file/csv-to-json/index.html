@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'sha256-f1Oa6aRGQGFXRLE+j+JJFQI6qIVuktBMhGQKmPzQaUY='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://static.cloudflareinsights.com 'sha256-f1Oa6aRGQGFXRLE+j+JJFQI6qIVuktBMhGQKmPzQaUY='; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; font-src 'self' data: blob:; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Kreativ Tools | CSV to JSON</title>
@@ -27,12 +27,12 @@
   <link rel="icon" href="../../favicon-32x32.png" sizes="32x32" type="image/png" />
   <link rel="icon" href="../../favicon-16x16.png" sizes="16x16" type="image/png" />
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="../../vendor/fontawesome/css/all.min.css" />
   <link rel="stylesheet" href="../../styles.css" />
   <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"CSV to JSON","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/file/csv-to-json/","description":"Convert CSV rows into JSON objects, inspect the preview, and download structured data for imports, automation, or developer handoff.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"File Tools","item":"https://kreativtools.com/file/"},{"@type":"ListItem","position":3,"name":"CSV to JSON","item":"https://kreativtools.com/file/csv-to-json/"}]}]</script>
   <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"f7acecd16c454cfbbb4704b4e665a173"}'></script>
 </head>
-<body>
+<body class="tool-page">
   <div class="bg-glow bg-glow-1"></div><div class="bg-glow bg-glow-2"></div>
   <header class="site-header">
     <a class="brand" href="/" aria-label="Kreativ Tools Home">
@@ -61,7 +61,8 @@
     <section class="upload-card"><input id="csvInput" type="file" accept=".csv,text/csv" aria-label="Upload file" hidden /><div id="csvDropzone" class="dropzone" role="group" aria-label="Upload CSV"><div class="drop-icon" aria-hidden="true"></div><button id="csvUploadButton" type="button" class="primary upload-trigger">Upload CSV</button><p>or drag and drop a CSV file here</p><p id="csvStatus" class="status status-empty">No CSV file selected yet.</p></div></section>
     <section id="csvWorkspace" class="workspace is-hidden"><div class="controls"><button id="csvConvertButton" type="button" class="primary" disabled data-export-prepare>Prepare JSON</button><button id="csvDownloadButton" type="button" class="primary" disabled data-export-download>Download JSON</button></div><div class="preview-panel"><h2>JSON Preview</h2><pre id="csvPreview" class="code-preview empty-note">Upload CSV to preview JSON.</pre><p id="csvMeta" class="dimensions"></p></div></section>
 
-    <section class="article-section tool-guide" aria-labelledby="csvJsonGuideTitle">
+    <details class="tool-help"><summary>CSV to JSON guide</summary>
+<section class="article-section tool-guide" aria-labelledby="csvJsonGuideTitle">
       <h2 id="csvJsonGuideTitle">CSV to JSON guide</h2>
       <p>Use this converter when a spreadsheet export needs to become structured JSON rows for upload, inspection, or handoff.</p>
       <div class="tool-guide-grid">
@@ -99,6 +100,7 @@
         </article>
       </div>
     </section>
+    </details>
   </main>
 
   <footer class="site-footer">

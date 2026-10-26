@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'sha256-R79ihQKs8w9RftEuhJDjErf3c5SQhboSXw3JYA/4d1A='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://static.cloudflareinsights.com 'sha256-R79ihQKs8w9RftEuhJDjErf3c5SQhboSXw3JYA/4d1A='; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; font-src 'self' data: blob:; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Kreativ Tools | Font to Webfont</title>
@@ -27,12 +27,12 @@
   <link rel="icon" href="../../favicon-32x32.png" sizes="32x32" type="image/png" />
   <link rel="icon" href="../../favicon-16x16.png" sizes="16x16" type="image/png" />
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="../../vendor/fontawesome/css/all.min.css" />
   <link rel="stylesheet" href="../../styles.css" />
   <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Font to Webfont","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/fonts/webfont-convert/","description":"Convert licensed TTF or OTF files into WOFF and WOFF2 webfont files, then pair the export with CSS and fallback planning.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Font Tools","item":"https://kreativtools.com/fonts/"},{"@type":"ListItem","position":3,"name":"Font to Webfont","item":"https://kreativtools.com/fonts/webfont-convert/"}]}]</script>
   <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"f7acecd16c454cfbbb4704b4e665a173"}'></script>
 </head>
-<body>
+<body class="tool-page">
   <div class="bg-glow bg-glow-1"></div>
   <div class="bg-glow bg-glow-2"></div>
 
@@ -100,7 +100,8 @@
       </div>
     </section>
 
-    <section class="article-section tool-guide" aria-labelledby="fontConvertGuideTitle">
+    <details class="tool-help"><summary>Font to webfont guide</summary>
+<section class="article-section tool-guide" aria-labelledby="fontConvertGuideTitle">
       <h2 id="fontConvertGuideTitle">Font to webfont guide</h2>
       <p>Use this tool when you already have a licensed desktop font file and need a smaller webfont format for a website, landing page, or design system.</p>
       <div class="tool-guide-grid">
@@ -138,12 +139,15 @@
         </article>
       </div>
     </section>
-    <section class="article-section">
+    </details>
+    <details class="tool-help"><summary>Example webfont conversion jobs</summary>
+<section class="article-section">
       <h2>Example webfont conversion jobs</h2>
       <p><strong>Marketing page font:</strong> confirm the license allows web use, convert the needed weight to WOFF2, then generate CSS after the filename is final.</p>
       <p><strong>Legacy browser fallback:</strong> export WOFF2 first and WOFF only when the project support list requires it.</p>
       <p><strong>Design review:</strong> preview headings, numbers, and brand words before publishing the converted font to a live site.</p>
     </section>
+    </details>
   </main>
 
   <footer class="site-footer">

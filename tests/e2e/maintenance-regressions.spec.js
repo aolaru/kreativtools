@@ -180,7 +180,11 @@ test('the static HTML security policy rejects JavaScript eval and injected handl
     `,
   }));
   await page.goto('/pdf/fill-sign/');
-  await page.addScriptTag({ url: '/__csp-probe.js' });
+  await page.evaluate(() => {
+    const script = document.createElement('script');
+    script.src = '/__csp-probe.js';
+    document.head.append(script);
+  });
   await page.waitForFunction(() => window.securityProbe?.imageFailed);
   expect(await page.evaluate(() => window.securityProbe)).toEqual({
     evalBlocked: true, handlerRan: false, imageFailed: true,

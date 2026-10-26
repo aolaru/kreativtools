@@ -1,0 +1,88 @@
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
+const { pathToFileURL } = require('node:url');
+const { PDFDocument } = require('pdf-lib');
+const JSZip = require('jszip');
+const { test, expect } = require('@playwright/test');
+const root = path.resolve(__dirname, '../..');
+const fixture = path.join(root, 'tests/fixtures/merge-a.pdf');
+const other = path.join(root, 'tests/fixtures/merge-b.pdf');
+let unpacked;
+const local = (file) => pathToFileURL(path.join(unpacked, file)).href;
+
+test.beforeAll(async () => {
+  unpacked = fs.mkdtempSync(path.join(os.tmpdir(), 'kreativ-offline-test-'));
+  const zip = await JSZip.loadAsync(fs.readFileSync(path.join(root, 'downloads/kreativ-pdf-offline.zip')));
+  for (const [name, file] of Object.entries(zip.files)) {
+    if (file.dir || path.basename(name) !== name) throw new Error(`Unexpected archive entry: ${name}`);
+    fs.writeFileSync(path.join(unpacked, name), await file.async('nodebuffer'));
+  }
+});
+
+test.afterAll(() => { if (unpacked) fs.rmSync(unpacked, { recursive: true, force: true }); });
+
+test('standalone launcher contains five local tools and makes no network requests', async ({ page }) => {
+  const requests = [];
+  page.on('request', (request) => { if (/^https?:/.test(request.url())) requests.push(request.url()); });
+  await page.goto(local('index.html'));
+  await expect(page.locator('.tool-card')).toHaveCount(5);
+  for (const link of await page.locator('.tool-card').all()) expect(await link.getAttribute('href')).toMatch(/^[a-z-]+\.html$/);
+  expect(requests).toEqual([]);
+});
+
+for (const tool of ['merge', 'compress']) {
+  test(`standalone ${tool} cleans metadata and exports without internet or a server`, async ({ page }) => {
+    const requests = [];
+    const errors = [];
+    page.on('request', (request) => { if (/^https?:/.test(request.url())) requests.push(request.url()); });
+    page.on('pageerror', (error) => errors.push(error.message));
+    const prefix = tool === 'merge' ? 'mergePdf' : 'compressPdf';
+    await page.goto(local(`pdf-${tool}.html`));
+    await page.setInputFiles(`#${prefix}Input`, tool === 'merge' ? [fixture, other] : fixture);
+    await expect(page.locator(`#${prefix}ActionButton`)).toBeEnabled();
+    if (tool === 'merge') await expect(page.locator('.pdf-queue-thumbnail[src]')).toHaveCount(2);
+    await page.check(`#${prefix}RemoveMetadata`);
+    await page.click(`#${prefix}ActionButton`);
+    await expect(page.locator(`#${prefix}DownloadButton`)).toBeEnabled();
+    const promise = page.waitForEvent('download');
+    await page.click(`#${prefix}DownloadButton`);
+    const bytes = fs.readFileSync(await (await promise).path());
+    const document = await PDFDocument.load(bytes, { updateMetadata: false });
+    expect(document.context.trailerInfo.Info).toBeUndefined();
+    expect(document.getPageCount()).toBeGreaterThan(0);
+    expect(requests).toEqual([]);
+    expect(errors).toEqual([]);
+  });
+}
+
+test('standalone PDF Split prepares separate page downloads', async ({ page }) => {
+  await page.goto(local('pdf-split.html'));
+  await page.setInputFiles('#splitPdfInput', fixture);
+  await expect(page.locator('#splitPdfActionButton')).toBeEnabled();
+  await page.click('#splitPdfActionButton');
+  await expect(page.locator('#splitPdfDownloadAllButton')).toBeEnabled();
+});
+
+test('standalone image tools can prepare and download images', async ({ page }) => {
+  const png = { name: 'tiny.png', mimeType: 'image/png', buffer: Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO7Z8rkAAAAASUVORK5CYII=', 'base64') };
+  for (const name of ['image-compress.html', 'image-resize.html']) {
+    await page.goto(local(name));
+    await page.locator('input[type="file"]').first().setInputFiles(png);
+    await expect(page.locator('[data-export-prepare]')).toBeEnabled();
+    await page.locator('[data-export-prepare]').click();
+    await expect(page.locator('[data-export-download]')).toBeEnabled();
+    const promise = page.waitForEvent('download');
+    await page.locator('[data-export-download]').click();
+    expect(fs.statSync(await (await promise).path()).size).toBeGreaterThan(0);
+    if (name === 'image-resize.html') {
+      await page.click('#toolPdf');
+      await page.locator('[data-export-prepare]').click();
+      await expect(page.locator('[data-export-download]')).toBeEnabled();
+      const pdfDownload = page.waitForEvent('download');
+      await page.locator('[data-export-download]').click();
+      const bytes = fs.readFileSync(await (await pdfDownload).path());
+      expect((await PDFDocument.load(bytes)).getPageCount()).toBe(1);
+    }
+  }
+});

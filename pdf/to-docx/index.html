@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'sha256-4PVAxDQucKNq7APSEJyzflBgS9KauLwkebH1GYMvzx4='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://static.cloudflareinsights.com 'sha256-4PVAxDQucKNq7APSEJyzflBgS9KauLwkebH1GYMvzx4='; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; font-src 'self' data: blob:; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Kreativ Tools | PDF Text to DOCX</title>
@@ -27,12 +27,12 @@
   <link rel="icon" href="../../favicon-32x32.png" sizes="32x32" type="image/png" />
   <link rel="icon" href="../../favicon-16x16.png" sizes="16x16" type="image/png" />
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="../../vendor/fontawesome/css/all.min.css" />
   <link rel="stylesheet" href="../../styles.css" />
   <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"PDF Text to DOCX","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/pdf/to-docx/","description":"Convert text-based PDF files into structured DOCX documents directly in your browser.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"PDF Tools","item":"https://kreativtools.com/pdf/"},{"@type":"ListItem","position":3,"name":"PDF Text to DOCX","item":"https://kreativtools.com/pdf/to-docx/"}]}]</script>
   <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"f7acecd16c454cfbbb4704b4e665a173"}'></script>
 </head>
-<body>
+<body class="tool-page">
   <div class="bg-glow bg-glow-1"></div>
   <div class="bg-glow bg-glow-2"></div>
 
@@ -126,7 +126,8 @@
       </div>
     </section>
 
-    <section class="tool-intro" aria-label="How this converter works">
+    <details class="tool-help"><summary>Best fit</summary>
+<section class="tool-intro" aria-label="How this converter works">
       <div class="tool-intro-card">
         <h2>Best fit</h2>
         <ul class="tool-intro-list">
@@ -140,8 +141,10 @@
         <p>This converter rebuilds structured text with heading and paragraph heuristics. It does not preserve exact PDF visuals, and scanned image-only PDFs will need OCR elsewhere before they convert well.</p>
       </div>
     </section>
+    </details>
 
-    <section class="tool-intro" aria-label="What to do next">
+    <details class="tool-help"><summary>After export</summary>
+<section class="tool-intro" aria-label="What to do next">
       <div class="tool-intro-card">
         <h2>After export</h2>
         <p>Open the DOCX in Word, Pages, or Google Docs to continue editing. If the original PDF is still too large to send, use <a href="/pdf/compress/">PDF Compress</a> on the source file first.</p>
@@ -151,6 +154,7 @@
         <p>Use <a href="/pdf/fill-sign/">PDF Fill &amp; Sign</a> when the goal is to place text and signatures on top of a fixed PDF layout instead of converting it into an editable document.</p>
       </div>
     </section>
+    </details>
   </main>
 
   <footer class="site-footer">
@@ -199,7 +203,7 @@
 </footer>
   <script src="../../github-pages-prefix.js"></script>
   <script src="../../theme.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="../../vendor/jszip.min.js"></script>
   <script src="../../tool-export-ui.js"></script>
   <script src="../../tool-upload-ui.js"></script>
   <script type="module">

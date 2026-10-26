@@ -17,6 +17,8 @@ module.exports = defineConfig({
     reuseExistingServer: !process.env.CI,
   },
   projects: [
-    { name: 'chromium', use: { ...devices['Desktop Chrome'] } }
+    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
+    { name: 'firefox', testMatch: /pdf-(?:metadata|improvements)\.spec\.js/, use: { ...devices['Desktop Firefox'] } },
+    { name: 'webkit', testMatch: /pdf-(?:metadata|improvements)\.spec\.js/, use: { ...devices['Desktop Safari'] } },
   ],
 });

@@ -3,13 +3,13 @@ const { createHash } = require('node:crypto');
 function contentSecurityPolicy(scriptHashes = [], forHeader = false) {
   return [
     "default-src 'self'",
-    `script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com ${scriptHashes.join(' ')}`.trim(),
+    `script-src 'self' 'wasm-unsafe-eval' https://static.cloudflareinsights.com ${scriptHashes.join(' ')}`.trim(),
     "script-src-attr 'none'",
-    "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com",
-    "font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com",
+    "style-src 'self' 'unsafe-inline'",
+    "font-src 'self' data: blob:",
     "img-src 'self' data: blob:",
     "media-src 'self' blob:",
-    "connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com",
+    "connect-src 'self' https://cloudflareinsights.com https://static.cloudflareinsights.com",
     "worker-src 'self' blob:",
     "object-src 'none'",
     "base-uri 'self'",

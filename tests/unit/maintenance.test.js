@@ -7,7 +7,7 @@ const test = require('node:test');
 const { scriptHashes } = require('../../scripts/security-policy');
 
 const root = path.resolve(__dirname, '../..');
-const ignored = new Set(['.git', 'node_modules', 'vendor', 'test-results', 'playwright-report', '.lighthouseci']);
+const ignored = new Set(['.git', 'node_modules', 'vendor', 'dist', 'downloads', '.playwright-mcp', 'test-results', 'playwright-report', '.lighthouseci']);
 
 function htmlFiles(directory) {
   return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {

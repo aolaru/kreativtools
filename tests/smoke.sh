@@ -162,7 +162,7 @@ main() {
   expect_pattern "pdf/to-docx/index.html" 'id="pdfDocxInput"'
   expect_pattern "pdf/to-docx/index.html" 'id="pdfDocxConvertButton"'
   expect_pattern "pdf/to-docx/index.html" 'id="pdfDocxDownloadButton"'
-  expect_pattern "pdf/to-docx/index.html" 'jszip@3\.10\.1'
+  expect_pattern "pdf/to-docx/index.html" 'vendor/jszip\.min\.js'
   expect_pattern "pdf/split/index.html" 'id="splitPdfInput"'
   expect_pattern "pdf/split/index.html" 'id="splitPdfActionButton"'
   expect_pattern "pdf/split/index.html" 'id="splitPdfDownloadAllButton"'

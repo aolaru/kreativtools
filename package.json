@@ -6,6 +6,8 @@
   "scripts": {
     "vendor:build": "node scripts/vendor-dependencies.js",
     "sync:site": "node scripts/sync-site.js",
+    "build:offline": "node scripts/build-offline.js",
+    "test:offline": "playwright test --config=playwright.offline.config.js",
     "version:patch": "npm version --no-git-tag-version patch && npm run sync:site",
     "version:minor": "npm version --no-git-tag-version minor && npm run sync:site",
     "version:major": "npm version --no-git-tag-version major && npm run sync:site",
@@ -16,13 +18,18 @@
     "test": "npm run test:smoke && npm run test:unit && npm run test:e2e"
   },
   "devDependencies": {
+    "@fontsource/space-grotesk": "5.3.0",
+    "@fortawesome/fontawesome-free": "6.7.2",
     "@pdf-lib/fontkit": "1.1.1",
-    "@playwright/test": "^1.54.2",
+    "@playwright/test": "1.64.1",
     "axe-core": "4.10.3",
     "esbuild": "0.25.11",
     "fonteditor-core": "2.6.3",
+    "jspdf": "4.2.1",
+    "jszip": "3.10.1",
     "pako": "2.1.0",
     "papaparse": "5.5.3",
+    "pdf-lib": "1.17.1",
     "pdfjs-dist": "5.4.296"
   }
 }

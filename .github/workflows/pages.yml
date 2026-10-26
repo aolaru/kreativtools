@@ -37,6 +37,12 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
+      - name: Include the tested offline toolkit
+        uses: actions/download-artifact@v4
+        with:
+          name: offline-toolkit
+          path: downloads
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

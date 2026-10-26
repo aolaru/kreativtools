@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'sha256-m4RSf5sMGD78lZyY206C5MiyLhhhTSFH91YTO66tMTU='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: blob: https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://static.cloudflareinsights.com 'sha256-m4RSf5sMGD78lZyY206C5MiyLhhhTSFH91YTO66tMTU='; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; font-src 'self' data: blob:; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Kreativ Tools | Image Crop</title>
@@ -27,12 +27,12 @@
   <link rel="icon" href="../../favicon-32x32.png" sizes="32x32" type="image/png" />
   <link rel="icon" href="../../favicon-16x16.png" sizes="16x16" type="image/png" />
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="../../vendor/fontawesome/css/all.min.css" />
   <link rel="stylesheet" href="../../styles.css" />
   <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Image Crop","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/image/crop/","description":"Crop images in your browser with freeform selection, aspect-ratio presets, and export as JPG, PNG, WebP, or AVIF.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"Image Tools","item":"https://kreativtools.com/image/"},{"@type":"ListItem","position":3,"name":"Image Crop","item":"https://kreativtools.com/image/crop/"}]}]</script>
   <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"f7acecd16c454cfbbb4704b4e665a173"}'></script>
 </head>
-<body>
+<body class="tool-page">
   <div class="bg-glow bg-glow-1"></div>
   <div class="bg-glow bg-glow-2"></div>
 
@@ -154,7 +154,8 @@
       </div>
     </section>
 
-    <section class="tool-intro" aria-label="Image crop guidance">
+    <details class="tool-help"><summary>What it does</summary>
+<section class="tool-intro" aria-label="Image crop guidance">
       <div class="tool-intro-card">
         <h2>What it does</h2>
         <p>Crop photos, graphics, and screenshots directly in your browser without sending the file to a server.</p>
@@ -164,8 +165,10 @@
         <p>Social crops, ecommerce product framing, profile images, thumbnails, and quick cleanup before compression or format conversion.</p>
       </div>
     </section>
+    </details>
 
-    <section class="tool-intro" aria-label="Image crop next steps">
+    <details class="tool-help"><summary>Common use cases</summary>
+<section class="tool-intro" aria-label="Image crop next steps">
       <div class="tool-intro-card">
         <h2>Common use cases</h2>
         <ul class="tool-intro-list">
@@ -179,8 +182,10 @@
         <p>After cropping, use <a href="/image/compress/">Image Compress</a> to reduce the file weight, or switch to <a href="/image/resize/">Image Resize &amp; Convert</a> if you still need exact output dimensions.</p>
       </div>
     </section>
+    </details>
 
-    <section class="article-section">
+    <details class="tool-help"><summary>Quick FAQ</summary>
+<section class="article-section">
       <h2>Quick FAQ</h2>
       <ul>
         <li><strong>Should I crop before resizing?</strong> Yes, if the framing is wrong. Crop first so the final dimensions apply to the part of the image that actually matters.</li>
@@ -188,6 +193,7 @@
         <li><strong>Can I export to web-friendly formats?</strong> Yes. The cropped result can be downloaded as JPG, PNG, WebP, or AVIF when the current browser supports it.</li>
       </ul>
     </section>
+    </details>
   </main>
 
   <footer class="site-footer">
