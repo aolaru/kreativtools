@@ -162,8 +162,17 @@ test('mobile next action remains available away from the controls and does not c
   await expect(page.locator('#mergePdfActionButton')).toBeEnabled();
   await page.locator('#mergePdfOutputStatus').scrollIntoViewIfNeeded();
   await expect(page.locator('.mobile-export-bar')).toBeVisible();
-  await page.locator('.mobile-export-bar button').click();
-  await expect(page.locator('#mergePdfDownloadButton')).toBeEnabled();
+  const mobileAction = page.locator('.mobile-export-bar button');
+  await expect(mobileAction).toHaveText('Prepare PDF');
+  await expect(mobileAction).toBeEnabled();
+  const labelSurvivesFocus = await mobileAction.evaluate((button) => {
+    const label = button.firstChild;
+    button.focus();
+    return button.firstChild === label;
+  });
+  expect(labelSurvivesFocus).toBe(true);
+  await mobileAction.click();
+  await expect(page.locator('#mergePdfDownloadButton'), `After mobile Prepare: ${await page.locator('#mergePdfStatus').textContent()}`).toBeEnabled();
   await expect(page.locator('.mobile-export-bar button')).toHaveText('Download PDF');
   await page.locator('#mergePdfDownloadButton').scrollIntoViewIfNeeded();
   await expect(page.locator('.mobile-export-bar')).toBeHidden();

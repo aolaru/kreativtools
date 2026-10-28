@@ -156,9 +156,12 @@
       const visible = !workspace.classList.contains('is-hidden') && !inView && !editing && matchMedia('(max-width: 700px)').matches;
       mobileBar.hidden = !visible;
       document.body.classList.toggle('has-mobile-export-bar', visible);
-      mobileAction.textContent = actionTarget.textContent;
+      // Replacing the focused button's text node during a pointer gesture can
+      // suppress the click in WebKit. Leave unchanged labels in place.
+      if (mobileAction.textContent !== actionTarget.textContent) mobileAction.textContent = actionTarget.textContent;
       mobileAction.disabled = actionTarget.disabled;
-      mobileLabel.textContent = cancel ? 'Processing locally' : ready ? 'Your file is ready' : 'Next step';
+      const nextLabel = cancel ? 'Processing locally' : ready ? 'Your file is ready' : 'Next step';
+      if (mobileLabel.textContent !== nextLabel) mobileLabel.textContent = nextLabel;
     };
     mobileAction.addEventListener('click', () => actionTarget.click());
     new IntersectionObserver(renderMobile, { threshold: [0, 1] }).observe(controls);
@@ -166,7 +169,7 @@
     window.addEventListener('scroll', renderMobile, { passive: true });
     window.addEventListener('resize', renderMobile, { passive: true });
     window.visualViewport?.addEventListener('resize', renderMobile);
-    document.addEventListener('focusin', renderMobile);
+    document.addEventListener('focusin', (event) => { if (!mobileBar.contains(event.target)) renderMobile(); });
     document.addEventListener('focusout', () => requestAnimationFrame(renderMobile));
     renderMobile();
     render();
