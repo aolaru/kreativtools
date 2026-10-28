@@ -22,11 +22,11 @@ test.beforeAll(async () => {
 
 test.afterAll(() => { if (unpacked) fs.rmSync(unpacked, { recursive: true, force: true }); });
 
-test('standalone launcher contains five local tools and makes no network requests', async ({ page }) => {
+test('standalone launcher contains seven local tools and makes no network requests', async ({ page }) => {
   const requests = [];
   page.on('request', (request) => { if (/^https?:/.test(request.url())) requests.push(request.url()); });
   await page.goto(local('index.html'));
-  await expect(page.locator('.tool-card')).toHaveCount(5);
+  await expect(page.locator('.tool-card')).toHaveCount(7);
   for (const link of await page.locator('.tool-card').all()) expect(await link.getAttribute('href')).toMatch(/^[a-z-]+\.html$/);
   expect(requests).toEqual([]);
 });
@@ -63,6 +63,39 @@ test('standalone PDF Split prepares separate page downloads', async ({ page }) =
   await page.click('#splitPdfActionButton');
   await expect(page.locator('#splitPdfDownloadAllButton')).toBeEnabled();
 });
+
+for (const tool of ['organize', 'images']) {
+  test(`standalone PDF ${tool} previews and exports without internet or a server`, async ({ page }) => {
+    const requests = [];
+    const errors = [];
+    page.on('request', (request) => { if (/^https?:/.test(request.url())) requests.push(request.url()); });
+    page.on('pageerror', (error) => errors.push(error.message));
+    const prefix = tool === 'organize' ? 'organizePdf' : 'imagesPdf';
+    await page.goto(local(`pdf-${tool}.html`));
+    await page.setInputFiles(`#${prefix}Input`, fixture);
+    await expect(page.locator(`#${prefix}ActionButton`)).toBeEnabled();
+    if (tool === 'organize') {
+      await expect(page.locator('#organizePdfPages img')).toHaveCount(1);
+      await page.check('#organizePdfRemoveMetadata');
+    }
+    await page.click(`#${prefix}ActionButton`);
+    await expect(page.locator(`#${prefix}DownloadButton`)).toBeEnabled();
+    const promise = page.waitForEvent('download');
+    await page.click(`#${prefix}DownloadButton`);
+    const bytes = fs.readFileSync(await (await promise).path());
+    if (tool === 'organize') {
+      const document = await PDFDocument.load(bytes, { updateMetadata: false });
+      expect(document.getPageCount()).toBe(1);
+      expect(document.context.trailerInfo.Info).toBeUndefined();
+    } else {
+      const zip = await JSZip.loadAsync(bytes);
+      expect(Object.keys(zip.files)).toEqual(['merge-a-page-001.png']);
+      expect((await zip.file('merge-a-page-001.png').async('nodebuffer')).subarray(1, 4).toString()).toBe('PNG');
+    }
+    expect(requests).toEqual([]);
+    expect(errors).toEqual([]);
+  });
+}
 
 test('standalone image tools can prepare and download images', async ({ page }) => {
   const png = { name: 'tiny.png', mimeType: 'image/png', buffer: Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO7Z8rkAAAAASUVORK5CYII=', 'base64') };

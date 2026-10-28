@@ -10,6 +10,8 @@ const tools = {
   '/pdf/merge/': ['pdf-merge.html', 'Merge PDFs'],
   '/pdf/compress/': ['pdf-compress.html', 'Compress PDFs'],
   '/pdf/split/': ['pdf-split.html', 'Split PDFs'],
+  '/pdf/organize/': ['pdf-organize.html', 'Organize PDF pages'],
+  '/pdf/to-images/': ['pdf-images.html', 'PDF to images'],
   '/image/compress/': ['image-compress.html', 'Compress images'],
   '/image/resize/': ['image-resize.html', 'Resize and convert images'],
 };
@@ -76,13 +78,14 @@ async function main() {
         if (tools[href]) return `<a href="${tools[href][0]}">${body}</a>`;
         return body;
       });
-    html = html.replace('</body>', () => `${route === '/pdf/merge/' ? bootstrap : route === '/pdf/compress/' ? processingBootstrap : ''}\n${scripts.join('\n')}\n</body>`);
+    html = html.replace('</body>', () => `${['/pdf/merge/', '/pdf/organize/', '/pdf/to-images/'].includes(route) ? bootstrap : route === '/pdf/compress/' ? processingBootstrap : ''}\n${scripts.join('\n')}\n</body>`);
     add(name, secure(html));
   }
   add('index.html', secure(`<!doctype html><html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Kreativ Tools Offline</title>${style}</head><body><main class="container"><section class="hero"><h1>Kreativ Tools Offline</h1><p>Open a tool below. No internet, account, installation, or server is needed. Your files stay on this device.</p></section><div class="tools-grid">${Object.values(tools).map(([name, label]) => `<a class="tool-card" href="${name}"><h2>${label}</h2><p>Open tool</p></a>`).join('')}</div><p>Use a current desktop browser. Extract the complete ZIP before opening index.html. Mobile file viewers may not run local HTML; use the website on those devices instead.</p><p>Metadata cleanup is not redaction. Rewriting signed PDFs may invalidate their digital signatures. Keep your originals.</p></main></body></html>`));
-  add('README.txt', 'Kreativ Tools Offline\n\nExtract this ZIP and open index.html in a current desktop browser. No server or internet is required. Includes PDF Merge, Compress and Split, Image Compress, and Image Resize.\n\nPDF Merge and Compress validate inputs and support cancellation. PDF limits: 100 MB per file, 100 files and 200 MB per merge. Complex documents can still exceed device memory.\n\nMetadata cleanup is not redaction. Digital signatures may be invalidated. Keep your originals. No analytics are included.\n\nSource: https://github.com/aolaru/kreativtools\nBuild: npm ci && npm run vendor:build && npm run sync:site && npm run build:offline\n');
+  add('README.txt', 'Kreativ Tools Offline\n\nExtract this ZIP and open index.html in a current desktop browser. No server or internet is required. Includes PDF Merge, Compress, Split, Page Organizer, PDF to Images, Image Compress, and Image Resize.\n\nPDF input limit: 100 MB per file. Merge: 100 files / 200 MB combined. Organizer: 200 source/output pages. Images: 50 pages per batch, 100 MB of image output. Complex documents can still exceed device memory.\n\nMetadata cleanup is not redaction. Digital signatures may be invalidated. Keep your originals. No analytics are included.\n\nSource: https://github.com/aolaru/kreativtools\nBuild: npm ci && npm run vendor:build && npm run sync:site && npm run build:offline\n');
   add('LICENSE.txt', read('LICENSE'));
   add('THIRD_PARTY_NOTICES.txt', read('THIRD_PARTY_NOTICES.md'));
+  add('JSZIP-LICENSE.txt', read('vendor/JSZIP-LICENSE'));
   for (const [name, file] of Object.entries({ 'PDF-LIB-LICENSE.txt': 'vendor/PDF-LIB-LICENSE', 'PDFJS-LICENSE.txt': 'vendor/pdfjs/LICENSE', 'JSPDF-LICENSE.txt': 'vendor/JSPDF-LICENSE', 'SPACE-GROTESK-LICENSE.txt': 'vendor/fonts/SPACE-GROTESK-LICENSE', 'FONTAWESOME-LICENSE.txt': 'vendor/fontawesome/LICENSE.txt' })) add(name, read(file));
   for (const name of ['LICENSE_FOXIT', 'LICENSE_LIBERATION']) add(`${name}.txt`, read(`vendor/pdfjs/standard_fonts/${name}`));
   for (const directory of ['cmaps', 'wasm']) {

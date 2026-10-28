@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://static.cloudflareinsights.com; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; font-src 'self' data: blob:; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <title>PDF to Images | Kreativ Tools</title>
+  <meta name="description" content="Export selected PDF pages as PNG or JPG images with resolution controls. Preview the results and download a ZIP locally in your browser." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://kreativtools.com/pdf/to-images/" />
+  <meta property="og:title" content="PDF to Images | Kreativ Tools" />
+  <meta property="og:description" content="Export selected PDF pages as PNG or JPG images with resolution controls. Preview the results and download a ZIP locally in your browser." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kreativtools.com/pdf/to-images/" />
+  <meta property="og:image" content="https://kreativtools.com/og-image.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and focused browser-based creative tools" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="PDF to Images | Kreativ Tools" />
+  <meta name="twitter:description" content="Export selected PDF pages as PNG or JPG images with resolution controls. Preview the results and download a ZIP locally in your browser." />
+  <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
+  <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and focused browser-based creative tools" />
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="../../favicon-32x32.png" sizes="32x32" type="image/png" />
+  <link rel="icon" href="../../favicon-16x16.png" sizes="16x16" type="image/png" />
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
+  <link rel="stylesheet" href="../../vendor/fontawesome/css/all.min.css" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"PDF to Images","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/pdf/to-images/","description":"Export selected PDF pages as PNG or JPG images with resolution controls. Preview the results and download a ZIP locally in your browser.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"PDF Tools","item":"https://kreativtools.com/pdf/"},{"@type":"ListItem","position":3,"name":"PDF to Images","item":"https://kreativtools.com/pdf/to-images/"}]}]</script>
+  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"f7acecd16c454cfbbb4704b4e665a173"}'></script>
+</head>
+<body class="tool-page">
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Kreativ Tools Home">
+      <div class="brand-mark">K</div>
+      <div class="brand-copy"><strong>Kreativ Tools</strong></div>
+    </a>
+
+    <nav class="top-nav" aria-label="Primary">
+      <a href="/tools/" aria-current="page"><i class="fa-solid fa-toolbox" aria-hidden="true"></i><span>Tools</span></a>
+      <a href="/learn/"><i class="fa-solid fa-book-open" aria-hidden="true"></i><span>Learn</span></a>
+      <a href="/changes/"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i><span>Updates</span></a>
+    </nav>
+
+    <div class="header-actions">
+      <button id="shareButton" type="button" class="icon-toggle" aria-label="Share this page" title="Share this page"><i class="fa-solid fa-share-nodes" aria-hidden="true"></i></button>
+      <button id="themeToggle" type="button" class="icon-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><i class="fa-solid fa-moon" aria-hidden="true"></i></button>
+    </div>
+  </header>
+
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a><span aria-hidden="true">/</span><a href="/pdf/">PDF Tools</a><span aria-hidden="true">/</span><span aria-current="page">PDF to Images</span>
+  </nav>
+
+  <main class="container">
+    <section class="hero">
+      <p class="eyebrow">PDF Tools</p>
+      <h1>PDF to Images</h1>
+      <p>Turn selected PDF pages into PNG or JPG images.</p>
+    </section>
+    <section class="upload-card">
+      <input id="imagesPdfInput" type="file" accept="application/pdf,.pdf" aria-label="Upload PDF" hidden />
+      <div id="imagesPdfDropzone" class="dropzone" role="group" aria-label="Choose a PDF to export as images">
+        <button id="imagesPdfUploadButton" class="primary" type="button">Choose PDF</button>
+        <p>or drag a PDF here</p>
+        <p class="status">Up to 100 MB. Export at most 50 pages per batch, entirely on this device.</p>
+        <p id="imagesPdfStatus" class="status">Choose a PDF to begin.</p>
+      </div>
+    </section>
+    <section id="imagesPdfWorkspace" class="workspace pdf-pages-workspace is-hidden">
+      <div class="controls">
+        <p id="imagesPdfMeta" class="status">No PDF loaded.</p>
+        <label for="imagesPdfRange">Pages to export</label>
+        <input id="imagesPdfRange" type="text" placeholder="All pages, or 1, 3-5" aria-describedby="imagesPdfRangeHelp" />
+        <p id="imagesPdfRangeHelp" class="status">Blank means all pages, up to 50. Ranges follow the order you enter, with repeated page numbers included only once.</p>
+        <label for="imagesPdfFormat">Image format</label>
+        <select id="imagesPdfFormat"><option value="image/png">PNG - lossless</option><option value="image/jpeg">JPG - smaller files</option></select>
+        <label for="imagesPdfDpi">Resolution</label>
+        <select id="imagesPdfDpi"><option value="72">72 DPI - screen size</option><option value="144" selected>144 DPI - sharper text</option><option value="216">216 DPI - larger images</option></select>
+        <label for="imagesPdfQuality">JPG quality</label>
+        <input id="imagesPdfQuality" type="range" min="10" max="100" value="90" disabled />
+        <button id="imagesPdfActionButton" type="button" class="primary" disabled data-export-prepare>Prepare images</button>
+        <button id="imagesPdfDownloadButton" type="button" class="secondary-button" disabled data-export-download>Download ZIP</button>
+        <button id="imagesPdfCancelButton" type="button" class="ghost" hidden>Cancel</button>
+        <p id="imagesPdfResult" class="status" role="status"></p>
+      </div>
+      <div class="preview-panel">
+        <h2>Export preview</h2>
+        <p>Prepare the images to check their appearance and pixel dimensions before downloading.</p>
+        <div id="imagesPdfResults" class="pdf-page-grid" role="group" aria-label="Exported page images"></div>
+      </div>
+    </section>
+    <details class="tool-help"><summary>PDF to Images help and limits</summary>
+<section class="article-section tool-guide" aria-labelledby="imagesHelp">
+      <h2 id="imagesHelp">PDF to Images help and limits</h2>
+      <p>Each selected page becomes one picture, including its visible text and graphics. This renders complete pages; it does not extract the original embedded image files. Higher resolution creates more pixels, not new detail.</p>
+      <p>PNG is lossless; JPG trades some detail for smaller files. Images have a white background. The chosen DPI controls raster dimensions; the downloaded image's encoding may report a different print-resolution tag. Use the pixel dimensions shown in the preview when placing the image in another app.</p>
+      <p>Exports lose selectable text, PDF form behavior, accessibility tags, and verifiable digital signatures. Keep the source PDF. File processing stays in the browser, and no PDF metadata is copied into the newly rendered image.</p>
+      <p>Encrypted PDFs are not supported. Export up to 50 pages and 100 MB of images per batch, with a maximum of 16 million pixels and 8192 pixels per side on each page. Reduce DPI or use fewer pages if a file is too large.</p>
+      <p>For page rotation or reordering, use <a href="/pdf/organize/">PDF Page Organizer</a>. For the reverse conversion, use <a href="/pdf/image-to-pdf/">Image to PDF</a>.</p>
+    </section>
+    </details>
+  </main>
+  <footer class="site-footer">
+  <div class="footer-topline"></div>
+  <div class="footer-inner">
+    <section class="footer-about">
+      <h3>Kreativ<span>Tools</span></h3>
+      <p>Private browser tools for creative, document, media, font, and data jobs.</p>
+    </section>
+
+    <section>
+      <h4>Product</h4>
+      <ul>
+        <li><a href="/tools/">Tools</a></li>
+        <li><a href="/learn/">Learn</a></li>
+        <li><a href="/changes/">Updates</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h4>Popular</h4>
+      <ul>
+        <li><a href="/pdf/fill-sign/">PDF Fill & Sign</a></li>
+        <li><a href="/image/compress/">Image Compress</a></li>
+        <li><a href="/pdf/merge/">PDF Merge</a></li>
+        <li><a href="/fonts/webfont-convert/">Font to Webfont</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h4>Company</h4>
+      <ul>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/privacy/">Privacy Policy</a></li>
+        <li><a href="/terms/">Terms</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="footer-bottom">
+    <p class="footer-brand-links"><a href="https://kreativfont.com/" target="_blank" rel="noopener noreferrer">Kreativ Font</a><span aria-hidden="true">·</span><a href="https://kreativsound.com/" target="_blank" rel="noopener noreferrer">Kreativ Sound</a><span aria-hidden="true">·</span><a href="https://kreativwp.com/" target="_blank" rel="noopener noreferrer">Kreativ WP</a><span aria-hidden="true">·</span><a href="/">Kreativ Tools</a></p>
+    <p>© 2026 <a href="https://madebykreativ.com/" target="_blank" rel="noopener noreferrer">Made by KREATIV</a> · Independent creative tools and assets by Andrei Olaru</p>
+    <p class="footer-meta-actions"></p>
+  </div>
+</footer>
+  <script src="../../vendor/jszip.min.js"></script>
+  <script src="../../tool-export-ui.js"></script>
+  <script src="../../tool-upload-ui.js"></script>
+  <script type="module" src="../../pdf-images-ui.mjs"></script>
+  <script src="../../github-pages-prefix.js"></script>
+  <script src="../../theme.js"></script>
+</body>
+</html>

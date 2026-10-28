@@ -28,7 +28,7 @@ This project is available under the [MIT License](LICENSE). You may use, modify,
 
 ### Tool categories
 - Image: crop, compress, resize, convert to WebP
-- PDF: image to PDF, fill and sign PDF, split PDF, merge PDF, compress PDF
+- PDF: image to PDF, fill and sign, text to DOCX, split, merge, compress, organize pages, and export pages to images
 - Video: convert to WEBM, extract thumbnail, trim video
 - Fonts: webfont convert, preview, CSS generator
 - Audio: convert to WAV, convert to MP3, trim audio, adjust volume
@@ -43,7 +43,7 @@ This project is available under the [MIT License](LICENSE). You may use, modify,
 
 ## Run locally
 
-Requirements: Node.js 20 or newer for the generation and test commands. Python 3 is only used in the example static server command.
+Requirements: Node.js 24 or newer for the generation and test commands. CI uses Node 24 on Ubuntu 24.04. Python 3 is only used in the example static server command.
 
 ```bash
 git clone git@github.com:aolaru/kreativtools.git
@@ -74,11 +74,13 @@ npm run build:offline
 npm run test:offline
 ```
 
-The build creates `downloads/kreativ-pdf-offline.zip` and an unpacked copy in `dist/offline/`. Extract the ZIP and open `index.html` in a current desktop browser. No server, internet connection, or account is required. It includes PDF Merge, PDF Compress, PDF Split, Image Compress, and Image Resize/Convert. Mobile file viewers may not execute local HTML; use the website on those devices. The offline tests open actual `file://` pages with browser networking disabled and verify exports in Chromium, Firefox, and WebKit.
+The build creates `downloads/kreativ-pdf-offline.zip` and an unpacked copy in `dist/offline/`. Extract the ZIP and open `index.html` in a current desktop browser. No server, internet connection, or account is required. Its seven tools are PDF Merge, Compress, Split, Page Organizer, PDF to Images, Image Compress, and Image Resize/Convert. Mobile file viewers may not execute local HTML; use the website on those devices. The offline tests open actual `file://` pages with browser networking disabled and verify exports in Chromium, Firefox, and WebKit.
 
 The package embeds the same processing code used by the website, including its PDF workers, preview resources, and metadata cleanup. It has no analytics and does not store uploaded files. The ZIP and unpacked build are ignored by Git; CI builds, tests, and passes the resulting ZIP to the deployment job. Rebuild after changing a packaged tool or shared dependency. The website itself does not gain persistent offline caching from this package.
 
 PDF Merge and Compress check readability, encryption, page counts, and signature fields before export. Merge detects duplicate contents and keeps valid files if another input fails. Limits are 100 MB per PDF, 100 files and 200 MB combined per merge; unusually complex PDFs may still exceed device memory. Cancellation terminates the processing worker. Metadata cleanup is not redaction, and rewriting a digitally signed document can invalidate its signature. Merge copies pages, not document-level editable forms or attachments; flatten completed forms before merging when needed.
+
+Page Organizer uses the same PDF worker to copy, reorder, rotate, duplicate, and remove pages, with a 200-page input/output limit and 20 Undo steps. It does not preserve document-level form structure, bookmarks, or attachments. PDF to Images renders up to 50 selected pages per batch, at 72/144/216 DPI, with PNG or JPG output and a ZIP. It caps each image at 16 million pixels and 8192 pixels per side, and the combined images at 100 MB. Raster exports are not editable or digitally signed PDFs. `pdf-page-model.mjs` holds selection/rotation validation, and `pdf-page-render.mjs` provides bounded, cancellable rendering.
 
 ## Shared generation
 
@@ -162,6 +164,7 @@ Follow the review and archive decision rule in [MAINTENANCE.md](MAINTENANCE.md).
 - GitHub Pages enforces the HTML Content Security Policy, which blocks unapproved inline scripts and event handlers. GitHub Pages does not serve custom response headers from `_headers`; response-only protections such as `frame-ancestors`, HSTS, and `nosniff` require a host/CDN configuration.
 - Canonical pages still include a `strict-origin-when-cross-origin` referrer meta tag so the static HTML has a privacy-safe browser fallback.
 - The Pages deployment waits for the reusable test and Lighthouse jobs to pass.
+- CI uses two browser-test workers, GitHub failure annotations, and retained test reports. A failed test still blocks publishing; do not bypass that gate to deploy a change.
 
 ## Versioning
 

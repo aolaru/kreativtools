@@ -1,6 +1,7 @@
 import * as bundledPdfLib from './vendor/pdf-lib.min.js';
 import { removePdfMetadata } from './pdf-metadata.mjs';
 import { checkPdfFiles } from './pdf-limits.mjs';
+import { validatePagePlan } from './pdf-page-model.mjs';
 export { PDF_LIMITS } from './pdf-limits.mjs';
 
 const pdfLib = globalThis.PDFLib || bundledPdfLib.default || bundledPdfLib;
@@ -32,7 +33,7 @@ function documentWarnings(document) {
   return { signed, hasForms, hasAttachments: !!names?.has(PDFName.of('EmbeddedFiles')) };
 }
 
-export async function executePdfOperation({ operation, files, removeMetadata = false }, progress = () => {}) {
+export async function executePdfOperation({ operation, files, removeMetadata = false, pagePlan }, progress = () => {}) {
   checkPdfFiles(files);
   const api = pdfLib;
   if (operation === 'inspect') {
@@ -53,6 +54,16 @@ export async function executePdfOperation({ operation, files, removeMetadata = f
       const pages = await output.copyPages(document, document.getPageIndices());
       pages.forEach((page) => output.addPage(page));
     }
+  } else if (operation === 'organize') {
+    progress('Reading the source pages...');
+    const { document } = await readDocument(files[0]);
+    const plan = validatePagePlan(pagePlan, document.getPageCount());
+    output = await api.PDFDocument.create({ updateMetadata: !removeMetadata });
+    const pages = await output.copyPages(document, plan.map((page) => page.index));
+    pages.forEach((page, index) => {
+      page.setRotation(api.degrees((page.getRotation().angle + plan[index].rotation) % 360));
+      output.addPage(page);
+    });
   } else if (operation === 'compress') {
     progress(`Reading ${files[0].name}...`);
     ({ document: output } = await readDocument(files[0]));

@@ -205,7 +205,7 @@ test('all tool upload controls and shared colors pass accessibility checks', asy
   test.setTimeout(120_000);
   await page.goto('/tools/');
   const routes = await page.locator('.tool-card').evaluateAll((cards) => cards.map((card) => card.getAttribute('href')));
-  expect(routes).toHaveLength(23);
+  expect(routes).toHaveLength(25);
   for (const route of ['/', '/tools/', '/learn/', '/privacy/', '/contact/', ...routes]) {
     await page.goto(route);
     await page.evaluate(fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8'));

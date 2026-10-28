@@ -31,7 +31,7 @@ test('mobile directory starts with search, short breadcrumbs, and every category
   await expect(page.locator('#toolsEmptyState')).toBeVisible();
   await page.click('#toolDirectoryReset');
   await expect(page.locator('#toolDirectorySearch')).toBeFocused();
-  await expect(page.locator('.category-grid .tool-card:not([hidden])')).toHaveCount(23);
+  await expect(page.locator('.category-grid .tool-card:not([hidden])')).toHaveCount(25);
 });
 
 test('mobile PDF editor has a reachable preview, collapsible settings, and stable zoomed placements', async ({ page }) => {
@@ -165,7 +165,7 @@ for (const route of ['/video/convert-webm/', '/video/trim/']) {
 test('every exporting tool has separate prepare and download controls', async ({ page }) => {
   await page.goto('/tools/');
   const routes = await page.locator('.category-grid .tool-card').evaluateAll((cards) => cards.map((card) => card.getAttribute('href')).filter((route) => route !== '/fonts/preview/'));
-  expect(routes).toHaveLength(22);
+  expect(routes).toHaveLength(24);
   for (const route of routes) {
     await page.goto(route);
     await expect(page.locator('[data-export-prepare]')).toHaveCount(1);

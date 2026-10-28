@@ -34,9 +34,10 @@ export function bindPdfUpload({ input, button, dropzone, onFiles }) {
 
 export function pdfWarning(info, merging = false) {
   const warnings = [];
+  const operation = typeof merging === 'string' ? merging : 'Merge';
   if (info.signed) warnings.push('This PDF contains signature fields. Rewriting it can invalidate digital signatures; keep the original.');
-  if (merging && info.hasForms) warnings.push('This PDF contains form fields. Merge copies pages, not an editable form. Flatten completed forms in a trusted PDF app first.');
-  if (merging && info.hasAttachments) warnings.push('This PDF contains attachments. Merge copies pages, not document attachments.');
+  if (merging && info.hasForms) warnings.push(`This PDF contains form fields. ${operation} copies pages, not an editable form. Flatten completed forms in a trusted PDF app first.`);
+  if (merging && info.hasAttachments) warnings.push(`This PDF contains attachments. ${operation} copies pages, not document attachments.`);
   return warnings.join(' ');
 }
 

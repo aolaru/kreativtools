@@ -7,6 +7,8 @@ module.exports = {
   '/pdf/fill-sign/': ['pdfFillExportButton', 'pdfFillDownloadButton', 'Prepare PDF', 'Download PDF'],
   '/pdf/image-to-pdf/': ['pdfPrepareButton', 'pdfDownloadButton', 'Prepare PDF', 'Download PDF'],
   '/pdf/merge/': ['mergePdfActionButton', 'mergePdfDownloadButton', 'Prepare PDF', 'Download PDF'],
+  '/pdf/organize/': ['organizePdfActionButton', 'organizePdfDownloadButton', 'Prepare PDF', 'Download PDF'],
+  '/pdf/to-images/': ['imagesPdfActionButton', 'imagesPdfDownloadButton', 'Prepare images', 'Download ZIP'],
   '/pdf/split/': ['splitPdfActionButton', 'splitPdfDownloadAllButton', 'Prepare PDFs', 'Download all PDFs'],
   '/pdf/to-docx/': ['pdfDocxConvertButton', 'pdfDocxDownloadButton', 'Prepare DOCX', 'Download DOCX'],
   '/audio/to-mp3/': ['mp3ConvertButton', 'mp3DownloadButton', 'Prepare MP3', 'Download MP3'],

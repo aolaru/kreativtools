@@ -2877,6 +2877,25 @@ input[type='range'] {
 .pdf-warning:empty, .pdf-input-issues:empty, .pdf-outcome:empty, [id$='MetadataResult']:empty { display: none; }
 .pdf-input-issues { padding: 14px 14px 14px 32px; border: 1px solid var(--outline); background: var(--panel); border-radius: 12px; overflow-wrap: anywhere; }
 .pdf-outcome { font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 700; margin-block: 12px; line-height: 1.2; }
+.pdf-pages-workspace { align-items: start; grid-template-columns: minmax(240px, 320px) minmax(0, 1fr); }
+.pdf-pages-workspace input[type='text'] { width: 100%; min-height: 44px; border: 1px solid var(--outline); border-radius: 10px; padding: 10px; background: var(--panel); color: var(--text); font: inherit; }
+.pdf-page-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 12px; }
+.pdf-page-card { padding: 12px; min-width: 0; border: 1px solid var(--outline); border-radius: 12px; background: var(--panel); }
+.pdf-page-card.is-selected { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.pdf-page-card label { display: flex; align-items: flex-start; gap: 6px; font-size: 0.875rem; }
+.pdf-page-card input[type='checkbox'] { width: auto; }
+.pdf-page-card h3 { margin-top: 0; font-size: 1rem; }
+.pdf-page-card p { color: var(--muted); font-size: 0.875rem; overflow-wrap: anywhere; }
+.pdf-page-thumbnail { display: grid; place-items: center; height: 190px; overflow: hidden; padding: 20px; margin-block: 10px; background: color-mix(in srgb, var(--outline) 25%, var(--panel)); border-radius: 8px; color: var(--muted); }
+.pdf-page-thumbnail img { max-width: 100%; max-height: 145px; object-fit: contain; }
+.pdf-image-result { display: block; max-width: 100%; max-height: 230px; margin: 12px auto; object-fit: contain; }
+.pdf-page-actions { display: grid; gap: 8px; }
+@media (max-width: 760px) {
+  .workspace.pdf-pages-workspace { grid-template-columns: 1fr; }
+  .pdf-page-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+  .pdf-page-card { padding: 10px; }
+  .pdf-page-card button { min-height: 44px; }
+}
 .tool-page main > p a { color: var(--accent-dark); }
 [data-theme='dark'] .tool-page main > p a { color: #93c5fd; }
 .mobile-export-bar { display: none; }
