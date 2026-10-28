@@ -1,6 +1,6 @@
 # Kreativ Tools
 
-Kreativ Tools is a privacy-first static website of browser-based utilities for image, PDF, video, font, audio, and file workflows. Files are processed locally in the browser by the tools; the site uses Cloudflare Web Analytics only for aggregate page and performance measurement and has no upload backend.
+Kreativ Tools is a privacy-first static website of browser-based utilities for image, PDF, video, font, audio, and file workflows. Files are processed locally in the browser by the tools; Cloudflare measures aggregate visits and offline download-link clicks. There is no file-upload backend.
 
 The project is in maintenance mode. It is a good base for a private tool library, a client-facing utility site, or a focused fork that keeps only the tools you need. Small fixes, compatibility improvements, accessibility work, and documentation corrections are welcome.
 
@@ -134,13 +134,17 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request. In short:
 - `sitemap.xml`: canonical URL list
 - `favicon.svg`: primary branded favicon
 
+## Private usage statistics
+
+Cloudflare Web Analytics shows visits to tool pages. Offline toolkit download-link clicks send an empty, best-effort request to the dedicated `kreativtools-offline-click-counter` Worker; view its request metrics in Cloudflare under Workers & Pages. The metrics are private to the account and are estimates: requests can be blocked, lost, repeated, or made directly by bots, and a click does not guarantee a completed download. The counter has no database and does not collect filenames or file content. Its code and Wrangler configuration are in `worker/`. Wrangler's Worker request metrics include invalid requests, too. Offline packages exclude this counter and remain usable without network access.
+
 ## Privacy
 
 Kreativ Tools does not load Google Analytics. Cloudflare Web Analytics measures aggregate page visits and performance. Kreativ Tools does not add uploaded files, file contents, or conversion results to its analytics implementation. Theme selection and some workflow settings can be stored locally in the visitor's browser. Saving a signature in PDF Fill & Sign also stores its image on that device until the visitor removes it or clears site storage; Start Over does not delete saved signatures.
 
 ## Maintenance mode
 
-Kreativ Tools is kept online as a free, privacy-first utility library. Do not add generic tools, Learn articles, workflows, monetization, or additional analytics/tracking unless the project is deliberately restarted.
+Kreativ Tools is kept online as a free, privacy-first utility library. Do not add generic tools, Learn articles, workflows, monetization, or further analytics/tracking unless the project is deliberately restarted.
 
 Prioritize these existing tools when another Kreativ project needs a practical utility:
 

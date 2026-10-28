@@ -1,0 +1,7 @@
+name = "kreativtools-offline-click-counter"
+main = "offline-click.mjs"
+compatibility_date = "2026-10-28"
+workers_dev = true
+
+[observability]
+enabled = false

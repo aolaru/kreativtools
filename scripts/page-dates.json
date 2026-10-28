@@ -286,8 +286,8 @@
   },
   "/pdf/compress/": {
     "published": "2026-03-09",
-    "modified": "2026-10-26",
-    "hash": "9049b927cf7d1d1e26899c6de678b9ba24de01844b29a66b3bfa2dc8e65394b1"
+    "modified": "2026-10-29",
+    "hash": "8eb23ac15892ae57372491987162e0ea042fa93c917a1ddd13ad49267b2c3205"
   },
   "/pdf/fill-sign/": {
     "published": "2026-04-24",
@@ -306,8 +306,8 @@
   },
   "/pdf/merge/": {
     "published": "2026-03-09",
-    "modified": "2026-10-26",
-    "hash": "8c1311b9a3ac3e91d5ec234671733c0223f641830367b0f302bff5501aaddba7"
+    "modified": "2026-10-29",
+    "hash": "a41c0746acb1399f9e226310d1119c20986447fd2baab687647b96f949e94c8f"
   },
   "/pdf/split/": {
     "published": "2026-03-23",
@@ -321,8 +321,8 @@
   },
   "/privacy/": {
     "published": "2026-03-09",
-    "modified": "2026-10-25",
-    "hash": "43e98fb24b6639124e84f203a9d2f6cda67066c62563c3dd966585b4f961abc1"
+    "modified": "2026-10-29",
+    "hash": "c99968cfc5709e18cff8ca61259ad70ae13189be858b4e25ed3506bb6da43d6c"
   },
   "/terms/": {
     "published": "2026-03-09",

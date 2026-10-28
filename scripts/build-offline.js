@@ -61,7 +61,7 @@ async function main() {
     for (const [, attributes, body] of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g)) {
       if (/application\/ld\+json/.test(attributes)) continue;
       const src = attributes.match(/src="([^"]+)"/)?.[1];
-      if (src?.startsWith('https:') || src?.includes('github-pages-prefix')) continue;
+      if (src?.startsWith('https:') || src?.includes('github-pages-prefix') || src?.includes('offline-download-count')) continue;
       if (src) {
         const relative = path.relative(root, path.resolve(path.dirname(file), src));
         scripts.push(script(/type="module"/.test(attributes) ? await bundle(relative) : read(relative)));

@@ -1,6 +1,6 @@
 const { createHash } = require('node:crypto');
 
-function contentSecurityPolicy(scriptHashes = [], forHeader = false) {
+function contentSecurityPolicy(scriptHashes = [], forHeader = false, offlineCounter = false) {
   return [
     "default-src 'self'",
     `script-src 'self' 'wasm-unsafe-eval' https://static.cloudflareinsights.com ${scriptHashes.join(' ')}`.trim(),
@@ -9,7 +9,7 @@ function contentSecurityPolicy(scriptHashes = [], forHeader = false) {
     "font-src 'self' data: blob:",
     "img-src 'self' data: blob:",
     "media-src 'self' blob:",
-    "connect-src 'self' https://cloudflareinsights.com https://static.cloudflareinsights.com",
+    `connect-src 'self' https://cloudflareinsights.com https://static.cloudflareinsights.com${forHeader || offlineCounter ? ' https://kreativtools-offline-click-counter.andrei-olaru.workers.dev' : ''}`,
     "worker-src 'self' blob:",
     "object-src 'none'",
     "base-uri 'self'",
@@ -25,7 +25,7 @@ function scriptHashes(content) {
 }
 
 function secureDocument(content) {
-  const policy = contentSecurityPolicy(scriptHashes(content));
+  const policy = contentSecurityPolicy(scriptHashes(content), false, /<script\s+src="[^"]*offline-download-count\.js"/.test(content));
   const tag = `<meta http-equiv="Content-Security-Policy" content="${policy}" />`;
   return content.replace(/(<meta charset="UTF-8"\s*\/>)/, `$1\n  ${tag}`);
 }
