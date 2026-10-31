@@ -62,15 +62,16 @@
     <section class="hero">
       <p class="eyebrow">Image Suite</p>
       <h1>Resize an Image, Convert, or Export PDF</h1>
-      <p>Upload once, then resize dimensions, convert format, or download your image as a PDF.</p>
+      <p>Upload one image or a batch. Resize or convert, then download images individually or as a ZIP.</p>
+      <p>Batch: up to 30 images and 100 MB total. With aspect ratio enabled, each image fits inside the chosen width and height. Batch output is limited to 16 million pixels per image and 100 MB total; PDF export supports one image at a time.</p>
     </section>
 
     <section class="upload-card">
-      <input id="imageInput" type="file" accept="image/*,.avif,.gif,.bmp,.tif,.tiff" aria-label="Upload file" hidden />
+      <input id="imageInput" type="file" accept="image/*,.avif,.gif,.bmp,.tif,.tiff" multiple aria-label="Upload file" hidden />
       <div id="dropzone" class="dropzone" role="group" aria-label="Upload image">
         <div class="drop-icon" aria-hidden="true"></div>
         <button id="uploadButton" type="button" class="primary upload-trigger">Upload from Device</button>
-        <p>or drag and drop an image here</p>
+        <p>or drag and drop up to 30 images here for a batch ZIP</p>
         <p>Supports JPG, PNG, WebP, AVIF, GIF, BMP, and TIFF when the browser can decode them.</p>
         <p id="status" class="status status-empty">No file selected yet.</p>
       </div>
@@ -78,7 +79,7 @@
 
     <section id="workspace" class="workspace is-hidden">
       <div class="controls">
-        <div class="tool-switcher" role="tablist" aria-label="Tool type">
+        <div class="tool-switcher" role="group" aria-label="Tool type">
           <button id="toolResize" type="button" class="tool-button is-active" aria-pressed="true">Resize</button>
           <button id="toolConvert" type="button" class="tool-button" aria-pressed="false">Convert</button>
           <button id="toolPdf" type="button" class="tool-button" aria-pressed="false">Image to PDF</button>
@@ -239,6 +240,7 @@
 </footer>
 
   <script src="../../vendor/jspdf.umd.min.js"></script>
+  <script src="../../vendor/jszip.min.js"></script>
   <script src="../../image-format-support.js"></script>
   <script src="../../tool-export-ui.js"></script>
   <script src="../../tool-upload-ui.js"></script>

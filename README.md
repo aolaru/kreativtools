@@ -82,6 +82,8 @@ PDF Merge and Compress check readability, encryption, page counts, and signature
 
 Page Organizer uses the same PDF worker to copy, reorder, rotate, duplicate, and remove pages, with a 200-page input/output limit and 20 Undo steps. It does not preserve document-level form structure, bookmarks, or attachments. PDF to Images renders up to 50 selected pages per batch, at 72/144/216 DPI, with PNG or JPG output and a ZIP. It caps each image at 16 million pixels and 8192 pixels per side, and the combined images at 100 MB. Raster exports are not editable or digitally signed PDFs. `pdf-page-model.mjs` holds selection/rotation validation, and `pdf-page-render.mjs` provides bounded, cancellable rendering.
 
+Image Compress can optionally fit within maximum dimensions without enlarging. Image Resize/Convert supports batches of up to 30 images and 100 MB input, with 16 million pixels per output image and 100 MB combined output; batch files are downloaded as a ZIP. PDF Merge accepts an optional page range per input. Page Organizer can export only the selected output pages, preserving their current order and rotation.
+
 ## Shared generation
 
 Canonical pages live at clean routes such as `section/index.html` and `tool/index.html`.

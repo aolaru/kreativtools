@@ -31,8 +31,8 @@
   },
   "/changes/": {
     "published": "2026-03-09",
-    "modified": "2026-10-28",
-    "hash": "83adcdd9b75bbf583baf27fc1dbcf79851b9e0260cdc62a4abe8154391f80a1a"
+    "modified": "2026-10-31",
+    "hash": "c74727833d446cb892966c828a2db450cda6496f720a4b99580c63ff12f4df15"
   },
   "/contact/": {
     "published": "2026-03-09",
@@ -81,8 +81,8 @@
   },
   "/image/compress/": {
     "published": "2026-03-09",
-    "modified": "2026-10-26",
-    "hash": "6cfcc0d520b18d846e1596d3a1a8246b1ca29031ae839da6399b5150d129dd1f"
+    "modified": "2026-10-31",
+    "hash": "834b55e4c1c42eb55caa1b01dcebedf0486eb506a8819b58dc6ad7944f7b6ca9"
   },
   "/image/crop/": {
     "published": "2026-03-22",
@@ -96,8 +96,8 @@
   },
   "/image/resize/": {
     "published": "2026-03-07",
-    "modified": "2026-10-26",
-    "hash": "d5aefeae1f16755ac29f237949f5f1dab5f45dc34351e5e55ad829f189d5c805"
+    "modified": "2026-10-31",
+    "hash": "39615898ba54615bd65033779afde0a7b90baa080133a56ea394bf27357635ed"
   },
   "/image/to-webp/": {
     "published": "2026-03-09",
@@ -306,8 +306,8 @@
   },
   "/pdf/merge/": {
     "published": "2026-03-09",
-    "modified": "2026-10-29",
-    "hash": "a41c0746acb1399f9e226310d1119c20986447fd2baab687647b96f949e94c8f"
+    "modified": "2026-10-31",
+    "hash": "8f7ebe87a14bd249160b43abf42105615083c05d54855936032376b0907ada3f"
   },
   "/pdf/split/": {
     "published": "2026-03-23",
@@ -376,8 +376,8 @@
   },
   "/pdf/organize/": {
     "published": "2026-10-28",
-    "modified": "2026-10-28",
-    "hash": "08b51b77b05e601f80dbc2d665d057476f90626fa3c6f5b63d2a45e6fc2a9fca"
+    "modified": "2026-10-31",
+    "hash": "89792f71993cd55a889b4b8bc76b4b246aa0e5c3ad459e815657f74d0082b58a"
   },
   "/pdf/to-images/": {
     "published": "2026-10-28",

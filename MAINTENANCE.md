@@ -6,6 +6,8 @@ Kreativ Tools is a static utility library in maintenance mode. Do not add tools,
 
 On October 28, 2026, the maintainer requested PDF Page Organizer and PDF to Images as targeted additions using the existing local PDF libraries. This exception covers those two tools and their offline packaging and tests, not a general catalogue expansion.
 
+On October 31, 2026, the maintainer requested targeted additions to four existing tools: optional image compression resizing, selected-page PDF export, per-file PDF merge ranges, and batch image resize/conversion. The exception includes their offline packaging and tests.
+
 ## Review date
 
 Review the project on **November 27, 2026**. This is a 60-day observation window from the simplified tool-directory rollout on September 28, 2026.

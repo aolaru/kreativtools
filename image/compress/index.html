@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://static.cloudflareinsights.com 'sha256-oJjT/IA9WCAZqVm1Co/w/LUo24L5U6jhcaN8D3glRvQ='; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; font-src 'self' data: blob:; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://static.cloudflareinsights.com 'sha256-yoIqsNKW3LqWWp0QViS5gT0cH+bC8XT4RSveWPt+xo0='; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; font-src 'self' data: blob:; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Kreativ Tools | Image Compress</title>
@@ -102,6 +102,15 @@
           <span class="quality-head">Quality <strong><span id="compressQualityValue">82</span>%</strong></span>
           <input id="compressQualityInput" type="range" min="1" max="100" value="82" />
         </label>
+
+        <details>
+          <summary>Optional resize</summary>
+          <p class="status">Fit within these limits without stretching or enlarging. Leave blank to keep the original dimensions.</p>
+          <div class="input-grid">
+            <label>Maximum width (px)<input id="compressMaxWidth" type="number" min="1" max="16384" placeholder="Original" /></label>
+            <label>Maximum height (px)<input id="compressMaxHeight" type="number" min="1" max="16384" placeholder="Original" /></label>
+          </div>
+        </details>
 
         <p id="compressMeta" class="status status-empty">Upload an image to view compression details.</p>
 
@@ -233,6 +242,8 @@
     const formatInput = document.getElementById('compressFormatInput');
     const qualityInput = document.getElementById('compressQualityInput');
     const qualityValue = document.getElementById('compressQualityValue');
+    const maxWidthInput = document.getElementById('compressMaxWidth');
+    const maxHeightInput = document.getElementById('compressMaxHeight');
     const metaEl = document.getElementById('compressMeta');
     const applyButton = document.getElementById('compressApplyButton');
     const downloadButton = document.getElementById('compressDownloadButton');
@@ -246,6 +257,8 @@
     let sourceName = 'image';
     let sourceFileSize = 0;
     let compressedBlob = null;
+    let outputVersion = 0;
+    let loadVersion = 0;
     const MAX_PREVIEW_WIDTH = 960;
     const MAX_PREVIEW_HEIGHT = 720;
 
@@ -280,13 +293,13 @@
       return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
     };
 
-    const drawImage = (img) => {
-      canvas.width = img.naturalWidth;
-      canvas.height = img.naturalHeight;
-      syncPreviewDisplaySize(img.naturalWidth, img.naturalHeight);
+    const drawImage = (img, width = img.naturalWidth, height = img.naturalHeight) => {
+      canvas.width = width;
+      canvas.height = height;
+      syncPreviewDisplaySize(width, height);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, 0, 0);
-      dimensionsEl.textContent = `${img.naturalWidth} x ${img.naturalHeight}px`;
+      ctx.drawImage(img, 0, 0, width, height);
+      dimensionsEl.textContent = `${width} x ${height}px`;
     };
 
     const isQualityEnabled = () => imageFormats.isLossyMime(formatInput.value);
@@ -297,6 +310,12 @@
     };
 
     const loadImageFile = (file) => {
+      const request = ++loadVersion;
+      outputVersion++;
+      compressedBlob = null;
+      sourceImage = null;
+      applyButton.disabled = true;
+      downloadButton.disabled = true;
       if (!imageFormats.isSupportedImageFile(file)) {
         setStatus('Please upload a valid image file. JPG, PNG, WebP, AVIF, GIF, BMP, and TIFF are supported when the browser can decode them.');
         return;
@@ -307,12 +326,17 @@
       const img = new Image();
 
       img.onload = () => {
+        if (request !== loadVersion) { URL.revokeObjectURL(imageUrl); return; }
         sourceImage = img;
         sourceName = normalizedFile.name.replace(/\.[^.]+$/, '');
         sourceFileSize = normalizedFile.size;
         compressedBlob = null;
 
-        drawImage(img);
+        if (img.naturalWidth <= 16384 && img.naturalHeight <= 16384 && img.naturalWidth * img.naturalHeight <= 268435456) drawImage(img);
+        else {
+          canvas.width = canvas.height = 0;
+          dimensionsEl.textContent = `${img.naturalWidth} x ${img.naturalHeight}px - set smaller resize limits before preparing`;
+        }
         workspace.classList.remove('is-hidden');
         applyButton.disabled = false;
         downloadButton.disabled = true;
@@ -324,6 +348,7 @@
       };
 
       img.onerror = () => {
+        if (request !== loadVersion) { URL.revokeObjectURL(imageUrl); return; }
         setStatus('Could not load this image. AVIF, GIF, BMP, and TIFF support depends on the current browser.');
         URL.revokeObjectURL(imageUrl);
       };
@@ -339,11 +364,23 @@
 
       const mime = formatInput.value;
       const quality = Math.max(0.01, Math.min(1, Number(qualityInput.value) / 100));
-
-      drawImage(sourceImage);
+      const limits = [maxWidthInput, maxHeightInput].map((input) => input.value.trim());
+      if (limits.some((value) => value && (!/^\d+$/.test(value) || Number(value) < 1 || Number(value) > 16384))) {
+        setStatus('Use whole-number resize limits from 1 to 16384 pixels.');
+        return;
+      }
+      const scale = Math.min(1, limits[0] ? Number(limits[0]) / sourceImage.naturalWidth : 1, limits[1] ? Number(limits[1]) / sourceImage.naturalHeight : 1);
+      const width = Math.max(1, Math.round(sourceImage.naturalWidth * scale));
+      const height = Math.max(1, Math.round(sourceImage.naturalHeight * scale));
+      if (width > 16384 || height > 16384 || width * height > 268435456) { setStatus('Image is too large. Set smaller resize limits.'); return; }
+      const version = ++outputVersion;
+      compressedBlob = null;
+      downloadButton.disabled = true;
+      drawImage(sourceImage, width, height);
 
       canvas.toBlob(
         (blob) => {
+          if (version !== outputVersion) return;
           if (!blob) {
             setStatus('Compression failed. Try another format or quality.');
             return;
@@ -381,6 +418,8 @@
     };
 
     const resetWorkspace = () => {
+      loadVersion++;
+      outputVersion++;
       sourceImage = null;
       sourceName = 'image';
       sourceFileSize = 0;
@@ -432,13 +471,23 @@
     });
 
     formatInput.addEventListener('change', () => {
+      outputVersion++;
       syncQualityUi();
       compressedBlob = null;
       downloadButton.disabled = true;
     });
 
     qualityInput.addEventListener('input', () => {
+      outputVersion++;
+      compressedBlob = null;
+      downloadButton.disabled = true;
       qualityValue.textContent = qualityInput.value;
+    });
+
+    for (const input of [maxWidthInput, maxHeightInput]) input.addEventListener('input', () => {
+      outputVersion++;
+      compressedBlob = null;
+      downloadButton.disabled = true;
     });
 
     applyButton.addEventListener('click', compressImage);

@@ -2878,6 +2878,7 @@ input[type='range'] {
 .pdf-input-issues { padding: 14px 14px 14px 32px; border: 1px solid var(--outline); background: var(--panel); border-radius: 12px; overflow-wrap: anywhere; }
 .pdf-outcome { font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 700; margin-block: 12px; line-height: 1.2; }
 .pdf-pages-workspace { align-items: start; grid-template-columns: minmax(240px, 320px) minmax(0, 1fr); }
+.pdf-queue-item input[type='text'] { width: 100%; min-height: 44px; border: 1px solid var(--outline); border-radius: 10px; padding: 10px; background: var(--panel); color: var(--text); font: inherit; }
 .pdf-pages-workspace input[type='text'] { width: 100%; min-height: 44px; border: 1px solid var(--outline); border-radius: 10px; padding: 10px; background: var(--panel); color: var(--text); font: inherit; }
 .pdf-page-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 12px; }
 .pdf-page-card { padding: 12px; min-width: 0; border: 1px solid var(--outline); border-radius: 12px; background: var(--panel); }

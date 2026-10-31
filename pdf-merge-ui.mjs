@@ -1,5 +1,6 @@
 import { createPdfTaskRunner } from './pdf-job.mjs';
 import { formatBytes, downloadPdf, bindPdfUpload, pdfWarning, firstPageThumbnail } from './pdf-tool-ui.mjs';
+import { parsePageSelection } from './pdf-page-model.mjs';
 
 const $ = (id) => document.getElementById(`mergePdf${id}`);
 const input = $('Input');
@@ -71,6 +72,16 @@ function render(focus) {
     meta.className = 'queue-item-meta';
     meta.textContent = `${entry.info.pages} page${entry.info.pages === 1 ? '' : 's'} - ${formatBytes(entry.file.size)}`;
     main.append(title, meta);
+    const rangeLabel = document.createElement('label');
+    rangeLabel.textContent = 'Pages to include (blank for all)';
+    const range = document.createElement('input');
+    range.type = 'text';
+    range.placeholder = 'e.g. 1, 3-5';
+    range.value = entry.range;
+    range.dataset.range = index;
+    range.setAttribute('aria-label', `Pages to include from ${entry.file.name}`);
+    rangeLabel.append(range);
+    main.append(rangeLabel);
     const warning = pdfWarning(entry.info, true);
     if (warning) {
       const note = document.createElement('p');
@@ -129,7 +140,7 @@ async function addFiles(files) {
         problems.push(`${file.name}: duplicate PDF skipped (same file contents).`);
         continue;
       }
-      const entry = { file, info, thumbnail: null };
+      const entry = { file, info, thumbnail: null, range: '' };
       entries.push(entry);
       render();
       // Only one preview is decoded at a time; a failed preview never rejects a readable PDF.
@@ -175,7 +186,11 @@ prepare.addEventListener('click', async () => {
   const clean = metadata.checked;
   $('OutputStatus').textContent = 'Merging in progress';
   try {
-    const result = await runner.run('merge', entries.map((entry) => entry.file), { removeMetadata: clean });
+    const pageSelections = entries.map((entry) => {
+      try { return parsePageSelection(entry.range, entry.info.pages, entry.info.pages).map((number) => number - 1); }
+      catch (error) { throw new Error(`${entry.file.name}: ${error.message}`); }
+    });
+    const result = await runner.run('merge', entries.map((entry) => entry.file), { removeMetadata: clean, pageSelections });
     if (request !== generation) return;
     output = result.bytes;
     $('OutputStatus').textContent = `Ready to download: ${result.pages} pages / ${formatBytes(output.byteLength)}`;
@@ -200,6 +215,11 @@ cancel.addEventListener('click', () => {
   status.textContent = 'Cancelled. Checked files stay in the queue.';
 });
 $('AddMoreButton').addEventListener('click', () => input.click());
+list.addEventListener('input', (event) => {
+  if (!event.target.matches('[data-range]')) return;
+  entries[Number(event.target.dataset.range)].range = event.target.value;
+  resetResult();
+});
 list.addEventListener('click', (event) => {
   const button = event.target.closest('button[data-action]');
   if (!button) return;

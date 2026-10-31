@@ -163,16 +163,18 @@ async function load(file) {
   }
 }
 
-$('SelectButton').addEventListener('click', () => { selected = selected.size === items.length ? new Set() : new Set(items.map((item) => item.id)); render(); });
+$('SelectButton').addEventListener('click', () => { selected = selected.size === items.length ? new Set() : new Set(items.map((item) => item.id)); if ($('SelectedOnly').checked) invalidate(); render(); });
 $('RotateButton').addEventListener('click', () => change((plan) => plan.map((item) => selected.has(item.id) ? { ...item, rotation: (item.rotation + 90) % 360 } : item)));
 $('DeleteButton').addEventListener('click', () => change((plan) => plan.filter((item) => !selected.has(item.id))));
 $('DuplicateButton').addEventListener('click', () => change((plan) => plan.flatMap((item) => selected.has(item.id) ? [item, { ...item, id: nextId++ }] : [item])));
 $('UndoButton').addEventListener('click', () => { if (undo.length) { items = undo.pop(); selected.clear(); invalidate(); render(); status.textContent = 'Last page change undone.'; } });
 $('RemoveMetadata').addEventListener('change', invalidate);
+$('SelectedOnly').addEventListener('change', invalidate);
 grid.addEventListener('change', (event) => {
   if (!event.target.matches('[data-select-page]')) return;
   const id = Number(event.target.dataset.selectPage);
   if (event.target.checked) selected.add(id); else selected.delete(id);
+  if ($('SelectedOnly').checked) invalidate();
   $('Selection').textContent = `${items.length} output pages / ${selected.size} selected`;
   event.target.closest('.pdf-page-card').classList.toggle('is-selected', event.target.checked);
   for (const name of ['RotateButton', 'DeleteButton', 'DuplicateButton']) $(name).disabled = !selected.size;
@@ -209,12 +211,14 @@ grid.addEventListener('drop', (event) => {
 grid.addEventListener('dragend', () => { dragId = null; });
 prepare.addEventListener('click', async () => {
   if (!source) return;
+  const exportItems = $('SelectedOnly').checked ? items.filter((item) => selected.has(item.id)) : items;
+  if (!exportItems.length) { status.textContent = 'Select at least one page to export.'; return; }
   previews?.abort();
   previewBusy = false;
   invalidate();
   const request = outputVersion;
   try {
-    const result = await runner.run('organize', [source], { pagePlan: items.map(({ index, rotation }) => ({ index, rotation })), removeMetadata: $('RemoveMetadata').checked });
+    const result = await runner.run('organize', [source], { pagePlan: exportItems.map(({ index, rotation }) => ({ index, rotation })), removeMetadata: $('RemoveMetadata').checked });
     if (request !== outputVersion) return;
     output = result.bytes;
     download.disabled = false;

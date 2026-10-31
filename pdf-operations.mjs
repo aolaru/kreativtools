@@ -33,7 +33,7 @@ function documentWarnings(document) {
   return { signed, hasForms, hasAttachments: !!names?.has(PDFName.of('EmbeddedFiles')) };
 }
 
-export async function executePdfOperation({ operation, files, removeMetadata = false, pagePlan }, progress = () => {}) {
+export async function executePdfOperation({ operation, files, removeMetadata = false, pagePlan, pageSelections }, progress = () => {}) {
   checkPdfFiles(files);
   const api = pdfLib;
   if (operation === 'inspect') {
@@ -51,7 +51,9 @@ export async function executePdfOperation({ operation, files, removeMetadata = f
       progress(`Merging file ${index + 1} of ${files.length}: ${files[index].name}`);
       const { document } = await readDocument(files[index]);
       files[index].buffer = null;
-      const pages = await output.copyPages(document, document.getPageIndices());
+      const selection = pageSelections?.[index] ?? document.getPageIndices();
+      if (!Array.isArray(selection) || !selection.length || selection.some((page) => !Number.isInteger(page) || page < 0 || page >= document.getPageCount())) throw new Error(`${files[index].name}: invalid page selection.`);
+      const pages = await output.copyPages(document, selection);
       pages.forEach((page) => output.addPage(page));
     }
   } else if (operation === 'organize') {

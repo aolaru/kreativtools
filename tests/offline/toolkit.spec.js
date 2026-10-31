@@ -119,3 +119,53 @@ test('standalone image tools can prepare and download images', async ({ page }) 
     }
   }
 });
+
+test('offline PDF organizer and merge export selected pages', async ({ page }) => {
+  const first = await PDFDocument.create();
+  first.addPage([100, 300]); first.addPage([200, 300]);
+  const file = { name: 'first.pdf', mimeType: 'application/pdf', buffer: Buffer.from(await first.save()) };
+  await page.goto(local('pdf-organize.html'));
+  await page.setInputFiles('#organizePdfInput', file);
+  await expect(page.locator('#organizePdfActionButton')).toBeEnabled();
+  await page.locator('[data-select-page]').nth(1).check();
+  await page.check('#organizePdfSelectedOnly');
+  await page.click('#organizePdfActionButton');
+  await expect(page.locator('#organizePdfDownloadButton')).toBeEnabled();
+  let event = page.waitForEvent('download');
+  await page.click('#organizePdfDownloadButton');
+  let document = await PDFDocument.load(fs.readFileSync(await (await event).path()));
+  expect(document.getPages().map((p) => p.getWidth())).toEqual([200]);
+  await page.goto(local('pdf-merge.html'));
+  await page.setInputFiles('#mergePdfInput', [file, { name: 'merge-b.pdf', mimeType: 'application/pdf', buffer: fs.readFileSync(other) }]);
+  await expect(page.locator('#mergePdfActionButton')).toBeEnabled();
+  await page.getByLabel('Pages to include from first.pdf').fill('2');
+  await page.click('#mergePdfActionButton');
+  await expect(page.locator('#mergePdfDownloadButton')).toBeEnabled();
+  event = page.waitForEvent('download');
+  await page.click('#mergePdfDownloadButton');
+  document = await PDFDocument.load(fs.readFileSync(await (await event).path()));
+  expect(document.getPageCount()).toBe(2);
+  expect(document.getPage(0).getWidth()).toBe(200);
+});
+
+test('offline image compression resizes and image batch exports a ZIP', async ({ page }) => {
+  const base64 = await page.evaluate(() => { const canvas = document.createElement('canvas'); canvas.width = 100; canvas.height = 50; return canvas.toDataURL('image/png').split(',')[1]; });
+  const image = { name: 'one.png', mimeType: 'image/png', buffer: Buffer.from(base64, 'base64') };
+  await page.goto(local('image-compress.html'));
+  await page.locator('input[type="file"]').first().setInputFiles(image);
+  await expect(page.locator('#compressApplyButton')).toBeEnabled();
+  await page.getByText('Optional resize').click();
+  await page.fill('#compressMaxWidth', '40');
+  await page.click('#compressApplyButton');
+  await expect(page.locator('#compressDownloadButton')).toBeEnabled();
+  await expect(page.locator('#compressDimensions')).toHaveText('40 x 20px');
+  await page.goto(local('image-resize.html'));
+  await page.locator('input[type="file"]').first().setInputFiles([image, { ...image, name: 'two.png' }]);
+  await expect(page.locator('#applyButton')).toBeEnabled();
+  await page.click('#applyButton');
+  await expect(page.locator('#downloadButton')).toBeEnabled();
+  const event = page.waitForEvent('download');
+  await page.click('#downloadButton');
+  const zip = await JSZip.loadAsync(fs.readFileSync(await (await event).path()));
+  expect(Object.keys(zip.files)).toEqual(['01-one.png', '02-two.png']);
+});

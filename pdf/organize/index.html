@@ -85,6 +85,7 @@
           <button id="organizePdfUndoButton" type="button" class="ghost" disabled>Undo last change</button>
         </div>
         <label class="checkbox-row"><input id="organizePdfRemoveMetadata" type="checkbox" /> Remove metadata</label>
+        <label class="checkbox-row"><input id="organizePdfSelectedOnly" type="checkbox" /> Export selected pages only</label>
         <p class="status">Remove document properties and XMP metadata from the result. This is not redaction.</p>
         <button id="organizePdfActionButton" type="button" class="primary" disabled data-export-prepare>Prepare PDF</button>
         <button id="organizePdfDownloadButton" type="button" class="secondary-button" disabled data-export-download>Download PDF</button>
@@ -100,7 +101,7 @@
     <details class="tool-help"><summary>Page Organizer help and limits</summary>
 <section class="article-section tool-guide" aria-labelledby="organizerHelp">
       <h2 id="organizerHelp">Page Organizer help and limits</h2>
-      <p>This tool builds a new PDF from the visible page order. Select the checkboxes to rotate, duplicate, or delete pages; at least one page must remain. Undo restores up to 20 arrangement changes. Changing the page arrangement invalidates the prepared download.</p>
+      <p>This tool builds a new PDF from the visible page order. Select the checkboxes to rotate, duplicate, or delete pages; at least one page must remain. Choose Export selected pages only to extract checked pages in their current order and rotation. Undo restores up to 20 arrangement changes. Changing the page arrangement invalidates the prepared download.</p>
       <p>It does not redact text or repair damaged PDFs. Document-level bookmarks, attachments, and editable form structure are not copied. Flatten completed forms in a trusted PDF app first. Rewriting digitally signed PDFs can invalidate their signatures, so keep the signed originals.</p>
       <p>Encrypted PDFs are not supported. The limit is 200 source and output pages, and 100 MB per input; complex files may need a desktop PDF application.</p>
       <p>To combine separate files, use <a href="/pdf/merge/">PDF Merge</a>. To export page pictures instead, use <a href="/pdf/to-images/">PDF to Images</a>.</p>

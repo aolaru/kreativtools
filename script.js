@@ -37,6 +37,17 @@ let originalWidth = 0;
 let originalHeight = 0;
 let sourceBaseName = 'image';
 let activeTool = 'resize';
+let batchFiles = [];
+let batchZip = null;
+let batchVersion = 0;
+let loadVersion = 0;
+
+const invalidateBatch = () => {
+  batchVersion++;
+  batchZip = null;
+  downloadButton.disabled = true;
+  if (originalImage) applyButton.disabled = false;
+};
 
 const MAX_DIMENSION = 16384;
 const MAX_CANVAS_PIXELS = 268435456;
@@ -121,8 +132,9 @@ const syncToolUi = () => {
   formatFields.classList.toggle('is-hidden', isPdf);
   pdfFields.classList.toggle('is-hidden', !isPdf);
   pdfMarginRow.classList.toggle('is-hidden', !isPdf);
-  applyButton.textContent = isPdf ? 'Prepare PDF' : 'Prepare image';
-  downloadButton.textContent = isPdf ? 'Download PDF' : 'Download Image';
+  applyButton.textContent = isPdf ? 'Prepare PDF' : batchFiles.length > 1 ? 'Prepare images' : 'Prepare image';
+  downloadButton.textContent = isPdf ? 'Download PDF' : batchFiles.length > 1 ? 'Download ZIP' : 'Download Image';
+  toolPdfButton.disabled = batchFiles.length > 1;
 };
 
 const enableWorkspace = () => {
@@ -132,6 +144,7 @@ const enableWorkspace = () => {
 };
 
 const loadFile = (file) => {
+  const request = ++loadVersion;
   originalImage = null;
   applyButton.disabled = true;
   downloadButton.disabled = true;
@@ -146,6 +159,7 @@ const loadFile = (file) => {
   const img = new Image();
 
   img.onload = () => {
+    if (request !== loadVersion) { URL.revokeObjectURL(imageUrl); return; }
     originalImage = img;
     originalWidth = img.naturalWidth;
     originalHeight = img.naturalHeight;
@@ -163,16 +177,93 @@ const loadFile = (file) => {
     drawImageToCanvas(img, originalWidth, originalHeight);
     enableWorkspace();
     setStatus(`Loaded image: ${normalizedFile.name}`);
-    uploadUi?.setLoaded({ name: normalizedFile.name, size: normalizedFile.size });
+    uploadUi?.setLoaded(batchFiles.length > 1
+      ? { countLabel: `${batchFiles.length} images`, meta: 'First image shown in preview' }
+      : { name: normalizedFile.name, size: normalizedFile.size });
     URL.revokeObjectURL(imageUrl);
   };
 
   img.onerror = () => {
+    if (request !== loadVersion) { URL.revokeObjectURL(imageUrl); return; }
     setStatus('Could not load this file. AVIF, GIF, BMP, and TIFF support depends on the current browser.');
     URL.revokeObjectURL(imageUrl);
   };
 
   img.src = imageUrl;
+};
+
+const loadFiles = (files) => {
+  invalidateBatch();
+  loadVersion++;
+  originalImage = null;
+  applyButton.disabled = true;
+  batchFiles = [];
+  if (!files.length) return;
+  if (files.length > 30 || files.reduce((total, file) => total + file.size, 0) > 100 * 1024 * 1024) {
+    setStatus('Choose at most 30 images and 100 MB combined.');
+    return;
+  }
+  if (files.some((file) => !imageFormats.isSupportedImageFile(file))) {
+    setStatus('All selected files must be supported images.');
+    return;
+  }
+  batchFiles = files;
+  if (batchFiles.length > 1 && activeTool === 'pdf') activeTool = 'resize';
+  syncToolUi();
+  loadFile(files[0]);
+};
+
+const prepareBatch = async () => {
+  if (!window.JSZip) { setStatus('ZIP support is unavailable. Reload and try again.'); return; }
+  const request = ++batchVersion;
+  batchZip = null;
+  downloadButton.disabled = true;
+  applyButton.disabled = true;
+  const zip = new window.JSZip();
+  const mime = formatInput.value;
+  const quality = isQualityActive() ? getOutputQuality() : undefined;
+  const width = getSafeDimension(widthInput.value, originalWidth);
+  const height = getSafeDimension(heightInput.value, originalHeight);
+  let totalBytes = 0;
+  try {
+    for (let i = 0; i < batchFiles.length; i++) {
+      if (request !== batchVersion) return;
+      const file = imageFormats.normalizeImageFile(batchFiles[i]);
+      setStatus(`Preparing image ${i + 1} of ${batchFiles.length}...`);
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      try {
+        await new Promise((resolve, reject) => { img.onload = resolve; img.onerror = () => reject(new Error(`Cannot decode ${file.name}.`)); img.src = url; });
+        if (request !== batchVersion) return;
+        let w = img.naturalWidth;
+        let h = img.naturalHeight;
+        if (activeTool === 'resize') {
+          if (keepRatioInput.checked) {
+            const scale = Math.min(width / w, height / h);
+            w = Math.max(1, Math.round(w * scale)); h = Math.max(1, Math.round(h * scale));
+          } else { w = width; h = height; }
+        }
+        if (w > MAX_DIMENSION || h > MAX_DIMENSION || w * h > 16000000) throw new Error(`${file.name}: dimensions are too large for batch processing.`);
+        const outputCanvas = document.createElement('canvas');
+        outputCanvas.width = w; outputCanvas.height = h;
+        outputCanvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        const blob = await new Promise((resolve) => outputCanvas.toBlob(resolve, mime, quality));
+        outputCanvas.width = outputCanvas.height = 0;
+        if (request !== batchVersion) return;
+        if (!blob || blob.type !== mime) throw new Error(`Could not export ${file.name} in this format.`);
+        totalBytes += blob.size;
+        if (totalBytes > 100 * 1024 * 1024) throw new Error('Batch output exceeds 100 MB. Use fewer images.');
+        const base = file.name.replace(/\.[^.]+$/, '').replace(/[\\/<>:"|?*\x00-\x1f\u202a-\u202e\u2066-\u2069]/g, '_').replace(/^\.+/, '').slice(0, 100) || 'image';
+        zip.file(`${String(i + 1).padStart(2, '0')}-${base}.${extensionByMime[mime]}`, await blob.arrayBuffer());
+      } finally { URL.revokeObjectURL(url); }
+    }
+    const bytes = await zip.generateAsync({ type: 'uint8array', compression: 'STORE' });
+    if (request !== batchVersion) return;
+    batchZip = bytes;
+    downloadButton.disabled = false;
+    setStatus(`${batchFiles.length} images ready. Download the ZIP.`);
+  } catch (error) { if (request === batchVersion) setStatus(error.message); }
+  finally { if (request === batchVersion) applyButton.disabled = false; }
 };
 
 const applyResize = () => {
@@ -262,8 +353,8 @@ dropzone.addEventListener('keydown', (event) => {
 });
 
 imageInput.addEventListener('change', () => {
-  const [file] = imageInput.files || [];
-  if (file) loadFile(file);
+  const files = Array.from(imageInput.files || []);
+  if (files.length) loadFiles(files);
 });
 
 dropzone.addEventListener('dragenter', (event) => {
@@ -285,31 +376,35 @@ dropzone.addEventListener('dragleave', (event) => {
 dropzone.addEventListener('drop', (event) => {
   event.preventDefault();
   dropzone.classList.remove('drag-over');
-  const [file] = event.dataTransfer?.files || [];
-  if (file) loadFile(file);
+  loadFiles(Array.from(event.dataTransfer?.files || []));
 });
 
 toolResizeButton.addEventListener('click', () => {
+  invalidateBatch();
   activeTool = 'resize';
   syncToolUi();
 });
 
 toolConvertButton.addEventListener('click', () => {
+  invalidateBatch();
   activeTool = 'convert';
   syncToolUi();
 });
 
 toolPdfButton.addEventListener('click', () => {
+  invalidateBatch();
   activeTool = 'pdf';
   syncToolUi();
 });
 
-formatInput.addEventListener('change', syncQualityUi);
+formatInput.addEventListener('change', () => { invalidateBatch(); syncQualityUi(); });
 qualityInput.addEventListener('input', () => {
+  invalidateBatch();
   qualityValue.textContent = qualityInput.value;
 });
 
 widthInput.addEventListener('input', () => {
+  invalidateBatch();
   if (!keepRatioInput.checked || !originalImage) return;
   const w = getSafeDimension(widthInput.value, originalWidth);
   const ratio = originalHeight / originalWidth;
@@ -317,6 +412,7 @@ widthInput.addEventListener('input', () => {
 });
 
 heightInput.addEventListener('input', () => {
+  invalidateBatch();
   if (!keepRatioInput.checked || !originalImage) return;
   const h = getSafeDimension(heightInput.value, originalHeight);
   const ratio = originalWidth / originalHeight;
@@ -328,6 +424,8 @@ applyButton.addEventListener('click', () => {
     setStatus('Upload an image first.');
     return;
   }
+
+  if (batchFiles.length > 1) { prepareBatch(); return; }
 
   if (activeTool === 'resize') {
     applyResize();
@@ -343,6 +441,13 @@ applyButton.addEventListener('click', () => {
 });
 
 downloadButton.addEventListener('click', () => {
+  if (batchFiles.length > 1) {
+    if (!batchZip) return;
+    const url = URL.createObjectURL(new Blob([batchZip], { type: 'application/zip' }));
+    const link = document.createElement('a'); link.href = url; link.download = 'images.zip'; link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 10000);
+    return;
+  }
   if (activeTool === 'pdf') {
     downloadPdf();
     return;
@@ -376,6 +481,9 @@ downloadButton.addEventListener('click', () => {
     quality
   );
 });
+
+keepRatioInput.addEventListener('change', invalidateBatch);
+window.addEventListener('pagehide', invalidateBatch);
 
 imageFormats?.syncFormatSelect(formatInput, formatInput.value);
 syncQualityUi();

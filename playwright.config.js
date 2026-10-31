@@ -19,7 +19,7 @@ module.exports = defineConfig({
   },
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
-    { name: 'firefox', testMatch: /pdf-(?:metadata|improvements|pages)\.spec\.js/, use: { ...devices['Desktop Firefox'] } },
-    { name: 'webkit', testMatch: /pdf-(?:metadata|improvements|pages)\.spec\.js/, use: { ...devices['Desktop Safari'] } },
+    { name: 'firefox', testMatch: /(?:pdf-(?:metadata|improvements|pages)|consolidated-features)\.spec\.js/, use: { ...devices['Desktop Firefox'] } },
+    { name: 'webkit', testMatch: /(?:pdf-(?:metadata|improvements|pages)|consolidated-features)\.spec\.js/, use: { ...devices['Desktop Safari'] } },
   ],
 });
