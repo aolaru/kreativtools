@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://static.cloudflareinsights.com; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; font-src 'self' data: blob:; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <title>JSON Validator and Formatter | Kreativ Tools</title>
+  <meta name="description" content="Validate, format, and minify JSON privately in your browser. Paste JSON or open a file, then copy or download the result." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://kreativtools.com/file/json-validator/" />
+  <meta property="og:title" content="JSON Validator and Formatter | Kreativ Tools" />
+  <meta property="og:description" content="Validate, format, and minify JSON privately in your browser. Paste JSON or open a file, then copy or download the result." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kreativtools.com/file/json-validator/" />
+  <meta property="og:image" content="https://kreativtools.com/og-image.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Kreativ Tools social preview card with the K mark and focused browser-based creative tools" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="JSON Validator and Formatter | Kreativ Tools" />
+  <meta name="twitter:description" content="Validate, format, and minify JSON privately in your browser. Paste JSON or open a file, then copy or download the result." />
+  <meta name="twitter:image" content="https://kreativtools.com/og-image.png" />
+  <meta name="twitter:image:alt" content="Kreativ Tools social preview card with the K mark and focused browser-based creative tools" />
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="../../favicon-32x32.png" sizes="32x32" type="image/png" />
+  <link rel="icon" href="../../favicon-16x16.png" sizes="16x16" type="image/png" />
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
+  <link rel="stylesheet" href="../../vendor/fontawesome/css/all.min.css" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"JSON Validator and Formatter","applicationCategory":"BrowserApplication","operatingSystem":"Any modern browser","url":"https://kreativtools.com/file/json-validator/","description":"Validate, format, and minify JSON privately in your browser. Paste JSON or open a file, then copy or download the result.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"KREATIV","url":"https://madebykreativ.com/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://kreativtools.com"},{"@type":"ListItem","position":2,"name":"File Tools","item":"https://kreativtools.com/file/"},{"@type":"ListItem","position":3,"name":"JSON Validator and Formatter","item":"https://kreativtools.com/file/json-validator/"}]}]</script>
+  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"f7acecd16c454cfbbb4704b4e665a173"}'></script>
+</head>
+<body class="tool-page">
+  <div class="bg-glow bg-glow-1"></div><div class="bg-glow bg-glow-2"></div>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Kreativ Tools Home">
+      <div class="brand-mark">K</div>
+      <div class="brand-copy"><strong>Kreativ Tools</strong></div>
+    </a>
+
+    <nav class="top-nav" aria-label="Primary">
+      <a href="/tools/" aria-current="page"><i class="fa-solid fa-toolbox" aria-hidden="true"></i><span>Tools</span></a>
+      <a href="/learn/"><i class="fa-solid fa-book-open" aria-hidden="true"></i><span>Learn</span></a>
+      <a href="/changes/"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i><span>Updates</span></a>
+    </nav>
+
+    <div class="header-actions">
+      <button id="shareButton" type="button" class="icon-toggle" aria-label="Share this page" title="Share this page"><i class="fa-solid fa-share-nodes" aria-hidden="true"></i></button>
+      <button id="themeToggle" type="button" class="icon-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><i class="fa-solid fa-moon" aria-hidden="true"></i></button>
+    </div>
+  </header>
+
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a><span aria-hidden="true">/</span><a href="/file/">File Tools</a><span aria-hidden="true">/</span><span aria-current="page">JSON Validator and Formatter</span>
+  </nav>
+  <main class="container">
+    <section class="hero"><p class="eyebrow">File Tools</p><h1>JSON Validator and Formatter</h1><p>Check JSON syntax, format it for reading, or minify it for sharing. Your data stays in your browser.</p></section>
+    <section class="json-editor-card" aria-labelledby="editorTitle">
+      <div class="json-editor-heading"><div><h2 id="editorTitle">Your JSON</h2><p>Paste JSON below or open a JSON file, up to 2 MB.</p></div><div><input id="jsonFile" type="file" accept=".json,application/json" aria-label="Upload file" hidden /><button id="openJson" type="button">Open JSON file</button></div></div>
+      <label for="jsonEditor" class="json-editor-label">JSON input</label>
+      <textarea id="jsonEditor" class="json-editor" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder='{"example": true}'></textarea>
+      <div class="json-editor-actions"><button id="validateJson" type="button" class="primary">Validate</button><button id="formatJson" type="button">Format</button><button id="minifyJson" type="button">Minify</button><button id="copyJson" type="button">Copy</button><button id="downloadJson" type="button">Download JSON</button><button id="clearJson" type="button">Clear</button></div>
+      <p id="jsonResult" class="json-result" role="status" aria-live="polite">Enter JSON to get started.</p>
+    </section>
+    <details class="tool-help"><summary>JSON validator guide</summary><section class="article-section tool-guide"><h2>JSON validator guide</h2><div class="tool-guide-grid">
+      <article class="tool-guide-card"><h3>How to use it</h3><p>Paste JSON or open a file, then select Validate. Format adds indentation; Minify removes unnecessary whitespace. Copy or download the result when ready.</p></article>
+      <article class="tool-guide-card"><h3>What is checked</h3><p>This checks JSON syntax, not a JSON Schema or whether the data is correct for a particular application. Objects, arrays, strings, numbers, booleans, and null are accepted.</p></article>
+      <article class="tool-guide-card"><h3>Common errors</h3><p>Use double quotes around keys and strings, remove trailing commas, and escape special characters inside strings. Error details depend on your browser.</p></article>
+      <article class="tool-guide-card"><h3>Privacy and limits</h3><p>JSON is processed in your browser and is not uploaded. Input is limited to 2 MB; deeply nested documents may be too large to format. Keep a copy of your original file.</p></article>
+      <article class="tool-guide-card tool-guide-note"><h3>Convert data</h3><p>Convert an array of objects with <a href="/file/json-to-csv/">JSON to CSV</a>, or create JSON with <a href="/file/csv-to-json/">CSV to JSON</a>.</p></article>
+    </div></section></details>
+  </main>
+  <footer class="site-footer">
+  <div class="footer-topline"></div>
+  <div class="footer-inner">
+    <section class="footer-about">
+      <h3>Kreativ<span>Tools</span></h3>
+      <p>Private browser tools for creative, document, media, font, and data jobs.</p>
+    </section>
+
+    <section>
+      <h4>Product</h4>
+      <ul>
+        <li><a href="/tools/">Tools</a></li>
+        <li><a href="/learn/">Learn</a></li>
+        <li><a href="/changes/">Updates</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h4>Popular</h4>
+      <ul>
+        <li><a href="/pdf/fill-sign/">PDF Fill & Sign</a></li>
+        <li><a href="/image/compress/">Image Compress</a></li>
+        <li><a href="/pdf/merge/">PDF Merge</a></li>
+        <li><a href="/fonts/webfont-convert/">Font to Webfont</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h4>Company</h4>
+      <ul>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/privacy/">Privacy Policy</a></li>
+        <li><a href="/terms/">Terms</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="footer-bottom">
+    <p class="footer-brand-links"><a href="https://kreativfont.com/" target="_blank" rel="noopener noreferrer">Kreativ Font</a><span aria-hidden="true">·</span><a href="https://kreativsound.com/" target="_blank" rel="noopener noreferrer">Kreativ Sound</a><span aria-hidden="true">·</span><a href="https://kreativwp.com/" target="_blank" rel="noopener noreferrer">Kreativ WP</a><span aria-hidden="true">·</span><a href="/">Kreativ Tools</a></p>
+    <p>© 2026 <a href="https://madebykreativ.com/" target="_blank" rel="noopener noreferrer">Made by KREATIV</a> · Independent creative tools and assets by Andrei Olaru</p>
+    <p class="footer-meta-actions"></p>
+  </div>
+</footer>
+  <script type="module" src="../../json-validator-ui.mjs"></script>
+  <script src="../../github-pages-prefix.js"></script><script src="../../theme.js"></script>
+</body>
+</html>

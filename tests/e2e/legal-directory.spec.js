@@ -21,6 +21,7 @@ const pages = [
   '/audio/volume',
   '/file/xml-to-csv',
   '/file/json-to-csv',
+  '/file/json-validator',
   '/file/csv-to-json',
   '/changes',
   '/workflows',
@@ -37,7 +38,7 @@ const pages = [
 test('all tools directory shows cards that link to tools', async ({ page }) => {
   await page.goto('/tools');
   const cards = page.locator('.tool-card');
-  await expect(cards).toHaveCount(25);
+  await expect(cards).toHaveCount(26);
 
   await expect(page.locator('.tools-upsell').getByRole('link', { name: 'Read the chooser guide' })).toBeVisible();
   await expect(page.locator('.tool-card[href="/image/crop/"]')).toBeVisible();
@@ -62,6 +63,7 @@ test('all tools directory shows cards that link to tools', async ({ page }) => {
   await expect(page.locator('.tool-card[href="/audio/volume/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/file/xml-to-csv/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/file/json-to-csv/"]')).toBeVisible();
+  await expect(page.locator('.tool-card[href="/file/json-validator/"]')).toBeVisible();
   await expect(page.locator('.tool-card[href="/file/csv-to-json/"]')).toBeVisible();
 });
 
@@ -69,7 +71,7 @@ test('all tools directory supports search and media filters', async ({ page }) =
   await page.goto('/tools');
   const visibleCards = page.locator('.category-grid .tool-card:not([hidden])');
 
-  await expect(visibleCards).toHaveCount(25);
+  await expect(visibleCards).toHaveCount(26);
   await expect(page.locator('.tool-filter-button')).toHaveCount(7);
   await page.getByRole('button', { name: 'Image' }).click();
   await expect(visibleCards).toHaveCount(4);
@@ -84,7 +86,7 @@ test('all tools directory supports search and media filters', async ({ page }) =
   await page.fill('#toolDirectorySearch', 'signature');
   await expect(visibleCards).toHaveCount(1);
   await expect(page.locator('.tool-card[href="/pdf/fill-sign/"]')).toBeVisible();
-  await expect(page.locator('#toolDirectorySummary')).toContainText('Showing 1 of 25');
+  await expect(page.locator('#toolDirectorySummary')).toContainText('Showing 1 of 26');
 
   await page.getByRole('button', { name: 'All' }).click();
   await page.fill('#toolDirectorySearch', 'zzz-no-match');

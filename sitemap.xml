@@ -6,7 +6,7 @@
   </url>
   <url>
     <loc>https://kreativtools.com/tools/</loc>
-    <lastmod>2026-10-28</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://kreativtools.com/changes/</loc>
@@ -34,7 +34,7 @@
   </url>
   <url>
     <loc>https://kreativtools.com/file/</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://kreativtools.com/learn/</loc>
@@ -190,11 +190,11 @@
   </url>
   <url>
     <loc>https://kreativtools.com/file/json-to-csv/</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://kreativtools.com/file/csv-to-json/</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://kreativtools.com/privacy/</loc>
@@ -267,5 +267,9 @@
   <url>
     <loc>https://kreativtools.com/pdf/to-images/</loc>
     <lastmod>2026-10-28</lastmod>
+  </url>
+  <url>
+    <loc>https://kreativtools.com/file/json-validator/</loc>
+    <lastmod>2026-11-11</lastmod>
   </url>
 </urlset>
