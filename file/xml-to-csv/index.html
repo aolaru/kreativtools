@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://static.cloudflareinsights.com 'sha256-i/I7X1AzH+OXXBI38evQwK8/LtLy8IaYtCdXIUOtA0c='; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; font-src 'self' data: blob:; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://static.cloudflareinsights.com 'sha256-l7C7un37EjkpTG8WRCtr8sKMN1WPyj8BPhsmPJnrcMs='; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; font-src 'self' data: blob:; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Kreativ Tools | XML to CSV</title>
@@ -70,7 +70,7 @@
       <div id="xmlDropzone" class="dropzone" role="group" aria-label="Upload XML file">
         <div class="drop-icon" aria-hidden="true"></div>
         <button id="xmlUploadButton" type="button" class="primary upload-trigger">Upload XML</button>
-        <p>or drag and drop an XML file here</p>
+        <p>or drag and drop an XML file here (maximum 5 MB)</p>
         <p class="status">Best results when records are repeated elements (for example: &lt;item&gt;, &lt;row&gt;, &lt;product&gt;).</p>
         <p id="xmlStatus" class="status status-empty">No XML file selected yet.</p>
       </div>
@@ -83,6 +83,8 @@
           <select id="recordSelect"></select>
         </label>
 
+        <label><input id="xmlSpreadsheetSafe" type="checkbox" checked /> Reduce spreadsheet formula risk</label>
+        <p class="status">Adds a tab to formula-like cells and headers. This changes data and is not guaranteed in every spreadsheet or after re-saving. Turn off only for trusted data or programmatic imports.</p>
         <button id="xmlConvertButton" type="button" class="primary" disabled data-export-prepare>Prepare CSV</button>
         <button id="xmlDownloadButton" type="button" class="primary" disabled data-export-download>Download CSV</button>
       </div>
@@ -117,7 +119,7 @@
         </article>
         <article class="tool-guide-card">
           <h3>Privacy and limits</h3>
-          <p>The XML is parsed in your browser. Very large files can slow down the page because parsing, preview, and CSV generation all happen locally.</p>
+          <p>The XML is parsed in your browser. Files are limited to 5 MB and output to 1 million table cells; complex files can still be slow to process.</p>
         </article>
         <article class="tool-guide-card">
           <h3>Common issues</h3>
@@ -182,6 +184,7 @@
 </footer>
   <script src="../../tool-export-ui.js"></script>
   <script src="../../tool-upload-ui.js"></script>
+  <script src="../../file-data-utils.js"></script>
   <script>
     const xmlInput = document.getElementById('xmlInput');
     const uploadButton = document.getElementById('xmlUploadButton');
@@ -195,10 +198,13 @@
 
     const csvPreview = document.getElementById('csvPreview');
     const metaEl = document.getElementById('xmlMeta');
+    const spreadsheetSafe = document.getElementById('xmlSpreadsheetSafe');
+    const { escapeCsv, checkTableSize, MAX_INPUT_BYTES } = window.kreativFileData;
 
     let xmlDoc = null;
     let sourceName = 'data';
     let currentCsv = '';
+    let loadVersion = 0;
 
     const setStatus = (message) => {
       statusEl.textContent = message;
@@ -209,14 +215,6 @@
       dropzone: dropzone,
       workspace: workspace,
     });
-
-    const escapeCsv = (value) => {
-      const str = String(value ?? '');
-      if (str.includes('"') || str.includes(',') || str.includes('\n')) {
-        return `"${str.replaceAll('"', '""')}"`;
-      }
-      return str;
-    };
 
     const collectFields = (node, prefix = '', out = {}) => {
       for (const attr of Array.from(node.attributes || [])) {
@@ -281,10 +279,12 @@
           return set;
         }, new Set())
       );
+      checkTableSize(records.length + 1, headers.length);
 
-      const lines = [headers.map(escapeCsv).join(',')];
+      const escape = (value) => escapeCsv(value, spreadsheetSafe.checked);
+      const lines = [headers.map(escape).join(',')];
       for (const row of records) {
-        const line = headers.map((h) => escapeCsv(row[h] || '')).join(',');
+        const line = headers.map((h) => escape(row[h] || '')).join(',');
         lines.push(line);
       }
       return lines.join('\n');
@@ -300,6 +300,7 @@
     };
 
     const loadXmlFile = async (file) => {
+      const version = ++loadVersion;
       xmlDoc = null;
       currentCsv = '';
       convertButton.disabled = true;
@@ -307,13 +308,16 @@
       csvPreview.textContent = '';
       metaEl.textContent = '';
       uploadUi?.clear();
+      workspace.classList.add('is-hidden');
       if (!file || !file.name.toLowerCase().endsWith('.xml')) {
         setStatus('Please upload a valid .xml file.');
         return;
       }
+      if (file.size > MAX_INPUT_BYTES) { setStatus('File is too large. Choose an XML file up to 5 MB.'); return; }
 
       try {
         const text = await file.text();
+        if (version !== loadVersion) return;
         const parser = new DOMParser();
         const doc = parser.parseFromString(text, 'application/xml');
         const parseError = doc.querySelector('parsererror');
@@ -347,7 +351,7 @@
         setStatus(`Loaded XML: ${file.name}`);
         uploadUi?.setLoaded({ name: file.name, size: file.size });
       } catch {
-        setStatus('Could not read this file. Please try another XML file.');
+        if (version === loadVersion) setStatus('Could not read this file. Please try another XML file.');
       }
     };
 
@@ -358,7 +362,11 @@
       }
 
       const tag = recordSelect.value;
-      const { csv, rowCount } = buildCsvForTag(tag);
+      let csv, rowCount;
+      currentCsv = '';
+      downloadButton.disabled = true;
+      try { ({ csv, rowCount } = buildCsvForTag(tag)); }
+      catch (error) { csvPreview.textContent = ''; setStatus(error.message); return; }
 
       if (!csv) {
         setStatus('No tabular rows were extracted for this record element.');
@@ -401,6 +409,7 @@
     xmlInput.addEventListener('change', () => {
       const [file] = xmlInput.files || [];
       if (file) loadXmlFile(file);
+      xmlInput.value = '';
     });
 
     dropzone.addEventListener('dragover', (event) => {

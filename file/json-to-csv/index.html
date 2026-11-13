@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://static.cloudflareinsights.com 'sha256-+LVCK8iB3B0Q945wYTpwngXXLA6jaqu59Je9BGkpGxA='; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; font-src 'self' data: blob:; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://static.cloudflareinsights.com 'sha256-HlevozGSWtrv4vwyh8GPZIqbZZ6RLx1zWUQvmB9ayHo='; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; font-src 'self' data: blob:; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Kreativ Tools | JSON to CSV</title>
@@ -58,8 +58,8 @@
 
   <main class="container">
     <section class="hero"><p class="eyebrow">File Tools</p><h1>JSON to CSV</h1><p>Upload a JSON file containing an array of objects and export CSV.</p></section>
-    <section class="upload-card"><input id="jsonInput" type="file" accept=".json,application/json,text/json" aria-label="Upload file" hidden /><div id="jsonDropzone" class="dropzone" role="group" aria-label="Upload JSON"><div class="drop-icon" aria-hidden="true"></div><button id="jsonUploadButton" type="button" class="primary upload-trigger">Upload JSON</button><p>or drag and drop a JSON file here</p><p id="jsonStatus" class="status status-empty">No JSON file selected yet.</p></div></section>
-    <section id="jsonWorkspace" class="workspace is-hidden"><div class="controls"><button id="jsonConvertButton" type="button" class="primary" disabled data-export-prepare>Prepare CSV</button><button id="jsonDownloadButton" type="button" class="primary" disabled data-export-download>Download CSV</button></div><div class="preview-panel"><h2>CSV Preview</h2><pre id="jsonPreview" class="code-preview empty-note">Upload JSON to preview CSV.</pre><p id="jsonMeta" class="dimensions"></p></div></section>
+    <section class="upload-card"><input id="jsonInput" type="file" accept=".json,application/json,text/json" aria-label="Upload file" hidden /><div id="jsonDropzone" class="dropzone" role="group" aria-label="Upload JSON"><div class="drop-icon" aria-hidden="true"></div><button id="jsonUploadButton" type="button" class="primary upload-trigger">Upload JSON</button><p>or drag and drop a JSON file here (maximum 5 MB)</p><p id="jsonStatus" class="status status-empty">No JSON file selected yet.</p></div></section>
+    <section id="jsonWorkspace" class="workspace is-hidden"><div class="controls"><label><input id="jsonSpreadsheetSafe" type="checkbox" checked /> Reduce spreadsheet formula risk</label><p class="status">Adds a tab to formula-like cells and headers. This changes data and is not guaranteed in every spreadsheet or after re-saving. Turn off only for trusted data or programmatic imports.</p><button id="jsonConvertButton" type="button" class="primary" disabled data-export-prepare>Prepare CSV</button><button id="jsonDownloadButton" type="button" class="primary" disabled data-export-download>Download CSV</button></div><div class="preview-panel"><h2>CSV Preview</h2><pre id="jsonPreview" class="code-preview empty-note">Upload JSON to preview CSV.</pre><p id="jsonMeta" class="dimensions"></p></div></section>
 
     <details class="tool-help"><summary>JSON to CSV guide</summary>
 <section class="article-section tool-guide" aria-labelledby="jsonCsvGuideTitle">
@@ -84,7 +84,7 @@
         </article>
         <article class="tool-guide-card">
           <h3>Privacy and limits</h3>
-          <p>The JSON stays in your browser. Very large files can be slower to preview, and deeply nested data should be flattened before conversion.</p>
+          <p>The JSON stays in your browser. Files are limited to 5 MB and output to 1 million table cells. Unsafe integers and some high-precision numbers are rejected; use quoted strings for exact IDs and decimals. Other decimals use JavaScript number precision. Flatten deeply nested data before conversion.</p>
         </article>
         <article class="tool-guide-card">
           <h3>Common issues</h3>
@@ -157,6 +157,7 @@
 </footer>
   <script src="../../tool-export-ui.js"></script>
   <script src="../../tool-upload-ui.js"></script>
+  <script src="../../file-data-utils.js"></script>
   <script>
     const input = document.getElementById('jsonInput');
     const uploadButton = document.getElementById('jsonUploadButton');
@@ -167,10 +168,13 @@
     const downloadButton = document.getElementById('jsonDownloadButton');
     const preview = document.getElementById('jsonPreview');
     const metaEl = document.getElementById('jsonMeta');
+    const spreadsheetSafe = document.getElementById('jsonSpreadsheetSafe');
+    const { escapeCsv, parseJsonSafely, checkTableSize, MAX_INPUT_BYTES } = window.kreativFileData;
 
     let sourceName = 'data';
     let rows = [];
     let csv = '';
+    let loadVersion = 0;
 
     const setStatus = (m) => { statusEl.textContent = m; };
 
@@ -179,7 +183,7 @@
       dropzone: dropzone,
       workspace: workspace,
     });
-    const esc = (v) => { const s = String(v ?? ''); return /[",\n]/.test(s) ? `"${s.replaceAll('"', '""')}"` : s; };
+    const esc = (value) => escapeCsv(value, spreadsheetSafe.checked);
 
     const normalizeRows = (json) => {
       if (Array.isArray(json)) return json;
@@ -192,6 +196,7 @@
 
     const buildCsv = (items) => {
       const headers = Array.from(items.reduce((set, item) => { Object.keys(item || {}).forEach((k) => set.add(k)); return set; }, new Set()));
+      checkTableSize(items.length + 1, headers.length);
       const lines = [headers.map(esc).join(',')];
       for (const item of items) lines.push(headers.map((h) => esc(item?.[h] ?? '')).join(','));
       return lines.join('\n');
@@ -199,6 +204,7 @@
 
     const loadJson = async (file) => {
       if (!file) return;
+      const version = ++loadVersion;
       rows = [];
       csv = '';
       sourceName = 'data';
@@ -207,9 +213,12 @@
       preview.textContent = '';
       metaEl.textContent = '';
       uploadUi?.clear();
+      workspace.classList.add('is-hidden');
+      if (file.size > MAX_INPUT_BYTES) { setStatus('File is too large. Choose a JSON file up to 5 MB.'); return; }
       try {
         const text = await file.text();
-        const json = JSON.parse(text);
+        if (version !== loadVersion) return;
+        const json = parseJsonSafely(text);
         rows = normalizeRows(json).filter((x) => x && typeof x === 'object' && !Array.isArray(x));
         if (!rows.length) { setStatus('No object array found in this JSON file.'); return; }
         sourceName = file.name.replace(/\.[^.]+$/, '');
@@ -220,15 +229,19 @@
         metaEl.textContent = `${rows.length} object rows detected.`;
         setStatus(`Loaded JSON: ${file.name}`);
         uploadUi?.setLoaded({ name: file.name, size: file.size });
-      } catch { setStatus('Invalid JSON file.'); }
+      } catch (error) { if (version === loadVersion) setStatus(error instanceof SyntaxError ? 'Invalid JSON file.' : error.message); }
     };
 
     const convert = () => {
       if (!rows.length) return;
-      csv = buildCsv(rows);
-      preview.textContent = csv.split('\n').slice(0, 14).join('\n');
-      downloadButton.disabled = false;
-      setStatus('CSV generated.');
+      csv = '';
+      downloadButton.disabled = true;
+      try {
+        csv = buildCsv(rows);
+        preview.textContent = csv.split('\n').slice(0, 14).join('\n');
+        downloadButton.disabled = false;
+        setStatus('CSV generated.');
+      } catch (error) { preview.textContent = ''; setStatus(error.message); }
     };
 
     const download = () => {

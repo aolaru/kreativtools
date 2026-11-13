@@ -101,6 +101,8 @@ PDF Merge and Compress use `pdf-operations.mjs` for loading, validation, and exp
 
 Shared tool UI lives in `tool-upload-ui.js` and `tool-export-ui.js`. Keep live feedback outside the hidden dropzone after upload. Exporting tools follow Prepare, Review, Download; `scripts/tool-exports.js` defines their button IDs and labels. New conversion handlers should return a `{ blob, filename }` result through the export controller instead of starting a download automatically. Settings changes invalidate a prepared result.
 
+The JSON, XML, and CSV converters share the 5 MB input and 1 million table-cell limits and CSV escaping in `file-data-utils.js`. Spreadsheet-risk reduction is enabled by default for CSV export and changes formula-like values; raw mode is for trusted data or programmatic consumers. It is not a universal guarantee across spreadsheet applications. JSON-to-CSV rejects unsafe integers and high-precision literals that are likely to lose precision; exact decimal and identifier values should be supplied as strings.
+
 Do not manually edit generated headers, footers, metadata, or top-level `*.html` redirect aliases. Change the source layout or metadata in `scripts/sync-site.js`, then run `npm run sync:site` and include the generated files in the same pull request.
 
 ## Contributing

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://static.cloudflareinsights.com 'sha256-RdTp7Brl4p5BJ3pmDosFoM/m6ibtuRYbTEYbVdx2jRk='; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; font-src 'self' data: blob:; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://static.cloudflareinsights.com 'sha256-RdTp7Brl4p5BJ3pmDosFoM/m6ibtuRYbTEYbVdx2jRk='; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; font-src 'self' data: blob:; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://cloudflareinsights.com https://static.cloudflareinsights.com https://kreativtools-offline-click-counter.andrei-olaru.workers.dev; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Kreativ Tools Directory | Focused Browser Tools</title>
@@ -197,7 +197,7 @@
         <a class="tool-card" data-category="Video Tools" href="/video/convert-webm/">
         <div class="tool-thumb thumb-video thumb-video-convert" aria-hidden="true"><i class="fa-solid fa-film tool-thumb-icon"></i></div>
         <h3>Video to WEBM</h3>
-        <p>Convert video uploads to WEBM directly in your browser workflow.</p>
+        <p>Convert browser-playable video to silent WEBM; audio is not included.</p>
         </a>
 
         <a class="tool-card" data-category="Video Tools" href="/video/thumbnail/">
@@ -209,7 +209,7 @@
         <a class="tool-card" data-category="Video Tools" href="/video/trim/">
         <div class="tool-thumb thumb-video thumb-video-trim" aria-hidden="true"><i class="fa-solid fa-scissors tool-thumb-icon"></i></div>
         <h3>Video Trim</h3>
-        <p>Cut video segments by start/end time and export trimmed WEBM clips.</p>
+        <p>Trim video into a silent WEBM clip; audio is not included.</p>
         </a>
 
         <a class="tool-card" data-category="Font Tools" href="/fonts/webfont-convert/">
@@ -286,6 +286,15 @@
         </a>
 
       </div>
+    </section>
+
+    <section class="home-panel compact-panel slim-panel" aria-labelledby="offlineToolkitTitle">
+      <div>
+        <p class="eyebrow">Work Offline</p>
+        <h2 id="offlineToolkitTitle">Take seven tools offline</h2>
+        <p>Includes PDF Merge, Compress, Split, Page Organizer, PDF to Images, Image Compress, and Image Resize &amp; Convert. Extract the ZIP and open index.html in a desktop browser. No server or internet connection is needed; mobile file viewers may not run local HTML.</p>
+      </div>
+      <a class="primary header-link" href="/downloads/kreativ-pdf-offline.zip" download>Download offline toolkit</a>
     </section>
 
     <section class="home-panel compact-panel slim-panel tools-upsell" aria-labelledby="toolsHelpTitle">
@@ -423,6 +432,7 @@
       updateDirectory();
     })();
   </script>
+  <script src="../offline-download-count.js"></script>
   <script src="../theme.js"></script>
 </body>
 </html>
