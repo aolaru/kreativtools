@@ -10,7 +10,7 @@ const compressPdf = path.join(fixturesDir, 'compress-sample.pdf');
 
 test('homepage routes users through one job-first decision path', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('heading', { level: 1, name: /Choose the job/i })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: /Get your files ready/i })).toBeVisible();
   await expect(page.locator('.hero-actions a[href="#homeJobRouterTitle"]')).toBeVisible();
   await expect(page.locator('.hero-actions a[href="/tools/"]')).toBeVisible();
   await expect(page.locator('.job-router-card')).toHaveCount(6);

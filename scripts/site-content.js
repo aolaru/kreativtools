@@ -73,9 +73,9 @@ const JOB_PATHS = [
 
 const JOB_ROUTER_VARIANTS = {
   home: {
-    eyebrow: 'Choose by Outcome',
-    title: 'Pick the job you need done.',
-    description: 'Choose a common job to open the focused browser tool that fits.',
+    eyebrow: 'Popular Tasks',
+    title: 'What do you need to do?',
+    description: 'Choose a task to open its tool.',
     limit: 6,
   },
   tools: {
