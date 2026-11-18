@@ -100,6 +100,8 @@ Use `npm run sync:site` after shared layout or metadata changes. The sync script
 - creates per-page Content Security Policies with hashes for each inline script
 - tracks content hashes and publication/modification dates in `scripts/page-dates.json`, so an unchanged page keeps its date
 
+The shared Tools menu is generated from the tool cards in `tools/index.html`. Add or update a card there, then synchronize the site; the menu tests verify that every directory tool is present.
+
 Processing libraries, PDF previews, export/UI fonts, icons, the CSV parser, and the font converter are bundled under `vendor/`. After updating their pinned npm versions, run `npm run vendor:build` and include the generated assets and notices. The WOFF2 converter loads its encoder from the bundled WASM file.
 
 PDF Merge and Compress use `pdf-operations.mjs` for loading, validation, and export, `pdf-job.mjs` for cancellable worker lifecycle, and `pdf-tool-ui.mjs` for shared upload, download, warning, and thumbnail helpers. Keep heavy operations in `pdf-worker.mjs`, not in page event handlers. Tool-page help is collapsed by the generator; the shared export UI adds a mobile action bar only when the original action is outside the viewport.

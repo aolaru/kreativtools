@@ -42,7 +42,14 @@
     </a>
 
     <nav class="top-nav" aria-label="Primary">
-      <a href="/tools/" aria-current="page"><i class="fa-solid fa-toolbox" aria-hidden="true"></i><span>Tools</span></a>
+      <div class="tools-nav" data-tools-nav><div class="tools-nav-trigger"><a href="/tools/" aria-current="page"><i class="fa-solid fa-toolbox" aria-hidden="true"></i><span>Tools</span></a><button class="tools-menu-toggle" type="button" aria-label="Show tools menu" aria-expanded="false" aria-controls="toolsMenu" hidden><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button></div><div class="tools-menu" id="toolsMenu" hidden><div class="tools-menu-grid">
+        <section class="tools-menu-group"><h2>PDF</h2><ul><li><a href="/pdf/image-to-pdf/">Image to PDF</a></li><li><a href="/pdf/to-docx/">PDF Text to DOCX</a></li><li><a href="/pdf/fill-sign/">PDF Fill &amp; Sign</a></li><li><a href="/pdf/split/">PDF Split</a></li><li><a href="/pdf/merge/">PDF Merge</a></li><li><a href="/pdf/compress/">PDF Compress</a></li><li><a href="/pdf/organize/">PDF Page Organizer</a></li><li><a href="/pdf/to-images/">PDF to Images</a></li></ul></section>
+        <section class="tools-menu-group"><h2>Image</h2><ul><li><a href="/image/crop/">Image Crop</a></li><li><a href="/image/compress/">Image Compress</a></li><li><a href="/image/resize/">Image Resize &amp; Convert</a></li><li><a href="/image/to-webp/">Image to WebP</a></li></ul></section>
+        <section class="tools-menu-group"><h2>Audio</h2><ul><li><a href="/audio/to-wav/">Audio to WAV</a></li><li><a href="/audio/to-mp3/">Audio to MP3</a></li><li><a href="/audio/trim/">Audio Trim</a></li><li><a href="/audio/volume/">Audio Volume Booster</a></li></ul></section>
+        <section class="tools-menu-group"><h2>Video</h2><ul><li><a href="/video/convert-webm/">Video to WEBM</a></li><li><a href="/video/thumbnail/">Video Thumbnail</a></li><li><a href="/video/trim/">Video Trim</a></li></ul></section>
+        <section class="tools-menu-group"><h2>Fonts</h2><ul><li><a href="/fonts/webfont-convert/">Font to Webfont</a></li><li><a href="/fonts/preview/">Font Preview</a></li><li><a href="/fonts/css-generator/">Font CSS Generator</a></li></ul></section>
+        <section class="tools-menu-group"><h2>Data</h2><ul><li><a href="/file/json-validator/">JSON Validator and Formatter</a></li><li><a href="/file/xml-to-csv/">XML to CSV</a></li><li><a href="/file/json-to-csv/">JSON to CSV</a></li><li><a href="/file/csv-to-json/">CSV to JSON</a></li></ul></section>
+      </div><a class="tools-menu-all" href="/tools/">View all tools <span aria-hidden="true">&rarr;</span></a></div></div>
       <a href="/learn/"><i class="fa-solid fa-book-open" aria-hidden="true"></i><span>Learn</span></a>
       <a href="/changes/"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i><span>Updates</span></a>
     </nav>

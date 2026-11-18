@@ -2,431 +2,431 @@
   "/about/": {
     "published": "2026-03-09",
     "modified": "2026-11-18",
-    "hash": "a5468d0c65567bd3f468fce3c02a5d318c1254e6d01525a8cd418d086ea8eb8d"
+    "hash": "87ad2a7f7e065962115414bba82775fb65714ffa84dfc95439c8b95598b5fc34"
   },
   "/audio/": {
     "published": "2026-03-09",
     "modified": "2026-11-18",
-    "hash": "db96573bc784521a33cb9fdb044ea41905083cd1f13485c70fb7004250f5ad63"
+    "hash": "e545abd0bd65fa233e76b5945556d7f59f9f3c2f7b91b69e29606d3efb9b369d"
   },
   "/audio/to-mp3/": {
     "published": "2026-03-08",
     "modified": "2026-11-18",
-    "hash": "73f84ed1642ff55f12e50e6bcf4eedd2d9e95fc78472cdfde4d025d514d6bff6"
+    "hash": "53cc303027715fb348959b0a0e29a413e7ee59f7e8b4c32d82ffbba30efe8fad"
   },
   "/audio/to-wav/": {
     "published": "2026-03-08",
     "modified": "2026-11-18",
-    "hash": "5dee26ae5afdb9236615ae4c0586aaf70369c3e2b4744d56ee7ca47f31f291fd"
+    "hash": "6910a5534396203393fce241bbd51363b5b285e62cf6527e30428c2de0238d57"
   },
   "/audio/trim/": {
     "published": "2026-03-11",
     "modified": "2026-11-18",
-    "hash": "a74f6e7315053fe3e531bef9ba3acd802eb31ac551d9b03b88e642b521009cf0"
+    "hash": "4ba3a4fb8c355ed318f041867c0c017d9f00c121a6ae403bcbf4db53d2192a97"
   },
   "/audio/volume/": {
     "published": "2026-03-11",
     "modified": "2026-11-18",
-    "hash": "51d7fe4237e26350971319f290ae99c7907800452ada6e8afbee325009ac6ce4"
+    "hash": "5e2c7f170defc106f25754840947827d3f12e8787fe4367f39f6f98f08140d09"
   },
   "/changes/": {
     "published": "2026-03-09",
     "modified": "2026-11-18",
-    "hash": "efbbceefe90a867a7930c736ad29c2d1a5a2dc2cd1c5985521434db3a6e09fc3"
+    "hash": "806106ddec905af19c4555d06c535d8bdd1c4317c62c22b7f3455a280571ff89"
   },
   "/contact/": {
     "published": "2026-03-09",
     "modified": "2026-11-18",
-    "hash": "ae03df9305d17b71b498d49768144cefbf78400031fd5ebc50e7819c3d6d0116"
+    "hash": "cad846ffdd7ff141a9f750d1fde1aa4452df72bec7db96b94937930e1319d6cd"
   },
   "/file/csv-to-json/": {
     "published": "2026-03-11",
     "modified": "2026-11-18",
-    "hash": "0c3269ab3a8ecd1bf15c07b47b4dac72348820558220e4b16d3e8a02d22910d2"
+    "hash": "e85315b6a97d6b4226a785deca8b883529047cdeacfe04a01f9855c5dd63a720"
   },
   "/file/": {
     "published": "2026-03-09",
     "modified": "2026-11-18",
-    "hash": "c99899298381af01e14ebd6335044f422948169301887bcf38475e743d2ee4c2"
+    "hash": "dc7fdca0e096614fa98e5eb07a00c2e1b763faa956c61f0a40645950c9c82006"
   },
   "/file/json-to-csv/": {
     "published": "2026-03-11",
     "modified": "2026-11-18",
-    "hash": "1e0d5404cb635ffaff513f51ecf29d5566b2c02d9348fecff9df03a94fde24cf"
+    "hash": "830e6165fa350a53cc22fd9838a55fb0b26b9513c0370773dfecae1a5e587531"
   },
   "/file/xml-to-csv/": {
     "published": "2026-03-08",
     "modified": "2026-11-18",
-    "hash": "0fb05febc3e9923169237ea843d7c1f5d12b8702fd5432d2f090336981fe6ab0"
+    "hash": "0979aace6d340973bd6906cfedf15255c4b569c35056706a4ea97aee8b2137fd"
   },
   "/fonts/css-generator/": {
     "published": "2026-03-11",
     "modified": "2026-11-18",
-    "hash": "503ababbb3f7f0e4081c821f1d2abe01d17fffeff00607b514b44357089e0b25"
+    "hash": "d13f1ed6c24caea55ad14ac3406e877dcd233a4289e3c762fd12a1305c491e11"
   },
   "/fonts/": {
     "published": "2026-03-09",
     "modified": "2026-11-18",
-    "hash": "32c9a693fdacede742258f3fd672876d0143ea8e8a57d11001fe5a0c5eaa5e66"
+    "hash": "8d6e6ff0f2265713b62ed4bf0a1d8c95f12b25c79f2059d3824f5eeda6aab378"
   },
   "/fonts/preview/": {
     "published": "2026-03-11",
     "modified": "2026-11-18",
-    "hash": "69e45b2e7c73fbe5972a078a8e0e398380790d46a4e215bf7254282aac8203af"
+    "hash": "a2d71ffcfc943acb7b7dc74d3c68d9b6f063f5bc5ec9560f9b08da65dc6f7a72"
   },
   "/fonts/webfont-convert/": {
     "published": "2026-03-08",
     "modified": "2026-11-18",
-    "hash": "5e2f9ebc721576d7cc2c9c2c6d404257e7bf101039ab6f5b9e764e14fc3a067d"
+    "hash": "ea07ec0fcdf099bd108808ba6374b64dc35cf54fb4984d21670b132da0d11d6a"
   },
   "/image/compress/": {
     "published": "2026-03-09",
     "modified": "2026-11-18",
-    "hash": "bf04eecef6f757f66b0f05ac6ac739dedce6b53f8fab10503cdba9c793993e50"
+    "hash": "41d693128010125757c98413baf6a6432eb781f8eb23a8e33cf683f7ea563618"
   },
   "/image/crop/": {
     "published": "2026-03-22",
     "modified": "2026-11-18",
-    "hash": "aa3a572b6a10383638047aa39748ef927d5548e2e2d7e8ea222343693f52a83f"
+    "hash": "3506be161a48ffc26d4d922cb2a3f6dba77ce3f323ef504c4af619e14670b7fd"
   },
   "/image/": {
     "published": "2026-03-09",
     "modified": "2026-11-18",
-    "hash": "7256929614c27a25a8522fdb5ed59ff7556980800d71f8155eb032ddd4648797"
+    "hash": "1ecc822b1642f48f62f828d8d0f58d3f1e631e560e48252ec6bc1e2d73f853d0"
   },
   "/image/resize/": {
     "published": "2026-03-07",
     "modified": "2026-11-18",
-    "hash": "95ba0a8c01c8a23f87e3e21bf733222930e45f83b26ea0469afa58d6b85e7af3"
+    "hash": "daedd45e6ccaf2823e89b84c129289f81cd44dc4aeb01afa3e3547c31eb09500"
   },
   "/image/to-webp/": {
     "published": "2026-03-09",
     "modified": "2026-11-18",
-    "hash": "617a6dc646573d820c2276af2be4b3de977a11c737a8f1a03721765831e7eeb8"
+    "hash": "8c4a752c7ffc508a01e3a4f267be2dc9f355b8b940c976c585ae9f13426a112a"
   },
   "/": {
     "published": "2026-03-07",
     "modified": "2026-11-18",
-    "hash": "b84a8239da0e535b11f52659fc3c901d87a0b8e2392f83529e1b3387a1f179f2"
+    "hash": "2a701de0625771fdf95e912a6906ee4ed5561b2c74ce6052996a8158eed2ea40"
   },
   "/learn/choose-kreativ-workflows-or-single-tools/": {
     "published": "2026-03-13",
     "modified": "2026-11-18",
-    "hash": "479363509091ecfd4e44bf09070d32e4c871f5f3ae6ff8af135349b55532fa8c"
+    "hash": "324d66186cb278e4d276f6f89aee4ed2890a070c9079ef0a5bb302066529473b"
   },
   "/learn/choosing-the-right-kreativ-tool/": {
     "published": "2026-03-19",
     "modified": "2026-11-18",
-    "hash": "0f54047986e3d9d0c7ec7b7b006067dc8a170494c4bdd9acecf11e03ccd7d099"
+    "hash": "7227ff0931c02a2864dadac0ca85169794324f39b12d315b65f1380394e0ec51"
   },
   "/learn/clean-csv-before-import/": {
     "published": "2026-03-19",
     "modified": "2026-11-18",
-    "hash": "bdb9fc8fb5094b2d5238634cb6221e0be4900d026a8f601a2ffed66a4dd6c4f5"
+    "hash": "2938896b7e727d55fac0ecdc48f54e606ce4a8e7b27209b86628a5fc16f449ba"
   },
   "/learn/compress-images-for-faster-websites/": {
     "published": "2026-03-19",
     "modified": "2026-11-18",
-    "hash": "2a4a091bc47ebfb07eacd1d4455b89281ffcb4e59a1840b2205ca6a3bcff1323"
+    "hash": "fd1085d5eec2b600e9d82dd20e8103f957d7f93b26ffc7c7ef7876484a7cad30"
   },
   "/learn/compress-pdf-for-email/": {
     "published": "2026-03-13",
     "modified": "2026-11-18",
-    "hash": "f9072338a2dd3bb63feff8cdccef6391ce1b2e3d86d2d0dda09adf4b53978014"
+    "hash": "49ee6f1dd0709c7650e24dceef244ae5308b2472159597012db00ca457f43ca6"
   },
   "/learn/convert-otf-or-ttf-to-woff2/": {
     "published": "2026-03-13",
     "modified": "2026-11-18",
-    "hash": "eba0817d3b6ef5521b0bb1b572980ec9a747ce735f336bd377324e945613c98c"
+    "hash": "6a93ecb9b63cc83b265a4f37ca3f69010312ae11a7c16c68d30be8e80d25e530"
   },
   "/learn/convert-png-to-webp-without-obvious-quality-loss/": {
     "published": "2026-03-19",
     "modified": "2026-11-18",
-    "hash": "c69419e71124ebf885e6d7b18f59a16bb50ddcbd89379b47c85cb5f9cf0be933"
+    "hash": "04279923eda83a21bcb5074e1a182e2c0e232ad46aa3126341576e3ab4baed21"
   },
   "/learn/convert-wav-to-mp3-and-choose-the-right-bitrate/": {
     "published": "2026-03-19",
     "modified": "2026-11-18",
-    "hash": "f68122b858d57c08873ad8cb89ac6646f8ae2e89827d8e84468f9a1ec4f30541"
+    "hash": "a924f42e9538af12c895fc31a9f87cf711dc42252ee05445675791b943545a47"
   },
   "/learn/crop-images-for-clean-thumbnails-and-social-posts/": {
     "published": "2026-03-19",
     "modified": "2026-11-18",
-    "hash": "f582bb0355f959495bc743edcbd7bec86411a39f8c09040ef7f3c971e8655669"
+    "hash": "d7634b865fbb2a61e45ed64edbd410b85049e4dcb0d2175417057671f6fe3e9d"
   },
   "/learn/file-privacy-limits/": {
     "published": "2026-03-19",
     "modified": "2026-11-18",
-    "hash": "5e018a58749cc019c67e6779f01dd14fcbc7264e4e9c1128748c2309f14e743f"
+    "hash": "09a14a5a1a8ceed901e06dc54e23f6e475df0dbd57b4b6d68aee022a7268fec8"
   },
   "/learn/fill-and-sign-pdf-forms-without-upload-limits/": {
     "published": "2026-03-19",
     "modified": "2026-11-18",
-    "hash": "bd0a2259a0be33fe71fb30a8f8e8b8285bcd93d901208d2e0f16297c6c010ab6"
+    "hash": "0b0d2ed11e4321434f7c2cb80d984d9460c2268e694965fa843bac1f6ecdc9a3"
   },
   "/learn/font-display-css-choices/": {
     "published": "2026-03-13",
     "modified": "2026-11-18",
-    "hash": "7cd8ea7d8aa52c7d66a93944e07fa2a5b4e84574d4776244df03cf9c1321a933"
+    "hash": "7c31829bda4dd870c6bfec5893f8741db3ee65e3101f181edae7a25e9e9aafdb"
   },
   "/learn/font-licensing-checklist/": {
     "published": "2026-03-13",
     "modified": "2026-11-18",
-    "hash": "74e58e7b6c0ccb330dc90468158546ddd76c6d1cdbea2c326ead72d3cb35afe4"
+    "hash": "a9fcf28656c688b212d71d4cdeae027100ad8aaa59cd72a1cf78b825dae8ab79"
   },
   "/learn/how-browser-based-file-tools-work/": {
     "published": "2026-03-19",
     "modified": "2026-11-18",
-    "hash": "b3887085992c1d54e342796aec9d3a54fec9553dc1b8ab07f7eb351d365f6716"
+    "hash": "f9ddbeb9a0375c11c61ed4efd6c407990d56da38d6c813a8079ce4cebdbc680a"
   },
   "/learn/": {
     "published": "2026-03-08",
     "modified": "2026-11-18",
-    "hash": "d5b17b1f71599445598fec9d0d9f628091c38d0a2b6542420618c67ca5e10ad2"
+    "hash": "35792ef95fd674a68d68762194e830a9d82e84daf1c280d782a85de43c6375a6"
   },
   "/learn/json-to-csv-common-mistakes/": {
     "published": "2026-03-19",
     "modified": "2026-11-18",
-    "hash": "40c75ec073e0830d11ce44fb706ebaf45c5be62be2acf95c347c382ff4d2cef6"
+    "hash": "16916c91fa1e53a513ae6ab3af1e128a1c9022c93dfa9291932fe026b1c05554"
   },
   "/learn/merge-pdf-files-in-order/": {
     "published": "2026-03-13",
     "modified": "2026-11-18",
-    "hash": "48be8c06d8e2a189457ebeb9a838b9631b75ad4abe75c40d59bbe4c66a463543"
+    "hash": "96a0d4c9edfd177534578f19b4ac7de06453daeaa977ad99266856d6aaa7f1d7"
   },
   "/learn/organize-pdf-handoff-files-before-sending/": {
     "published": "2026-03-19",
     "modified": "2026-11-18",
-    "hash": "25d373a7f68dbca8703c4aef24f327653e508175315bd962e922188a71296cf0"
+    "hash": "bd2ed72f13fd684e4112851276c920313b1b030a8f560ef167dc50523856d534"
   },
   "/learn/prepare-a-sendable-pdf-in-kreativ-workflows/": {
     "published": "2026-03-13",
     "modified": "2026-11-18",
-    "hash": "d34bdb00956aa9196460f0af2d4c2c4abff23d59cbf42304324374513316dbc4"
+    "hash": "ce2b3f7639d53c381e03e7ca0f5574621afea46e4f426bd1e5b8e5dfbe7236b6"
   },
   "/learn/prepare-pdfs-for-email-without-breaking-layout/": {
     "published": "2026-03-13",
     "modified": "2026-11-18",
-    "hash": "6e394c800e2327f3327bef63a20d575f63f51617acb72e1dc97799a8864a3df1"
+    "hash": "5178debfd50734fc11938cb0059e1f0debb1535113122e832732a0eff428d06f"
   },
   "/learn/prepare-webfonts-for-fast-frontend-delivery/": {
     "published": "2026-03-13",
     "modified": "2026-11-18",
-    "hash": "ee3c8bf1b72a26098e673f4e7f31e373b05fcf8aafb62c0426ec7ab5b552b92f"
+    "hash": "5c0b7e310fe3f46995472fe0065f24d8c29cec37d84e257f525af5f8959fabfe"
   },
   "/learn/resize-before-compressing-images/": {
     "published": "2026-03-19",
     "modified": "2026-11-18",
-    "hash": "917e6ca9ca4a13ff1afb9a5afdd6c392bb2657d4067d18b2e52cba4042042133"
+    "hash": "c291719f6e3b53489028e527f0bb667cf7d967fa7d1dad47bbeef97f1c5e6b9c"
   },
   "/learn/resize-images-for-shopify-or-woocommerce/": {
     "published": "2026-03-19",
     "modified": "2026-11-18",
-    "hash": "64f76b410e73c77f6263b064531c6f730574d327226693eec9f4af78f838bffb"
+    "hash": "39a68f8e9715874e45cf106a1dfa7f118338103e018bd6d4ffc3b51c2cd33f7e"
   },
   "/learn/save-time-with-kreativ-workflows-defaults/": {
     "published": "2026-03-13",
     "modified": "2026-11-18",
-    "hash": "8bf99d05cf8678e8d881f8bc87e87953d2e231336f83f98eee1ae578ec9032bb"
+    "hash": "e12999b43ab2ab8c7e1b64ba0e79efa0a6e04176178accb680b11386199cf2ca"
   },
   "/learn/split-pdf-pages-without-rebuilding-document/": {
     "published": "2026-03-19",
     "modified": "2026-11-18",
-    "hash": "1f33a325126c3376eb278013357cadb3bf11a83068ad15087b01dd794f3a89bf"
+    "hash": "ddfc0fa9a99e31c8cae425f768378f854104e53777bddb6cd7f8a651bf62e948"
   },
   "/learn/trim-video-clips-for-email-and-social/": {
     "published": "2026-03-19",
     "modified": "2026-11-18",
-    "hash": "b332fefff5f1a25b2ae223e363d89f13265ccfe2fd330439ed36342cd9e9b4bb"
+    "hash": "41bf8a195aa2458a787dbf6fd92bc4e5429eeba0a22438a05d2b2b3be5298fc9"
   },
   "/learn/update-labels/": {
     "published": "2026-03-07",
     "modified": "2026-11-18",
-    "hash": "a2b4ca31bf0f48211cfad9c96ab22524c3ac04fba369c05879d5a7b170deeae7"
+    "hash": "4c8e061db4076ba2d8ebd1b60087498927d16e5a095a096cb2bb83fb8a0faec6"
   },
   "/learn/use-kreativ-workflows-audio-delivery-for-shareable-audio/": {
     "published": "2026-03-19",
     "modified": "2026-11-18",
-    "hash": "f862cecaf37242ab2164994b0536d71224c5fb82a1661ae798bc6a275e5fe363"
+    "hash": "9320ff531db25cbdafd3cc1fef18a42d689d6c886170d719a1351b99815f324d"
   },
   "/learn/use-kreativ-workflows-image-prep-for-web-ready-images/": {
     "published": "2026-03-19",
     "modified": "2026-11-18",
-    "hash": "dc1fd7c76b7a889c3a90e90b455f54e1930b169b3a4623dbd53ffcd5ec748ae1"
+    "hash": "1e459ca64da3181bb0ce456af6098d1420637071edaabdef7369efab69386cc0"
   },
   "/learn/video-thumbnail-best-practices/": {
     "published": "2026-03-19",
     "modified": "2026-11-18",
-    "hash": "4badbf5cd0fd4fe04a06487773abb64e32eefe02e22367b241e2d9d45852c585"
+    "hash": "a35f99e011137611480d6037518135f749192339c29f771599a4e3136cfa7858"
   },
   "/learn/webm-vs-mp4-for-browser-video/": {
     "published": "2026-03-19",
     "modified": "2026-11-18",
-    "hash": "6dd7fb74790fce31ee18654928d7c7b1fb8408babf8157ce44dc2b5d24c890d7"
+    "hash": "f7613d82b35859692c1d5f59cb7e2e3e7a34e9138034f349df971e7a36e030fb"
   },
   "/learn/what-are-kreativ-workflows/": {
     "published": "2026-03-19",
     "modified": "2026-11-18",
-    "hash": "f07ce22f6d935119ebd60b070e98fc9c87a1b4b525112df02f1805c14220737c"
+    "hash": "6ebb236ce105f9c9a7af076f0f42e53c79e6a84cd181c219ca436105317bc520"
   },
   "/learn/when-pdf-compression-does-not-help/": {
     "published": "2026-03-19",
     "modified": "2026-11-18",
-    "hash": "1931c286b212d47460a415154e72b7ebe646dea94b96cdf17c90af740effa713"
+    "hash": "3b27f704547fd4188becbf407348e8c8278ce36592190fea87cdaebaa0f96cec"
   },
   "/learn/woff2-vs-woff-font-formats/": {
     "published": "2026-03-13",
     "modified": "2026-11-18",
-    "hash": "59a804ea48e2bef176fbf9867e8242427824f5c6c16574d7b55eff5a2475ad4f"
+    "hash": "eb4ed7e02335053ec0e85566458f09f7f714af117f9fe7943ffec962e00cd415"
   },
   "/learn/xml-export-troubleshooting/": {
     "published": "2026-03-19",
     "modified": "2026-11-18",
-    "hash": "418dd76e8ffaba26bdee3bea0418c2b616868b0b9d69be4a403369dd220cd788"
+    "hash": "d3a515ff70f30c2ffc5891adbb86dd1d0e3f7b5222bb8cfef394ba99e5725948"
   },
   "/pdf/compress/": {
     "published": "2026-03-09",
     "modified": "2026-11-18",
-    "hash": "5206064cf11fbfaa71fceb579d8ca72f1acfb520a9191fb498853a18fdc12738"
+    "hash": "04ac4239366a642ff15a88c5b0538a3c45df6641cb4ac3f2ba7dea35ad59a2c1"
   },
   "/pdf/fill-sign/": {
     "published": "2026-04-24",
     "modified": "2026-11-18",
-    "hash": "b3abb0652247caa06d869e62d0dc1e6ca6baa58aaf7874206d5132d43f2952ea"
+    "hash": "4e6f44021273b400764228b38aab9e5b4e3a4cee435d7caa8d03394683991fbc"
   },
   "/pdf/image-to-pdf/": {
     "published": "2026-03-09",
     "modified": "2026-11-18",
-    "hash": "1953d530eca3d99ca33f15188ebda095c889675f7a282b55a3abeca6fca9e80a"
+    "hash": "cc92b7e362d93a5a8c61ea8ea6b971f6ddc7e3415a5ceca9531457084e517aab"
   },
   "/pdf/": {
     "published": "2026-03-09",
     "modified": "2026-11-18",
-    "hash": "2326ee23ba7d4ec083f337b08cd7b61437b1cfb1c6e715f62d3fa438532b9161"
+    "hash": "f960ab18665da738bb1943986fca1f9bff573c428ba92e23c455c197f9e723fc"
   },
   "/pdf/merge/": {
     "published": "2026-03-09",
     "modified": "2026-11-18",
-    "hash": "4f149afed232705b15459de7853c4e8ca17fe6d723dab4b0fb2659c670f3aa09"
+    "hash": "6a3e2b78a04365981e3a4aa372e2a06a810e4acfcfe3ea4afa076320ed0c0f37"
   },
   "/pdf/split/": {
     "published": "2026-03-23",
     "modified": "2026-11-18",
-    "hash": "a475f7d3da69d3d4f6e9b9f4cd747f2afa4d39237f0030129111a8050fa3310b"
+    "hash": "2ef0070d719116d1818a96594a7889445d50b3a4560aa7c0936628283e170c51"
   },
   "/pdf/to-docx/": {
     "published": "2026-04-30",
     "modified": "2026-11-18",
-    "hash": "75f82408381a050d95450d9fef66cb546fb30cac2072cc2aa4e6341cdec39cc3"
+    "hash": "c0751075098e3275f9ad8de7093ee773c5c547071d866eeef5e8f4ba97ce2720"
   },
   "/privacy/": {
     "published": "2026-03-09",
     "modified": "2026-11-18",
-    "hash": "2c8a5accb3b968722a3f0c9d2b283c6e4a1b5dbffae86a657c501452d7513323"
+    "hash": "12e2f3ed4551cff9e9ab9fff4500bc1dec73527ec69e1397382983fc66201d09"
   },
   "/terms/": {
     "published": "2026-03-09",
     "modified": "2026-11-18",
-    "hash": "fb3451f4c875e46848d3360dae2663d395d3f05f49a6e5f5bd9d2029c5a4935a"
+    "hash": "6f691235271add9ba5930732f024a8931bd0a482e4022e52c44394cb743c8b91"
   },
   "/tools/": {
     "published": "2026-03-09",
     "modified": "2026-11-18",
-    "hash": "1f411204bf7dd33c4548b01407b9a1e50ba0a193e47c51796179a0af75087379"
+    "hash": "1b7d6dc77748cf1b2b4d50cc6a8eebaa5cf5a78a7c17e282bb7bdda92dfd9b7c"
   },
   "/video/convert-webm/": {
     "published": "2026-03-08",
     "modified": "2026-11-18",
-    "hash": "e3ceb9140513452921f41acd185a6121a7f91e20163710c4fe1478113c2cc821"
+    "hash": "71b1856c270d4cef03c1fcdaaebf339a56d390fd9208fa2f406c38872be09192"
   },
   "/video/": {
     "published": "2026-03-09",
     "modified": "2026-11-18",
-    "hash": "de44fdc82a6db5cd97ae56c9f161d2791c51d8b0d3db8f51e1dd2294803321a8"
+    "hash": "0067577d4fffefc1cd51d49a2f4263014efafbd84964feab85336dca6786ae27"
   },
   "/video/thumbnail/": {
     "published": "2026-03-08",
     "modified": "2026-11-18",
-    "hash": "e00b6634e7d7d30d18caadc13d7a955f27c66c0c669b5d9942ea0ed7b8ab7666"
+    "hash": "e0071803b5e45ffb71a125b73e65068fda7437d6bb04b524350dccee910895b8"
   },
   "/video/trim/": {
     "published": "2026-03-11",
     "modified": "2026-11-18",
-    "hash": "e56f0494871bb234c68e083f09489ff9a8b805c09f7f93e36ca5356768bdbee4"
+    "hash": "24bf74091c99d7481394dfe011304aabcebb1d04f0dadba219ad038aeb125b5b"
   },
   "/workflows/audio-delivery/": {
     "published": "2026-03-31",
     "modified": "2026-11-18",
-    "hash": "76e4ea6ef8cc7d7a795884f5edbbf5ebe0730fccdf915557643cb88de822df6d"
+    "hash": "3a5bbef39bb969b9d39a274260915efdc543a453494cdc25ead86c1603c8ae36"
   },
   "/workflows/image-prep/": {
     "published": "2026-03-26",
     "modified": "2026-11-18",
-    "hash": "95c46ffb391196a579cc557f7a737171e622018be399a3390a3c9c28ca45f5a9"
+    "hash": "f0cb4a00b5bb4bfa92c196daa68d3c4e742b73c894e589e283f164a072e164d7"
   },
   "/workflows/": {
     "published": "2026-03-26",
     "modified": "2026-11-18",
-    "hash": "ab4528352f2e9712f20c61ebd466839538309b6b6506ce7b0384acec6e2c9410"
+    "hash": "2591c49c4b7634bce123c510759855ab7e6ae7e86a713c0c8b7e7fcf52872712"
   },
   "/workflows/pdf-delivery/": {
     "published": "2026-03-26",
     "modified": "2026-11-18",
-    "hash": "5250c2e4b1d4885b6e11d3f0169ea1000bf6ab423d22f99c9884e8a3215f1a9a"
+    "hash": "46b4822f01fdd1dc4c01df83ec35639e457638244e3cf5e99a7b760d4635f940"
   },
   "/pdf/organize/": {
     "published": "2026-10-28",
     "modified": "2026-11-18",
-    "hash": "c2dc03ec71144782a03a2907a6d55368017ed23b1be9e6b87e673f9c2172bf32"
+    "hash": "ab7b1ec74d182417088b7f576c1898b732a0c0c3119455e4d43e3ae25ced25fc"
   },
   "/pdf/to-images/": {
     "published": "2026-10-28",
     "modified": "2026-11-18",
-    "hash": "e247a6e903e9f7461998e0bfe208a2a55034ecb72a7ece2469ac29fccf1c8667"
+    "hash": "71527990bb29efd55770e86895adad572b7c5b2f0e11d65b0b570722e349bf4d"
   },
   "/file/json-validator/": {
     "published": "2026-11-11",
     "modified": "2026-11-18",
-    "hash": "eb67a273dc977359d05941d894a98775950799b5368bb07a57f7e2d4146a5af5"
+    "hash": "5898fba9147b8b9bb738f01211aae4e93576f3fd9c2c9a6253119a2e03ca0433"
   },
   "/resources/sample-files/archives/": {
     "published": "2026-11-18",
     "modified": "2026-11-18",
-    "hash": "ff561430037ac078b5a9025df1044e5b81dc9ebcacf8c878a5f3b18f6cd70434"
+    "hash": "e729f8eb098b340ff9453ea36e6912c2d358c297ac4c6856bccda90067aa2ec7"
   },
   "/resources/sample-files/audio-video/": {
     "published": "2026-11-18",
     "modified": "2026-11-18",
-    "hash": "996916b7e82f86d176341e94e16e0acf99c82d43efbe77b3a2e3252a33d3f160"
+    "hash": "7bf90abcf845d69e9d5e12f7a64dee07c7c39449fd6a2a5633db7ba327d9927b"
   },
   "/resources/sample-files/data/": {
     "published": "2026-11-18",
     "modified": "2026-11-18",
-    "hash": "d867228abe2a5412e40905f4062b5e2fe0083f8df7cea3151ff6d30e03611377"
+    "hash": "4df03c603b459f960c26eec2948fba5591d65b000757171a91ca07091ca8ed4f"
   },
   "/resources/sample-files/documents/": {
     "published": "2026-11-18",
     "modified": "2026-11-18",
-    "hash": "03f2ba2f73541003702a367e3b56089d44fc4c59928e2cc5eb1bb3bbe7edb25b"
+    "hash": "9e04307c1c4e9846aadb46e00cc7a04491c3bd9012934bf606d504c380da6314"
   },
   "/resources/sample-files/images/": {
     "published": "2026-11-18",
     "modified": "2026-11-18",
-    "hash": "182fa10bc5f61bffcfdcb1ac7dfc184610e92798dc4626175938a7240fc4798f"
+    "hash": "5fe3055475a9da70328c8f94493c01cd17077c29f31e8f167bc49c419ed0749d"
   },
   "/resources/sample-files/": {
     "published": "2026-11-18",
     "modified": "2026-11-18",
-    "hash": "49deb8511bccb82e275d2d1084ae0cbec2b1f8ae24ff88ef46c9ba0e9919db11"
+    "hash": "9c9611a726ad04c973816894d9e572e362f0aaffc8b6ce66d266cea4888c9754"
   },
   "/resources/sample-files/pdf/": {
     "published": "2026-11-18",
     "modified": "2026-11-18",
-    "hash": "e9c894a3ee7a79fd143fe0d3fdd341b792b6964bdb2162d6d64006a168a39a4f"
+    "hash": "190b041e59991d89037e3c2514d9bfe3594cd356fb4b442cd52e9b729e6c25d4"
   },
   "/resources/sample-files/pro/": {
     "published": "2026-11-18",
     "modified": "2026-11-18",
-    "hash": "1d1ef841aae9a211a3e7d09df05c1774d763a04b2ba2df4f5a2651d2718a8d0d"
+    "hash": "5500b5c8e4a1bbd3230cc952b61f1ff2bffc8bb471e03d3fee71dd70c7db1c9b"
   }
 }

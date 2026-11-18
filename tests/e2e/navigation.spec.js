@@ -28,7 +28,7 @@ test('main pages load and keep Tools, Learn, and Updates in the expected order',
   for (const route of pages) {
     await page.goto(route);
     await expect(page.locator('nav.top-nav')).toBeVisible();
-    const labels = await page.locator('nav.top-nav a').allTextContents();
+    const labels = await page.locator('nav.top-nav > a, nav.top-nav .tools-nav-trigger > a').allTextContents();
     const normalized = labels.map((label) => label.trim());
     expect(normalized).toEqual(['Tools', 'Learn', 'Updates']);
     expect(normalized[normalized.length - 1]).toBe('Updates');
@@ -49,7 +49,7 @@ test('tools nav item points to the directory and stays active on workflow routes
   await expect(page.getByRole('heading', { level: 1, name: 'Tools', exact: true })).toBeVisible();
 
   await page.goto('/workflows/image-prep');
-  await expect(page.locator('nav.top-nav a[href="/tools/"]')).toHaveAttribute('aria-current', 'page');
+  await expect(page.locator('nav.top-nav .tools-nav-trigger a[href="/tools/"]')).toHaveAttribute('aria-current', 'page');
 });
 
 test('theme toggle switches data-theme attribute', async ({ page }) => {

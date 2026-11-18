@@ -43,7 +43,14 @@
     </a>
 
     <nav class="top-nav" aria-label="Primary">
-      <a href="/tools/"><i class="fa-solid fa-toolbox" aria-hidden="true"></i><span>Tools</span></a>
+      <div class="tools-nav" data-tools-nav><div class="tools-nav-trigger"><a href="/tools/"><i class="fa-solid fa-toolbox" aria-hidden="true"></i><span>Tools</span></a><button class="tools-menu-toggle" type="button" aria-label="Show tools menu" aria-expanded="false" aria-controls="toolsMenu" hidden><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button></div><div class="tools-menu" id="toolsMenu" hidden><div class="tools-menu-grid">
+        <section class="tools-menu-group"><h2>PDF</h2><ul><li><a href="/pdf/image-to-pdf/">Image to PDF</a></li><li><a href="/pdf/to-docx/">PDF Text to DOCX</a></li><li><a href="/pdf/fill-sign/">PDF Fill &amp; Sign</a></li><li><a href="/pdf/split/">PDF Split</a></li><li><a href="/pdf/merge/">PDF Merge</a></li><li><a href="/pdf/compress/">PDF Compress</a></li><li><a href="/pdf/organize/">PDF Page Organizer</a></li><li><a href="/pdf/to-images/">PDF to Images</a></li></ul></section>
+        <section class="tools-menu-group"><h2>Image</h2><ul><li><a href="/image/crop/">Image Crop</a></li><li><a href="/image/compress/">Image Compress</a></li><li><a href="/image/resize/">Image Resize &amp; Convert</a></li><li><a href="/image/to-webp/">Image to WebP</a></li></ul></section>
+        <section class="tools-menu-group"><h2>Audio</h2><ul><li><a href="/audio/to-wav/">Audio to WAV</a></li><li><a href="/audio/to-mp3/">Audio to MP3</a></li><li><a href="/audio/trim/">Audio Trim</a></li><li><a href="/audio/volume/">Audio Volume Booster</a></li></ul></section>
+        <section class="tools-menu-group"><h2>Video</h2><ul><li><a href="/video/convert-webm/">Video to WEBM</a></li><li><a href="/video/thumbnail/">Video Thumbnail</a></li><li><a href="/video/trim/">Video Trim</a></li></ul></section>
+        <section class="tools-menu-group"><h2>Fonts</h2><ul><li><a href="/fonts/webfont-convert/">Font to Webfont</a></li><li><a href="/fonts/preview/">Font Preview</a></li><li><a href="/fonts/css-generator/">Font CSS Generator</a></li></ul></section>
+        <section class="tools-menu-group"><h2>Data</h2><ul><li><a href="/file/json-validator/">JSON Validator and Formatter</a></li><li><a href="/file/xml-to-csv/">XML to CSV</a></li><li><a href="/file/json-to-csv/">JSON to CSV</a></li><li><a href="/file/csv-to-json/">CSV to JSON</a></li></ul></section>
+      </div><a class="tools-menu-all" href="/tools/">View all tools <span aria-hidden="true">&rarr;</span></a></div></div>
       <a href="/learn/"><i class="fa-solid fa-book-open" aria-hidden="true"></i><span>Learn</span></a>
       <a href="/changes/" aria-current="page"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i><span>Updates</span></a>
     </nav>
@@ -75,29 +82,34 @@
 
     <section class="home-band" aria-label="Recent update highlights">
       <article class="home-band-card">
-        <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
-        <h2>Safer PDF editing</h2>
-        <p>PDF previews use an updated local renderer. Fill &amp; Sign exports Romanian names correctly and makes saved-signature storage clearer.</p>
+        <i class="fa-solid fa-file-circle-check" aria-hidden="true"></i>
+        <h2>Sample files for testing</h2>
+        <p>Download synthetic files for testing uploads, previews, parsers, and error handling, with checksums and expected results.</p>
       </article>
       <article class="home-band-card">
         <i class="fa-solid fa-toolbox" aria-hidden="true"></i>
-        <h2>More reliable conversions</h2>
-        <p>CSV conversion preserves quoted multiline fields, webfont conversion exports WOFF2, and generated font CSS uses the correct format.</p>
+        <h2>Tools are easier to find</h2>
+        <p>Open tools directly from the navigation, or browse the directory and downloadable offline toolkit.</p>
       </article>
       <article class="home-band-card">
-        <i class="fa-solid fa-book-open" aria-hidden="true"></i>
-        <h2>Clearer controls and guides</h2>
-        <p>Upload buttons open once, text is easier to read, and Learn points to the tools that remain supported.</p>
+        <i class="fa-solid fa-code" aria-hidden="true"></i>
+        <h2>JSON validation</h2>
+        <p>Check, format, and minify JSON in your browser without uploading it to a server.</p>
       </article>
     </section>
 
     <section class="upload-card">
       <div class="home-section-heading">
         <p class="eyebrow">Recent Log</p>
-        <h2>Recent maintenance</h2>
-        <p>The existing tools remain free and online. New product development is paused.</p>
+        <h2>Recent changes</h2>
+        <p>Updates to the free tools, resources, and site navigation.</p>
       </div>
       <div class="changelog-list">
+        <p>2026-11-18 UPDATE - Open individual tools directly from the Tools navigation. The menu works with a mouse, keyboard, or touch; the full searchable directory remains available.</p>
+        <p>2026-11-18 NEW - Added a <a href="/resources/sample-files/">sample file library</a> with 45 synthetic PDF, image, document, archive, data, audio, and video files. Each download includes a testing scenario, expected result, and checksum.</p>
+        <p>2026-11-15 UPDATE - Clarified the homepage and added links to PaperBuild and the offline toolkit so visitors can find the right starting point.</p>
+        <p>2026-11-13 UPDATE - Improved file-handling guidance and made the downloadable offline toolkit easier to find.</p>
+        <p>2026-11-11 NEW - Added the <a href="/file/json-validator/">JSON Validator and Formatter</a> to check syntax, format, and minify JSON locally in the browser.</p>
         <p>2026-10-31 UPDATE - Image Compress can optionally resize within maximum dimensions. Image Resize &amp; Convert supports batch ZIP exports. PDF Merge accepts page ranges per file, and Page Organizer can export only selected pages.</p>
         <p>2026-10-28 NEW - PDF Page Organizer lets you reorder, rotate, duplicate, or delete pages with thumbnails, keyboard controls, and Undo. It builds a new PDF locally, with optional metadata cleanup. Keep signed originals and flatten completed forms before organizing their pages.</p>
         <p>2026-10-28 NEW - PDF to Images exports selected pages as PNG or JPG, with resolution controls, previews, individual downloads, and a ZIP. Both new tools are included in the offline toolkit.</p>

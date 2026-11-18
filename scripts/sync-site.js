@@ -450,8 +450,21 @@ function buildHead({ title, description, route, prefix }) {
 
 function buildHeader(route) {
   const activeKey = navKeyForRoute(route);
+  const directory = fs.readFileSync(path.join(ROOT, 'tools/index.html'), 'utf8');
+  const groups = new Map([['PDF Tools', 'PDF'], ['Image Tools', 'Image'], ['Audio Tools', 'Audio'], ['Video Tools', 'Video'], ['Font Tools', 'Fonts'], ['File Tools', 'Data']].map(([category, label]) => [category, { label, tools: [] }]));
+  const cards = directory.matchAll(/<a class="tool-card" data-category="([^"]+)" href="([^"]+)">[\s\S]*?<h3>([^<]+)<\/h3>/g);
+  for (const [, category, href, title] of cards) {
+    const group = groups.get(category);
+    if (!group || !/^\/[a-z0-9/-]+\/$/.test(href) || !fs.existsSync(path.join(ROOT, href, 'index.html'))) {
+      throw new Error(`Invalid tool directory entry: ${category} ${href}`);
+    }
+    group.tools.push({ href, title: decodeHtmlEntities(title) });
+  }
+  if ([...groups.values()].some((group) => group.tools.length === 0)) throw new Error('A tool directory category has no tools.');
+  const toolGroups = [...groups.values()].map((group) => `        <section class="tools-menu-group"><h2>${escapeHtml(group.label)}</h2><ul>${group.tools.map((tool) => `<li><a href="${escapeAttr(tool.href)}">${escapeHtml(tool.title)}</a></li>`).join('')}</ul></section>`).join('\n');
   const navLinks = NAV_ITEMS.map((item) => {
     const current = item.key === activeKey ? ' aria-current="page"' : '';
+    if (item.key === 'tools') return `      <div class="tools-nav" data-tools-nav><div class="tools-nav-trigger"><a href="${item.href}"${current}><i class="fa-solid ${item.icon}" aria-hidden="true"></i><span>${item.label}</span></a><button class="tools-menu-toggle" type="button" aria-label="Show tools menu" aria-expanded="false" aria-controls="toolsMenu" hidden><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button></div><div class="tools-menu" id="toolsMenu" hidden><div class="tools-menu-grid">\n${toolGroups}\n      </div><a class="tools-menu-all" href="/tools/">View all tools <span aria-hidden="true">&rarr;</span></a></div></div>`;
     return `      <a href="${item.href}"${current}><i class="fa-solid ${item.icon}" aria-hidden="true"></i><span>${item.label}</span></a>`;
   }).join('\n');
 

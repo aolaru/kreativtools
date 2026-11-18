@@ -248,8 +248,45 @@
     document.addEventListener('keydown', shareKeydownHandler, true);
   };
 
+  const setupToolsMenu = () => {
+    const nav = document.querySelector('[data-tools-nav]');
+    const toggle = nav?.querySelector('.tools-menu-toggle');
+    const menu = nav?.querySelector('.tools-menu');
+    if (!nav || !toggle || !menu) return;
+    let closeTimer;
+    const setOpen = (open) => {
+      clearTimeout(closeTimer);
+      menu.hidden = !open;
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Hide tools menu' : 'Show tools menu');
+    };
+    toggle.hidden = false;
+    toggle.addEventListener('click', () => setOpen(menu.hidden));
+    nav.addEventListener('pointerenter', (event) => {
+      if (event.pointerType === 'mouse') setOpen(true);
+    });
+    nav.addEventListener('pointerleave', (event) => {
+      if (event.pointerType === 'mouse') closeTimer = setTimeout(() => {
+        if (!nav.contains(document.activeElement)) setOpen(false);
+      }, 200);
+    });
+    nav.addEventListener('focusout', () => setTimeout(() => {
+      if (!nav.contains(document.activeElement) && !nav.matches(':hover')) setOpen(false);
+    }, 0));
+    document.addEventListener('click', (event) => {
+      if (!nav.contains(event.target)) setOpen(false);
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !menu.hidden) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+  };
+
   document.addEventListener('DOMContentLoaded', () => {
     setTheme(getPreferredTheme());
+    setupToolsMenu();
     updateShareButton('idle');
     const btn = document.getElementById('themeToggle');
     if (btn) btn.addEventListener('click', toggleTheme);
