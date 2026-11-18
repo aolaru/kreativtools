@@ -21,6 +21,7 @@ This project is available under the [MIT License](LICENSE). You may use, modify,
 ### Main sections
 - Home: simplified job-first router into the right focused tool or Learn path
 - Tools directory: primary action hub for focused browser tools
+- Sample files: synthetic downloads for testing uploads, file handling, and error cases
 - Learn: compact start-here guide hub with focused follow-up articles in an archive
 - Updates: public product log for launches, UX updates, and design improvements
 - Workflows: archived, functional routes retained for existing links but removed from primary discovery and search indexing
@@ -43,7 +44,7 @@ This project is available under the [MIT License](LICENSE). You may use, modify,
 
 ## Run locally
 
-Requirements: Node.js 24 or newer for the generation and test commands. CI uses Node 24 on Ubuntu 24.04. Python 3 is only used in the example static server command.
+Requirements: Node.js 24 or newer and Python 3 for the generation and test commands. CI uses Node 24 on Ubuntu 24.04.
 
 ```bash
 git clone git@github.com:aolaru/kreativtools.git
@@ -63,6 +64,10 @@ npm test
 ```
 
 The complete website suite runs in Chromium. PDF validation, cancellation, metadata, rendering, ordering, and mobile-action tests also run in Firefox and WebKit. This is desktop engine coverage, not certification on every Android device.
+
+## Sample testing files
+
+The [sample file library](resources/sample-files/) contains small synthetic fixtures with documented test scenarios and checksums. See its [maintainer guide](resources/sample-files/README.md) for regeneration, validation, future external storage, and private bundle packaging. Optional Python libraries and FFmpeg are needed only to regenerate or independently inspect fixtures, not to serve them.
 
 ## Offline toolkit
 

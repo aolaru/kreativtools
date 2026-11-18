@@ -3,6 +3,7 @@ const SITE_URL = 'https://kreativtools.com';
 const FOOTER_SECTIONS = {
   product: [
     ['Tools', '/tools/'],
+    ['Sample Files', '/resources/sample-files/'],
     ['Learn', '/learn/'],
     ['Updates', '/changes/'],
   ],

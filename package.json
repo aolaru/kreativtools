@@ -5,7 +5,9 @@
   "version": "0.9.8",
   "scripts": {
     "vendor:build": "node scripts/vendor-dependencies.js",
-    "sync:site": "node scripts/sync-site.js",
+    "sync:site": "node scripts/render-sample-pages.js && node scripts/sync-site.js",
+    "samples:generate": "python3 scripts/generate-sample-files.py",
+    "samples:validate": "node scripts/validate-samples.js && node scripts/render-sample-pages.js --check",
     "build:offline": "node scripts/build-offline.js",
     "test:offline": "playwright test --config=playwright.offline.config.js",
     "version:patch": "npm version --no-git-tag-version patch && npm run sync:site",
@@ -15,7 +17,7 @@
     "test:unit": "node --test tests/unit/*.test.js",
     "test:e2e": "playwright test",
     "test:lighthouse": "npx -y @lhci/cli@0.14.x autorun --config=.lighthouserc.json",
-    "test": "npm run test:smoke && npm run test:unit && npm run test:e2e"
+    "test": "npm run samples:validate && npm run test:smoke && npm run test:unit && npm run test:e2e"
   },
   "devDependencies": {
     "@fontsource/space-grotesk": "5.3.0",

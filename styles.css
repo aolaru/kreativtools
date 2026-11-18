@@ -3993,3 +3993,25 @@ input[type='range'] {
 .json-editor-actions { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
 .json-result { margin: 1rem 0 0; overflow-wrap: anywhere; }
 .json-result-error { color: #bd352f; }
+.sample-library { padding-bottom: 3rem; }
+.sample-library .article-section a { color: var(--accent-dark); }
+.sample-category-links { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.5rem 0; }
+.sample-category-links a { display: inline-flex; padding: .55rem .85rem; border: 1px solid var(--outline); border-radius: 999px; background: var(--panel); color: var(--text); text-decoration: none; font-weight: 700; }
+.sample-category-links a[aria-current='page'] { border-color: var(--accent); color: var(--accent); }
+.sample-controls { display: flex; flex-wrap: wrap; align-items: center; gap: .65rem; padding: 1rem; border: 1px solid var(--outline); border-radius: 16px; background: var(--panel); }
+.sample-controls[hidden] { display: none; }
+.sample-controls label { font-weight: 700; }
+.sample-controls input { flex: 1 1 16rem; min-width: 0; }
+.sample-controls p { flex-basis: 100%; margin: 0; color: var(--muted); }
+.sample-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 1rem; margin: 1.25rem 0 2rem; }
+.sample-card { display: flex; flex-direction: column; gap: .75rem; min-width: 0; padding: 1.2rem; border: 1px solid var(--outline); border-radius: 16px; background: var(--panel); }
+.sample-card[hidden] { display: none; }
+.sample-card h3, .sample-card p { margin: 0; }
+.sample-card-top { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+.sample-type, .sample-validity { padding: .25rem .55rem; border-radius: 999px; font-size: .78rem; font-weight: 700; background: color-mix(in srgb, var(--accent) 12%, var(--panel)); }
+.sample-validity-invalid { color: #9c2020; background: #ffe2df; }
+.sample-validity-edge { color: #704600; background: #fff0c8; }
+.sample-file-meta, .sample-card details { color: var(--muted); font-size: .88rem; overflow-wrap: anywhere; }
+.sample-hash { overflow-wrap: anywhere; }
+.sample-card details summary { cursor: pointer; color: var(--text); }
+.sample-card .header-link { align-self: flex-start; margin-top: auto; max-width: 100%; overflow-wrap: anywhere; }

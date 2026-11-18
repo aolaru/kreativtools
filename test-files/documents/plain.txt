@@ -1,0 +1,2 @@
+Synthetic plain text document.
+Second line.

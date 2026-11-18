@@ -7,3 +7,4 @@ playwright-report/
 .playwright-mcp/
 dist/
 downloads/*.zip
+.venv-samples/

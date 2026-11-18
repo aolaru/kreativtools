@@ -177,6 +177,7 @@ function normalizeInternalHref(href) {
 }
 
 function navKeyForRoute(route) {
+  if (route.startsWith('/resources/')) return '';
   if (route === '/changes/') return 'changes';
   if (route.startsWith('/workflows')) return 'tools';
   if (route.startsWith('/tools')) return 'tools';
@@ -198,6 +199,7 @@ function ogTypeForRoute(route) {
 }
 
 function robotsForRoute(route) {
+  if (route === '/resources/sample-files/pro/') return 'noindex, nofollow';
   if (route.startsWith('/workflows/') || ARCHIVED_WORKFLOW_LEARN_ROUTES.has(route)) return 'noindex, nofollow';
   return 'index, follow';
 }
@@ -220,12 +222,14 @@ function sectionLabelForRoute(route) {
   if (route.startsWith('/fonts/')) return 'Font Tools';
   if (route.startsWith('/audio/')) return 'Audio Tools';
   if (route.startsWith('/file/')) return 'File Tools';
+  if (route.startsWith('/resources/sample-files/')) return 'Sample Files';
   if (route.startsWith('/tools/')) return 'Tools';
   if (route.startsWith('/changes/')) return 'Updates';
   return plainTitle(route.split('/').filter(Boolean).pop() || 'Kreativ Tools');
 }
 
 function sectionRouteForRoute(route) {
+  if (route.startsWith('/resources/sample-files/')) return '/resources/sample-files/';
   if (route.startsWith('/learn/')) return '/learn/';
   if (route.startsWith('/workflows/')) return '/workflows/';
   if (route.startsWith('/image/')) return '/image/';

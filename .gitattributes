@@ -1,0 +1,2 @@
+# Test fixtures must retain their exact bytes and published checksums.
+/test-files/** -text -diff
