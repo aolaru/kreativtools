@@ -24,19 +24,29 @@ const pages = [
   '/contact',
 ];
 
-test('main pages load and keep Tools, Learn, and Updates in the expected order', async ({ page }) => {
+test('main pages load and keep primary navigation in the expected order', async ({ page }) => {
   for (const route of pages) {
     await page.goto(route);
     await expect(page.locator('nav.top-nav')).toBeVisible();
     const labels = await page.locator('nav.top-nav > a, nav.top-nav .tools-nav-trigger > a').allTextContents();
     const normalized = labels.map((label) => label.trim());
-    expect(normalized).toEqual(['Tools', 'Learn', 'Updates']);
+    expect(normalized).toEqual(['Tools', 'QA', 'Learn', 'Updates']);
     expect(normalized[normalized.length - 1]).toBe('Updates');
     expect(normalized).toContain('Tools');
     expect(normalized).toContain('Learn');
-    expect(normalized.indexOf('Tools')).toBe(normalized.indexOf('Learn') - 1);
+    expect(normalized.indexOf('Tools')).toBe(normalized.indexOf('QA') - 1);
+    expect(normalized.indexOf('QA')).toBe(normalized.indexOf('Learn') - 1);
     expect(normalized.indexOf('Learn')).toBe(normalized.indexOf('Updates') - 1);
   }
+});
+
+test('QA navigation opens the sample library and remains active on its pages', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: 'QA', exact: true }).click();
+  await expect(page).toHaveURL(/\/resources\/sample-files\/$/);
+  await expect(page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: 'QA', exact: true })).toHaveAttribute('aria-current', 'page');
+  await page.goto('/resources/sample-files/pdf/');
+  await expect(page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: 'QA', exact: true })).toHaveAttribute('aria-current', 'page');
 });
 
 test('tools nav item points to the directory and stays active on workflow routes', async ({ page }) => {
