@@ -25,7 +25,8 @@ test('homepage and free toolkit link to the app idea', async ({ page }) => {
   await page.getByRole('link', { name: 'proposed desktop app' }).click();
   await expect(page).toHaveURL(/\/offline-app\/$/);
   await page.goto('/tools/');
-  await expect(page.getByRole('link', { name: 'See the proposed app and join the waitlist' })).toHaveAttribute('href', '/offline-app/');
+  await expect(page.getByRole('link', { name: 'proposed desktop app' })).toHaveAttribute('href', '/offline-app/');
+  await expect(page.getByRole('link', { name: 'offline converters PRO bundle' })).toHaveAttribute('href', '/offline-converters-pro/');
   await expect(page.locator('#offlineToolkitTitle').locator('..').locator('..').getByRole('link', { name: 'Download offline toolkit' })).toHaveAttribute('download', '');
 });
 

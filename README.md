@@ -89,6 +89,19 @@ Page Organizer uses the same PDF worker to copy, reorder, rotate, duplicate, and
 
 Image Compress can optionally fit within maximum dimensions without enlarging. Image Resize/Convert supports batches of up to 30 images and 100 MB input, with 16 million pixels per output image and 100 MB combined output; batch files are downloaded as a ZIP. PDF Merge accepts an optional page range per input. Page Organizer can export only the selected output pages, preserving their current order and rotation.
 
+## Offline converters PRO
+
+The separate converters bundle includes 19 existing image, audio, video, font, and data tools. It opens from `file://` in a current desktop browser and does not include website analytics. It is not an installer, checkout, or access-control system. The intended one-time price is EUR 24; no payment or paid delivery is configured. The free toolkit remains separate.
+
+Build the ZIP at an absolute path **outside this website checkout** (the command refuses to overwrite an existing file), then test that exact archive:
+
+```bash
+npm run build:offline:pro -- /absolute/private/path/kreativ-converters-pro.zip
+OFFLINE_PRO_ZIP=/absolute/private/path/kreativ-converters-pro.zip npm run test:offline:pro
+```
+
+Browser codecs and file limits vary; the video conversion and trim tools produce silent output. Automated video export tests currently run in Chromium only, not Firefox or WebKit. Font licenses can restrict conversion and redistribution. Review third-party licenses and corresponding-source obligations, particularly LGPL-licensed LameJS, before commercial distribution. The repository is MIT-licensed and customers can reuse its source under that license; a private ZIP is not copy protection.
+
 ## Shared generation
 
 Canonical pages live at clean routes such as `section/index.html` and `tool/index.html`.

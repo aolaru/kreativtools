@@ -321,8 +321,8 @@
   },
   "/privacy/": {
     "published": "2026-03-09",
-    "modified": "2026-11-19",
-    "hash": "65ea9e819c17ce3ab25d0f2c26c026fde4421a608bca48f4623507330867da0b"
+    "modified": "2026-11-21",
+    "hash": "f1d9a5c67bb2d2ca4c86e920f1c0e842cc273907336f7124bf115f3c8211568c"
   },
   "/terms/": {
     "published": "2026-03-09",
@@ -331,8 +331,8 @@
   },
   "/tools/": {
     "published": "2026-03-09",
-    "modified": "2026-11-19",
-    "hash": "28cb8b2739b1d8d0de047112c9b5b97f02ec8c631986c73424ad9b57347b4b55"
+    "modified": "2026-11-21",
+    "hash": "768c0ea49a30ee289cb1b24345d833a497c71a019b79fcb9703a29d8ad51cec5"
   },
   "/video/convert-webm/": {
     "published": "2026-03-08",
@@ -433,5 +433,10 @@
     "published": "2026-11-19",
     "modified": "2026-11-19",
     "hash": "4fa0b52d0c0f1b1423abf636cbe70eaeec3fac1fd46cc941757b3df04527de69"
+  },
+  "/offline-converters-pro/": {
+    "published": "2026-11-21",
+    "modified": "2026-11-21",
+    "hash": "10d47de846bd8237ba88ebd0e8f6e5c5f4243ba95038342c1540a32cde4c12b7"
   }
 }

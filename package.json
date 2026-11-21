@@ -10,6 +10,8 @@
     "samples:validate": "node scripts/validate-samples.js && node scripts/render-sample-pages.js --check",
     "build:offline": "node scripts/build-offline.js",
     "test:offline": "playwright test --config=playwright.offline.config.js",
+    "build:offline:pro": "node scripts/build-offline-converters-pro.js",
+    "test:offline:pro": "playwright test --config=playwright.offline-pro.config.js",
     "version:patch": "npm version --no-git-tag-version patch && npm run sync:site",
     "version:minor": "npm version --no-git-tag-version minor && npm run sync:site",
     "version:major": "npm version --no-git-tag-version major && npm run sync:site",

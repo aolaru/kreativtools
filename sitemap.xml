@@ -6,7 +6,7 @@
   </url>
   <url>
     <loc>https://kreativtools.com/tools/</loc>
-    <lastmod>2026-11-19</lastmod>
+    <lastmod>2026-11-21</lastmod>
   </url>
   <url>
     <loc>https://kreativtools.com/changes/</loc>
@@ -198,7 +198,7 @@
   </url>
   <url>
     <loc>https://kreativtools.com/privacy/</loc>
-    <lastmod>2026-11-19</lastmod>
+    <lastmod>2026-11-21</lastmod>
   </url>
   <url>
     <loc>https://kreativtools.com/terms/</loc>
@@ -303,5 +303,9 @@
   <url>
     <loc>https://kreativtools.com/offline-app/</loc>
     <lastmod>2026-11-19</lastmod>
+  </url>
+  <url>
+    <loc>https://kreativtools.com/offline-converters-pro/</loc>
+    <lastmod>2026-11-21</lastmod>
   </url>
 </urlset>
